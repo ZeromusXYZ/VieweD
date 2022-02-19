@@ -448,6 +448,7 @@ namespace VieweD.Engine.FFXI
                                 if (loadForm.pb.Value >= loadForm.pb.Maximum)
                                     loadForm.pb.Value = loadForm.pb.Minimum;
                                 loadForm.pb.Refresh();
+                                Application.DoEvents();
                             }
                         }
 
@@ -686,6 +687,8 @@ namespace VieweD.Engine.FFXI
                         {
                             loadForm.pb.PerformStep();
                             loadForm.pb.Refresh();
+                            loadForm.BringToFront();
+                            Application.DoEvents();
                         }
                     } // end foreach datafile line
                     #endregion

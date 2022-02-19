@@ -352,7 +352,11 @@ namespace VieweD.Engine.Common
                         }
                         loadForm.pb.Value = i;
                         if ((i % 50) == 0)
+                        {
                             loadForm.pb.Refresh();
+                            loadForm.BringToFront();
+                            Application.DoEvents();
+                        }
                     }
                     lbPackets.EndUpdate();
                     if (gotoIndex >= 0)
