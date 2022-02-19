@@ -47,11 +47,11 @@ Section "" ;No components page, name is not important
 
   ; Program Data
   SetOutPath $INSTDIR\data\ffxi\lookup
-  File /r data\lookup\*.*
+  File /r data\ffxi\lookup\*.*
   SetOutPath $INSTDIR\data\ffxi\parse
-  File /r data\parse\*.*
+  File /r data\ffxi\parse\*.*
   SetOutPath $INSTDIR\data\ffxi\filter
-  File /r data\filter\*.*
+  File /r data\ffxi\filter\*.*
 
   SetOutPath $INSTDIR\Plugins
   File /r Plugins\*.*
