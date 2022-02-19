@@ -1,0 +1,5 @@
+file;in-0x079;Proposal Update;Proposal update following a /vote command
+
+uint32;$04;_unknown?
+data21;$08;_unknown?-- 08  Likely contains information about the current chat mode and vote count
+string16;$1D;Proposer Name

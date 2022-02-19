@@ -1,0 +1,34 @@
+file;in-0x0C9;Player Check Response;Shows another player your equipment after using the Check command
+
+uint32;$04;Target ID
+uint16;$08;Target Index
+byte;$0A;Packet Type
+
+switchblock;$0A;MetaData;1
+switchblock;$0A;Equip;3
+
+[[MetaData]]
+info;$0B;Info;Player Information
+data3;$0B;_junk?
+byte;$0E;Icon Set Subtype;0 = Unopened Linkshell?, 1 = Linkshell, 2 = Pearlsack, 3 = Linkpearl, 4 = Ripped Pearlsack (I think), 5 = Broken Linkpearl?
+byte;$0F;Icon Set ID;This identifies the icon set, always 2 for linkshells.
+bits;$10:0-4;Linkshell Red
+bits;$10:4-4;Linkshell Green
+bits;$11:0-4;Linkshell Blue
+bits;$11:4-4;Junk bits?
+byte:jobs;$12;Main Job
+byte:jobs;$13;Sub Job
+linkshellstring;$14;Linkshell Name
+byte;$24;Main Job Level
+byte;$25;Sub Job Level
+rem;data42;$26;_unknown?;-- 26   At least the first two bytes and the last twelve bytes are junk, possibly more
+[[]]
+
+[[Equip]]
+info;$0B;Info;Equipment Information
+byte;$0B;Item Count
+
+rem;suboffset is counter adress
+playercheckitems;$0C:$0B;Item
+[[]]
+

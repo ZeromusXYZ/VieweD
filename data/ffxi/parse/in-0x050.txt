@@ -1,0 +1,5 @@
+file;in-0x050;Equip;Updates the characters equipment slots.
+
+byte;0x04;Inventory Index
+byte:equipslot;0x05;Equipment Slot
+byte:containers;0x06;Inventory Bag

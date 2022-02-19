@@ -1,0 +1,13 @@
+file;in-0x076;Party Buffs;Packet updated every time a party member's buffs change
+
+rem;Maybe I should make a custom data type for this
+
+rem;types.party_buff_entry = L{
+rem;    {ctype='unsigned int',      label='ID',                 fn=id},             -- 00
+rem;    {ctype='unsigned short',    label='Index',              fn=index},          -- 04
+rem;    {ctype='unsigned short',    label='_unknown1'},                             -- 06
+rem;    {ctype='data[8]',           label='Bit Mask'},                              -- 08
+rem;    {ctype='data[32]',          label='Buffs'},                                 -- 10
+rem;}
+
+rem;{ref=types.party_buff_entry,label='Party Buffs',        count=5},           -- 04  This is 00'd out for absent party members.

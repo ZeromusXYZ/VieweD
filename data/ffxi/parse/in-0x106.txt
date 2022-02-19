@@ -1,0 +1,4 @@
+file;in-0x106;Bazaar Seller Info;Information on the purchase sent to the buyer when they attempt to buy something
+
+uint32;$04;Type
+string16;$08;Name

@@ -1,0 +1,9 @@
+file;in-0x03A;Independing Animation;Used for arbitrary battle animations that are unaccompanied by an action packet.
+
+uint32;$04;Actor ID
+uint32;$08;Target ID
+uint16;$0C;Actor Index
+uint16;$0E;Target Index
+uint16;$10;Animation ID
+byte;$12;Animation Type;-- 12   0 = magic, 1 = item, 2 = JA, 3 = environmental animations, etc.
+byte;$13;_junk?;-- 13   Deleting this has no effect

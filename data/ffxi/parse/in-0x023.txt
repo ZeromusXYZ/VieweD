@@ -1,0 +1,9 @@
+file;in-0x023;Tradeitem;Sent when an item appears in the trade window.
+
+uint32;$04;Count
+uint16;$08;Trade Count;-- 08   Seems to increment every time packet 0x023 comes in, i.e. every trade action performed by the other party
+uint16:items;$0A;Item;-- 0A   If the item is removed, gil is used with a count of zero
+byte;$0C;_unknown1;Might be junk, seems to be 0x05
+byte;$0D;Trade Slot;Gil is slot 0, then 1-4 for top and 5-8 for bottom row
+data24;$0E;ExtData
+data2;$26;_junk?

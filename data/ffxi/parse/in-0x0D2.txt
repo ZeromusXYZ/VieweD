@@ -1,0 +1,14 @@
+file;in-0x0D2;Founditem;This command shows an item found on defeated mob or from a Treasure Chest
+
+uint32;$04;Quantity?
+uint32;$08;Dropper ID
+uint32;$0C;Count
+uint16:items;$10;Item
+uint16;$12;Dropper Index
+byte;$14;ItemSlot Index
+bool;$15;Is Old Item
+byte;$16;Unknown 0x00?;-- 16   Seems to always be 00
+byte;$17;_unknown?;-- 17   Seemingly random, both 00 and FF observed, as well as many values in between
+ms;$18;Timestamp
+data28;$1C;_unknown? ExtData?
+uint32;$38;_junk?

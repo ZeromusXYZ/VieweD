@@ -1,0 +1,28 @@
+file;in-0x020;Item Update;Info about item in your inventory.
+
+uint32;$04;Count
+uint32;$08;Bazaar Gil
+uint16:items;$0C;Item
+byte:containers;$0E;Bag
+byte;$0F;Index
+byte;$10;Status
+
+switchblock;$12;Gardening-Mode;64
+showblock;0;Default
+
+[[Gardening-Mode]]
+byte;$11;Growth Stage
+byte;$12;Pot Status;Enabled
+byte:garden_crystals;$13;Crystal Fed 1
+byte:garden_crystals;$14;Crystal Fed 2
+byte:garden_seed;$15;Seed Type
+byte;$16;State?;
+bit;$16:0;  Bit0 - Examined;
+vanatime;$1D;Time Planted
+vanatime;$21;Next Phase;
+[[]]
+
+[[Default]]
+data24;$11;ExtData
+data3;$29;_junk?
+[[]]

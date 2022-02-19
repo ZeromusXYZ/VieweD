@@ -1,0 +1,7 @@
+file;in-0x03D;Price response;Returns the value of an item.
+
+uint32;$04;Price
+byte;$08;Inventory Index
+byte:containers;$09;Bag
+uint16;$0A;_junk?
+uint32;$0C;_unknown?;Seems to be 1

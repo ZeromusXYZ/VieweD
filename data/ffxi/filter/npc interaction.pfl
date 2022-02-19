@@ -1,0 +1,5 @@
+rem;original-file;npc interaction.pfl
+outtype;none
+intype;show
+in;0x034;NPC Interaction 2
+in;0x032;NPC Interaction 1

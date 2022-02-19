@@ -1,0 +1,6 @@
+rem;original-file;hide movement.pfl
+outtype;hide
+out;0x015;Standard Client
+intype;hide
+in;0x00E;NPC Update
+in;0x00D;PC Update

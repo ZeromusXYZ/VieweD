@@ -1,0 +1,1 @@
+npcid;name;this is a dummy file for lookups, it will be auto-populated by PVLV if FFXI is installed

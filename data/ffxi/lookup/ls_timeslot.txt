@@ -1,0 +1,7 @@
+id;days
+rem;used for linkshell concierge
+0;In the Morning
+1;In the Afternoon
+2;In the Evening
+3;At Night
+4;At the wee hours of the morning

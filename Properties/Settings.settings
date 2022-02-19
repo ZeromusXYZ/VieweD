@@ -1,0 +1,141 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="VieweD.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="ColFontIN" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">0, 64, 0</Value>
+    </Setting>
+    <Setting Name="ColBackIN" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">238, 255, 238</Value>
+    </Setting>
+    <Setting Name="ColSyncIN" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">204, 255, 204</Value>
+    </Setting>
+    <Setting Name="ColSelectIN" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">64, 128, 64</Value>
+    </Setting>
+    <Setting Name="ColBarIN" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">0, 32, 0</Value>
+    </Setting>
+    <Setting Name="ColFontOUT" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">0, 0, 64</Value>
+    </Setting>
+    <Setting Name="ColBackOUT" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">238, 238, 255</Value>
+    </Setting>
+    <Setting Name="ColSyncOUT" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">204, 204, 255</Value>
+    </Setting>
+    <Setting Name="ColSelectOUT" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">64, 64, 128</Value>
+    </Setting>
+    <Setting Name="ColBarOUT" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">0, 0, 32</Value>
+    </Setting>
+    <Setting Name="ColFontUNK" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">32, 32, 32</Value>
+    </Setting>
+    <Setting Name="ColBackUNK" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">White</Value>
+    </Setting>
+    <Setting Name="ColSyncUNK" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">238, 238, 238</Value>
+    </Setting>
+    <Setting Name="ColSelectUNK" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">128, 32, 32</Value>
+    </Setting>
+    <Setting Name="ColBarUNK" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">Black</Value>
+    </Setting>
+    <Setting Name="ColSelectedFontIN" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">238, 255, 238</Value>
+    </Setting>
+    <Setting Name="ColSelectedFontOUT" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">238, 238, 255</Value>
+    </Setting>
+    <Setting Name="ColSelectedFontUNK" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">White</Value>
+    </Setting>
+    <Setting Name="ExternalParseEditor" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="AutoLoadVideo" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="AutoOpenVideoForm" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="PacketListStyle" Type="System.Byte" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="PreParseData" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="ColFieldCount" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">8</Value>
+    </Setting>
+    <Setting Name="ColField1" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">Chocolate</Value>
+    </Setting>
+    <Setting Name="ColField2" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">MediumSeaGreen</Value>
+    </Setting>
+    <Setting Name="ColField3" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">CornflowerBlue</Value>
+    </Setting>
+    <Setting Name="ColField4" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">DarkSalmon</Value>
+    </Setting>
+    <Setting Name="ColField5" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">DarkGray</Value>
+    </Setting>
+    <Setting Name="ColField6" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">Brown</Value>
+    </Setting>
+    <Setting Name="ColField7" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">MidnightBlue</Value>
+    </Setting>
+    <Setting Name="ColField8" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">Red</Value>
+    </Setting>
+    <Setting Name="ColField9" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">Green</Value>
+    </Setting>
+    <Setting Name="ColField10" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">Blue</Value>
+    </Setting>
+    <Setting Name="ColField11" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">Purple</Value>
+    </Setting>
+    <Setting Name="ColField12" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">Maroon</Value>
+    </Setting>
+    <Setting Name="ColField13" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">Navy</Value>
+    </Setting>
+    <Setting Name="ColField14" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">Violet</Value>
+    </Setting>
+    <Setting Name="ColField15" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">Turquoise</Value>
+    </Setting>
+    <Setting Name="ShowStringHexData" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="AskCreateNewProjectFile" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="UseGameClientData" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="ParserDataUpdateZipURL" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="ShowDebugInfo" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="DoUpdateSettings" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

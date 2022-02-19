@@ -1,0 +1,1 @@
+file;in-0x071;Campaign Map Info;Populates the Campaign map

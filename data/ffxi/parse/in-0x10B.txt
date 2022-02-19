@@ -1,0 +1,3 @@
+file;in-0x10B;Bazaar Open Packet;Packet sent when you open your bazaar
+
+uint32;$04;_unknown?

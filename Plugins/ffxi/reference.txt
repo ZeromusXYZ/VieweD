@@ -1,0 +1,7 @@
+﻿System.Data.dll
+Microsoft.Data.Sqlite.dll
+SQLitePCLRaw.batteries_v2.dll
+SQLitePCLRaw.core.dll
+SQLitePCLRaw.nativelibrary.dll
+SQLitePCLRaw.provider.dynamic_cdecl.dll
+SQLitePCLRaw.provider.e_sqlite3.dll

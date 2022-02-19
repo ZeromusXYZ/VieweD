@@ -1,0 +1,200 @@
+Place parsers .txt items into the parse folder
+The low viewer will look for a .txt item inside it with the following name
+
+parse\[data direction]-[hex packet id].txt
+
+- [data direction] is either 'in' or 'out'
+- [hex packet id] needs to be in 0x??? format (3 hex digits)
+
+example:
+
+parse\out-0x015.txt     <-- Standard Client Packet (your character's position update to the server)
+
+
+The item will be parsed line by line, and if something matches, it'll show it in the program
+Line format is as following
+
+type[:lookup];offset[;name[;description]]
+
+- type are some pre-defined types in the log viewer
+- offset is the byte-offset within the raw data (including the header)
+  This can be in decimal format or hex format (C or Pascal)  10 = 0xA = 0x0A = $A = $0A = Ah = 0Ah
+- name is what you want to show in the row header (optional, if ommited will display your type and offset instead)
+- description is not used at this time (might use this for flags in the future)
+- lookup is the name of the lookupfile to use for getting names of values, not all field types support this
+
+
+--------------------------------
+About Fields
+--------------------------------
+currently supported field types:
+
+typename: file , rem , comment
+description: nothing at all
+
+typename: info
+description: Displays the Description field in the fields view, usefull for adding field comments
+
+typename: byte [:lookup]
+description: unsigned 8 bit (1 byte) value, shows result as ordinal, hex, bitvalues and character
+
+typename: bit , bool
+description: display true/false value for a specific bit in a byte. To specific which bit, add a : after the offset
+  examples for value at offset $0A with a value of 9 (00001001):
+  bit;$0A:4;Bit4;  --> results in  False
+  bit;$0A:0;Bit0;  --> results in  True
+
+typename: bits [:lookup]
+description: display a int64 value for specified bits. To specific which bit, add a : after the offset and a - to add a size (in bits)
+  examples for value at offset $0A with a value of 73 (01001001):
+  bits;$0A:4-2;Bit4 to 5;  --> results in 0              ^^
+  bits;$0A:0-5;Bit0 to 5;  --> results in 9               ^^^^^
+  bits;$0A:6;Bit6;  --> results in 1 (no size=1)        ^
+  warning: you can specify more than 64 bits in size, but only the first 64 will be used to display a uint64
+
+
+typename: uint16  [:lookup]
+description: unsigned 16 bit (2 byte) value
+
+typename: int16  [:lookup]
+description: signed 16 bit (2 byte) value
+
+typename: int32  [:lookup]
+description: signed 32 bit (4 byte) value
+
+typename: uint32  [:lookup]
+description: unsigned 32 bit (4 byte) value
+
+typename: float
+description: 4 byte floating point number
+
+typename: string , string??
+description: shows a null terminated string,
+  if a number is added to "string" in the field name, it will count as a maximum string size.
+  e.g. use string8 for max of 8 bytes of data
+  does NOT support anto-translate or non-ascii (e.g. japanese text) in this program
+
+typename: data??
+description: ?? bytes or raw data displayed in Hex. (e.g. data16)
+
+typename: ip4
+description: 4 byte IP adress in 0.0.0.0 format
+
+typename: pos
+description: series of 3 floats to make XYZ coordinates
+
+typename: dir
+description: more visually appealing way of displaying a byte that is used for direction
+
+typename: ms
+description: more visually appealing way of displaying a uint32 that is used as a timestamp in milliseconds
+
+typename: frames
+description: more visually appealing way of displaying a uint32 that is used as a timestamp in frames (60 second)
+
+typename: vanatime
+description: more visually appealing way of displaying a int32 as Vanad'diel seconds that is used as a timestamp
+
+typename: bitflaglist  [:lookup]
+description: checks X amount of bits if they are set. Displays a line for every bit
+  that is set (with it's bit number). And uses a lookup item to add a name if known.
+  sub-offset must be set to the amount of BITS you want to check (e.g. 1024 for the spells list)
+  the description for this type is used as the lookup name
+  example:
+  bitflaglist:lookup;$04:0-1024;Magic List
+              ^      ^   ^ ^    ^          
+              |      |   | |    +-- Label prefix to show
+              |      |   | +-- number of BITS to expect
+			  |      |   +-- starting bit offset (note ":" in front of this, not a ";" )
+              |      +-- Starting BYTE
+              +-- base name of lookup file, this would be spells.txt
+
+typename: bitflaglist2  [:lookup]
+description: same as bitflaglist, but only generates one output line with all values together
+
+typename: packet-in-0x028
+description: Shows info about incomming packet 0x028 (has no color coding)
+  it needs a special handler because of the way the packet has variable size
+  depending on conditional bit flags (would be too complex to script)
+  Does nothing if it's not used in the correct packet parser
+
+functionname: save;CustomLookupListName;BaseValueFieldName;SavedValueFieldName
+description: Saves a id/value combo into a lookup table. CustomLookupListName must start with a @ and cannot be any of the special
+  names like @math. Takes a raw value from a parsed field named BaseValueFieldName (only primitive types are supported) and 
+  associates it with the string value that is a result of of SavedValueFieldName's data view (as show in the grid).
+  Note1: try not to make recurring lookups by accident :p
+  Note2: If the same base value is used, it will be overwritten
+
+  
+
+If there is unused byte data left in the packet, the log viewer will generate a list of the bytes at the end of all parsed fields.
+It will try to generate either uint32's or byte's depending on the unused size.
+
+
+--------------------------------
+About Switching Blocks
+--------------------------------
+You can mark a parse block using double brackets [[ name ]]
+A block is closed by making a empty named block like [[]]
+Blocks are usefull for multi-purpose packets that have some kind of flag inside of them
+to indicates what that packet is for. It is usefull to change the parse format
+depending on what type the packet is for. A good example would be packet in-0x063 "Set Update"
+that can contain a lot of different information.
+You will need to use switchblock or showblock to enable the fields inside a block.
+switchblock can be evaluated as a value simular to the "byte" or "bits" fields
+
+Syntax:
+switchblock;offsettocompare;blocknametoswitch;ValueToCompareAgainst
+showblock;unused;blocknametoswitch
+[[blocknametoswitch]]
+...
+[[]]
+
+Example:
+
+	switchblock;0x10:0-4;My Info;7
+	showblock;0;Default
+
+	[[My Info]]
+	uint32;0x11;My Value
+	...
+	[[]]
+
+	[[Default]]
+	data15;0x11;Raw Data
+	[[]]
+
+Result if byte 0x10 is 0x27
+	0x11 | My Value | "some uint32 value"
+
+Result if byte 0x10 is 0x31
+	0x11 | Raw Data | "array of 15 bytes as hex"
+
+If you would remove showblock and the brackets for the Default block, 
+you would always show the Raw Data example field, 
+and also the My Value field if the My Info switchblock is triggered
+
+
+--------------------------------
+About EnableCode
+--------------------------------
+Enable/Disable showing of block (and other special code) info
+Syntax:
+enablecode;0
+enablecode;1 (default)
+
+When set to 0 (disabled), the following is disabled:
+- SwitchBlock and ShowBlock will not produce a info line in the field view
+- Opening Switch Blocks are NOT stored for listing on the top-right of the field view
+
+A example of this can be found in the in-0x00E parser where it is used to only store the (N)PC's name if the proper flag for it is set
+
+enablecode;0
+switchblock;0x0A:3;savename;1
+[[savename]]
+rem;Only save name if the bitflag for it is set
+save;@actors;NPC;Name
+[[]]
+
+Because the user has now real value in "seeing" this [[savename]] as it doesn't produce any real output, it's better to just hide it there
+

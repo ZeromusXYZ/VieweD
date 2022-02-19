@@ -1,0 +1,6 @@
+file;in-0x053;Logout Time;The annoying message that tells how much time till you logout.
+
+uint32;$04;Parameter
+uint32;$08;_unknown?
+uint16;$0A;Message ID
+uint16;$0C;_junk?

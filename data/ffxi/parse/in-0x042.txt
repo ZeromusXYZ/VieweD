@@ -1,0 +1,6 @@
+file;in-0x042;Blacklist Command;Sent in response to /blacklist add or /blacklist delete.
+
+uint32;$04;Account ID;Note, this is not the Player ID
+string16;$08;Name
+byte;$18;Add(0)/Remove(1)
+data3;$19;_junk?

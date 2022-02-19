@@ -1,0 +1,63 @@
+file;in-0x118;Currency 2 Info;Contains all currencies to be displayed in the currency menu
+
+
+int32;$04;Bayld
+int16;$08;Kinetic Units
+byte;$0A;Coalition Imprimaturs
+byte;$0B;Unknown/Unused?
+int32;$0C;Obsidian Fragments
+int16;$10;Lebondopt Wings Stored
+int16;$12;Pulchridopt Wings Stored
+int32;$14;Mweya Plasm Corpuscles
+byte;$18;Ghastly Stones Stored
+byte;$19;Ghastly Stones +1 Stored
+byte;$1A;Ghastly Stones +2 Stored
+byte;$1B;Verdigris Stones Stored
+byte;$1C;Verdigris Stones +1 Stored
+byte;$1D;Verdigris Stones +2 Stored
+byte;$1E;Wailing Stones Stored
+byte;$1F;Wailing Stones +1 Stored
+byte;$20;Wailing Stones +2 Stored
+byte;$21;Snowslit Stones Stored
+byte;$22;Snowslit Stones +1 Stored
+byte;$23;Snowslit Stones +2 Stored
+byte;$24;Snowtip Stones Stored
+byte;$25;Snowtip Stones +1 Stored
+byte;$26;Snowtip Stones +2 Stored
+byte;$27;Snowdim Stones Stored
+byte;$28;Snowdim Stones +1 Stored
+byte;$29;Snowdim Stones +2 Stored
+byte;$2A;Snoworb Stones Stored
+byte;$2B;Snoworb Stones +1 Stored
+byte;$2C;Snoworb Stones +2 Stored
+byte;$2D;Leafslit Stones Stored
+byte;$2E;Leafslit Stones +1 Stored
+byte;$2F;Leafslit Stones +2 Stored
+byte;$30;Leaftip Stones Stored
+byte;$31;Leaftip Stones +1 Stored
+byte;$32;Leaftip Stones +2 Stored
+byte;$33;Leafdim Stones Stored
+byte;$34;Leafdim Stones +1 Stored
+byte;$35;Leafdim Stones +2 Stored
+byte;$36;Leaforb Stones Stored
+byte;$37;Leaforb Stones +1 Stored
+byte;$38;Leaforb Stones +2 Stored
+byte;$39;Duskslit Stones Stored
+byte;$3A;Duskslit Stones +1 Stored
+byte;$3B;Duskslit Stones +2 Stored
+byte;$3C;Dusktip Stones Stored
+byte;$3D;Dusktip Stones +1 Stored
+byte;$3E;Dusktip Stones +2 Stored
+byte;$3F;Duskdim Stones Stored
+byte;$40;Duskdim Stones +1 Stored
+byte;$41;Duskdim Stones +2 Stored
+byte;$42;Duskorb Stones Stored
+byte;$43;Duskorb Stones +1 Stored
+byte;$44;Duskorb Stones +2 Stored
+byte;$45;Pellucid Stones Stored
+byte;$46;Fern Stones Stored
+byte;$47;Taupe Stones Stored
+int16;$48;Unknown/Unused?
+int16;$4A;Escha Beads
+int32;$4C;Escha Silt
+int16;$50;Potpourri

@@ -1,0 +1,3 @@
+file;in-0x0F6;Widescan List Mark;Marks the start and ending of a widescan list
+
+uint32;$04;Type

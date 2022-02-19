@@ -1,0 +1,9 @@
+file;in-0x029;Action Message;Packet sent for simple battle-related messages.
+
+uint32;$04;Actor
+uint32;$08;Target
+uint32;$0C;Param 1
+uint32;$10;Param 2
+uint16;$14;Actor Index
+uint16;$16;Target Index
+uint16;$18;Message

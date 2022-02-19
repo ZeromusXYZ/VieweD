@@ -1,0 +1,12 @@
+file;in-0x068;Pet Status;Updates information about whether or not you have a pet and the TP, HP, etc. of the pet if appropriate
+
+bits;$04:0-6;Message Type
+bits;$04:6-10;Message Length
+uint16;$06;Owner Index
+uint32;$08;Owner ID
+uint16;$0C;Pet Index
+byte;$0E;Current HP%
+byte;$0F;Current MP%
+uint32;$10;Pet TP
+uint32;$14;Target ID
+string;$18;Pet Name

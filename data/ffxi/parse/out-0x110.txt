@@ -1,0 +1,56 @@
+file;out-0x110;Fishing Action;
+rem;Packet info contributed by Setzor
+
+uint32:@actors;0x04;Character ID
+uint8:fishingaction;0x0E;Action;2 = Check hook, 3 = Hook Action, 4 = End, 5 = Time Warning
+
+rem;uint32;0x08;Stamina/Status Code/Time Left;(Action:[3] 0-100=Fish Stamina % when catching, 200=Give Up after Hook, 201=Cancel before hook, 300=Out of Time -- [5] #=Time Left, )
+
+enablecode;0
+switchblock;0x0E;a2;2
+rem;switchblock;0x0E;a3other;3
+switchblock;0x0E;a4;4
+switchblock;0x0E;a5;5
+rem;guess which type it is based on stamina/type field
+switchblock;0x08:0-16;a3giveup;200
+switchblock;0x08:0-16;a3cancel;201
+switchblock;0x08:0-16;a3time;300
+rem;if nothing found yet, consider it stamina
+showblock;0x0E;a3stamina
+enablecode;1
+
+[[a2]]
+uint32;0x08;Unused
+[[]]
+
+[[a3other]]
+rem;this block is no longer used
+uint32;0x08;Status Code;0-100=Fish Stamina % when catching, 200=Give Up after Hook, 201=Cancel before hook, 300=Out of Time
+[[]]
+
+[[a3stamina]]
+uint32;0x08;Stamina
+[[]]
+
+[[a3giveup]]
+uint32;0x08;Give up after hook
+[[]]
+
+[[a3cancel]]
+uint32;0x08;Cancel before hook
+[[]]
+
+[[a3time]]
+uint32;0x08;Out of time
+[[]]
+
+[[a4]]
+uint32;0x08;Unused
+[[]]
+
+[[a5]]
+uint32;0x08;Time Left
+[[]]
+
+uint16;0x0C;Target Index
+uint32;0x10;Special;Same as Special received from incomming 0x115 (Fish Bite)

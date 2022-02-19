@@ -1,0 +1,18 @@
+file;in-0x116;Equipset Build Response;Returned from the server when building a set
+
+equipsetitem;$04;SLOT_MAIN
+equipsetitem;$08;SLOT_SUB
+equipsetitem;$0C;SLOT_RANGED
+equipsetitem;$10;SLOT_AMMO
+equipsetitem;$14;SLOT_HEAD
+equipsetitem;$18;SLOT_BODY
+equipsetitem;$1C;SLOT_HANDS
+equipsetitem;$20;SLOT_LEGS
+equipsetitem;$24;SLOT_FEET
+equipsetitem;$28;SLOT_NECK
+equipsetitem;$2C;SLOT_WAIST
+equipsetitem;$30;SLOT_EAR1
+equipsetitem;$34;SLOT_EAR2
+equipsetitem;$38;SLOT_RING1
+equipsetitem;$3C;SLOT_RING2
+equipsetitem;$40;SLOT_BACK

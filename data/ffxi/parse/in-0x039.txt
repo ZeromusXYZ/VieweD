@@ -1,0 +1,11 @@
+file;in-0x039;Environment Animation;Sent to force animations to specific objects
+
+rem;Animations without entities will have zeroes for ID and Index
+rem;-- Example without IDs: Runic Gate/Runic Portal
+rem;-- Example with IDs: Diabolos floor tiles
+
+uint32;$04;ID
+uint32;$08;_dupeID?
+string4;$0C;Type;-- 0C   Four character animation name
+uint16;$10;Index
+uint16;$12;_dupeIndex?

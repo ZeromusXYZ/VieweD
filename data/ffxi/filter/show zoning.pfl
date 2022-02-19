@@ -1,0 +1,14 @@
+rem;original-file;show zoning.pfl
+outtype;show
+out;0x00A;Client Connect
+out;0x00C;Zone In 1
+out;0x00D;Client Leave
+out;0x00F;Zone In 2
+out;0x011;Zone In 3
+out;0x05C;Warp Request
+out;0x0E7;Logout
+intype;show
+in;0x00A;Zone In
+in;0x00B;Zone Out
+in;0x053;Logout Time
+in;0x008;Zones Visited

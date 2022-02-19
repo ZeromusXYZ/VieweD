@@ -1,0 +1,6 @@
+file;in-0x03C;Shop;Displays items in a vendors shop.
+
+uint16;$04;Next Shop Slot
+bit;$06:0;Is Last Page
+bits;$06:1-15;_junk?
+shopitems;$08;Shop Entry

@@ -1,0 +1,6 @@
+file;in-0x058;Lock Target;Locks your target
+
+uint32;$04;ID
+uint16;$0C;Index
+uint32;$08;Target ID
+uint16;$0E;Target Index

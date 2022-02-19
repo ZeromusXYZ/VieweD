@@ -1,0 +1,80 @@
+file;in-0x067;Pet Info;Updates information about whether or not you have a pet and the TP, HP, etc. of the pet if appropriate
+
+rem;Base Data
+bits;$04:0-6;Message Type
+bits;$04:6-10;Message Length
+
+switchblock;$04:0-6;PC-Mode;2
+switchblock;$04:0-6;NPC-Mode;3
+switchblock;$04:0-6;DSP-Mode;4
+
+[[PC-Mode]]
+rem;-- Finish PC Update, received after incoming 0x00D and 0x037
+info;0;Info;PC-Mode
+uint16;$06;Player Index
+uint32:@actors;$08;Player ID
+uint16;$0C;Fellow Index
+
+rem;shared info block
+uint16;$0E;Unknown?
+bool;$10:0;Bit0?
+bool;$10:1;Campaign Battle
+bool;$10:2;Level Sync
+bool;$10:3;Bit3?
+rem;end shared block
+
+bits;$10:4-25;Bit4-28?
+bits;$13:5-3;Mount Type
+uint32;$14;Unknown?
+bits;$18:0-3;Chocobo Special Head
+bits;$18:3-3;Chocobo Special Feet
+bits;$18:6-3;Chocobo Special Tail
+bits;$19:1-3;Chocobo Color
+bits;$19:4-1;Chocobo Unknown?
+bits;$19:5-4;Chocobo Speed Mod;-- 19:5  speed_mod + 32, server: speed_mod = strength rank(7) + gallop(1) + purple racing silks(1) cap:8
+bits;$1A:1-4;Chocobo Unknown?
+bits;$1A:5-4;Chocobo Riding Time Mod;-- 1A:5  time_mod * 240 + 60, server: time_mod = (endurance rank(7) + canter(1) cap@7) + orange racing silks(1) + 4 cap:11
+bit;$1B:1;Burrow
+bit;$1B:2;Bore
+bit;$1B:3;Bit3?
+bit;$1B:4;Treasure Finder
+bits;$1B:5-3;Bit5-7?
+data9;$1C;Unknown?
+byte;$25;Main Job Level
+byte;$26;Unknown?
+byte;$27;Unknown?
+[[]]
+
+[[NPC-Mode]]
+info;0;Info;NPC-Mode
+rem;-- Finish NPC Update, received after incoming 0x00E
+uint16;$06;NPC Index
+uint32:@actors;$08;NPC ID
+uint16;$0C;Owner Index
+
+rem;shared info block
+uint16;$0E;Unknown?
+bool;$10:0;Bit0?
+bool;$10:1;Campaign Battle
+bool;$10:2;Level Sync
+bool;$10:3;Bit3?
+rem;end shared block
+
+bits;$10:4-28;Unknown?
+uint32;$14;Unknown?
+[[]]
+
+
+[[DSP-Mode]]
+info;0;Info;DSP-Mode
+uint16;$06;Owner Index
+uint32:@actors;$08;Owner ID
+uint16;$0C;Pet Index
+byte;$0E;Current HP%
+byte;$0F;Current MP%
+uint32;$10;Pet TP
+uint32:@actors;$14;Target ID
+string;$18;Pet Name
+
+save;@actors;Target ID;Pet Name
+[[]]

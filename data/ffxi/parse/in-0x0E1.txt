@@ -1,0 +1,5 @@
+file;in-0x0E1;Party Member List;Sent when you look at the party member list
+
+uint16;$04;Party ID
+uint16;$06;_unknown?
+string;$04;PartyID String

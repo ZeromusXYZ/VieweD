@@ -1,0 +1,8 @@
+file;in-0x109;Bazaar Purchase Info;Information on the purchase sent to the buyer when the purchase is successful
+
+uint32;$04;Buyer ID
+uint32;$08;Quantity
+uint16;$0C;Buyer Index
+uint16;$0E;Bazaar Index
+string16;$10;Buyer Name
+uint32;$20;_unknown?;-- 20   Was 05 00 02 00 for me

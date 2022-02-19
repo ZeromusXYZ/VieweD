@@ -1,0 +1,4 @@
+0;San d'Oria
+1;Bastok
+2;Windurst
+3;Jeuno

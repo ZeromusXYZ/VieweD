@@ -1,0 +1,10 @@
+file;in-0x030;Synth Animation;Generates the synthesis animation
+
+uint32:@actors;$04;Player ID
+uint16;$08;Player Index
+uint16;$0A;Effect
+info;$0A;Effect Info;1000=water, 1100=wind, 1200=fire, 1300=earth, 1400=lightning, 1500=ice, 1600=light, 1700=dark
+byte;$0C;Param;
+info;$0C;Param Info;00 is NQ, 01 is break, 02 is HQ
+byte;$0D;Animation;-- 0D  -- Always C2 for me.
+byte;$0E;_unknown?;-- 0E  -- Appears to just be trash.

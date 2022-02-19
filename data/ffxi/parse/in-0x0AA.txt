@@ -1,0 +1,4 @@
+file;in-0x0AA;Spell List;Packet that shows the spells that you know
+
+bitflaglist:spells;$04:0-1024;Spell;spells
+

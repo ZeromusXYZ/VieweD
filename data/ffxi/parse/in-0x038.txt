@@ -1,0 +1,7 @@
+file;in-0x038;Entity Animation;Sent when a model should play a specific animation.
+
+uint32;$04;Mob ID
+uint32;$08;_dupeMob?
+string4;$0C;Type;-- 0C   Four character animation name
+uint16;$10;Mob Index
+uint16;$12;_dupeMobIndex?

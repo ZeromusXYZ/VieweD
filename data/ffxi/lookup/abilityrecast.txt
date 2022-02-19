@@ -1,0 +1,147 @@
+recastid;name
+0;1h special ability
+1;berserk
+2;warcry
+3;defender
+4;aggressor
+5;provoke
+6;warriors charge
+7;tomahawk
+8;retaliation
+13;focus
+14;dodge
+15;chakra
+16;boost
+17;counterstance
+18;chi blast
+19;mantra
+20;formless strikes
+21;footwork
+26;divine seal
+27;martyr
+28;devotion
+29;afflatus solace
+30;afflatus misery
+36;saboteur
+37;spontaneity
+38;elemental seal
+47;tenuto
+48;marcato
+49;convert
+50;composure
+54;hagakure
+57;issekigan
+60;steal
+61;despoil
+62;flee
+63;hide
+64;sneak attack
+65;mug
+66;trick attack
+67;assassins charge
+68;feint
+69;accomplice
+73;shield bash
+74;holy circle
+75;sentinel
+76;cover
+77;rampart
+78;fealty
+79;chivalry
+85;souleater
+86;arcane circle
+87;last resort
+88;weapon bash
+89;dark seal
+90;diabolic eye
+97;charm
+98;gauge
+99;tame
+100;fight
+101;heel
+102;sic
+103;reward
+104;call beast
+105;feral howl
+106;killer instinct
+107;snarl
+108;apogee
+109;nightingale
+110;troubadour
+112;pianissimo
+115;deus ex automata
+121;scavenge
+122;shadowbind
+123;camouflage
+124;sharpshot
+125;barrage
+126;unlimited shot
+127;stealth shot
+128;flashy shot
+129;velocity shot
+132;konzen-ittai
+133;third eye
+134;meditate
+135;warding circle
+136;shikikoyo
+137;blade bash
+138;hasso
+139;seigan
+140;sekkanoki
+145;sange
+146;yonin
+147;innin
+148;futae
+157;ancient circle
+158;jump
+159;high jump
+160;super jump
+161;dismiss
+162;spirit link
+163;call wyvern
+164;deep breathing
+165;angon
+170;assault
+171;retreat
+172;release
+173;blood pact rage
+174;blood pact ward
+175;elemental siphon
+181;chain affinity
+182;burst affinity
+183;convergence
+184;diffusion
+193;phantom roll
+194;double-up
+195;fire shot
+196;random deal
+197;snake eye
+198;fold
+205;activate
+206;repair
+207;deploy
+208;deactivate
+209;retrieve
+210;fire maneuver
+211;role reversal
+212;ventriloquy
+214;maintenance
+215;healing waltz
+216;sambas
+217;waltzes
+218;spectral jig
+219;saber dance
+220;quickstep
+221;animated flourish
+222;reverse flourish
+223;no foot rise
+224;fan dance
+225;divine waltz
+228;light arts
+230;modus veritas
+231;penury
+232;dark arts
+233;stratagems
+234;sublimation
+235;enlightenment
+254;stymie

@@ -1,0 +1,669 @@
+spellid;name
+1;cure
+2;cure ii
+3;cure iii
+4;cure iv
+5;cure v
+6;cure vi
+7;curaga
+8;curaga ii
+9;curaga iii
+10;curaga iv
+11;curaga v
+12;raise
+13;raise ii
+14;poisona
+15;paralyna
+16;blindna
+17;silena
+18;stona
+19;viruna
+20;cursna
+21;holy
+22;holy ii
+23;dia
+24;dia ii
+25;dia iii
+26;dia iv
+27;dia v
+28;banish
+29;banish ii
+30;banish iii
+31;banish iv
+32;banish v
+33;diaga
+34;diaga ii
+35;diaga iii
+36;diaga iv
+37;diaga v
+38;banishga
+39;banishga ii
+40;banishga iii
+41;banishga iv
+42;banishga v
+43;protect
+44;protect ii
+45;protect iii
+46;protect iv
+47;protect v
+48;shell
+49;shell ii
+50;shell iii
+51;shell iv
+52;shell v
+53;blink
+54;stoneskin
+55;aquaveil
+56;slow
+57;haste
+58;paralyze
+59;silence
+60;barfire
+61;barblizzard
+62;baraero
+63;barstone
+64;barthunder
+65;barwater
+66;barfira
+67;barblizzara
+68;baraera
+69;barstonra
+70;barthundra
+71;barwatera
+72;barsleep
+73;barpoison
+74;barparalyze
+75;barblind
+76;barsilence
+77;barpetrify
+78;barvirus
+79;slow ii
+80;paralyze ii
+81;recall-jugner
+82;recall-pashh
+83;recall-meriph
+84;baramnesia
+85;baramnesra
+86;barsleepra
+87;barpoisonra
+88;barparalyzra
+89;barblindra
+90;barsilencera
+91;barpetra
+92;barvira
+93;cura
+94;sacrifice
+95;esuna
+96;auspice
+97;reprisal
+98;repose
+99;sandstorm
+100;enfire
+101;enblizzard
+102;enaero
+103;enstone
+104;enthunder
+105;enwater
+106;phalanx
+107;phalanx ii
+108;regen
+109;refresh
+110;regen ii
+111;regen iii
+112;flash
+113;rainstorm
+114;windstorm
+115;firestorm
+116;hailstorm
+117;thunderstorm
+118;voidstorm
+119;aurorastorm
+120;teleport-yhoat
+121;teleport-altep
+122;teleport-holla
+123;teleport-dem
+124;teleport-mea
+125;protectra
+126;protectra ii
+127;protectra iii
+128;protectra iv
+129;protectra v
+130;shellra
+131;shellra ii
+132;shellra iii
+133;shellra iv
+134;shellra v
+135;reraise
+136;invisible
+137;sneak
+138;deodorize
+139;teleport-vahzl
+140;raise iii
+141;reraise ii
+142;reraise iii
+143;erase
+144;fire
+145;fire ii
+146;fire iii
+147;fire iv
+148;fire v
+149;blizzard
+150;blizzard ii
+151;blizzard iii
+152;blizzard iv
+153;blizzard v
+154;aero
+155;aero ii
+156;aero iii
+157;aero iv
+158;aero v
+159;stone
+160;stone ii
+161;stone iii
+162;stone iv
+163;stone v
+164;thunder
+165;thunder ii
+166;thunder iii
+167;thunder iv
+168;thunder v
+169;water
+170;water ii
+171;water iii
+172;water iv
+173;water v
+174;firaga
+175;firaga ii
+176;firaga iii
+177;firaga iv
+178;firaga v
+179;blizzaga
+180;blizzaga ii
+181;blizzaga iii
+182;blizzaga iv
+183;blizzaga v
+184;aeroga
+185;aeroga ii
+186;aeroga iii
+187;aeroga iv
+188;aeroga v
+189;stonega
+190;stonega ii
+191;stonega iii
+192;stonega iv
+193;stonega v
+194;thundaga
+195;thundaga ii
+196;thundaga iii
+197;thundaga iv
+198;thundaga v
+199;waterga
+200;waterga ii
+201;waterga iii
+202;waterga iv
+203;waterga v
+204;flare
+205;flare ii
+206;freeze
+207;freeze ii
+208;tornado
+209;tornado ii
+210;quake
+211;quake ii
+212;burst
+213;burst ii
+214;flood
+215;flood ii
+216;gravity
+217;gravity ii
+218;meteor
+219;comet
+220;poison
+221;poison ii
+222;poison iii
+223;poison iv
+224;poison v
+225;poisonga
+226;poisonga ii
+227;poisonga iii
+228;poisonga iv
+229;poisonga v
+230;bio
+231;bio ii
+232;bio iii
+233;bio iv
+234;bio v
+235;burn
+236;frost
+237;choke
+238;rasp
+239;shock
+240;drown
+241;retrace
+242;absorb-acc
+244;meteor ii
+245;drain
+246;drain ii
+247;aspir
+248;aspir ii
+249;blaze spikes
+250;ice spikes
+251;shock spikes
+252;stun
+253;sleep
+254;blind
+255;break
+256;virus
+257;curse
+258;bind
+259;sleep ii
+260;dispel
+261;warp
+262;warp ii
+263;escape
+264;tractor
+265;tractor ii
+266;absorb-str
+267;absorb-dex
+268;absorb-vit
+269;absorb-agi
+270;absorb-int
+271;absorb-mnd
+272;absorb-chr
+273;sleepga
+274;sleepga ii
+275;absorb-tp
+276;blind ii
+277;dread spikes
+278;geohelix
+279;hydrohelix
+280;anemohelix
+281;pyrohelix
+282;cryohelix
+283;ionohelix
+284;noctohelix
+285;luminohelix
+286;addle
+287;klimaform
+288;fire spirit
+289;ice spirit
+290;air spirit
+291;earth spirit
+292;thunder spirit
+293;water spirit
+294;light spirit
+295;dark spirit
+296;carbuncle
+297;fenrir
+298;ifrit
+299;titan
+300;leviathan
+301;garuda
+302;shiva
+303;ramuh
+304;diabolos
+305;odin
+306;alexander
+307;cait sith
+308;animus augeo
+309;animus minuo
+310;enlight
+311;endark
+312;enfire ii
+313;enblizzard ii
+314;enaero ii
+315;enstone ii
+316;enthunder ii
+317;enwater ii
+318;monomi ichi
+319;aisha ichi
+320;katon ichi
+321;katon ni
+322;katon san
+323;hyoton ichi
+324;hyoton ni
+325;hyoton san
+326;huton ichi
+327;huton ni
+328;huton san
+329;doton ichi
+330;doton ni
+331;doton san
+332;raiton ichi
+333;raiton ni
+334;raiton san
+335;suiton ichi
+336;suiton ni
+337;suiton san
+338;utsusemi ichi
+339;utsusemi ni
+340;utsusemi san
+341;jubaku ichi
+342;jubaku ni
+343;jubaku san
+344;hojo ichi
+345;hojo ni
+346;hojo san
+347;kurayami ichi
+348;kurayami ni
+349;kurayami san
+350;dokumori ichi
+351;dokumori ni
+352;dokumori san
+353;tonko ichi
+354;tonko ni
+355;tonko san
+356;paralyga
+357;slowga
+358;hastega
+359;silencega
+360;dispelga
+361;blindga
+362;bindga
+365;breakga
+366;graviga
+367;death
+368;foe requiem
+369;foe requiem ii
+370;foe requiem iii
+371;foe requiem iv
+372;foe requiem v
+373;foe requiem vi
+374;foe requiem vii
+375;foe requiem viii
+376;horde lullaby
+377;horde lullaby ii
+378;armys paeon
+379;armys paeon ii
+380;armys paeon iii
+381;armys paeon iv
+382;armys paeon v
+383;armys paeon vi
+384;armys paeon vii
+385;armys paeon viii
+386;mages ballad
+387;mages ballad ii
+388;mages ballad iii
+389;knights minne
+390;knights minne ii
+391;knights minne iii
+392;knights minne iv
+393;knights minne v
+394;valor minuet
+395;valor minuet ii
+396;valor minuet iii
+397;valor minuet iv
+398;valor minuet v
+399;sword madrigal
+400;blade madrigal
+401;hunters prelude
+402;archers prelude
+403;sheepfoe mambo
+404;dragonfoe mambo
+405;fowl aubade
+406;herb pastoral
+407;chocobo hum
+408;shining fantasia
+409;scops operetta
+410;puppets operetta
+411;jesters operetta
+412;gold capriccio
+413;devotee serenade
+414;warding round
+415;goblin gavotte
+416;cactuar fugue
+417;moogle rhapsody
+418;protected aria
+419;advancing march
+420;victory march
+421;battlefield elegy
+422;carnage elegy
+423;massacre elegy
+424;sinewy etude
+425;dextrous etude
+426;vivacious etude
+427;quick etude
+428;learned etude
+429;spirited etude
+430;enchanting etude
+431;herculean etude
+432;uncanny etude
+433;vital etude
+434;swift etude
+435;sage etude
+436;logical etude
+437;bewitching etude
+438;fire carol
+439;ice carol
+440;wind carol
+441;earth carol
+442;lightning carol
+443;water carol
+444;light carol
+445;dark carol
+446;fire carol ii
+447;ice carol ii
+448;wind carol ii
+449;earth carol ii
+450;lightning carol ii
+451;water carol ii
+452;light carol ii
+453;dark carol ii
+454;fire threnody
+455;ice threnody
+456;wind threnody
+457;earth threnody
+458;lightning threnody
+459;water threnody
+460;light threnody
+461;dark threnody
+462;magic finale
+463;foe lullaby
+464;goddesss hymnus
+465;chocobo mazurka
+466;maidens virelai
+467;raptor mazurka
+468;foe sirvente
+469;adventurers dirge
+470;sentinels scherzo
+471;foe lullaby ii
+473;refresh ii
+474;cura ii
+475;cura iii
+477;regen iv
+478;embrava
+479;boost-str
+480;boost-dex
+481;boost-vit
+482;boost-agi
+483;boost-int
+484;boost-mnd
+485;boost-chr
+486;gain-str
+487;gain-dex
+488;gain-vit
+489;gain-agi
+490;gain-int
+491;gain-mnd
+492;gain-chr
+493;temper
+495;adloquium
+496;firaja
+497;blizzaja
+498;aeroja
+499;stoneja
+500;thundaja
+501;waterja
+502;kaustra
+503;impact
+504;regen v
+505;gekka ichi
+506;yain ichi
+507;myoshu ichi
+508;yurin ichi
+509;kakka ichi
+510;migawari ichi
+511;haste ii
+513;venom shell
+515;maelstrom
+517;metallic body
+519;screwdriver
+521;mp drainkiss
+522;death ray
+524;sandspin
+527;smite of rage
+529;bludgeon
+530;refueling
+531;ice break
+532;blitzstrahl
+533;self-destruct
+534;mysterious light
+535;cold wave
+536;poison breath
+537;stinking gas
+538;memento mori
+539;terror touch
+540;spinal cleave
+541;blood saber
+542;digest
+543;mandibular bite
+544;cursed sphere
+545;sickle slash
+547;cocoon
+548;filamented hold
+549;pollen
+551;power attack
+554;death scissors
+555;magnetite cloud
+557;eyes on me
+560;frenetic rip
+561;frightful roar
+563;hecatomb wave
+564;body slam
+565;radiant breath
+567;helldive
+569;jet stream
+570;blood drain
+572;sound blast
+573;feather tickle
+574;feather barrier
+575;jettatura
+576;yawn
+577;foot kick
+578;wild carrot
+579;voracious trunk
+581;healing breeze
+582;chaotic eye
+584;sheep song
+585;ram charge
+587;claw cyclone
+588;lowing
+589;dimensional death
+591;heat breath
+592;blank gaze
+593;magic fruit
+594;uppercut
+595;1000 needles
+596;pinecone bomb
+597;sprout smack
+598;soporific
+599;queasyshroom
+603;wild oats
+604;bad breath
+605;geist wall
+606;awful eye
+608;frost breath
+610;infrasonics
+611;disseverment
+612;actinic burst
+613;reactor cool
+614;saline coat
+615;plasma charge
+616;temporal shift
+617;vertical cleave
+618;blastbomb
+620;battle dance
+621;sandspray
+622;grand slam
+623;head butt
+626;bomb toss
+628;frypan
+629;flying hip press
+631;hydro shot
+632;diamondhide
+633;enervation
+634;light of penance
+636;warm-up
+637;firespit
+638;feather storm
+640;tail slap
+641;hysteric barrage
+642;amplification
+643;cannonball
+644;mind blast
+645;exuviation
+646;magic hammer
+647;zephyr mantle
+648;regurgitation
+650;seedspray
+651;corrosive ooze
+652;spiral spin
+653;asuran claws
+654;sub-zero smash
+655;triumphant roar
+656;acrid stream
+657;blazing bound
+658;plenilune embrace
+659;demoralizing roar
+660;cimicine discharge
+661;animating wail
+662;battery charge
+663;leafstorm
+664;regeneration
+665;final sting
+666;goblin rush
+667;vanity dive
+668;magic barrier
+669;whirl of rage
+670;benthic typhoon
+671;auroral drape
+672;osmosis
+673;quad continuum
+674;fantod
+675;thermal pulse
+677;empty thrash
+678;dream flower
+679;occultation
+680;charged whisker
+681;winds of promy
+682;delta thrust
+683;evryone grudge
+684;reaving wind
+685;barrier tusk
+686;mortal ray
+687;water bomb
+688;heavy strike
+689;dark orb
+690;white wind
+692;sudden lunge
+693;quadrastrike
+694;vapor spray
+695;thunder breath
+696;orcish counterstance
+697;amorphic spikes
+698;wind breath
+699;barbed crescent
+736;thunderbolt
+737;harden shell
+738;absolute terror
+739;gates of hades
+740;tourbillion
+741;pyric bulwark
+742;bilgestorm
+743;bloodrake
+841;distract
+842;distract ii
+843;frazzle
+844;frazzle ii
+845;flurry
+846;flurry ii
