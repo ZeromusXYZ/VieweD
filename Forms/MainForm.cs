@@ -965,7 +965,7 @@ namespace VieweD
                 var mITem = (sender as ToolStripMenuItem);
                 // apply filter
                 var lastSync = tp.CurrentSync;
-                tp.PL.Filter.LoadFromFile(Path.Combine(Application.StartupPath, "data", "aa", "filter", mITem.Text + ".pfl"));
+                tp.PL.Filter.LoadFromFile(Path.Combine(Application.StartupPath, "data", tp.Engine.EngineId, "filter", mITem.Text + ".pfl"));
                 tp.PL.FilterFrom(tp.PLLoaded);
                 tp.FillListBox(lastSync);
                 tp.CenterListBox();
@@ -980,7 +980,7 @@ namespace VieweD
             {
                 var tp = GetCurrentPacketTabPage();
                 mmFilterApply.DropDownItems.Clear();
-                var di = new DirectoryInfo(Path.Combine(Application.StartupPath, "data", "aa", "filter"));
+                var di = new DirectoryInfo(Path.Combine(Application.StartupPath, "data", tp.Engine.EngineId, "filter"));
                 var files = di.GetFiles("*.pfl");
                 foreach (var fi in files)
                 {

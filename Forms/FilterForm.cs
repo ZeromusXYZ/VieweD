@@ -34,14 +34,25 @@ namespace VieweD
 
         protected List<FilterListEntry> OutDataSource;
         protected List<FilterListEntry> InDataSource;
-        public EngineBase currentEngine;
+        private EngineBase _currentEngine;
+        public EngineBase currentEngine
+        {
+            get { return _currentEngine; }
+            set
+            {
+                _currentEngine = value;
+                if (value != null)
+                {
+                    saveFileDlg.InitialDirectory = Path.Combine(Application.StartupPath, "data", value.EngineId, "filter");
+                    loadFileDlg.InitialDirectory = Path.Combine(Application.StartupPath, "data", value.EngineId, "filter");
+                }
+            }
+        }
 
         public FilterForm()
         {
             InitializeComponent();
             Filter = new PacketListFilter();
-            saveFileDlg.InitialDirectory = Path.Combine(Application.StartupPath, "data", "aa", "filter");
-            loadFileDlg.InitialDirectory = Path.Combine(Application.StartupPath, "data", "aa", "filter");
             OutDataSource = new List<FilterListEntry>();
             InDataSource = new List<FilterListEntry>();
             ClearFilters();
