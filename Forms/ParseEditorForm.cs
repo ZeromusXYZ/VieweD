@@ -28,10 +28,15 @@ namespace VieweD
                 }
                 catch (Exception ex)
                 {
+                    editBox.DescriptionFile = "";
                     editBox.Language = FastColoredTextBoxNS.Language.XML;
                     MessageBox.Show($"Error in {syntaxFile}\r\n{ex.Message}", "Syntax File Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-
+            }
+            else 
+            {
+                editBox.DescriptionFile = "";
+                editBox.Language = FastColoredTextBoxNS.Language.XML;
             }
         }
 
