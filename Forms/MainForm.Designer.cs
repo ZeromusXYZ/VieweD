@@ -131,7 +131,13 @@
             // MM
             // 
             this.MM.ImageScalingSize = new System.Drawing.Size(18, 18);
-            this.MM.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { this.mmFile, this.mmSearch, this.mmFilter, this.mmExtra, this.mmTools, this.mmAbout });
+            this.MM.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mmFile,
+            this.mmSearch,
+            this.mmFilter,
+            this.mmExtra,
+            this.mmTools,
+            this.mmAbout});
             this.MM.Location = new System.Drawing.Point(0, 0);
             this.MM.Name = "MM";
             this.MM.Padding = new System.Windows.Forms.Padding(7, 2, 0, 2);
@@ -141,7 +147,19 @@
             // 
             // mmFile
             // 
-            this.mmFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { this.mmFileOpen, this.toolStripSeparator1, this.mmFileAppend, this.mmFileAddFromClipboard, this.mmFilePasteNew, this.mmFileS2, this.mmFileProjectDetails, this.mmFileClose, this.mmFileS1, this.mmFileSettings, this.mmFileS3, this.mmFileExit });
+            this.mmFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mmFileOpen,
+            this.toolStripSeparator1,
+            this.mmFileAppend,
+            this.mmFileAddFromClipboard,
+            this.mmFilePasteNew,
+            this.mmFileS2,
+            this.mmFileProjectDetails,
+            this.mmFileClose,
+            this.mmFileS1,
+            this.mmFileSettings,
+            this.mmFileS3,
+            this.mmFileExit});
             this.mmFile.Name = "mmFile";
             this.mmFile.Size = new System.Drawing.Size(37, 20);
             this.mmFile.Text = "Fil&e";
@@ -165,7 +183,8 @@
             // 
             this.mmFileAppend.Image = global::VieweD.Properties.Resources.Fairytale_filenew3;
             this.mmFileAppend.Name = "mmFileAppend";
-            this.mmFileAppend.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.Shift) | System.Windows.Forms.Keys.O)));
+            this.mmFileAppend.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.O)));
             this.mmFileAppend.Size = new System.Drawing.Size(249, 24);
             this.mmFileAppend.Text = "Append Log ...";
             this.mmFileAppend.Click += new System.EventHandler(this.mmFileAppend_Click);
@@ -174,7 +193,8 @@
             // 
             this.mmFileAddFromClipboard.Image = global::VieweD.Properties.Resources.Fairytale_editcopy;
             this.mmFileAddFromClipboard.Name = "mmFileAddFromClipboard";
-            this.mmFileAddFromClipboard.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.Shift) | System.Windows.Forms.Keys.V)));
+            this.mmFileAddFromClipboard.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.V)));
             this.mmFileAddFromClipboard.Size = new System.Drawing.Size(249, 24);
             this.mmFileAddFromClipboard.Text = "Add from clipboard";
             this.mmFileAddFromClipboard.Click += new System.EventHandler(this.MmAddFromClipboard_Click);
@@ -236,7 +256,9 @@
             // 
             // mmSearch
             // 
-            this.mmSearch.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { this.mmSearchSearch, this.mmSearchNext });
+            this.mmSearch.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mmSearchSearch,
+            this.mmSearchNext});
             this.mmSearch.Name = "mmSearch";
             this.mmSearch.Size = new System.Drawing.Size(54, 20);
             this.mmSearch.Text = "&Search";
@@ -245,7 +267,7 @@
             // 
             this.mmSearchSearch.Name = "mmSearchSearch";
             this.mmSearchSearch.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
-            this.mmSearchSearch.Size = new System.Drawing.Size(161, 22);
+            this.mmSearchSearch.Size = new System.Drawing.Size(180, 22);
             this.mmSearchSearch.Text = "Search ...";
             this.mmSearchSearch.Click += new System.EventHandler(this.MmSearchSearch_Click);
             // 
@@ -253,22 +275,27 @@
             // 
             this.mmSearchNext.Name = "mmSearchNext";
             this.mmSearchNext.ShortcutKeys = System.Windows.Forms.Keys.F3;
-            this.mmSearchNext.Size = new System.Drawing.Size(161, 22);
+            this.mmSearchNext.Size = new System.Drawing.Size(180, 22);
             this.mmSearchNext.Text = "Search next";
             this.mmSearchNext.Click += new System.EventHandler(this.MmSearchNext_Click);
             // 
             // mmFilter
             // 
-            this.mmFilter.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { this.mmFilterApply, this.toolStripMenuItem3, this.mmFilterEdit, this.mmFilterReset });
+            this.mmFilter.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mmFilterApply,
+            this.toolStripMenuItem3,
+            this.mmFilterEdit,
+            this.mmFilterReset});
             this.mmFilter.Name = "mmFilter";
             this.mmFilter.Size = new System.Drawing.Size(45, 20);
             this.mmFilter.Text = "Fi&lter";
             // 
             // mmFilterApply
             // 
-            this.mmFilterApply.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { this.MMFilterApplyItem });
+            this.mmFilterApply.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MMFilterApplyItem});
             this.mmFilterApply.Name = "mmFilterApply";
-            this.mmFilterApply.Size = new System.Drawing.Size(170, 22);
+            this.mmFilterApply.Size = new System.Drawing.Size(180, 22);
             this.mmFilterApply.Text = "Apply";
             this.mmFilterApply.DropDownOpening += new System.EventHandler(this.MmFilterApply_DropDownOpening);
             // 
@@ -281,27 +308,34 @@
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(167, 6);
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(177, 6);
             // 
             // mmFilterEdit
             // 
             this.mmFilterEdit.Name = "mmFilterEdit";
             this.mmFilterEdit.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F)));
-            this.mmFilterEdit.Size = new System.Drawing.Size(170, 22);
+            this.mmFilterEdit.Size = new System.Drawing.Size(180, 22);
             this.mmFilterEdit.Text = "Edit ...";
             this.mmFilterEdit.Click += new System.EventHandler(this.MmFilterEdit_Click);
             // 
             // mmFilterReset
             // 
             this.mmFilterReset.Name = "mmFilterReset";
-            this.mmFilterReset.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.Shift) | System.Windows.Forms.Keys.F)));
-            this.mmFilterReset.Size = new System.Drawing.Size(170, 22);
+            this.mmFilterReset.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.F)));
+            this.mmFilterReset.Size = new System.Drawing.Size(180, 22);
             this.mmFilterReset.Text = "Reset";
             this.mmFilterReset.Click += new System.EventHandler(this.MmFilterReset_Click);
             // 
             // mmExtra
             // 
-            this.mmExtra.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { this.mmVideoOpenLink, this.MMExtraGameView, this.MMExtraN1, this.MMExtraUpdateParser, this.MMExtraImportFromGame, this.mmExtraExportPacketsAsCSV });
+            this.mmExtra.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mmVideoOpenLink,
+            this.MMExtraGameView,
+            this.MMExtraN1,
+            this.MMExtraUpdateParser,
+            this.MMExtraImportFromGame,
+            this.mmExtraExportPacketsAsCSV});
             this.mmExtra.Name = "mmExtra";
             this.mmExtra.Size = new System.Drawing.Size(45, 20);
             this.mmExtra.Text = "E&xtra";
@@ -362,14 +396,20 @@
             // 
             // mmAbout
             // 
-            this.mmAbout.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { this.mmAboutGithub, this.mmAboutDiscord, this.MMAboutN1, this.MMAbout7Zip, this.mmAboutVideoLAN, this.MMAboutN2, this.mmAboutAbout });
+            this.mmAbout.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mmAboutGithub,
+            this.mmAboutDiscord,
+            this.MMAboutN1,
+            this.MMAbout7Zip,
+            this.mmAboutVideoLAN,
+            this.MMAboutN2,
+            this.mmAboutAbout});
             this.mmAbout.Name = "mmAbout";
             this.mmAbout.Size = new System.Drawing.Size(52, 20);
             this.mmAbout.Text = "&About";
             // 
             // mmAboutGithub
             // 
-            this.mmAboutGithub.Enabled = false;
             this.mmAboutGithub.Name = "mmAboutGithub";
             this.mmAboutGithub.Size = new System.Drawing.Size(197, 22);
             this.mmAboutGithub.Text = "Open source on Github";
@@ -389,7 +429,9 @@
             // 
             // MMAbout7Zip
             // 
-            this.MMAbout7Zip.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { this.MMAbout7ZipMain, this.MMAbout7ZipDownload });
+            this.MMAbout7Zip.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MMAbout7ZipMain,
+            this.MMAbout7ZipDownload});
             this.MMAbout7Zip.Name = "MMAbout7Zip";
             this.MMAbout7Zip.Size = new System.Drawing.Size(197, 22);
             this.MMAbout7Zip.Text = "Visit 7-zip site";
@@ -429,7 +471,9 @@
             // 
             // splitContainer1
             // 
-            this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
+            this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
             this.splitContainer1.Location = new System.Drawing.Point(0, 24);
             this.splitContainer1.Name = "splitContainer1";
@@ -449,7 +493,9 @@
             // tcPackets
             // 
             this.tcPackets.Alignment = System.Windows.Forms.TabAlignment.Left;
-            this.tcPackets.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
+            this.tcPackets.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tcPackets.Controls.Add(this.tpPackets1);
             this.tcPackets.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
             this.tcPackets.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
@@ -478,7 +524,9 @@
             // 
             // lbPackets
             // 
-            this.lbPackets.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
+            this.lbPackets.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lbPackets.ContextMenuStrip = this.pmPacketList;
             this.lbPackets.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.lbPackets.FormattingEnabled = true;
@@ -491,7 +539,19 @@
             // 
             // pmPacketList
             // 
-            this.pmPacketList.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { this.pmPLShowPacketName, this.pmPLS1, this.pmPLShowOnly, this.pmPLHideThis, this.pmPLS2, this.pmPLShowOutOnly, this.plPLShowInOnly, this.pmPLS3, this.pmPLResetFilters, this.pmPLS4, this.pmPLEditParser, this.pmPLExportPacket });
+            this.pmPacketList.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.pmPLShowPacketName,
+            this.pmPLS1,
+            this.pmPLShowOnly,
+            this.pmPLHideThis,
+            this.pmPLS2,
+            this.pmPLShowOutOnly,
+            this.plPLShowInOnly,
+            this.pmPLS3,
+            this.pmPLResetFilters,
+            this.pmPLS4,
+            this.pmPLEditParser,
+            this.pmPLExportPacket});
             this.pmPacketList.Name = "pmPacketList";
             this.pmPacketList.Size = new System.Drawing.Size(208, 204);
             // 
@@ -596,7 +656,9 @@
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             this.dGV.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            this.dGV.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
+            this.dGV.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dGV.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
             this.dGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dGV.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnF2;
@@ -632,7 +694,9 @@
             // 
             // splitContainer3
             // 
-            this.splitContainer3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
+            this.splitContainer3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.splitContainer3.Location = new System.Drawing.Point(3, 4);
             this.splitContainer3.Name = "splitContainer3";
             // 
@@ -653,7 +717,9 @@
             // 
             // rtInfo
             // 
-            this.rtInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
+            this.rtInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.rtInfo.DetectUrls = false;
             this.rtInfo.HideSelection = false;
             this.rtInfo.Location = new System.Drawing.Point(3, 3);
@@ -666,7 +732,9 @@
             // 
             // flpPreviewData
             // 
-            this.flpPreviewData.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
+            this.flpPreviewData.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.flpPreviewData.AutoSize = true;
             this.flpPreviewData.BackColor = System.Drawing.SystemColors.Control;
             this.flpPreviewData.Controls.Add(this.lUint16);
@@ -687,7 +755,8 @@
             // 
             // lRawViewPos
             // 
-            this.lRawViewPos.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
+            this.lRawViewPos.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lRawViewPos.Location = new System.Drawing.Point(164, 134);
             this.lRawViewPos.Name = "lRawViewPos";
             this.lRawViewPos.Size = new System.Drawing.Size(328, 18);
@@ -726,7 +795,11 @@
             // 
             // statusBar
             // 
-            this.statusBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { this.sbEngine, this.sbExtraInfo, this.sbProjectInfo, this.sbRules });
+            this.statusBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.sbEngine,
+            this.sbExtraInfo,
+            this.sbProjectInfo,
+            this.sbRules});
             this.statusBar.Location = new System.Drawing.Point(0, 534);
             this.statusBar.Name = "statusBar";
             this.statusBar.Size = new System.Drawing.Size(1084, 24);
@@ -735,7 +808,9 @@
             // 
             // sbEngine
             // 
-            this.sbEngine.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
+            this.sbEngine.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
+            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
+            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
             this.sbEngine.BorderStyle = System.Windows.Forms.Border3DStyle.SunkenOuter;
             this.sbEngine.Name = "sbEngine";
             this.sbEngine.Size = new System.Drawing.Size(47, 19);
@@ -744,7 +819,9 @@
             // 
             // sbExtraInfo
             // 
-            this.sbExtraInfo.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
+            this.sbExtraInfo.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
+            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
+            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
             this.sbExtraInfo.BorderStyle = System.Windows.Forms.Border3DStyle.SunkenOuter;
             this.sbExtraInfo.Name = "sbExtraInfo";
             this.sbExtraInfo.Size = new System.Drawing.Size(20, 19);
@@ -752,17 +829,21 @@
             // 
             // sbProjectInfo
             // 
-            this.sbProjectInfo.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
+            this.sbProjectInfo.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
+            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
+            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
             this.sbProjectInfo.BorderStyle = System.Windows.Forms.Border3DStyle.SunkenOuter;
             this.sbProjectInfo.Name = "sbProjectInfo";
-            this.sbProjectInfo.Size = new System.Drawing.Size(897, 19);
+            this.sbProjectInfo.Size = new System.Drawing.Size(1049, 19);
             this.sbProjectInfo.Spring = true;
             this.sbProjectInfo.Text = "Project: none";
             this.sbProjectInfo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // sbRules
             // 
-            this.sbRules.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
+            this.sbRules.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
+            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
+            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
             this.sbRules.BorderStyle = System.Windows.Forms.Border3DStyle.SunkenOuter;
             this.sbRules.Name = "sbRules";
             this.sbRules.Size = new System.Drawing.Size(74, 19);
@@ -825,6 +906,7 @@
             this.statusBar.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
+
         }
 
         private System.Windows.Forms.Label lRawViewPos;

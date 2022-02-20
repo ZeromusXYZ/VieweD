@@ -40,6 +40,11 @@ namespace VieweD.Engine.Common
         public Dictionary<string,string> FileExtensions { get; protected set; }
 
         /// <summary>
+        /// List containing all data types for this engine to insert (old style)
+        /// </summary>
+        public List<string> EditorDataTypes { get; protected set; } = new List<string>();
+
+        /// <summary>
         /// List of names of possible tools that need to be added to the menu 
         /// </summary>
         public List<string> ToolNamesList { get; protected set; } = new List<string>();

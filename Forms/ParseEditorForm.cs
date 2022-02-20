@@ -18,6 +18,21 @@ namespace VieweD
         {
             CurrentTab = parent;
             InitializeComponent();
+            var syntaxFile = Path.Combine(Application.StartupPath, "data", CurrentTab?.Engine?.EngineId ?? "null", "editor-syntax.xml"); 
+            if (File.Exists(syntaxFile))
+            {
+                try
+                {
+                    editBox.DescriptionFile = syntaxFile;
+                    editBox.Language = FastColoredTextBoxNS.Language.Custom;
+                }
+                catch (Exception ex)
+                {
+                    editBox.Language = FastColoredTextBoxNS.Language.XML;
+                    MessageBox.Show($"Error in {syntaxFile}\r\n{ex.Message}", "Syntax File Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+            }
         }
 
         private void BtnSave_Click(object sender, EventArgs e)
@@ -65,7 +80,7 @@ namespace VieweD
             Text += " - " + LoadedFile;
             editBox.SelectionLength = 0;
             editBox.SelectionStart = editBox.Text.Length;
-            FillFFXITypes();
+            FillTypes();
         }
 
         public void LoadFromRule(PacketRule rule)
@@ -112,144 +127,56 @@ namespace VieweD
             Text += " - " + LoadedRule.Name;
             editBox.SelectionLength = 0;
             editBox.SelectionStart = editBox.Text.Length;
-            FillAATypes();
+            FillTypes();
         }
 
-        private void FillFFXITypes()
+        private void FillTypes()
         {
+            var dataTypes = CurrentTab?.Engine?.EditorDataTypes;
             cbFieldType.Items.Clear();
-
-            cbFieldType.Items.Add("uint32");
-            cbFieldType.Items.Add("int32");
-            cbFieldType.Items.Add("uint16");
-            cbFieldType.Items.Add("int16");
-            cbFieldType.Items.Add("byte");
-            cbFieldType.Items.Add("float");
-            cbFieldType.Items.Add("pos");
-            cbFieldType.Items.Add("dir");
-            cbFieldType.Items.Add("switchblock");
-            cbFieldType.Items.Add("showblock");
-            cbFieldType.Items.Add("info");
-            cbFieldType.Items.Add("bit");
-            cbFieldType.Items.Add("bits");
-            cbFieldType.Items.Add("string");
-            cbFieldType.Items.Add("data");
-            cbFieldType.Items.Add("ms");
-            cbFieldType.Items.Add("frames");
-            cbFieldType.Items.Add("vanatime");
-            cbFieldType.Items.Add("ip4");
-            cbFieldType.Items.Add("linkshellstring");
-            cbFieldType.Items.Add("inscribestring");
-            cbFieldType.Items.Add("bitflaglist");
-            cbFieldType.Items.Add("bitflaglist2");
-            cbFieldType.Items.Add("combatskill");
-            cbFieldType.Items.Add("craftskill");
-            cbFieldType.Items.Add("equipsetitem");
-            cbFieldType.Items.Add("equipsetitemlist");
-            cbFieldType.Items.Add("abilityrecastlist");
-            cbFieldType.Items.Add("blacklistentry");
-            cbFieldType.Items.Add("meritentries");
-            cbFieldType.Items.Add("playercheckitems");
-            cbFieldType.Items.Add("bufficons");
-            cbFieldType.Items.Add("bufftimers");
-            cbFieldType.Items.Add("buffs");
-            cbFieldType.Items.Add("jobpointentries");
-            cbFieldType.Items.Add("shopitems");
-            cbFieldType.Items.Add("guildshopitems");
-            cbFieldType.Items.Add("jobpoints");
-            cbFieldType.Items.Add("roequest");
-            cbFieldType.Items.Add("packet-in-0x028");
-
+            var defaultType = string.Empty;
+            if ((dataTypes != null) && (dataTypes.Count > 0))
+            {
+                foreach (var dType in dataTypes)
+                {
+                    if (string.IsNullOrWhiteSpace(defaultType))
+                        defaultType = dType;
+                    cbFieldType.Items.Add(dType);
+                }
+            }
             cbFieldType.Sorted = true;
-            cbFieldType.Text = "uint16";
 
-            lPos.Visible = true;
-            lPosInfo.Visible = true;
-            tPos.Visible = true;
+            if (!string.IsNullOrWhiteSpace(defaultType))
+                cbFieldType.Text = defaultType;
 
-            cbFieldType.Width = cbLookup.Width;
+            if ((dataTypes != null) && (CurrentTab.Engine.HasRulesFile))
+            {
+                lPos.Visible = false;
+                lPosInfo.Visible = false;
+                tPos.Visible = false;
 
-            tComment.Enabled = true;
+                cbFieldType.Width = tName.Left - cbFieldType.Left - 8;
+
+                // Just hide the entire old control set for now
+                pOldEditControl.Visible = false;
+                btnInsert.Visible = false;
+                editBox.Height += pOldEditControl.Height;
+                docMap.Height += pOldEditControl.Height;
+
+                tComment.Enabled = false;
+            }
+            else
+            {
+                lPos.Visible = true;
+                lPosInfo.Visible = true;
+                tPos.Visible = true;
+
+                cbFieldType.Width = cbLookup.Width;
+
+                tComment.Enabled = true;
+            }
         }
-
-        private void FillAATypes()
-        {
-            cbFieldType.Items.Clear();
-            cbFieldType.Items.Add("chunk type=\"pi\"");
-            cbFieldType.Items.Add("chunk type=\"pish\"");
-            cbFieldType.Items.Add("chunk type=\"b\"");
-            cbFieldType.Items.Add("chunk type=\"w\"");
-            cbFieldType.Items.Add("chunk type=\"rw\"");
-            cbFieldType.Items.Add("chunk type=\"h\"");
-            cbFieldType.Items.Add("chunk type=\"rh\"");
-            cbFieldType.Items.Add("chunk type=\"d\"");
-            cbFieldType.Items.Add("chunk type=\"rd\"");
-            cbFieldType.Items.Add("chunk type=\"i\"");
-            cbFieldType.Items.Add("chunk type=\"ri\"");
-            cbFieldType.Items.Add("chunk type=\"f\"");
-            cbFieldType.Items.Add("chunk type=\"rf\"");
-            cbFieldType.Items.Add("chunk type=\"half\"");
-            cbFieldType.Items.Add("chunk type=\"q\"");
-            cbFieldType.Items.Add("chunk type=\"rq\"");
-            cbFieldType.Items.Add("chunk type=\"int64\""); // not used
-            cbFieldType.Items.Add("chunk type=\"a\"");
-            cbFieldType.Items.Add("chunk type=\"ts\"");
-            cbFieldType.Items.Add("chunk type=\"rts\"");
-            cbFieldType.Items.Add("chunk type=\"s\"");
-            cbFieldType.Items.Add("chunk type=\"u\"");
-            cbFieldType.Items.Add("chunk type=\"t\"");
-            cbFieldType.Items.Add("chunk type=\"zs\"");
-            cbFieldType.Items.Add("chunk type=\"zu\"");
-            cbFieldType.Items.Add("chunk type=\"zu8\"");
-            cbFieldType.Items.Add("chunk type=\"bc\"");
-            cbFieldType.Items.Add("chunk type=\"bcx\"");
-            cbFieldType.Items.Add("chunk type=\"bcy\"");
-            cbFieldType.Items.Add("chunk type=\"bcz\"");
-            cbFieldType.Items.Add("chunk type=\"qx\"");
-            cbFieldType.Items.Add("chunk type=\"qy\"");
-            cbFieldType.Items.Add("chunk type=\"qz\"");
-            cbFieldType.Items.Add("chunk type=\"rqx\"");
-            cbFieldType.Items.Add("chunk type=\"rqy\"");
-            cbFieldType.Items.Add("chunk type=\"rqz\"");
-
-            cbFieldType.Items.Add("ifeq arg1=\"1\" arg2=\"2\"");
-            cbFieldType.Items.Add("ifneq arg1=\"1\" arg2=\"2\"");
-            cbFieldType.Items.Add("iflt arg1=\"1\" arg2=\"2\"");
-            cbFieldType.Items.Add("ifgt arg1=\"1\" arg2=\"2\"");
-            cbFieldType.Items.Add("ifz arg=\"1\"");
-            cbFieldType.Items.Add("ifnz arg=\"1\"");
-            cbFieldType.Items.Add("add arg1=\"1\" arg2=\"2\" dst=\"dst\"");
-            cbFieldType.Items.Add("sub arg1=\"1\" arg2=\"2\" dst=\"dst\"");
-            cbFieldType.Items.Add("mul arg1=\"1\" arg2=\"2\" dst=\"dst\"");
-            cbFieldType.Items.Add("shl arg1=\"1\" arg2=\"2\" dst=\"dst\"");
-            cbFieldType.Items.Add("shr arg1=\"1\" arg2=\"2\" dst=\"dst\"");
-            cbFieldType.Items.Add("and arg1=\"1\" arg2=\"2\" dst=\"dst\"");
-            cbFieldType.Items.Add("or arg1=\"1\" arg2=\"2\" dst=\"dst\"");
-            cbFieldType.Items.Add("mov val=\"1\" dst=\"dst\"");
-            cbFieldType.Items.Add("loop");
-            cbFieldType.Items.Add("break");
-            cbFieldType.Items.Add("continue");
-            cbFieldType.Items.Add("lookup save=\"custom\" source=\"s\" val=\"v\"");
-
-            cbFieldType.Sorted = true;
-            cbFieldType.Text = "chunk type=\"w\"";
-
-            lPos.Visible = false;
-            lPosInfo.Visible = false;
-            tPos.Visible = false;
-
-            cbFieldType.Width = tName.Left - cbFieldType.Left - 8 ;
-
-            // Just hide the entire old control set for now
-            pOldEditControl.Visible = false;
-            btnInsert.Visible = false;
-            editBox.Height += pOldEditControl.Height;
-            docMap.Height += pOldEditControl.Height;
-
-            tComment.Enabled = false;
-        }
-
-
+                
         private void ParseEditorForm_Load(object sender, EventArgs e)
         {
             cbLookup.Items.Clear();

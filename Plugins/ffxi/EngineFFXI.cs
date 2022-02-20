@@ -56,25 +56,68 @@ namespace VieweD.Engine.FFXI
         public EngineFFXI()
         {
             ParentTab = null;
-            FileExtensions = new Dictionary<string,string>
-            {
-                { ".log", "PacketViewer File" },
-                { ".txt", "Packeteer File" },
-                { ".sqlite", "PacketDB File" }
-            };
-            ToolNamesList.Add(ToolImportGame);
+            InitEngine();
         }
 
         public EngineFFXI(PacketTabPage parent)
         {
             ParentTab = parent;
-            FileExtensions = new Dictionary<string,string>
+            InitEngine();
+        }
+
+        private void InitEngine()
+        {
+            FileExtensions = new Dictionary<string, string>
             {
                 { ".log", "PacketViewer File" },
                 { ".txt", "Packeteer File" },
                 { ".sqlite", "PacketDB File" }
             };
-            ToolNamesList.Add("FFXI: Import from game");
+
+            ToolNamesList.Add(ToolImportGame);
+
+            EditorDataTypes.Clear();
+            EditorDataTypes.Add("uint16");
+
+            EditorDataTypes.Add("uint32");
+            EditorDataTypes.Add("int32");
+            EditorDataTypes.Add("int16");
+            EditorDataTypes.Add("byte");
+            EditorDataTypes.Add("float");
+            EditorDataTypes.Add("pos");
+            EditorDataTypes.Add("dir");
+            EditorDataTypes.Add("switchblock");
+            EditorDataTypes.Add("showblock");
+            EditorDataTypes.Add("info");
+            EditorDataTypes.Add("bit");
+            EditorDataTypes.Add("bits");
+            EditorDataTypes.Add("string");
+            EditorDataTypes.Add("data");
+            EditorDataTypes.Add("ms");
+            EditorDataTypes.Add("frames");
+            EditorDataTypes.Add("vanatime");
+            EditorDataTypes.Add("ip4");
+            EditorDataTypes.Add("linkshellstring");
+            EditorDataTypes.Add("inscribestring");
+            EditorDataTypes.Add("bitflaglist");
+            EditorDataTypes.Add("bitflaglist2");
+            EditorDataTypes.Add("combatskill");
+            EditorDataTypes.Add("craftskill");
+            EditorDataTypes.Add("equipsetitem");
+            EditorDataTypes.Add("equipsetitemlist");
+            EditorDataTypes.Add("abilityrecastlist");
+            EditorDataTypes.Add("blacklistentry");
+            EditorDataTypes.Add("meritentries");
+            EditorDataTypes.Add("playercheckitems");
+            EditorDataTypes.Add("bufficons");
+            EditorDataTypes.Add("bufftimers");
+            EditorDataTypes.Add("buffs");
+            EditorDataTypes.Add("jobpointentries");
+            EditorDataTypes.Add("shopitems");
+            EditorDataTypes.Add("guildshopitems");
+            EditorDataTypes.Add("jobpoints");
+            EditorDataTypes.Add("roequest");
+            EditorDataTypes.Add("packet-in-0x028");
         }
 
         public override bool CanAppend(PacketTabPage project)
