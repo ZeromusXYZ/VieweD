@@ -96,15 +96,6 @@ namespace VieweD.Engine.Common
 
             if (n >= 16)
                 DataColors.Add(Properties.Settings.Default.ColField15);
-            /*
-            DataColors.Add(Color.Chocolate);
-            DataColors.Add(Color.MediumSeaGreen);
-            DataColors.Add(Color.CornflowerBlue);
-            DataColors.Add(Color.DarkSalmon);
-            DataColors.Add(Color.DarkGray);
-            DataColors.Add(Color.Brown);
-            DataColors.Add(Color.MidnightBlue);
-            */
         }
     }
 }

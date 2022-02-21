@@ -40,6 +40,10 @@ namespace VieweD
             Properties.Settings.Default.UseGameClientData = cbUseGameClientData.Checked ;
             Properties.Settings.Default.ShowDebugInfo = cbShowDebug.Checked;
 
+            Properties.Settings.Default.PacketListFont = btnPacketListFont.Font;
+            Properties.Settings.Default.GridViewFont = btnGridViewFont.Font;
+            Properties.Settings.Default.RawViewFont = btnRawViewFont.Font;
+
             foreach (var tab in tcSettings.TabPages)
             {
                 if (tab is EngineSettingsTab engineTab)
@@ -81,6 +85,10 @@ namespace VieweD
             btnSyncOUT.BackColor = Properties.Settings.Default.ColSyncOUT;
             btnSyncUNK.BackColor = Properties.Settings.Default.ColSyncUNK;
 
+            btnPacketListFont.Font = Properties.Settings.Default.PacketListFont;
+            btnPacketListFont.Text = btnPacketListFont.Font.Name + ", " + btnPacketListFont.Font.SizeInPoints + "pt";
+            labelPacketListArrows.Font = Properties.Settings.Default.PacketListFont;
+
             localFieldColors.Clear();
             localFieldColors.Add(SystemColors.ControlText);
             localFieldColors.Add(Properties.Settings.Default.ColField1);
@@ -99,8 +107,14 @@ namespace VieweD
             localFieldColors.Add(Properties.Settings.Default.ColField14);
             localFieldColors.Add(Properties.Settings.Default.ColField15);
 
+            btnGridViewFont.Font = Properties.Settings.Default.GridViewFont;
+            btnGridViewFont.Text = btnGridViewFont.Font.Name + ", " + btnGridViewFont.Font.SizeInPoints + "pt";
+
             tbFieldColorCount.Value = Properties.Settings.Default.ColFieldCount;
             UpdateFieldColorGrid();
+
+            btnRawViewFont.Font = Properties.Settings.Default.RawViewFont;
+            btnRawViewFont.Text = btnRawViewFont.Font.Name + ", " + btnRawViewFont.Font.SizeInPoints + "pt";
 
             cbUseExternalEditor.Checked = Properties.Settings.Default.ExternalParseEditor;
             cbAutoOpenVideoForm.Checked = Properties.Settings.Default.AutoOpenVideoForm;
@@ -398,6 +412,15 @@ namespace VieweD
                 btnColField15.BackColor = SystemColors.ControlDarkDark;
             }
 
+            foreach (var control in layoutGridColors.Controls)
+            {
+                if (control is Label l)
+                    l.Font = btnGridViewFont.Font;
+                else
+                    if (control is Button b)
+                    b.Font = btnGridViewFont.Font;
+            }
+
         }
 
         private void BtnColField_Click(object sender, EventArgs e)
@@ -419,6 +442,40 @@ namespace VieweD
 
         private void btnBrowse_Click(object sender, EventArgs e)
         {
+        }
+
+        private void btnPacketListFont_Click(object sender, EventArgs e)
+        {
+            fontDlg.Font = Properties.Settings.Default.PacketListFont;
+            if (fontDlg.ShowDialog() == DialogResult.OK)
+            {
+                btnPacketListFont.Font = fontDlg.Font;
+                btnPacketListFont.Text = btnPacketListFont.Font.Name + ", " + btnPacketListFont.Font.SizeInPoints + "pt" ;
+                labelPacketListArrows.Font = fontDlg.Font;
+            }
+        }
+
+        private void btnGridViewFont_Click(object sender, EventArgs e)
+        {
+            fontDlg.Font = Properties.Settings.Default.GridViewFont;
+            if (fontDlg.ShowDialog() == DialogResult.OK)
+            {
+                btnGridViewFont.Font = fontDlg.Font;
+                btnGridViewFont.Text = btnGridViewFont.Font.Name + ", " + btnGridViewFont.Font.SizeInPoints + "pt";
+            }
+
+            UpdateFieldColorGrid();
+        }
+
+        private void btnRawViewFont_Click(object sender, EventArgs e)
+        {
+            fontDlg.Font = Properties.Settings.Default.RawViewFont;
+            if (fontDlg.ShowDialog() == DialogResult.OK)
+            {
+                btnRawViewFont.Font = fontDlg.Font;
+                btnRawViewFont.Text = btnRawViewFont.Font.Name + ", " + btnRawViewFont.Font.SizeInPoints + "pt";
+            }
+
         }
     }
 }

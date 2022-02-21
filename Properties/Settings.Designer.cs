@@ -12,7 +12,7 @@ namespace VieweD.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.0.3.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.1.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -560,6 +560,42 @@ namespace VieweD.Properties {
             }
             set {
                 this["DoUpdateSettings"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Consolas, 9pt")]
+        public global::System.Drawing.Font PacketListFont {
+            get {
+                return ((global::System.Drawing.Font)(this["PacketListFont"]));
+            }
+            set {
+                this["PacketListFont"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Consolas, 9pt")]
+        public global::System.Drawing.Font RawViewFont {
+            get {
+                return ((global::System.Drawing.Font)(this["RawViewFont"]));
+            }
+            set {
+                this["RawViewFont"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Consolas, 9pt")]
+        public global::System.Drawing.Font GridViewFont {
+            get {
+                return ((global::System.Drawing.Font)(this["GridViewFont"]));
+            }
+            set {
+                this["GridViewFont"] = value;
             }
         }
     }

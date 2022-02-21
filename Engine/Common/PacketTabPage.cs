@@ -67,8 +67,12 @@ namespace VieweD.Engine.Common
             lbPackets.Location = new System.Drawing.Point(0, 0);
             lbPackets.Size = new System.Drawing.Size(this.Width, this.Height);
             lbPackets.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            lbPackets.Font = new Font("Consolas", 9); // Add fixedsized font (to override the tab page itself)
+            lbPackets.Dock = DockStyle.Fill;
+            lbPackets.Font = Properties.Settings.Default.PacketListFont ; // Add fixedsized font (to override the tab page itself)
+            lbPackets.ItemHeight = (int)Math.Ceiling(lbPackets.Font.GetHeight());
+            //lbPackets.Font = new Font("Consolas", 9); // Add fixedsized font (to override the tab page itself)
             lbPackets.DrawMode = DrawMode.OwnerDrawFixed;
+
             lbPackets.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.lbPackets_DrawItem);
             // Add the SelectedIndexChanged for this from MainForm/process creating it, as it's too complex to handle internally
             // lbPackets.SelectedIndexChanged += new System.EventHandler(this.lbPackets_SelectedIndexChanged); 

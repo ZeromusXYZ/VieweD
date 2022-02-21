@@ -109,6 +109,8 @@ namespace VieweD
             RegisterFileExt(); // Registers project files in Windows
 
             PacketColors.UpdateColorsFromSettings();
+            dGV.Font = Properties.Settings.Default.GridViewFont;
+
             Application.UseWaitCursor = true;
             try
             {
@@ -377,7 +379,8 @@ namespace VieweD
             string BuildHeaderWithColorTable()
             {
                 string rtfHead = string.Empty;
-                rtfHead += "{\\rtf1\\ansi\\ansicpg1252\\deff0\\nouicompat\\deflang2057{\\fonttbl{\\f0\\fnil\\fcharset0 Consolas;}}";
+                rtfHead += "{\\rtf1\\ansi\\ansicpg1252\\deff0\\nouicompat\\deflang2057{\\fonttbl{\\f0\\fnil\\fcharset0 " + Properties.Settings.Default.RawViewFont.Name + ";}}";
+                // rtfHead += "{\\rtf1\\ansi\\ansicpg1252\\deff0\\nouicompat\\deflang2057{\\fonttbl{\\f0\\fnil\\fcharset0 Consolas;}}";
                 rtfHead += "{\\colortbl;";
                 foreach (var col in colorTable)
                 {
@@ -663,6 +666,17 @@ namespace VieweD
                 {
                     Properties.Settings.Default.Save();
                     PacketColors.UpdateColorsFromSettings();
+                    dGV.Font = Properties.Settings.Default.GridViewFont;
+                    // Apply packet list font to open tabs
+                    foreach (var page in tcPackets.TabPages)
+                        if (page is PacketTabPage tp)
+                        {
+                            tp.lbPackets.Font = Properties.Settings.Default.PacketListFont;
+                            tp.lbPackets.ItemHeight = (int)Math.Ceiling(tp.lbPackets.Font.GetHeight());
+                            tp.lbPackets.Dock = DockStyle.Fill;
+                            tp.lbPackets.Refresh();
+                        }
+
                     //LoadDataFromGameclient();
                     //MessageBox.Show("Settings saved");
                 }
@@ -1374,7 +1388,7 @@ namespace VieweD
                     if (ll.Value.Data.TryGetValue(val, out var v))
                         if (v.Id > 0)
                         {
-                            var s = ll.Key + " => " + v.Val;
+                            var s = ll.Key + "(0x" + val.ToString("X") + ") => " + v.Val;
                             if (!lookupResults.Contains(s))
                                 lookupResults.Add(s);
                         }
@@ -1387,15 +1401,19 @@ namespace VieweD
                 var l = new Label();
                 l.AutoSize = true;
                 l.Text = typeName + ": 0x" + val.ToString("X" + hexWidth) + " - " + val.ToString();
-                foreach (var ll in CurrentPP.PD.Parent._parentTab.Engine.DataLookups.LookupLists)
+                // Only lookups for negative values on signed
+                if (val < 0)
                 {
-                    if (ll.Value.Data.TryGetValue((ulong)val, out var v))
-                        if (v.Id > 0)
-                        {
-                            var s = ll.Key + " => " + v.Val;
-                            if (!lookupResults.Contains(s))
-                                lookupResults.Add(s);
-                        }
+                    foreach (var ll in CurrentPP.PD.Parent._parentTab.Engine.DataLookups.LookupLists)
+                    {
+                        if (ll.Value.Data.TryGetValue((ulong)val, out var v))
+                            if (v.Id > 0)
+                            {
+                                var s = ll.Key + "(" + val.ToString() + ") => " + v.Val;
+                                if (!lookupResults.Contains(s))
+                                    lookupResults.Add(s);
+                            }
+                    }
                 }
                 flpPreviewData.Controls.Add(l);
             }
@@ -1808,13 +1826,16 @@ namespace VieweD
 
         private void splitContainer3_Resize(object sender, EventArgs e)
         {
-            splitContainer3.Panel2Collapsed = (splitContainer3.Width  < 700);
+            var maxRawSizeWidth = (int)splitContainer3.CreateGraphics().MeasureString(InfoGridHeader, Properties.Settings.Default.RawViewFont).Width + 60 ;
+            splitContainer3.SplitterDistance = Math.Min(maxRawSizeWidth, splitContainer3.SplitterDistance);
+            splitContainer3.Panel2Collapsed = (splitContainer3.Width  < (maxRawSizeWidth + 100));
         }
 
         private void splitContainer3_Panel1_Resize(object sender, EventArgs e)
         {
-            if (splitContainer3.SplitterDistance > 600)
-                splitContainer3.SplitterDistance = 600;
+            var maxRawSizeWidth = (int)splitContainer3.CreateGraphics().MeasureString(InfoGridHeader, Properties.Settings.Default.RawViewFont).Width + 60;
+            if (splitContainer3.SplitterDistance > maxRawSizeWidth)
+                splitContainer3.SplitterDistance = maxRawSizeWidth;
         }
 
     }
