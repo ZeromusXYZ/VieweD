@@ -25,6 +25,7 @@ namespace VieweD.Engine.Common
         public string OriginalTimeString { get; set; }
         public ushort CapturedZoneId { get; set; }
         public bool MarkedAsInvalid { get; set; }
+        public bool MarkedAsDimmed { get; set; }
 
         public PacketParser PP;
         public int Cursor { get => cursor; set { cursor = value; BitCursor = 0; } }

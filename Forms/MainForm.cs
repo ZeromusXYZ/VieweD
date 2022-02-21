@@ -964,10 +964,6 @@ namespace VieweD
 
         }
 
-        private void MmFilterApply_Click(object sender, EventArgs e)
-        {
-        }
-
         private void MMFilterApplyItem_Click(object sender, EventArgs e)
         {
             var tp = GetCurrentPacketTabPage();
@@ -986,6 +982,24 @@ namespace VieweD
             }
         }
 
+        private void MMFilterHighlightItem_Click(object sender, EventArgs e)
+        {
+            var tp = GetCurrentPacketTabPage();
+            if (tp == null)
+                return;
+
+            if (sender is ToolStripMenuItem)
+            {
+                var mITem = (sender as ToolStripMenuItem);
+                // apply filter
+                var lastSync = tp.CurrentSync;
+                tp.PL.Filter.LoadFromFile(Path.Combine(Application.StartupPath, "data", tp.Engine.EngineId, "filter", mITem.Text + ".pfl"));
+                tp.PL.HightlightFilterFrom(tp.PLLoaded);
+                tp.FillListBox(lastSync);
+                tp.CenterListBox();
+            }
+        }
+
         private void MmFilterApply_DropDownOpening(object sender, EventArgs e)
         {
             // generate menu
@@ -994,6 +1008,7 @@ namespace VieweD
             {
                 var tp = GetCurrentPacketTabPage();
                 mmFilterApply.DropDownItems.Clear();
+                mmFilterHighlight.DropDownItems.Clear();
                 var di = new DirectoryInfo(Path.Combine(Application.StartupPath, "data", tp.Engine.EngineId, "filter"));
                 var files = di.GetFiles("*.pfl");
                 foreach (var fi in files)
@@ -1001,12 +1016,20 @@ namespace VieweD
                     ToolStripMenuItem mi = new ToolStripMenuItem(Path.GetFileNameWithoutExtension(fi.Name));
                     mi.Click += MMFilterApplyItem_Click;
                     mmFilterApply.DropDownItems.Add(mi);
+
+                    ToolStripMenuItem mi2 = new ToolStripMenuItem(Path.GetFileNameWithoutExtension(fi.Name));
+                    mi2.Click += MMFilterHighlightItem_Click;
+                    mmFilterHighlight.DropDownItems.Add(mi2);
                 }
                 if (files.Length <= 0)
                 {
                     ToolStripMenuItem mi = new ToolStripMenuItem("no filters found");
                     mi.Enabled = false;
                     mmFilterApply.DropDownItems.Add(mi);
+
+                    ToolStripMenuItem mi2 = new ToolStripMenuItem("no filters found");
+                    mi2.Enabled = false;
+                    mmFilterHighlight.DropDownItems.Add(mi2);
                 }
             }
             catch

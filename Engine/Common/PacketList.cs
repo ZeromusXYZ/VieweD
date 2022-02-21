@@ -163,6 +163,7 @@ namespace VieweD.Engine.Common
             LoadedLogFileFormat = original.LoadedLogFileFormat;
             foreach(var pd in original.PacketDataList)
             {
+                pd.MarkedAsDimmed = false;
                 PacketDataList.Add(pd);
                 c++;
             }
@@ -218,6 +219,7 @@ namespace VieweD.Engine.Common
             LoadedLogFileFormat = original.LoadedLogFileFormat;
             foreach (var pd in original.PacketDataList.Where(pd => DoIShowThis(pd)))
             {
+                pd.MarkedAsDimmed = false;
                 PacketDataList.Add(pd);
                 c++;
             }
@@ -225,6 +227,27 @@ namespace VieweD.Engine.Common
                 firstPacketTime = PacketDataList[0].TimeStamp;
             return c;
         }
+
+        public int HightlightFilterFrom(PacketList original)
+        {
+            int c = 0;
+            Clear();
+            IsPreParsed = original.IsPreParsed;
+            Rules = original.Rules;
+            XORKey = original.XORKey;
+            AESKey = original.AESKey;
+            LoadedLogFileFormat = original.LoadedLogFileFormat;
+            foreach (var pd in original.PacketDataList)
+            {
+                pd.MarkedAsDimmed = !DoIShowThis(pd);
+                PacketDataList.Add(pd);
+                c++;
+                if (PacketDataList.Count > 0)
+                    firstPacketTime = PacketDataList[0].TimeStamp;
+            }
+            return c;
+        }
+
 
         public int SearchFrom(PacketList original, SearchParameters p)
         {

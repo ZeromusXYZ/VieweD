@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.MM = new System.Windows.Forms.MenuStrip();
             this.mmFile = new System.Windows.Forms.ToolStripMenuItem();
@@ -107,6 +107,7 @@
             this.sbProjectInfo = new System.Windows.Forms.ToolStripStatusLabel();
             this.sbRules = new System.Windows.Forms.ToolStripStatusLabel();
             this.saveCSVFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.mmFilterHighlight = new System.Windows.Forms.ToolStripMenuItem();
             this.MM.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -267,7 +268,7 @@
             // 
             this.mmSearchSearch.Name = "mmSearchSearch";
             this.mmSearchSearch.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
-            this.mmSearchSearch.Size = new System.Drawing.Size(180, 22);
+            this.mmSearchSearch.Size = new System.Drawing.Size(161, 22);
             this.mmSearchSearch.Text = "Search ...";
             this.mmSearchSearch.Click += new System.EventHandler(this.MmSearchSearch_Click);
             // 
@@ -275,7 +276,7 @@
             // 
             this.mmSearchNext.Name = "mmSearchNext";
             this.mmSearchNext.ShortcutKeys = System.Windows.Forms.Keys.F3;
-            this.mmSearchNext.Size = new System.Drawing.Size(180, 22);
+            this.mmSearchNext.Size = new System.Drawing.Size(161, 22);
             this.mmSearchNext.Text = "Search next";
             this.mmSearchNext.Click += new System.EventHandler(this.MmSearchNext_Click);
             // 
@@ -283,6 +284,7 @@
             // 
             this.mmFilter.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mmFilterApply,
+            this.mmFilterHighlight,
             this.toolStripMenuItem3,
             this.mmFilterEdit,
             this.mmFilterReset});
@@ -302,7 +304,7 @@
             // MMFilterApplyItem
             // 
             this.MMFilterApplyItem.Name = "MMFilterApplyItem";
-            this.MMFilterApplyItem.Size = new System.Drawing.Size(57, 6);
+            this.MMFilterApplyItem.Size = new System.Drawing.Size(177, 6);
             this.MMFilterApplyItem.Click += new System.EventHandler(this.MMFilterApplyItem_Click);
             // 
             // toolStripMenuItem3
@@ -651,11 +653,11 @@
             // 
             this.dGV.AllowUserToAddRows = false;
             this.dGV.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            this.dGV.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            this.dGV.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
             this.dGV.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -857,6 +859,13 @@
             this.saveCSVFileDialog.RestoreDirectory = true;
             this.saveCSVFileDialog.Title = "Export CSV File";
             // 
+            // mmFilterHighlight
+            // 
+            this.mmFilterHighlight.Name = "mmFilterHighlight";
+            this.mmFilterHighlight.Size = new System.Drawing.Size(180, 22);
+            this.mmFilterHighlight.Text = "Highlight";
+            this.mmFilterHighlight.DropDownOpening += new System.EventHandler(this.MmFilterApply_DropDownOpening);
+            // 
             // MainForm
             // 
             this.AllowDrop = true;
@@ -988,6 +997,7 @@
         private System.Windows.Forms.SplitContainer splitContainer3;
         private System.Windows.Forms.FlowLayoutPanel flpPreviewData;
         private System.Windows.Forms.Label lUint16;
+        private System.Windows.Forms.ToolStripMenuItem mmFilterHighlight;
     }
 }
 

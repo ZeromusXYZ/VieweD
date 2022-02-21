@@ -216,6 +216,25 @@ namespace VieweD.Engine.Common
                     break;
             }
 
+            if (pd.MarkedAsDimmed)
+            {
+                Colorspace.RgbToHls(backCol, out _, out var l, out _);
+
+                var isDark = l < 0.5 ;
+
+                if (isDark)
+                    backCol = Color.FromArgb(backCol.A, backCol.R / 2, backCol.G / 2, backCol.B / 2);
+                else
+                    backCol = Color.FromArgb(
+                        backCol.A,
+                        backCol.R > 128 ? 255 : backCol.R * 2,
+                        backCol.G > 128 ? 255 : backCol.G * 2,
+                        backCol.B > 128 ? 255 : backCol.B * 2);
+
+                textCol = Color.FromArgb(textCol.A, (backCol.R + textCol.R) / 2, (backCol.G + textCol.G) / 2, (backCol.B + textCol.B) / 2);
+                //barCol = Color.FromArgb(barCol.A, barCol.R / 4, barCol.G / 4, barCol.B / 4);
+            }
+
             // Define the colors of our brushes.
             Brush textBrush = new SolidBrush(textCol);
             Brush backBrush = new SolidBrush(backCol);
@@ -564,7 +583,7 @@ namespace VieweD.Engine.Common
 
             PL.Filter.Clear();
             var lastSync = CurrentSync;
-            PL.FilterFrom(PLLoaded);
+            PL.CopyFrom(PLLoaded);
             FillListBox(lastSync);
             CenterListBox();
         }

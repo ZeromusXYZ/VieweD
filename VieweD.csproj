@@ -312,6 +312,7 @@
     <Compile Include="Helpers\FlickerFreeListBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Helpers\System\Colorspace.cs" />
     <Compile Include="Helpers\System\FileHelper.cs" />
     <Compile Include="Helpers\System\Half.cs" />
     <Compile Include="Helpers\System\HalfHelper.cs" />
