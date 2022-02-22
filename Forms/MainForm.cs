@@ -937,15 +937,25 @@ namespace VieweD
                     filterDlg.Filter.CopyFrom(tp.PL.Filter);
                     filterDlg.LoadLocalFromFilter();
                 }
-                if (filterDlg.ShowDialog(this) == DialogResult.OK)
+                var lastSync = tp.CurrentSync;
+                switch (filterDlg.ShowDialog(this))
                 {
-                    filterDlg.SaveLocalToFilter();
-                    var lastSync = tp.CurrentSync;
-                    tp.PL.Filter.CopyFrom(filterDlg.Filter);
-                    tp.PL.FilterFrom(tp.PLLoaded);
-                    tp.FillListBox(lastSync);
-                    tp.CenterListBox();
-
+                    case DialogResult.OK: // Apply
+                        filterDlg.SaveLocalToFilter();
+                        tp.PL.Filter.CopyFrom(filterDlg.Filter);
+                        tp.PL.FilterFrom(tp.PLLoaded);
+                        tp.FillListBox(lastSync);
+                        tp.CenterListBox();
+                        break;
+                    case DialogResult.Yes: // Highlight
+                        filterDlg.SaveLocalToFilter();
+                        tp.PL.Filter.CopyFrom(filterDlg.Filter);
+                        tp.PL.HightlightFilterFrom(tp.PLLoaded);
+                        tp.FillListBox(lastSync);
+                        tp.CenterListBox();
+                        break;
+                    default:
+                        break;
                 }
             }
         }

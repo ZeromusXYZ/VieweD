@@ -60,6 +60,10 @@ namespace VieweD
 
         private void FilterForm_Load(object sender, EventArgs e)
         {
+            lbOut.Font = Properties.Settings.Default.PacketListFont;
+            lbIn.Font = Properties.Settings.Default.PacketListFont;
+            cbOutIDs.Font = Properties.Settings.Default.PacketListFont;
+            cbInIDs.Font = Properties.Settings.Default.PacketListFont;
             OutDataSource.Clear();
             //cbOutIDs.Items.Clear();
             if (currentEngine != null)
@@ -309,6 +313,11 @@ namespace VieweD
         {
             if ((!cbInIDs.DroppedDown) && (e.KeyCode == Keys.Enter))
                 BtnInAdd_Click(null, null);
+        }
+
+        private void btnHighlight_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.Yes;
         }
     }
 }

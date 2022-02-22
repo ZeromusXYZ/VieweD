@@ -46,6 +46,9 @@ Section "" ;No components page, name is not important
   File runtimes\win-x86\native\*.*
 
   ; Program Data
+  ; FFXI Engine Data
+  SetOutPath $INSTDIR\data\ffxi
+  File /r data\ffxi*.*
   SetOutPath $INSTDIR\data\ffxi\lookup
   File /r data\ffxi\lookup\*.*
   SetOutPath $INSTDIR\data\ffxi\parse
@@ -53,6 +56,7 @@ Section "" ;No components page, name is not important
   SetOutPath $INSTDIR\data\ffxi\filter
   File /r data\ffxi\filter\*.*
 
+  ; FFXI Engine Plugin
   SetOutPath $INSTDIR\Plugins
   File /r Plugins\*.*
   SetOutPath $INSTDIR\Plugins\ffxi

@@ -55,6 +55,7 @@
             this.saveFileDlg = new System.Windows.Forms.SaveFileDialog();
             this.loadFileDlg = new System.Windows.Forms.OpenFileDialog();
             this.btnClear = new System.Windows.Forms.Button();
+            this.btnHighlight = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -92,7 +93,8 @@
             // 
             // cbOutIDs
             // 
-            this.cbOutIDs.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbOutIDs.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.cbOutIDs.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.cbOutIDs.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.cbOutIDs.DropDownWidth = 350;
@@ -106,7 +108,9 @@
             // 
             // lbOut
             // 
-            this.lbOut.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
+            this.lbOut.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lbOut.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbOut.FormattingEnabled = true;
             this.lbOut.ItemHeight = 14;
@@ -215,9 +219,11 @@
             // 
             // cbInIDs
             // 
-            this.cbInIDs.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbInIDs.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.cbInIDs.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.cbInIDs.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.cbInIDs.DropDownWidth = 350;
             this.cbInIDs.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbInIDs.FormattingEnabled = true;
             this.cbInIDs.Location = new System.Drawing.Point(15, 345);
@@ -228,7 +234,9 @@
             // 
             // lbIn
             // 
-            this.lbIn.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
+            this.lbIn.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lbIn.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbIn.FormattingEnabled = true;
             this.lbIn.ItemHeight = 14;
@@ -311,7 +319,7 @@
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(116, 23);
             this.btnOK.TabIndex = 10;
-            this.btnOK.Text = "OK";
+            this.btnOK.Text = "Apply";
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.BtnOK_Click);
             // 
@@ -319,7 +327,7 @@
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(575, 329);
+            this.btnCancel.Location = new System.Drawing.Point(575, 300);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(116, 23);
             this.btnCancel.TabIndex = 11;
@@ -329,7 +337,7 @@
             // btnSave
             // 
             this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSave.Location = new System.Drawing.Point(575, 283);
+            this.btnSave.Location = new System.Drawing.Point(575, 254);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(116, 23);
             this.btnSave.TabIndex = 12;
@@ -340,7 +348,7 @@
             // btnLoad
             // 
             this.btnLoad.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnLoad.Location = new System.Drawing.Point(575, 254);
+            this.btnLoad.Location = new System.Drawing.Point(575, 225);
             this.btnLoad.Name = "btnLoad";
             this.btnLoad.Size = new System.Drawing.Size(116, 23);
             this.btnLoad.TabIndex = 13;
@@ -365,7 +373,7 @@
             // btnClear
             // 
             this.btnClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnClear.Location = new System.Drawing.Point(575, 214);
+            this.btnClear.Location = new System.Drawing.Point(575, 185);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(116, 23);
             this.btnClear.TabIndex = 14;
@@ -373,12 +381,24 @@
             this.btnClear.UseVisualStyleBackColor = true;
             this.btnClear.Click += new System.EventHandler(this.BtnClear_Click);
             // 
+            // btnHighlight
+            // 
+            this.btnHighlight.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnHighlight.Location = new System.Drawing.Point(575, 329);
+            this.btnHighlight.Name = "btnHighlight";
+            this.btnHighlight.Size = new System.Drawing.Size(116, 23);
+            this.btnHighlight.TabIndex = 15;
+            this.btnHighlight.Text = "Highlight Only";
+            this.btnHighlight.UseVisualStyleBackColor = true;
+            this.btnHighlight.Click += new System.EventHandler(this.btnHighlight_Click);
+            // 
             // FilterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(706, 397);
+            this.Controls.Add(this.btnHighlight);
             this.Controls.Add(this.btnClear);
             this.Controls.Add(this.btnLoad);
             this.Controls.Add(this.btnSave);
@@ -398,6 +418,7 @@
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
+
         }
 
         #endregion
@@ -429,5 +450,6 @@
         private System.Windows.Forms.OpenFileDialog loadFileDlg;
         private System.Windows.Forms.Button btnClear;
         public System.Windows.Forms.Button btnOK;
+        public System.Windows.Forms.Button btnHighlight;
     }
 }

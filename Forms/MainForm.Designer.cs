@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.MM = new System.Windows.Forms.MenuStrip();
             this.mmFile = new System.Windows.Forms.ToolStripMenuItem();
@@ -51,6 +51,7 @@
             this.mmFilter = new System.Windows.Forms.ToolStripMenuItem();
             this.mmFilterApply = new System.Windows.Forms.ToolStripMenuItem();
             this.MMFilterApplyItem = new System.Windows.Forms.ToolStripSeparator();
+            this.mmFilterHighlight = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.mmFilterEdit = new System.Windows.Forms.ToolStripMenuItem();
             this.mmFilterReset = new System.Windows.Forms.ToolStripMenuItem();
@@ -107,7 +108,7 @@
             this.sbProjectInfo = new System.Windows.Forms.ToolStripStatusLabel();
             this.sbRules = new System.Windows.Forms.ToolStripStatusLabel();
             this.saveCSVFileDialog = new System.Windows.Forms.SaveFileDialog();
-            this.mmFilterHighlight = new System.Windows.Forms.ToolStripMenuItem();
+            this.mmFilterHighlightApply = new System.Windows.Forms.ToolStripSeparator();
             this.MM.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -306,6 +307,15 @@
             this.MMFilterApplyItem.Name = "MMFilterApplyItem";
             this.MMFilterApplyItem.Size = new System.Drawing.Size(177, 6);
             this.MMFilterApplyItem.Click += new System.EventHandler(this.MMFilterApplyItem_Click);
+            // 
+            // mmFilterHighlight
+            // 
+            this.mmFilterHighlight.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mmFilterHighlightApply});
+            this.mmFilterHighlight.Name = "mmFilterHighlight";
+            this.mmFilterHighlight.Size = new System.Drawing.Size(180, 22);
+            this.mmFilterHighlight.Text = "Highlight";
+            this.mmFilterHighlight.DropDownOpening += new System.EventHandler(this.MmFilterApply_DropDownOpening);
             // 
             // toolStripMenuItem3
             // 
@@ -653,11 +663,11 @@
             // 
             this.dGV.AllowUserToAddRows = false;
             this.dGV.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            this.dGV.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            this.dGV.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dGV.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -859,12 +869,11 @@
             this.saveCSVFileDialog.RestoreDirectory = true;
             this.saveCSVFileDialog.Title = "Export CSV File";
             // 
-            // mmFilterHighlight
+            // mmFilterHighlightApply
             // 
-            this.mmFilterHighlight.Name = "mmFilterHighlight";
-            this.mmFilterHighlight.Size = new System.Drawing.Size(180, 22);
-            this.mmFilterHighlight.Text = "Highlight";
-            this.mmFilterHighlight.DropDownOpening += new System.EventHandler(this.MmFilterApply_DropDownOpening);
+            this.mmFilterHighlightApply.Name = "mmFilterHighlightApply";
+            this.mmFilterHighlightApply.Size = new System.Drawing.Size(177, 6);
+            this.mmFilterHighlightApply.Click += new System.EventHandler(this.MMFilterHighlightItem_Click);
             // 
             // MainForm
             // 
@@ -998,6 +1007,7 @@
         private System.Windows.Forms.FlowLayoutPanel flpPreviewData;
         private System.Windows.Forms.Label lUint16;
         private System.Windows.Forms.ToolStripMenuItem mmFilterHighlight;
+        private System.Windows.Forms.ToolStripSeparator mmFilterHighlightApply;
     }
 }
 

@@ -474,6 +474,7 @@ namespace VieweD.Engine.Common
 
         private void PmPLShowOnly_Click(object sender, EventArgs e)
         {
+            var hasShift = Control.ModifierKeys.HasFlag(Keys.Shift);
             var pd = GetSelectedPacket();
             if (pd == null)
                 return;
@@ -498,13 +499,17 @@ namespace VieweD.Engine.Common
                     return;
             }
             var lastSync = CurrentSync;
-            PL.FilterFrom(PLLoaded);
+            if (hasShift)
+                PL.HightlightFilterFrom(PLLoaded);
+            else
+                PL.FilterFrom(PLLoaded);
             FillListBox(lastSync);
             CenterListBox();
         }
 
         private void PmPLHideThis_Click(object sender, EventArgs e)
         {
+            var hasShift = Control.ModifierKeys.HasFlag(Keys.Shift);
             var pd = GetSelectedPacket();
             if (pd == null)
                 return;
@@ -534,13 +539,17 @@ namespace VieweD.Engine.Common
                     return;
             }
             var lastSync = CurrentSync;
-            PL.FilterFrom(PLLoaded);
+            if (hasShift)
+                PL.HightlightFilterFrom(PLLoaded);
+            else
+                PL.FilterFrom(PLLoaded);
             FillListBox(lastSync);
             CenterListBox();
         }
 
         private void PmPLShowIncomingOnly_Click(object sender, EventArgs e)
         {
+            var hasShift = Control.ModifierKeys.HasFlag(Keys.Shift);
             var pd = GetSelectedPacket();
             if (pd == null)
                 return;
@@ -552,13 +561,17 @@ namespace VieweD.Engine.Common
             PL.Filter.FilterOutType = FilterType.AllowNone;
 
             var lastSync = CurrentSync;
-            PL.FilterFrom(PLLoaded);
+            if (hasShift)
+                PL.HightlightFilterFrom(PLLoaded);
+            else
+                PL.FilterFrom(PLLoaded);
             FillListBox(lastSync);
             CenterListBox();
         }
 
         private void PmPLShowOutgoingOnly_Click(object sender, EventArgs e)
         {
+            var hasShift = Control.ModifierKeys.HasFlag(Keys.Shift);
             var pd = GetSelectedPacket();
             if (pd == null)
                 return;
@@ -570,7 +583,10 @@ namespace VieweD.Engine.Common
             PL.Filter.FilterInType = FilterType.AllowNone;
 
             var lastSync = CurrentSync;
-            PL.FilterFrom(PLLoaded);
+            if (hasShift)
+                PL.HightlightFilterFrom(PLLoaded);
+            else
+                PL.FilterFrom(PLLoaded);
             FillListBox(lastSync);
             CenterListBox();
         }
