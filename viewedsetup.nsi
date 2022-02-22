@@ -46,19 +46,14 @@ Section "" ;No components page, name is not important
   File runtimes\win-x86\native\*.*
 
   ; Program Data
+
+  ; Engines Plugin Readme
+  SetOutPath $INSTDIR\Plugins
+  File /r Plugins\readme.txt
+
   ; FFXI Engine Data
   SetOutPath $INSTDIR\data\ffxi
-  File /r data\ffxi*.*
-  SetOutPath $INSTDIR\data\ffxi\lookup
-  File /r data\ffxi\lookup\*.*
-  SetOutPath $INSTDIR\data\ffxi\parse
-  File /r data\ffxi\parse\*.*
-  SetOutPath $INSTDIR\data\ffxi\filter
-  File /r data\ffxi\filter\*.*
-
-  ; FFXI Engine Plugin
-  SetOutPath $INSTDIR\Plugins
-  File /r Plugins\*.*
+  File /r data\ffxi\*.*
   SetOutPath $INSTDIR\Plugins\ffxi
   File /r Plugins\ffxi\*.*
 
