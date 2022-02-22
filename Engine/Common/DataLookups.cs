@@ -273,10 +273,10 @@ namespace VieweD.Engine.Common
             AllLoadErrors = string.Empty ;
             bool noErrors = true;
             var lookupPath = DefaultLookupPath(engineId);
-            DirectoryInfo DI = new DirectoryInfo(lookupPath);
+            DirectoryInfo di = new DirectoryInfo(lookupPath);
             if (Directory.Exists(lookupPath))
             {
-                foreach (var fi in DI.GetFiles())
+                foreach (var fi in di.GetFiles())
                 {
                     if (!LoadLookupFile(fi.FullName))
                         noErrors = false;
@@ -301,15 +301,14 @@ namespace VieweD.Engine.Common
             */
             if ((lookupOffsetString != string.Empty) && (lookupName.ToLower() == "@math"))
             {
-                if (lookupOffsetString.IndexOf("?") < 0)
+                if (!lookupOffsetString.StartsWith("?"))
                     lookupOffsetString = "? " + lookupOffsetString;
                 MathList.EvalString = lookupOffsetString;
                 return MathList;
             }
             else
             {
-                DataLookupList res;
-                if (LookupLists.TryGetValue(lookupName, out res))
+                if (LookupLists.TryGetValue(lookupName, out var res))
                     return res;
             }
             return NullList;
@@ -344,9 +343,9 @@ namespace VieweD.Engine.Common
                 return;
             if (customListName.StartsWith("§"))
             {
-                if ((customListName == "§playerid") && (GameViewForm.GV != null))
+                if ((customListName == @"§playerid") && (GameViewForm.GV != null))
                 {
-                    GameViewForm.GV.gbPlayer.Text = "Player 0x" + customId.ToString("X8");
+                    GameViewForm.GV.gbPlayer.Text = @"Player 0x" + customId.ToString("X8");
                     GameViewForm.GV.lPlayerName.Text = customValue;
                 }
                 return;

@@ -5,9 +5,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using VieweD.Engine.Common;
 
 namespace VieweD.Engine
@@ -16,12 +13,12 @@ namespace VieweD.Engine
     {
         public static Engines Instance; 
 
-        public static List<EngineBase> AllEngines = new List<EngineBase>();
+        public static readonly List<EngineBase> AllEngines = new List<EngineBase>();
         public static List<string> PluginFiles = new List<string>();
         public static List<string> PluginReferences = new List<string>();
         public static List<string> PluginErrors = new List<string>();
         public static TimeSpan CompileTime { get; set; } = TimeSpan.FromSeconds(0);
-        private static Assembly pluginsAssembly;
+        private static Assembly _pluginsAssembly;
         public static bool PreParseData => Properties.Settings.Default.PreParseData;
         public static bool UseGameClientData => Properties.Settings.Default.UseGameClientData;
         public static bool ShowStringHexData => Properties.Settings.Default.ShowStringHexData;
@@ -43,9 +40,9 @@ namespace VieweD.Engine
             }
 
             // Load plugin engines
-            if (Engines.pluginsAssembly != null)
+            if (Engines._pluginsAssembly != null)
             {
-                var pluginClasses = Engines.pluginsAssembly.GetTypes();
+                var pluginClasses = Engines._pluginsAssembly.GetTypes();
                 foreach (var aClass in pluginClasses)
                 {
                     if (aClass.BaseType == typeof(EngineBase))
@@ -64,12 +61,12 @@ namespace VieweD.Engine
             var startTime = DateTime.UtcNow;
             using (var loadForm = new LoadingForm())
             {
-                loadForm.Text = "VieweD - Compiling plugins ...";
+                loadForm.Text = @"VieweD - Compiling plugins ...";
                 loadForm.pb.Maximum = 100;
                 // Only actually show the form if we got debug enabled
                 if (Properties.Settings.Default.ShowDebugInfo)
                     loadForm.Show();
-                pluginsAssembly = null;
+                _pluginsAssembly = null;
                 // Get all source code files in Plugins folder
                 if (Directory.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Plugins")))
                     PluginFiles = Directory.GetFiles(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Plugins"), "*.cs", SearchOption.AllDirectories).ToList();
@@ -78,10 +75,10 @@ namespace VieweD.Engine
 
                 if (Directory.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Plugins")))
                 {
-                    var PluginReferencesFiles = Directory.GetFiles(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Plugins"), "reference.txt", SearchOption.AllDirectories).ToList();
-                    foreach (var PluginReference in PluginReferencesFiles)
+                    var pluginReferencesFiles = Directory.GetFiles(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Plugins"), "reference.txt", SearchOption.AllDirectories).ToList();
+                    foreach (var pluginReference in pluginReferencesFiles)
                     {
-                        var s = File.ReadAllLines(PluginReference);
+                        var s = File.ReadAllLines(pluginReference);
                         PluginReferences.AddRange(s);
                     }
                 }
@@ -148,7 +145,7 @@ namespace VieweD.Engine
                 loadForm.pb.Value = 95;
 
                 // Load Temp Assembly
-                pluginsAssembly = Assembly.LoadFile(tempAssemblyFile); ;
+                _pluginsAssembly = Assembly.LoadFile(tempAssemblyFile); ;
 
                 loadForm.pb.Value = 100;
             }
@@ -158,7 +155,7 @@ namespace VieweD.Engine
             return true;
         }
 
-        public static void RegisterEngine(EngineBase engine)
+        private static void RegisterEngine(EngineBase engine)
         {
             if (engine == null)
                 return;

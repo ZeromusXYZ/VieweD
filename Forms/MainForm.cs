@@ -671,10 +671,10 @@ namespace VieweD
                     foreach (var page in tcPackets.TabPages)
                         if (page is PacketTabPage tp)
                         {
-                            tp.lbPackets.Font = Properties.Settings.Default.PacketListFont;
-                            tp.lbPackets.ItemHeight = (int)Math.Ceiling(tp.lbPackets.Font.GetHeight());
-                            tp.lbPackets.Dock = DockStyle.Fill;
-                            tp.lbPackets.Refresh();
+                            tp.LbPackets.Font = Properties.Settings.Default.PacketListFont;
+                            tp.LbPackets.ItemHeight = (int)Math.Ceiling(tp.LbPackets.Font.GetHeight());
+                            tp.LbPackets.Dock = DockStyle.Fill;
+                            tp.LbPackets.Refresh();
                         }
 
                     //LoadDataFromGameclient();
@@ -694,14 +694,14 @@ namespace VieweD
             PacketTabPage tp = (tcPackets.SelectedTab as PacketTabPage);
 
             cbShowBlock.Enabled = false;
-            if ((tp.lbPackets.SelectedIndex < 0) || (tp.lbPackets.SelectedIndex >= tp.PL.Count))
+            if ((tp.LbPackets.SelectedIndex < 0) || (tp.LbPackets.SelectedIndex >= tp.PL.Count))
             {
                 rtInfo.SelectionColor = rtInfo.ForeColor;
                 rtInfo.SelectionBackColor = rtInfo.BackColor;
                 rtInfo.Text = "Please select a valid item from the list";
                 return;
             }
-            PacketData pd = tp.PL.GetPacket(tp.lbPackets.SelectedIndex);
+            PacketData pd = tp.PL.GetPacket(tp.LbPackets.SelectedIndex);
             var sw = cbShowBlock.SelectedIndex;
             if (sw >= 0)
             {
@@ -712,7 +712,7 @@ namespace VieweD
                 UpdatePacketDetails(tp, pd, "-", true);
             }
             cbShowBlock.Enabled = true;
-            tp.lbPackets.Invalidate();
+            tp.LbPackets.Invalidate();
         }
 
         private void dGV_SelectionChanged(object sender, EventArgs e)
@@ -823,7 +823,7 @@ namespace VieweD
             }
             PacketTabPage tp = (tc.SelectedTab as PacketTabPage);
             UpdateStatusBarAndTitle(tp);
-            PacketData pd = tp.PL.GetPacket(tp.lbPackets.SelectedIndex);
+            PacketData pd = tp.PL.GetPacket(tp.LbPackets.SelectedIndex);
             cbShowBlock.Enabled = false;
             UpdatePacketDetails(tp, pd, "-");
             cbShowBlock.Enabled = true;
@@ -896,10 +896,10 @@ namespace VieweD
         private PacketTabPage CreateNewPacketsTabPage()
         {
             PacketTabPage tp = new PacketTabPage(this);
-            tp.lbPackets.SelectedIndexChanged += lbPackets_SelectedIndexChanged;
+            tp.LbPackets.SelectedIndexChanged += lbPackets_SelectedIndexChanged;
             tcPackets.TabPages.Add(tp);
             tcPackets.SelectedTab = tp;
-            tp.lbPackets.Focus();
+            tp.LbPackets.Focus();
             return tp;
         }
 
@@ -1093,35 +1093,35 @@ namespace VieweD
         {
             var tp = GetCurrentPacketTabPage();
 
-            if ((tp == null) || (tp.lbPackets.Items.Count <= 0))
+            if ((tp == null) || (tp.LbPackets.Items.Count <= 0))
             {
                 MessageBox.Show("Nothing to search in !", "Search", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
-            var startIndex = tp.lbPackets.SelectedIndex;
-            if ((startIndex < 0) && (startIndex >= tp.lbPackets.Items.Count))
+            var startIndex = tp.LbPackets.SelectedIndex;
+            if ((startIndex < 0) && (startIndex >= tp.LbPackets.Items.Count))
                 startIndex = -1;
             int i = startIndex + 1;
-            for (int c = 0; c < tp.lbPackets.Items.Count - 1; c++)
+            for (int c = 0; c < tp.LbPackets.Items.Count - 1; c++)
             {
-                if (i >= tp.lbPackets.Items.Count)
+                if (i >= tp.LbPackets.Items.Count)
                     i = 0;
                 var pd = tp.PL.GetPacket(i);
                 if (pd.MatchesSearch(SearchParameters))
                 {
                     // Select index
-                    tp.lbPackets.SelectedIndex = i;
+                    tp.LbPackets.SelectedIndex = i;
                     // Move to center
-                    var iHeight = tp.lbPackets.ItemHeight;
+                    var iHeight = tp.LbPackets.ItemHeight;
                     if (iHeight <= 0)
                         iHeight = 8;
-                    var iCount = tp.lbPackets.Size.Height / iHeight;
+                    var iCount = tp.LbPackets.Size.Height / iHeight;
                     var tPos = i - (iCount / 2);
                     if (tPos < 0)
                         tPos = 0;
-                    tp.lbPackets.TopIndex = tPos;
-                    tp.lbPackets.Focus();
+                    tp.LbPackets.TopIndex = tPos;
+                    tp.LbPackets.Focus();
                     // We're done
                     return;
                 }
@@ -1134,7 +1134,7 @@ namespace VieweD
         {
             var tp = GetCurrentPacketTabPage();
 
-            if ((tp == null) || (tp.lbPackets.Items.Count <= 0))
+            if ((tp == null) || (tp.LbPackets.Items.Count <= 0))
             {
                 MessageBox.Show("Nothing to search in !", "Search as New Tab", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;

@@ -1,8 +1,8 @@
-﻿using System;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace VieweD.Engine.Common
 {
+    // ReSharper disable once ClassWithVirtualMembersNeverInherited.Global
     public class EngineSettingsTab : TabPage
     {
         protected GroupBox panel;
@@ -14,7 +14,7 @@ namespace VieweD.Engine.Common
             panel = new GroupBox();
             Controls.Add(panel);
             panel.Dock = DockStyle.Fill;
-            panel.Text = " Plugin Settings ";
+            panel.Text = @" Plugin Settings ";
         }
 
         /// <summary>

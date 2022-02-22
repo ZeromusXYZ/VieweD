@@ -9,6 +9,9 @@ namespace VieweD.Engine.Common
 
         public virtual string GetValue(UInt64 id, string defaultValue = "")
         {
+            if (defaultValue == null)
+                defaultValue = string.Empty;
+                
             var res = GetValue(id);
             if (res == "")
             {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -7,17 +8,19 @@ using VieweD.Forms;
 
 namespace VieweD.Engine.Common
 {
+    [SuppressMessage("ReSharper", "UnusedMember.Global")]
+    [SuppressMessage("ReSharper", "BuiltInTypeReferenceStyle")]
     public class PacketList
     {
-        private bool _isPreParsed;
+        private bool isPreParsed;
         public PacketTabPage _parentTab;
 
         public List<PacketData> PacketDataList { get; set; }
         public List<UInt16> ContainsPacketsIn { get; set; }
         public List<UInt16> ContainsPacketsOut { get; set; }
         public bool IsPreParsed { 
-            get => _isPreParsed; 
-            set => _isPreParsed = value; 
+            get => isPreParsed; 
+            set => isPreParsed = value; 
         }
         public string LoadedLogFileFormat { get; set; }
         public PacketListFilter Filter ;
@@ -71,7 +74,7 @@ namespace VieweD.Engine.Common
             }
             else
             {
-                MessageBox.Show("Could not find a handler to open this file type", "LoadFromFile", MessageBoxButtons.OK,
+                MessageBox.Show(@"Could not find a handler to open this file type", @"LoadFromFile", MessageBoxButtons.OK,
                     MessageBoxIcon.Warning);
                 return false;
             }
@@ -95,13 +98,12 @@ namespace VieweD.Engine.Common
             {
                 if (x is PathTooLongException)
                 {
-                    MessageBox.Show(
-                        "This program does not support file paths that are longer than MAX_PATH (260 characters by default)\r\nPlease consider shortening your directory or file names, and try again.",
-                        "Name too long", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                    MessageBox.Show("This program does not support file paths that are longer than MAX_PATH (260 characters by default)\r\nPlease consider shortening your directory or file names, and try again.",
+                        @"Name too long", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 }
                 else
                 {
-                    MessageBox.Show("Exception:\r\n" + x.Message, parentTab?.Engine?.EngineId + ".LoadFromFile()",
+                    MessageBox.Show("Exception:\r\n" + x.Message, parentTab?.Engine?.EngineId + @".LoadFromFile()",
                         MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 }
 
@@ -323,7 +325,7 @@ namespace VieweD.Engine.Common
                     // Last packet of the group
                     var oneStepTime = TimeSpan.Zero;
                     if (divider > 0)
-                        oneStepTime = TimeSpan.FromMilliseconds(1000 / divider);
+                        oneStepTime = TimeSpan.FromMilliseconds(1000f / divider);
                     var stepTime = TimeSpan.Zero;
                     for (int n = 0; n <= divider; n++)
                     {

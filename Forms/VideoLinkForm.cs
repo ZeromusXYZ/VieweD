@@ -262,12 +262,12 @@ namespace VieweD
                 var start = sourceTP.PLLoaded.firstPacketTime;
                 var videopos = TimeSpan.FromMilliseconds(pos);
                 var off = start.Add(videopos).Add(sourceTP.LinkVideoOffset);
-                var nowIndex = sourceTP.lbPackets.SelectedIndex;
+                var nowIndex = sourceTP.LbPackets.SelectedIndex;
                 var newIndex = sourceTP.PL.FindPacketIndexByDateTime(off, nowIndex);
 
                 // Account for a small bug that I think it related to the redraw or threading, only update if new position is "valid"
                 if (newIndex >= 0)
-                    sourceTP.lbPackets.SelectedIndex = newIndex;
+                    sourceTP.LbPackets.SelectedIndex = newIndex;
                 sourceTP.CenterListBox();
             }
         }

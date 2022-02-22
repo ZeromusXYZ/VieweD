@@ -114,7 +114,7 @@ namespace VieweD.Engine.Common
             Init(parent, parentAction, thisNode, thisStep, reversed);
         }
 
-        protected virtual void Init(PacketRule parent, RulesAction parentAction, XmlNode thisNode, int thisStep, bool reversed)
+        private void Init(PacketRule parent, RulesAction parentAction, XmlNode thisNode, int thisStep, bool reversed)
         {
             ParentRule = parent;
             ParentAction = parentAction;

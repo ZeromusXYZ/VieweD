@@ -33,21 +33,21 @@ namespace VieweD.Engine.Common
         /// <summary>
         /// List of possible Decrypt IDs
         /// </summary>
-        public List<string> DecryptorList { get; } = new List<string>();
+        public virtual List<string> DecryptorList { get; } = new List<string>();
         /// <summary>
         /// List of supported file extension that this engine supports (extension, description)
         /// </summary>
-        public Dictionary<string,string> FileExtensions { get; protected set; }
+        public virtual Dictionary<string,string> FileExtensions { get; protected set; } = new Dictionary<string,string>();
 
         /// <summary>
         /// List containing all data types for this engine to insert (old style)
         /// </summary>
-        public List<string> EditorDataTypes { get; protected set; } = new List<string>();
+        public virtual List<string> EditorDataTypes { get; protected set; } = new List<string>();
 
         /// <summary>
         /// List of names of possible tools that need to be added to the menu 
         /// </summary>
-        public List<string> ToolNamesList { get; protected set; } = new List<string>();
+        public virtual List<string> ToolNamesList { get; protected set; } = new List<string>();
 
         /// <summary>
         /// Lookup Data for this engine
@@ -78,7 +78,6 @@ namespace VieweD.Engine.Common
         public EngineBase()
         {
             ParentTab = null;
-            FileExtensions = new Dictionary<string,string>();
         }
 
         /// <summary>
@@ -88,8 +87,6 @@ namespace VieweD.Engine.Common
         public EngineBase(PacketTabPage parent)
         {
             ParentTab = parent; // Is set to null in case of registration
-            FileExtensions = new Dictionary<string, string>();
-            // FileExtensions.Add(".txt", "Text File");
         }
         
         /// <summary>
@@ -99,7 +96,7 @@ namespace VieweD.Engine.Common
         /// <returns></returns>
         int IComparable<EngineBase>.CompareTo(EngineBase other)
         {
-            return string.Compare(this.EngineName, other.EngineName);
+            return string.CompareOrdinal(this.EngineName, other.EngineName);
         }
 
         /// <summary>
@@ -128,7 +125,7 @@ namespace VieweD.Engine.Common
         /// </summary>
         public virtual void Init()
         {
-            DataLookups.LoadLookups(EngineId, true);
+            DataLookups.LoadLookups(EngineId);
         }
 
         /// <summary>

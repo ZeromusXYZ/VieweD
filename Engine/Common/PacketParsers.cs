@@ -1,17 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Windows.Forms;
 using System.Drawing;
 
 namespace VieweD.Engine.Common
 {
+    [SuppressMessage("ReSharper", "InconsistentNaming")] 
+    [SuppressMessage("ReSharper", "BuiltInTypeReferenceStyle")]
+    [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
     public class PacketParser
     {
-        const int columnOffset = 0;
-        const int columnVAR = 1;
-        const int columnDATA = 2;
-        const int columnSize = 3;
+        private const int ColumnOffset = 0;
+        private const int ColumnVar = 1;
+        private const int ColumnData = 2;
+        private const int ColumnSize = 3;
         public UInt16 ThisPacketID { get; set; }
         public PacketLogTypes ThisPacketLogType { get; set; }
         public List<ushort> ParsedBytes = new List<ushort>();
@@ -144,31 +148,6 @@ namespace VieweD.Engine.Common
             return res;
         }
 
-        public string VanaDoW(byte dow)
-        {
-            switch(dow)
-            {
-                case 0:
-                    return "Firesday";
-                case 1:
-                    return "Earthsday";
-                case 2:
-                    return "Watersday";
-                case 3:
-                    return "Windsday";
-                case 4:
-                    return "Iceday";
-                case 5:
-                    return "Thundersday";
-                case 6:
-                    return "Lightsday";
-                case 7:
-                    return "Darksday";
-                default:
-                    return "??? DoW 0x" + dow.ToString("X");
-            }
-        }
-
         public string Lookup(string lookupName,UInt64 value)
         {
             if (lookupName == string.Empty)
@@ -195,17 +174,17 @@ namespace VieweD.Engine.Common
             //DGV.Rows.Clear();
             DGV.ColumnCount = 3;
 
-            DGV.Columns[columnOffset].HeaderText = "Pos";
-            DGV.Columns[columnOffset].Width = 88;
+            DGV.Columns[ColumnOffset].HeaderText = @"Pos";
+            DGV.Columns[ColumnOffset].Width = 88;
 
-            DGV.Columns[columnVAR].HeaderText = "Name";
-            DGV.Columns[columnVAR].Width = 192;
+            DGV.Columns[ColumnVar].HeaderText = @"Name";
+            DGV.Columns[ColumnVar].Width = 192;
 
-            DGV.Columns[columnDATA].HeaderText = "Data";
-            var dataWidth = DGV.Width - DGV.Columns[columnOffset].Width - DGV.Columns[columnVAR].Width - 20;
+            DGV.Columns[ColumnData].HeaderText = @"Data";
+            var dataWidth = DGV.Width - DGV.Columns[ColumnOffset].Width - DGV.Columns[ColumnVar].Width - 20;
             if (dataWidth < 128)
                 dataWidth = 128;
-            DGV.Columns[columnDATA].Width = dataWidth;
+            DGV.Columns[ColumnData].Width = dataWidth;
 
 
             //DGV.Columns[columnSize].HeaderText = "Size";
@@ -219,13 +198,13 @@ namespace VieweD.Engine.Common
                 var isSearchResult = MainForm.SearchParameters.HasSearchForData() && pvl.MatchesSearch(MainForm.SearchParameters);
 
                 DGV.Rows[thisRow].DefaultCellStyle.BackColor = isSearchResult ? Color.Yellow : SystemColors.Window ;
-                DGV.Rows[thisRow].Cells[columnOffset].Value = pvl.Pos;
-                DGV.Rows[thisRow].Cells[columnOffset].Style.ForeColor = pvl.FieldColor;
-                DGV.Rows[thisRow].Cells[columnOffset].Value = pvl.Pos;
-                DGV.Rows[thisRow].Cells[columnOffset].Style.ForeColor = pvl.FieldColor ;
-                DGV.Rows[thisRow].Cells[columnVAR].Value = pvl.Var;
-                DGV.Rows[thisRow].Cells[columnVAR].Style.ForeColor = pvl.FieldColor;
-                DGV.Rows[thisRow].Cells[columnDATA].Value = pvl.Data ;
+                DGV.Rows[thisRow].Cells[ColumnOffset].Value = pvl.Pos;
+                DGV.Rows[thisRow].Cells[ColumnOffset].Style.ForeColor = pvl.FieldColor;
+                DGV.Rows[thisRow].Cells[ColumnOffset].Value = pvl.Pos;
+                DGV.Rows[thisRow].Cells[ColumnOffset].Style.ForeColor = pvl.FieldColor ;
+                DGV.Rows[thisRow].Cells[ColumnVar].Value = pvl.Var;
+                DGV.Rows[thisRow].Cells[ColumnVar].Style.ForeColor = pvl.FieldColor;
+                DGV.Rows[thisRow].Cells[ColumnData].Value = pvl.Data ;
                 // DGV.Rows[thisRow].Cells[3].Value = pvl.FieldIndex.ToString();
                 if (SelectedFields.IndexOf(pvl.FieldIndex) >= 0)
                 {
@@ -236,8 +215,8 @@ namespace VieweD.Engine.Common
                 {
                     DGV.Rows[thisRow].Selected = false;
                 }
-                DGV.Rows[thisRow].Cells[columnOffset].ToolTipText = pvl.ExtraInfo;
-                DGV.Rows[thisRow].Cells[columnVAR].ToolTipText = pvl.ExtraInfo;
+                DGV.Rows[thisRow].Cells[ColumnOffset].ToolTipText = pvl.ExtraInfo;
+                DGV.Rows[thisRow].Cells[ColumnVar].ToolTipText = pvl.ExtraInfo;
                 // DGV.Rows[thisRow].Cells[columnDATA].ToolTipText = pvl.ExtraInfo;
             }
 

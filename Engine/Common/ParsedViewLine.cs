@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 
 namespace VieweD.Engine.Common
 {
+    [SuppressMessage("ReSharper", "BuiltInTypeReferenceStyle")]
     public class ParsedViewLine
     {
         public string Pos ;
@@ -15,28 +17,23 @@ namespace VieweD.Engine.Common
 
         public bool MatchesSearch(SearchParameters p)
         {
-            bool res = true;
-            var RawBytes = BitConverter.GetBytes(DataAsUInt64);
-            var stringSearchHex = string.Empty;
-            var stringSearchDec = string.Empty;
+            var res = true;
+            var rawBytes = BitConverter.GetBytes(DataAsUInt64);
+            //var stringSearchHex = string.Empty;
+            //var stringSearchDec = string.Empty;
 
-            if ((res) && (p.SearchByByte))
+            if (p.SearchByByte)
             {
-                res = false;
-                if (Array.IndexOf(RawBytes,p.SearchByte) >= 0)
-                    res = true;
-
-                if (Data.ToLower().Contains(p.SearchByte.ToString("X2").ToLower()))
-                    res = true;
+                res = (Array.IndexOf(rawBytes, p.SearchByte) >= 0) || Data.ToLower().Contains(p.SearchByte.ToString("X2").ToLower());
             }
 
             if ((res) && (p.SearchByUInt16))
             {
                 res = false;
-                for (int i = 0; i < RawBytes.Length - 2; i++)
+                for (var i = 0; i < rawBytes.Length - 2; i++)
                 {
                     
-                    var n = BitConverter.ToUInt16(RawBytes,i);
+                    var n = BitConverter.ToUInt16(rawBytes,i);
                     if (n == p.SearchUInt16)
                     {
                         res = true;
@@ -50,10 +47,10 @@ namespace VieweD.Engine.Common
             if ((res) && (p.SearchByUInt24))
             {
                 res = false;
-                for (int i = 0; i < RawBytes.Length - 3; i++)
+                for (var i = 0; i < rawBytes.Length - 3; i++)
                 {
                     var rd = new byte[4];
-                    Array.Copy(RawBytes,i,rd,0,3);
+                    Array.Copy(rawBytes,i,rd,0,3);
                     UInt32 n = BitConverter.ToUInt32(rd,0);
                    
                     if (n == p.SearchUInt24)
@@ -69,9 +66,9 @@ namespace VieweD.Engine.Common
             if ((res) && (p.SearchByUInt32))
             {
                 res = false;
-                for (int i = 0; i < RawBytes.Length - 4; i++)
+                for (var i = 0; i < rawBytes.Length - 4; i++)
                 {
-                    var n = BitConverter.ToUInt32(RawBytes,i);
+                    var n = BitConverter.ToUInt32(rawBytes,i);
                     if (n == p.SearchUInt32)
                     {
                         res = true;
@@ -84,7 +81,7 @@ namespace VieweD.Engine.Common
 
             if ((res) && (p.SearchByParsedData) && (p.SearchParsedFieldValue != string.Empty))
             {
-                res = false;
+                // res = false;
                 if (p.SearchParsedFieldName != string.Empty)
                 {
                     // Field Name Specified

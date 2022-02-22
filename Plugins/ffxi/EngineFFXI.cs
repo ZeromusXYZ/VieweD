@@ -5,6 +5,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using System.Globalization;
 using Microsoft.Data.Sqlite;
 using VieweD.Engine.Common;
 
@@ -52,6 +53,14 @@ namespace VieweD.Engine.FFXI
         public static readonly DataLookupListFfxiSpecialDialog DialogsListFfxi = new DataLookupListFfxiSpecialDialog();
         
         private static string ToolImportGame = "FFXI: Import from game" ;
+        
+        // Source: https://docs.microsoft.com/en-us/dotnet/api/system.datetime.parse?view=netframework-4.7.2#System_DateTime_Parse_System_String_System_IFormatProvider_System_Globalization_DateTimeStyles_
+        // Assume a date and time string formatted for the fr-FR culture is the local 
+        // time and convert it to UTC.
+        // dateString = "2008-03-01 10:00";
+        public CultureInfo cultureForDateTimeParse = CultureInfo.CreateSpecificCulture("fr-FR"); // French seems to best match for what we need here
+        public DateTimeStyles stylesForDateTimeParse = DateTimeStyles.AssumeLocal;
+        
 
         public EngineFFXI()
         {
@@ -311,7 +320,7 @@ namespace VieweD.Engine.FFXI
                         try
                         {
                             // try quick-parse first
-                            packetData.TimeStamp = packetData.DateTimeParse(packetData.OriginalTimeString, out var dt) ? dt : DateTime.Parse(packetData.OriginalTimeString, packetData.cultureForDateTimeParse, packetData.stylesForDateTimeParse);
+                            packetData.TimeStamp = packetData.DateTimeParse(packetData.OriginalTimeString, out var dt) ? dt : DateTime.Parse(packetData.OriginalTimeString, cultureForDateTimeParse, stylesForDateTimeParse);
                             ts = packetData.TimeStamp.ToString("HH:mm:ss");
                         }
                         catch (FormatException)

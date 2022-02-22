@@ -118,7 +118,7 @@ namespace VieweD.Engine.Common
             }
             catch (Exception x)
             {
-                MessageBox.Show("Failed to load " + filename + "\r\nException: " + x.Message, "Load Filter Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(@"Failed to load " + filename + "\r\nException: " + x.Message, @"Load Filter Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
             return true;
@@ -126,7 +126,7 @@ namespace VieweD.Engine.Common
 
         public bool SaveToFile(string filename,EngineBase engine)
         {
-            List<string> sl = new List<string>();
+            var sl = new List<string>();
             sl.Add("rem;original-file;" + Path.GetFileName(filename));
             switch(FilterOutType)
             {
@@ -174,7 +174,7 @@ namespace VieweD.Engine.Common
             }
             catch (Exception x)
             {
-                MessageBox.Show("Failed to save " + filename + "\r\nException: " + x.Message, "Save Filter Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(@"Failed to save " + filename + "\r\nException: " + x.Message, @"Save Filter Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
             return true;

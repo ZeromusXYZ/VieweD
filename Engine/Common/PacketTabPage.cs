@@ -11,9 +11,11 @@ namespace VieweD.Engine.Common
     public class PacketTabPage: TabPage
     {
         private MainForm ownerMainForm;
+        // ReSharper disable once InconsistentNaming
         public PacketList PLLoaded; // File Loaded
+        // ReSharper disable once InconsistentNaming
         public PacketList PL; // Filtered File Data Displayed
-        // public PacketParser PP;
+
         public uint CurrentSync;
         public string LoadedLogFile ;
         public string LoadedRulesFile;
@@ -27,21 +29,21 @@ namespace VieweD.Engine.Common
         public TimeSpan LinkVideoOffset;
         public string DecryptVersion = "_None_";
 
-        public FlickerFreeListBox lbPackets;
+        public FlickerFreeListBox LbPackets;
         // Popup Menu Controls
-        public ContextMenuStrip pmPL;
-        public ToolStripMenuItem pmPLShowPacketName;
-        public ToolStripSeparator pmPLS1;
-        public ToolStripMenuItem pmPLShowOnly;
-        public ToolStripMenuItem pmPLHideThis;
-        public ToolStripSeparator pmPLS2;
-        public ToolStripMenuItem pmPLShowOutOnly;
-        public ToolStripMenuItem pmPLShowInOnly;
-        public ToolStripSeparator pmPLS3;
-        public ToolStripMenuItem pmPLResetFilters;
-        public ToolStripSeparator pmPLS4;
-        public ToolStripMenuItem pmPLEditParser;
-        public ToolStripMenuItem pmPLExportPacket;
+        private ContextMenuStrip pmPl;
+        private ToolStripMenuItem pmPlShowPacketName;
+        private ToolStripSeparator pmPls1;
+        private ToolStripMenuItem pmPlShowOnly;
+        private ToolStripMenuItem pmPlHideThis;
+        private ToolStripSeparator pmPls2;
+        private ToolStripMenuItem pmPlShowOutOnly;
+        private ToolStripMenuItem pmPlShowInOnly;
+        private ToolStripSeparator pmPls3;
+        private ToolStripMenuItem pmPlResetFilters;
+        private ToolStripSeparator pmPls4;
+        private ToolStripMenuItem pmPlEditParser;
+        private ToolStripMenuItem pmPlExportPacket;
         // Engine Handler
         public EngineBase Engine;
 
@@ -54,7 +56,7 @@ namespace VieweD.Engine.Common
             // Create base controls
             PLLoaded = new PacketList(this);
             PL = new PacketList(this);
-            lbPackets = new FlickerFreeListBox();
+            LbPackets = new FlickerFreeListBox();
             VideoLink = null;
             ProjectFolder = string.Empty;
             LinkVideoFileName = string.Empty;
@@ -63,17 +65,17 @@ namespace VieweD.Engine.Common
             ProjectFile = string.Empty;
 
             // Set ListBox Position
-            lbPackets.Parent = this;
-            lbPackets.Location = new System.Drawing.Point(0, 0);
-            lbPackets.Size = new System.Drawing.Size(this.Width, this.Height);
-            lbPackets.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            lbPackets.Dock = DockStyle.Fill;
-            lbPackets.Font = Properties.Settings.Default.PacketListFont ; // Add fixedsized font (to override the tab page itself)
-            lbPackets.ItemHeight = (int)Math.Ceiling(lbPackets.Font.GetHeight());
-            //lbPackets.Font = new Font("Consolas", 9); // Add fixedsized font (to override the tab page itself)
-            lbPackets.DrawMode = DrawMode.OwnerDrawFixed;
+            LbPackets.Parent = this;
+            LbPackets.Location = new System.Drawing.Point(0, 0);
+            LbPackets.Size = new System.Drawing.Size(this.Width, this.Height);
+            LbPackets.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            LbPackets.Dock = DockStyle.Fill;
+            LbPackets.Font = Properties.Settings.Default.PacketListFont ; // Add fixed sized font (to override the tab page itself)
+            LbPackets.ItemHeight = (int)Math.Ceiling(LbPackets.Font.GetHeight());
+            //lbPackets.Font = new Font("Consolas", 9); // Add fixed sized font (to override the tab page itself)
+            LbPackets.DrawMode = DrawMode.OwnerDrawFixed;
 
-            lbPackets.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.lbPackets_DrawItem);
+            LbPackets.DrawItem += lbPackets_DrawItem;
             // Add the SelectedIndexChanged for this from MainForm/process creating it, as it's too complex to handle internally
             // lbPackets.SelectedIndexChanged += new System.EventHandler(this.lbPackets_SelectedIndexChanged); 
 
@@ -82,53 +84,53 @@ namespace VieweD.Engine.Common
             ProjectTags = string.Empty;
 
             // Create Popup Menu
-            pmPL = new ContextMenuStrip();
-            pmPL.Opening += new CancelEventHandler(PmPL_Opening);
+            pmPl = new ContextMenuStrip();
+            pmPl.Opening += PmPL_Opening;
 
-            lbPackets.ContextMenuStrip = pmPL;
+            LbPackets.ContextMenuStrip = pmPl;
 
-            pmPLShowPacketName = new ToolStripMenuItem("Show packet name");
-            pmPL.Items.Add(pmPLShowPacketName);
+            pmPlShowPacketName = new ToolStripMenuItem("Show packet name");
+            pmPl.Items.Add(pmPlShowPacketName);
 
-            pmPLS1 = new ToolStripSeparator();
-            pmPL.Items.Add(pmPLS1);
+            pmPls1 = new ToolStripSeparator();
+            pmPl.Items.Add(pmPls1);
 
-            pmPLShowOnly = new ToolStripMenuItem("Show this type only");
-            pmPLShowOnly.Click += new EventHandler(PmPLShowOnly_Click);
-            pmPL.Items.Add(pmPLShowOnly);
+            pmPlShowOnly = new ToolStripMenuItem("Show this type only");
+            pmPlShowOnly.Click += PmPLShowOnly_Click;
+            pmPl.Items.Add(pmPlShowOnly);
 
-            pmPLHideThis = new ToolStripMenuItem("Hide this type");
-            pmPLHideThis.Click += new EventHandler(PmPLHideThis_Click);
-            pmPL.Items.Add(pmPLHideThis);
+            pmPlHideThis = new ToolStripMenuItem("Hide this type");
+            pmPlHideThis.Click += PmPLHideThis_Click;
+            pmPl.Items.Add(pmPlHideThis);
 
-            pmPLS2 = new ToolStripSeparator();
-            pmPL.Items.Add(pmPLS2);
+            pmPls2 = new ToolStripSeparator();
+            pmPl.Items.Add(pmPls2);
 
-            pmPLShowOutOnly = new ToolStripMenuItem("Show only Outgoing");
-            pmPLShowOutOnly.Click += new EventHandler(PmPLShowOutgoingOnly_Click);
-            pmPL.Items.Add(pmPLShowOutOnly);
+            pmPlShowOutOnly = new ToolStripMenuItem("Show only Outgoing");
+            pmPlShowOutOnly.Click += PmPLShowOutgoingOnly_Click;
+            pmPl.Items.Add(pmPlShowOutOnly);
 
-            pmPLShowInOnly = new ToolStripMenuItem("Show only Incoming");
-            pmPLShowInOnly.Click += new EventHandler(PmPLShowIncomingOnly_Click);
-            pmPL.Items.Add(pmPLShowInOnly);
+            pmPlShowInOnly = new ToolStripMenuItem("Show only Incoming");
+            pmPlShowInOnly.Click += PmPLShowIncomingOnly_Click;
+            pmPl.Items.Add(pmPlShowInOnly);
 
-            pmPLS3 = new ToolStripSeparator();
-            pmPL.Items.Add(pmPLS3);
+            pmPls3 = new ToolStripSeparator();
+            pmPl.Items.Add(pmPls3);
 
-            pmPLResetFilters = new ToolStripMenuItem("Reset all filters");
-            pmPLResetFilters.Click += new EventHandler(PmPLResetFilter_Click);
-            pmPL.Items.Add(pmPLResetFilters);
+            pmPlResetFilters = new ToolStripMenuItem("Reset all filters");
+            pmPlResetFilters.Click += PmPLResetFilter_Click;
+            pmPl.Items.Add(pmPlResetFilters);
 
-            pmPLS4 = new ToolStripSeparator();
-            pmPL.Items.Add(pmPLS4);
+            pmPls4 = new ToolStripSeparator();
+            pmPl.Items.Add(pmPls4);
 
-            pmPLEditParser = new ToolStripMenuItem("Edit this parser");
-            pmPLEditParser.Click += new EventHandler(PmPLEditParser_Click);
-            pmPL.Items.Add(pmPLEditParser);
+            pmPlEditParser = new ToolStripMenuItem("Edit this parser");
+            pmPlEditParser.Click += PmPLEditParser_Click;
+            pmPl.Items.Add(pmPlEditParser);
 
-            pmPLExportPacket = new ToolStripMenuItem("Export Packet");
-            pmPLExportPacket.Click += new EventHandler(PmPLExport_Click);
-            pmPL.Items.Add(pmPLExportPacket);
+            pmPlExportPacket = new ToolStripMenuItem("Export Packet");
+            pmPlExportPacket.Click += PmPLExport_Click;
+            pmPl.Items.Add(pmPlExportPacket);
 
             // Init misc stuff
             CurrentSync = 0xFFFFFFFF;
@@ -136,19 +138,18 @@ namespace VieweD.Engine.Common
 
         public PacketData GetSelectedPacket()
         {
-            if ((lbPackets.SelectedIndex < 0) || (lbPackets.SelectedIndex >= PL.Count))
+            if ((LbPackets.SelectedIndex < 0) || (LbPackets.SelectedIndex >= PL.Count))
                 return null;
-            return PL.GetPacket(lbPackets.SelectedIndex);
+            return PL.GetPacket(LbPackets.SelectedIndex);
         }
 
-        public void lbPackets_DrawItem(object sender, DrawItemEventArgs e)
+        private void lbPackets_DrawItem(object sender, DrawItemEventArgs e)
         {
-            ListBox lb = (sender as ListBox);
-            if (!(lb.Parent is PacketTabPage))
+            if (!(sender is ListBox lb))
                 return;
-            PacketTabPage tp = (lb.Parent as PacketTabPage);
-            PacketData pd = null;
-            if ((e.Index >= 0) && (e.Index < tp.PL.Count))
+            
+            PacketData pd;
+            if ((lb.Parent is PacketTabPage tp) && (e.Index >= 0) && (e.Index < tp.PL.Count))
             {
                 pd = tp.PL.GetPacket(e.Index);
             }
@@ -159,8 +160,8 @@ namespace VieweD.Engine.Common
                 return;
             }
 
-            bool barOn = (tp.CurrentSync == pd.PacketSync);
-            bool isSelected = (e.Index == lb.SelectedIndex);
+            var barOn = (tp.CurrentSync == pd.PacketSync);
+            var isSelected = (e.Index == lb.SelectedIndex);
             Color textCol;
             Color backCol;
             Color barCol;
@@ -242,12 +243,13 @@ namespace VieweD.Engine.Common
 
             // Draw the background of the ListBox control for each item.
             e.Graphics.FillRectangle(backBrush, e.Bounds);
+            
             // header text
             var s = lb.Items[e.Index].ToString();
             //s = pd.VirtualTimeStamp.ToString() + "." + pd.VirtualTimeStamp.Millisecond.ToString("0000");
 
-            Rectangle icon1 = new Rectangle(e.Bounds.Left, e.Bounds.Top + ((e.Bounds.Height - Properties.Resources.mini_unk_icon.Height) / 2), Properties.Resources.mini_unk_icon.Width, Properties.Resources.mini_unk_icon.Height);
-            Rectangle icon2 = new Rectangle(icon1.Left + icon1.Width, icon1.Top, icon1.Width, icon1.Height);
+            var icon1 = new Rectangle(e.Bounds.Left, e.Bounds.Top + ((e.Bounds.Height - Properties.Resources.mini_unk_icon.Height) / 2), Properties.Resources.mini_unk_icon.Width, Properties.Resources.mini_unk_icon.Height);
+            var icon2 = new Rectangle(icon1.Left + icon1.Width, icon1.Top, icon1.Width, icon1.Height);
 
             Rectangle textBounds;
             if ((tp.VideoLink != null) && (tp.VideoLink.IsInTimeRange(pd.VirtualTimeStamp)))
@@ -320,8 +322,7 @@ namespace VieweD.Engine.Common
 
             // Draw the current item text based on the current Font 
             // and the custom brush settings.
-            e.Graphics.DrawString(s,
-                e.Font, textBrush, textBounds, StringFormat.GenericDefault);
+            e.Graphics.DrawString(s, e.Font, textBrush, textBounds, StringFormat.GenericDefault);
 
             if (barOn)
             {
@@ -337,17 +338,17 @@ namespace VieweD.Engine.Common
         public void CenterListBox()
         {
             // Move to center
-            var iHeight = lbPackets.ItemHeight;
+            var iHeight = LbPackets.ItemHeight;
             if (iHeight <= 0)
                 iHeight = 8;
-            var iCount = lbPackets.Size.Height / iHeight;
-            var tPos = lbPackets.SelectedIndex - (iCount / 2);
+            var iCount = LbPackets.Size.Height / iHeight;
+            var tPos = LbPackets.SelectedIndex - (iCount / 2);
             if (tPos < 0)
                 tPos = 0;
-            lbPackets.TopIndex = tPos;
+            LbPackets.TopIndex = tPos;
         }
 
-        public void FillListBox(uint gotTolastSync = 0)
+        public void FillListBox(uint gotToLastSync = 0)
         {
             var gotoIndex = -1;
             Application.UseWaitCursor = true;
@@ -363,15 +364,15 @@ namespace VieweD.Engine.Common
                     loadForm.Show();
                     loadForm.pb.Minimum = 0;
                     loadForm.pb.Maximum = PL.Count;
-                    lbPackets.BeginUpdate();
-                    lbPackets.Items.Clear();
+                    LbPackets.BeginUpdate();
+                    LbPackets.Items.Clear();
                     for (int i = 0; i < PL.Count; i++)
                     {
                         PacketData pd = PL.GetPacket(i);
-                        lbPackets.Items.Add(pd.HeaderText);
-                        if ((gotoIndex < 0) && (gotTolastSync > 0) && (pd.PacketSync >= gotTolastSync))
+                        LbPackets.Items.Add(pd.HeaderText);
+                        if ((gotoIndex < 0) && (gotToLastSync > 0) && (pd.PacketSync >= gotToLastSync))
                         {
-                            gotoIndex = lbPackets.Items.Count - 1 ;
+                            gotoIndex = LbPackets.Items.Count - 1 ;
                         }
                         loadForm.pb.Value = i;
                         if ((i % 50) == 0)
@@ -381,10 +382,10 @@ namespace VieweD.Engine.Common
                             Application.DoEvents();
                         }
                     }
-                    lbPackets.EndUpdate();
+                    LbPackets.EndUpdate();
                     if (gotoIndex >= 0)
                     {
-                        lbPackets.SelectedIndex = gotoIndex;
+                        LbPackets.SelectedIndex = gotoIndex;
                     }
                     loadForm.Hide();
                 }
@@ -407,68 +408,68 @@ namespace VieweD.Engine.Common
             }
             if (pd.Parent._parentTab.Engine.HasRulesFile)
             {
-                var r = pd?.Parent?.Rules.GetPacketRule(pd.PacketLogType, pd.StreamId, pd.PacketLevel, pd.PacketId);
+                var r = pd.Parent.Rules.GetPacketRule(pd.PacketLogType, pd.StreamId, pd.PacketLevel, pd.PacketId);
                 if (r != null)
                 {
                     var lookupKey = r.LookupKey + (((ulong)pd.PacketLogType) * 0x0100000000);
-                    pmPLShowPacketName.Text = lookupKey.ToString("X8");
-                    pmPLEditParser.Tag = r ;
+                    pmPlShowPacketName.Text = lookupKey.ToString("X8");
+                    pmPlEditParser.Tag = r ;
                     if (pd.PacketLogType != PacketLogTypes.Unknown)
                     {
-                        pmPLEditParser.Text = @"Edit " + lookupKey.ToString("X8") + @" => " + r.Name;
-                        pmPLEditParser.Visible = true;
+                        pmPlEditParser.Text = @"Edit " + lookupKey.ToString("X8") + @" => " + r.Name;
+                        pmPlEditParser.Visible = true;
                     }
                     else
                     {
-                        pmPLEditParser.Text = @"Unknown direction, can't edit";
-                        pmPLEditParser.Visible = false;
+                        pmPlEditParser.Text = @"Unknown direction, can't edit";
+                        pmPlEditParser.Visible = false;
                     }
                 }
                 else
                 {
-                    pmPLShowPacketName.Text = @"No rule assigned";
-                    pmPLEditParser.Tag = null;
-                    pmPLEditParser.Text = @"Nothing to edit";
-                    pmPLEditParser.Visible = false;
+                    pmPlShowPacketName.Text = @"No rule assigned";
+                    pmPlEditParser.Tag = null;
+                    pmPlEditParser.Text = @"Nothing to edit";
+                    pmPlEditParser.Visible = false;
                 }
 
             }
             else
             {
-                pmPLShowPacketName.Text = pd.PacketLogType.ToString() + @" - 0x" + pd.PacketId.ToString("X3");
+                pmPlShowPacketName.Text = pd.PacketLogType.ToString() + @" - 0x" + pd.PacketId.ToString("X3");
                 string parserFileName;
                 switch (pd.PacketLogType)
                 {
                     case PacketLogTypes.Incoming:
                         parserFileName = Path.Combine("data", pd.Parent._parentTab.Engine.EngineId, "parse", "in-0x" + pd.PacketId.ToString("X3") + ".txt");
-                        pmPLEditParser.Text = @"Edit " + parserFileName;
-                        pmPLEditParser.Visible = true;
+                        pmPlEditParser.Text = @"Edit " + parserFileName;
+                        pmPlEditParser.Visible = true;
                         break;
                     case PacketLogTypes.Outgoing:
                         parserFileName = Path.Combine("data", pd.Parent._parentTab.Engine.EngineId, "parse", "out-0x" + pd.PacketId.ToString("X3") + ".txt");
-                        pmPLEditParser.Text = @"Edit " + parserFileName;
-                        pmPLEditParser.Visible = true;
+                        pmPlEditParser.Text = @"Edit " + parserFileName;
+                        pmPlEditParser.Visible = true;
                         break;
                     default:
                         parserFileName = "";
-                        pmPLEditParser.Text = "";
-                        pmPLEditParser.Visible = false;
+                        pmPlEditParser.Text = "";
+                        pmPlEditParser.Visible = false;
                         break;
                 }
-                pmPLEditParser.Tag = parserFileName;
+                pmPlEditParser.Tag = parserFileName;
             }
-            pmPLShowOnly.Enabled = (pd.PacketLogType != PacketLogTypes.Unknown);
-            pmPLHideThis.Enabled = (pd.PacketLogType != PacketLogTypes.Unknown);
+            pmPlShowOnly.Enabled = (pd.PacketLogType != PacketLogTypes.Unknown);
+            pmPlHideThis.Enabled = (pd.PacketLogType != PacketLogTypes.Unknown);
 
         }
 
         private void PmPLEditParser_Click(object sender, EventArgs e)
         {
-            if (pmPLEditParser.Tag == null)
+            if (pmPlEditParser.Tag == null)
                 return;
-            if (pmPLEditParser.Tag is string fName)
+            if (pmPlEditParser.Tag is string fName)
                 ownerMainForm.OpenBasicParseEditor(fName);
-            if (pmPLEditParser.Tag is PacketRule pr)
+            if (pmPlEditParser.Tag is PacketRule pr)
                 ownerMainForm.OpenXmlRulesParseEditor(pr);
         }
 
@@ -640,7 +641,7 @@ namespace VieweD.Engine.Common
             }
             catch (Exception x)
             {
-                MessageBox.Show("Error saving raw packet " + exportName + "\r\nException: " + x.Message);
+                MessageBox.Show(@"Error saving raw packet " + exportName + "\r\nException: " + x.Message);
             }
 
         }
@@ -717,6 +718,7 @@ namespace VieweD.Engine.Common
                     {
                         DecryptVersion = fieldVal;
                     }
+                    /*
                     else
                     if (fieldType == "pin")
                     {
@@ -731,6 +733,7 @@ namespace VieweD.Engine.Common
                     {
                         continue;
                     }
+                    */
 
                 }
 
@@ -756,10 +759,6 @@ namespace VieweD.Engine.Common
                     {
                         res = LoadProjectFile(projectStream);
                     }
-                }
-                else
-                {
-                    res = false;
                 }
             }
             catch
@@ -797,9 +796,9 @@ namespace VieweD.Engine.Common
                 ProjectFile = ProjectFolder + partialProjectFileName + ".pvd";
             }
 
-            if ( (Properties.Settings.Default.AskCreateNewProjectFile == true) && (!File.Exists(ProjectFile)) )
+            if ( (Properties.Settings.Default.AskCreateNewProjectFile) && (!File.Exists(ProjectFile)) )
             {
-                if (MessageBox.Show("Do you want to save project settings as a new project file ?\r\n" + ProjectFile, "Create Project File", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+                if (MessageBox.Show("Do you want to save project settings as a new project file ?\r\n" + ProjectFile, @"Create Project File", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
                 {
                     ProjectFile = string.Empty;
                     return false;
@@ -836,7 +835,7 @@ namespace VieweD.Engine.Common
                     pout += n.ToString("X3");
                 }
 
-                List<string> sl = new List<string>();
+                var sl = new List<string>();
                 sl.Add("rem;VieweD Project File");
                 sl.Add("packetlog;" + relLogFile);
                 sl.Add("rules;" + relRuleFile);

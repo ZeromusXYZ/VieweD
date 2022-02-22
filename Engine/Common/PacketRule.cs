@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Text;
 using System.Xml;
@@ -8,9 +9,14 @@ using VieweD.Helpers.System;
 
 namespace VieweD.Engine.Common
 {
+    [SuppressMessage("ReSharper", "ClassWithVirtualMembersNeverInherited.Global")]
+    [SuppressMessage("ReSharper", "BuiltInTypeReferenceStyle")]
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
     public class PacketRule
     {
+        // ReSharper disable once InconsistentNaming
         public XmlNode _rootNode { get; protected set; }
+        // ReSharper disable once InconsistentNaming
         public RulesGroup _parent { get; protected set; }
         public byte StreamId { get; protected set; }
         public byte Level { get; protected set; }

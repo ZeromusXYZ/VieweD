@@ -46,7 +46,15 @@ namespace VieweD.Forms
             {
                 thisForm.FillForm(appendOnly);
 
-                if (thisForm.ShowDialog() == DialogResult.OK)
+                if (thisForm.cbEnginesList.Items.Count <= 0)
+                {
+                    MessageBox.Show(@"No engines installed");
+                    return null;
+                }
+                if (thisForm.cbEnginesList.Items.Count == 1)
+                    thisForm.SelectedEngineId = (thisForm.cbEnginesList.Items[0] as ComboBoxFileListValues)?.EngineId ?? "null" ; 
+
+                if ((thisForm.cbEnginesList.Items.Count == 1) || (thisForm.ShowDialog() == DialogResult.OK))
                 {
                     foreach (var engine in Engines.AllEngines)
                     {
