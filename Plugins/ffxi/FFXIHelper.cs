@@ -425,7 +425,7 @@ namespace VieweD.Engine.FFXI
                             ID <<= 8;
                             ID += FirstItem[3 - i];
                         }
-                        if (ID == 0xffff)
+                        if (ID == 0xFFFF)
                         {
                             ItemType = FFXI_ItemDatFileTypes.Currency;
                         }

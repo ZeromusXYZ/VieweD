@@ -154,13 +154,13 @@ namespace VieweD.Engine.FFXI
                         uint ResourceID = uint.Parse(HexID, NumberStyles.HexNumber);
                         byte[] EncodedResourceString = new byte[6];
                         EncodedResourceString[5] = 0xFD;
-                        EncodedResourceString[4] = (byte)(ResourceID & 0xff);
+                        EncodedResourceString[4] = (byte)(ResourceID & 0xFF);
                         ResourceID >>= 8;
-                        EncodedResourceString[3] = (byte)(ResourceID & 0xff);
+                        EncodedResourceString[3] = (byte)(ResourceID & 0xFF);
                         ResourceID >>= 8;
-                        EncodedResourceString[2] = (byte)(ResourceID & 0xff);
+                        EncodedResourceString[2] = (byte)(ResourceID & 0xFF);
                         ResourceID >>= 8;
-                        EncodedResourceString[1] = (byte)(ResourceID & 0xff);
+                        EncodedResourceString[1] = (byte)(ResourceID & 0xFF);
                         ResourceID >>= 8;
                         EncodedResourceString[0] = 0xFD;
                         return EncodedResourceString;
@@ -179,7 +179,7 @@ namespace VieweD.Engine.FFXI
             if (MainBR != null)
             {
                 MainBR.BaseStream.Seek(0, SeekOrigin.Begin);
-                for (ushort i = 0; i <= 0xff; ++i)
+                for (ushort i = 0; i <= 0xFF; ++i)
                 {
                     ushort MainEntry = MainBR.ReadUInt16();
                     if (MainEntry == (ushort)C) // match found
@@ -193,7 +193,7 @@ namespace VieweD.Engine.FFXI
                         if (SubBR != null)
                         {
                             SubBR.BaseStream.Seek(0, SeekOrigin.Begin);
-                            for (ushort j = 0x00; j <= 0xff; ++j)
+                            for (ushort j = 0x00; j <= 0xFF; ++j)
                             {
                                 if (SubBR.ReadUInt16() == (ushort)C) // match found
                                 {
@@ -235,7 +235,7 @@ namespace VieweD.Engine.FFXI
                 ushort TableEntry = this.FindTableEntry(chars[pos]);
                 if (TableEntry != 0xFFFF)
                 {
-                    if (TableEntry > 0xff)
+                    if (TableEntry > 0xFF)
                     {
                         EncodedBytes.Add((byte)((TableEntry & 0xFF00) >> 8));
                     }

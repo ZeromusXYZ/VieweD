@@ -270,12 +270,11 @@
             this.editBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.editBox.CharHeight = 14;
             this.editBox.CharWidth = 8;
-            this.editBox.CommentPrefix = "";
+            this.editBox.CommentPrefix = null;
             this.editBox.ContextMenuStrip = this.pmEdit;
             this.editBox.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.editBox.DescriptionFile = "";
             this.editBox.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
-            this.editBox.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.editBox.IsReplaceMode = false;
             this.editBox.Language = FastColoredTextBoxNS.Language.XML;
             this.editBox.LeftBracket = '<';
@@ -326,6 +325,8 @@
             // 
             // pOldEditControl
             // 
+            this.pOldEditControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pOldEditControl.Controls.Add(this.label1);
             this.pOldEditControl.Controls.Add(this.label2);
             this.pOldEditControl.Controls.Add(this.tPos);

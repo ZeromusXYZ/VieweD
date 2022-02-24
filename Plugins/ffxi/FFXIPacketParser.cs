@@ -14,7 +14,7 @@ namespace VieweD.Engine.FFXI
 
         public FFXIPacketParser(UInt16 aPacketID, PacketLogTypes aPacketLogType) : base()
         {
-            var filename = string.Empty; // = Application.StartupPath + Path.DirectorySeparatorChar + "parse" + Path.DirectorySeparatorChar ;
+            var filename = string.Empty;
             switch (aPacketLogType)
             {
                 case PacketLogTypes.Incoming:
@@ -201,29 +201,29 @@ namespace VieweD.Engine.FFXI
             switch (PD.PacketLogType)
             {
                 case PacketLogTypes.Outgoing:
-                    AddParseLineToView(0xff,
+                    AddParseLineToView(0xFF,
                         "0x00", GetDataColor(0),
                         "PacketID",
                         "OUT 0x" + PD.PacketId.ToString("X") + " - ", ffxiLookup.PacketTypeToString(PacketLogTypes.Outgoing, PD.PacketId), PD.PacketId);
                     break;
                 case PacketLogTypes.Incoming:
-                    AddParseLineToView(0xff,
+                    AddParseLineToView(0xFF,
                         "0x00", GetDataColor(0),
                         "PacketID",
                         "IN 0x" + PD.PacketId.ToString("X") + " - " + ffxiLookup.PacketTypeToString(PacketLogTypes.Incoming,PD.PacketId), PD.PacketId);
                     break;
                 default:
-                    AddParseLineToView(0xff,
+                    AddParseLineToView(0xFF,
                         "0x00", GetDataColor(0),
                         "PacketID",
                         "??? 0x" + PD.PacketId.ToString("X"), PD.PacketId);
                     break;
             }
-            AddParseLineToView(0xff,
+            AddParseLineToView(0xFF,
                 "0x00", GetDataColor(0),
                 "Size",
                 PD.PacketDataSize.ToString() + " (0x" + PD.PacketDataSize.ToString("X2") + ")", PD.PacketDataSize);
-            AddParseLineToView(0xff,
+            AddParseLineToView(0xFF,
                 "0x00", GetDataColor(0),
                 "Sync",
                 PD.PacketSync.ToString() + " (0x" + PD.PacketSync.ToString("X4") + ")", PD.PacketSync);
@@ -280,7 +280,7 @@ namespace VieweD.Engine.FFXI
                 if (fields.Count() < 2)
                 {
                     // Need at least 2 fields to be a valid line
-                    AddParseLineToView(0xff, "L " + parseLineNumber.ToString(), Color.Red, "Parse Error", "Need at least 2 fields");
+                    AddParseLineToView(0xFF, "L " + parseLineNumber.ToString(), Color.Red, "Parse Error", "Need at least 2 fields");
                     continue;
                 }
                 string typeField = fields[0].ToLower().Trim(' ');
@@ -325,7 +325,7 @@ namespace VieweD.Engine.FFXI
 
                     if (fields.Count() < 4)
                     {
-                        AddParseLineToView(0xff, "L " + parseLineNumber.ToString(), Color.Red, "Parse Error", "Not enough fields for save function, requires 3 parameters");
+                        AddParseLineToView(0xFF, "L " + parseLineNumber.ToString(), Color.Red, "Parse Error", "Not enough fields for save function, requires 3 parameters");
                         continue;
                     }
 
@@ -368,7 +368,7 @@ namespace VieweD.Engine.FFXI
                     if (!DataLookups.TryFieldParse(offsetStr, out Offset))
                     {
                         Offset = 0;
-                        AddParseLineToView(0xff, "L " + parseLineNumber.ToString(), Color.Red, "Parse Error", "Invalid Offset Value in: " + posField);
+                        AddParseLineToView(0xFF, "L " + parseLineNumber.ToString(), Color.Red, "Parse Error", "Invalid Offset Value in: " + posField + " ("+ offsetStr + ")");
                         continue;
                     }
 
@@ -384,14 +384,14 @@ namespace VieweD.Engine.FFXI
                         if (!DataLookups.TryFieldParse(subOffsetBitStr, out SubOffset))
                         {
                             Offset = 0;
-                            AddParseLineToView(0xff, "L " + parseLineNumber.ToString(), Color.Red, "Parse Error", "Invalid SubOffset Value in: " + posField);
+                            AddParseLineToView(0xFF, "L " + parseLineNumber.ToString(), Color.Red, "Parse Error", "Invalid SubOffset Value in: " + posField + " ("+ subOffsetBitStr + ")");
                             continue;
                         }
 
                         if (!DataLookups.TryFieldParse(subOffsetRangeStr, out SubOffsetRange))
                         {
                             Offset = 0;
-                            AddParseLineToView(0xff, "L " + parseLineNumber.ToString(), Color.Red, "Parse Error", "Invalid SubOffsetRange Value in: " + posField);
+                            AddParseLineToView(0xFF, "L " + parseLineNumber.ToString(), Color.Red, "Parse Error", "Invalid SubOffsetRange Value in: " + posField + " ("+ subOffsetRangeStr + ")");
                             continue;
                         }
                     }
@@ -401,7 +401,7 @@ namespace VieweD.Engine.FFXI
                         if (!DataLookups.TryFieldParse(subOffsetStr, out SubOffset))
                         {
                             Offset = 0;
-                            AddParseLineToView(0xff, "L " + parseLineNumber.ToString(), Color.Red, "Parse Error", "Invalid SubOffset Value in: " + posField);
+                            AddParseLineToView(0xFF, "L " + parseLineNumber.ToString(), Color.Red, "Parse Error", "Invalid SubOffset Value in: " + posField + " ("+ subOffsetStr + ")");
                             continue;
                         }
                     }
@@ -412,7 +412,7 @@ namespace VieweD.Engine.FFXI
                     if (!DataLookups.TryFieldParse(posField, out Offset))
                     {
                         Offset = 0;
-                        AddParseLineToView(0xff, "L " + parseLineNumber.ToString(), Color.Red, "Parse Error", "Invalid Offset Value in: " + posField);
+                        AddParseLineToView(0xFF, "L " + parseLineNumber.ToString(), Color.Red, "Parse Error", "Invalid Offset Value in: " + posField);
                         continue;
                     }
                 }
@@ -449,7 +449,7 @@ namespace VieweD.Engine.FFXI
 
                             // Debug Info
                             if (enableCode)
-                                AddParseLineToView(0xff, "L " + parseLineNumber.ToString(), Color.Red, "SwitchBlock", "Activate Block: " + ActiveSwitchBlock);
+                                AddParseLineToView(0xFF, "L " + parseLineNumber.ToString(), Color.Red, "SwitchBlock", "Activate Block: " + ActiveSwitchBlock);
 
                             LastSwitchedBlock = ActiveSwitchBlock;
                             if (PreParsedSwitchBlock == "-")
@@ -471,7 +471,7 @@ namespace VieweD.Engine.FFXI
 
                         // Debug Info
                         if (enableCode)
-                            AddParseLineToView(0xff, "L " + parseLineNumber.ToString(), Color.Red, "ShowBlock", "Activate Block: " + ActiveSwitchBlock);
+                            AddParseLineToView(0xFF, "L " + parseLineNumber.ToString(), Color.Red, "ShowBlock", "Activate Block: " + ActiveSwitchBlock);
 
                         LastSwitchedBlock = ActiveSwitchBlock;
                         if (PreParsedSwitchBlock == "-")
