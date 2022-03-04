@@ -649,6 +649,23 @@ namespace VieweD.Engine.FFXI
                     MarkParsed(Offset, stringSize + 2, DataFieldIndex);
                 }
                 else
+                if (typeField == "ffstring")
+                {
+                    var stringBytes = new List<byte>();
+                    var bPos = Offset;
+                    while ((bPos < PD.RawBytes.Count) && (PD.RawBytes[bPos] != 0x00))
+                    {
+                        stringBytes.Add(PD.GetByteAtPos(bPos));
+                        bPos++;
+                    }
+                    var stringSize = stringBytes.Count;
+                    var stringdata = "";
+                    stringdata = FFXIEncoding.E.GetString(stringBytes.ToArray());
+                    AddDataField(Offset, stringSize);
+                    AddParseLineToView(DataFieldIndex, posField, GetDataColor(DataFieldIndex), nameField, stringdata, descriptionField);
+                    MarkParsed(Offset, stringSize, DataFieldIndex);
+                }
+                else
                 if (typeField.StartsWith("data"))
                 {
                     var sizeStr = typeField.Substring(4, typeField.Length - 4);

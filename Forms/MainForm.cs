@@ -1411,6 +1411,7 @@ namespace VieweD
         {
             List<string> lookupResults = new List<string>();
 
+            // Used for uint24 that doesn't support negative values
             void AddLabelUnsigned(string typeName, int hexWidth, UInt64 val)
             {
                 var l = new Label();
@@ -1429,11 +1430,24 @@ namespace VieweD
                 flpPreviewData.Controls.Add(l);
             }
 
+            // Displays both signed and it's unsigned equivalent if they are different
             void AddLabelSigned(string typeName, int hexWidth, Int64 val)
             {
                 var l = new Label();
                 l.AutoSize = true;
-                l.Text = typeName + ": 0x" + val.ToString("X" + hexWidth) + " - " + val.ToString();
+                var h = val.ToString("X" + hexWidth);
+                if (h.Length >= hexWidth)
+                    h = h.Substring(h.Length - hexWidth, hexWidth);
+                else
+                    h = h.PadLeft(hexWidth, 'F');
+                if (!Int64.TryParse(h, System.Globalization.NumberStyles.HexNumber, System.Globalization.CultureInfo.InvariantCulture, out var positiveVal))
+                    positiveVal = val;
+
+                if (positiveVal != val)
+                    l.Text = typeName + ": 0x" + h + " - " + positiveVal + " (" + val.ToString() + ")";
+                else
+                    l.Text = typeName + ": 0x" + h + " - " + val.ToString();
+
                 // Only lookups for negative values on signed
                 if (val < 0)
                 {
@@ -1509,7 +1523,7 @@ namespace VieweD
 
                 if (sizeLeft >= 2)
                 {
-                    AddLabelUnsigned("uint16",4,CurrentPP.PD.GetUInt16AtPos(rawPos));
+                    //AddLabelUnsigned("uint16",4,CurrentPP.PD.GetUInt16AtPos(rawPos));
                     AddLabelSigned("int16 ",4,CurrentPP.PD.GetInt16AtPos(rawPos));
                 }
                 if (sizeLeft >= 3)
@@ -1521,14 +1535,14 @@ namespace VieweD
                 }
                 if (sizeLeft >= 4)
                 {
-                    AddLabelUnsigned("uint32", 8, CurrentPP.PD.GetUInt32AtPos(rawPos));
+                    //AddLabelUnsigned("uint32", 8, CurrentPP.PD.GetUInt32AtPos(rawPos));
                     AddLabelSigned("int32 ", 8, CurrentPP.PD.GetInt32AtPos(rawPos));
                     AddLabel("float : " + CurrentPP.PD.GetFloatAtPos(rawPos).ToString());
                     AddLabel("datetime: " + CurrentPP.PD.GetTimeStampAtPos(rawPos));
                 }
                 if (sizeLeft >= 8)
                 {
-                    AddLabelUnsigned("uint64", 16, CurrentPP.PD.GetUInt64AtPos(rawPos));
+                    //AddLabelUnsigned("uint64", 16, CurrentPP.PD.GetUInt64AtPos(rawPos));
                     AddLabelSigned("int64 ", 16, CurrentPP.PD.GetInt64AtPos(rawPos));
                     AddLabel("double: " + CurrentPP.PD.GetDoubleAtPos(rawPos).ToString());
                 }

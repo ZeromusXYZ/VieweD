@@ -20,6 +20,16 @@ namespace VieweD.Engine.FFXI
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     public class FFXIEncoding : Encoding
     {
+        private static FFXIEncoding _e;
+        public static FFXIEncoding E
+        {
+            get { 
+                if (_e == null)
+                    _e = new FFXIEncoding();
+                return _e; 
+            }
+        }
+
         // The main table, and the 60 lead-byte tables
         private static SortedList ConversionTables = new SortedList(61);
 

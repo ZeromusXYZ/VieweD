@@ -52,6 +52,7 @@
             this.mmFilterApply = new System.Windows.Forms.ToolStripMenuItem();
             this.MMFilterApplyItem = new System.Windows.Forms.ToolStripSeparator();
             this.mmFilterHighlight = new System.Windows.Forms.ToolStripMenuItem();
+            this.mmFilterHighlightApply = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.mmFilterEdit = new System.Windows.Forms.ToolStripMenuItem();
             this.mmFilterReset = new System.Windows.Forms.ToolStripMenuItem();
@@ -108,7 +109,6 @@
             this.sbProjectInfo = new System.Windows.Forms.ToolStripStatusLabel();
             this.sbRules = new System.Windows.Forms.ToolStripStatusLabel();
             this.saveCSVFileDialog = new System.Windows.Forms.SaveFileDialog();
-            this.mmFilterHighlightApply = new System.Windows.Forms.ToolStripSeparator();
             this.MM.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -298,14 +298,14 @@
             this.mmFilterApply.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.MMFilterApplyItem});
             this.mmFilterApply.Name = "mmFilterApply";
-            this.mmFilterApply.Size = new System.Drawing.Size(180, 22);
+            this.mmFilterApply.Size = new System.Drawing.Size(170, 22);
             this.mmFilterApply.Text = "Apply";
             this.mmFilterApply.DropDownOpening += new System.EventHandler(this.MmFilterApply_DropDownOpening);
             // 
             // MMFilterApplyItem
             // 
             this.MMFilterApplyItem.Name = "MMFilterApplyItem";
-            this.MMFilterApplyItem.Size = new System.Drawing.Size(177, 6);
+            this.MMFilterApplyItem.Size = new System.Drawing.Size(57, 6);
             this.MMFilterApplyItem.Click += new System.EventHandler(this.MMFilterApplyItem_Click);
             // 
             // mmFilterHighlight
@@ -313,20 +313,26 @@
             this.mmFilterHighlight.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mmFilterHighlightApply});
             this.mmFilterHighlight.Name = "mmFilterHighlight";
-            this.mmFilterHighlight.Size = new System.Drawing.Size(180, 22);
+            this.mmFilterHighlight.Size = new System.Drawing.Size(170, 22);
             this.mmFilterHighlight.Text = "Highlight";
             this.mmFilterHighlight.DropDownOpening += new System.EventHandler(this.MmFilterApply_DropDownOpening);
+            // 
+            // mmFilterHighlightApply
+            // 
+            this.mmFilterHighlightApply.Name = "mmFilterHighlightApply";
+            this.mmFilterHighlightApply.Size = new System.Drawing.Size(57, 6);
+            this.mmFilterHighlightApply.Click += new System.EventHandler(this.MMFilterHighlightItem_Click);
             // 
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(177, 6);
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(167, 6);
             // 
             // mmFilterEdit
             // 
             this.mmFilterEdit.Name = "mmFilterEdit";
             this.mmFilterEdit.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F)));
-            this.mmFilterEdit.Size = new System.Drawing.Size(180, 22);
+            this.mmFilterEdit.Size = new System.Drawing.Size(170, 22);
             this.mmFilterEdit.Text = "Edit ...";
             this.mmFilterEdit.Click += new System.EventHandler(this.MmFilterEdit_Click);
             // 
@@ -335,7 +341,7 @@
             this.mmFilterReset.Name = "mmFilterReset";
             this.mmFilterReset.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.F)));
-            this.mmFilterReset.Size = new System.Drawing.Size(180, 22);
+            this.mmFilterReset.Size = new System.Drawing.Size(170, 22);
             this.mmFilterReset.Text = "Reset";
             this.mmFilterReset.Click += new System.EventHandler(this.MmFilterReset_Click);
             // 
@@ -498,7 +504,7 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
-            this.splitContainer1.Size = new System.Drawing.Size(1084, 508);
+            this.splitContainer1.Size = new System.Drawing.Size(1084, 511);
             this.splitContainer1.SplitterDistance = 450;
             this.splitContainer1.TabIndex = 3;
             // 
@@ -516,7 +522,7 @@
             this.tcPackets.Multiline = true;
             this.tcPackets.Name = "tcPackets";
             this.tcPackets.SelectedIndex = 0;
-            this.tcPackets.Size = new System.Drawing.Size(447, 505);
+            this.tcPackets.Size = new System.Drawing.Size(447, 508);
             this.tcPackets.TabIndex = 1;
             this.tcPackets.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.TcPackets_DrawItem);
             this.tcPackets.SelectedIndexChanged += new System.EventHandler(this.TcPackets_SelectedIndexChanged);
@@ -529,7 +535,7 @@
             this.tpPackets1.Location = new System.Drawing.Point(24, 4);
             this.tpPackets1.Name = "tpPackets1";
             this.tpPackets1.Padding = new System.Windows.Forms.Padding(3);
-            this.tpPackets1.Size = new System.Drawing.Size(419, 497);
+            this.tpPackets1.Size = new System.Drawing.Size(419, 500);
             this.tpPackets1.TabIndex = 0;
             this.tpPackets1.Text = "Packets";
             this.tpPackets1.UseVisualStyleBackColor = true;
@@ -655,8 +661,8 @@
             this.splitContainer2.Panel2.Controls.Add(this.lRawViewPos);
             this.splitContainer2.Panel2.Controls.Add(this.btnCopyRawSource);
             this.splitContainer2.Panel2.Controls.Add(this.cbOriginalData);
-            this.splitContainer2.Size = new System.Drawing.Size(630, 508);
-            this.splitContainer2.SplitterDistance = 349;
+            this.splitContainer2.Size = new System.Drawing.Size(630, 511);
+            this.splitContainer2.SplitterDistance = 352;
             this.splitContainer2.TabIndex = 0;
             // 
             // dGV
@@ -679,7 +685,7 @@
             this.dGV.RowHeadersVisible = false;
             this.dGV.RowHeadersWidth = 8;
             this.dGV.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dGV.Size = new System.Drawing.Size(612, 314);
+            this.dGV.Size = new System.Drawing.Size(612, 317);
             this.dGV.TabIndex = 2;
             this.dGV.SelectionChanged += new System.EventHandler(this.dGV_SelectionChanged);
             // 
@@ -723,37 +729,33 @@
             this.splitContainer3.Panel2.Controls.Add(this.flpPreviewData);
             this.splitContainer3.Panel2Collapsed = true;
             this.splitContainer3.Size = new System.Drawing.Size(615, 124);
-            this.splitContainer3.SplitterDistance = 500;
+            this.splitContainer3.SplitterDistance = 660;
             this.splitContainer3.TabIndex = 5;
             this.splitContainer3.Resize += new System.EventHandler(this.splitContainer3_Resize);
             // 
             // rtInfo
             // 
-            this.rtInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.rtInfo.DetectUrls = false;
+            this.rtInfo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.rtInfo.HideSelection = false;
-            this.rtInfo.Location = new System.Drawing.Point(3, 3);
+            this.rtInfo.Location = new System.Drawing.Point(0, 0);
             this.rtInfo.Name = "rtInfo";
             this.rtInfo.ReadOnly = true;
-            this.rtInfo.Size = new System.Drawing.Size(609, 118);
+            this.rtInfo.Size = new System.Drawing.Size(615, 124);
             this.rtInfo.TabIndex = 2;
             this.rtInfo.Text = resources.GetString("rtInfo.Text");
             this.rtInfo.SelectionChanged += new System.EventHandler(this.RtInfo_SelectionChanged);
             // 
             // flpPreviewData
             // 
-            this.flpPreviewData.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.flpPreviewData.AutoSize = true;
             this.flpPreviewData.BackColor = System.Drawing.SystemColors.Control;
             this.flpPreviewData.Controls.Add(this.lUint16);
+            this.flpPreviewData.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flpPreviewData.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flpPreviewData.Location = new System.Drawing.Point(3, 3);
+            this.flpPreviewData.Location = new System.Drawing.Point(0, 0);
             this.flpPreviewData.Name = "flpPreviewData";
-            this.flpPreviewData.Size = new System.Drawing.Size(105, 118);
+            this.flpPreviewData.Size = new System.Drawing.Size(148, 124);
             this.flpPreviewData.TabIndex = 0;
             // 
             // lUint16
@@ -812,7 +814,7 @@
             this.sbExtraInfo,
             this.sbProjectInfo,
             this.sbRules});
-            this.statusBar.Location = new System.Drawing.Point(0, 534);
+            this.statusBar.Location = new System.Drawing.Point(0, 537);
             this.statusBar.Name = "statusBar";
             this.statusBar.Size = new System.Drawing.Size(1084, 24);
             this.statusBar.TabIndex = 4;
@@ -869,18 +871,12 @@
             this.saveCSVFileDialog.RestoreDirectory = true;
             this.saveCSVFileDialog.Title = "Export CSV File";
             // 
-            // mmFilterHighlightApply
-            // 
-            this.mmFilterHighlightApply.Name = "mmFilterHighlightApply";
-            this.mmFilterHighlightApply.Size = new System.Drawing.Size(177, 6);
-            this.mmFilterHighlightApply.Click += new System.EventHandler(this.MMFilterHighlightItem_Click);
-            // 
             // MainForm
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1084, 558);
+            this.ClientSize = new System.Drawing.Size(1084, 561);
             this.Controls.Add(this.statusBar);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.MM);
