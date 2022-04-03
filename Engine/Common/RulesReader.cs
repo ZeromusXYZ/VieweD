@@ -22,6 +22,7 @@ namespace VieweD.Engine.Common
 
         public PacketTabPage parentTab;
         protected ZlibCodec decompressor = new ZlibCodec(Ionic.Zlib.CompressionMode.Decompress);
+        public string ExpectedClientVersion = string.Empty;
 
 
         protected RulesReader(PacketTabPage parent)
@@ -35,6 +36,13 @@ namespace VieweD.Engine.Common
             // Open XML file
             _doc = new XmlDocument();
             _doc.Load(new StringReader(xmlData));
+
+            var versionNode = _doc.SelectSingleNode("/root/version");
+            if (versionNode != null)
+            {
+                var client = XmlHelper.GetAttributeString(XmlHelper.ReadNodeAttributes(versionNode), "client");
+                ExpectedClientVersion = client;
+            }
             
             // Read and Save template nodes in a List
             _allTemplates = _doc.SelectNodes("/root/templates/template");
