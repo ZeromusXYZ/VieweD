@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
+using System.Globalization;
 using System.Text;
 using System.Xml;
 using VieweD.Helpers.System;
@@ -118,11 +119,6 @@ namespace VieweD.Engine.Common
                         case "bc":
                             res = new RulesActionReadUInt24(this, parentAction, actionNode, step, isReversed);
                             break;
-                        case "bcx":
-                        case "bcy":
-                        case "bcz":
-                            res = new RulesActionRead3ByteFloat(this, parentAction, actionNode, step, isReversed);
-                            break;
                         default:
                             // Blank Command
                             res = new RulesAction(this, parentAction, actionNode, step, isReversed);
@@ -156,6 +152,21 @@ namespace VieweD.Engine.Common
                 case "mul":
                     res = new RulesActionArithmeticOperation(this, parentAction, actionNode, step, "arg1", "*", "arg2", "dst");
                     break;
+                case "div":
+                    res = new RulesActionArithmeticOperation(this, parentAction, actionNode, step, "arg1", "/", "arg2", "dst");
+                    break;
+                case "addf":
+                    res = new RulesActionDoubleArithmeticOperation(this, parentAction, actionNode, step, "arg1", "+", "arg2", "dst");
+                    break;
+                case "subf":
+                    res = new RulesActionDoubleArithmeticOperation(this, parentAction, actionNode, step, "arg1", "-", "arg2", "dst");
+                    break;
+                case "mulf":
+                    res = new RulesActionDoubleArithmeticOperation(this, parentAction, actionNode, step, "arg1", "*", "arg2", "dst");
+                    break;
+                case "divf":
+                    res = new RulesActionDoubleArithmeticOperation(this, parentAction, actionNode, step, "arg1", "/", "arg2", "dst");
+                    break;
                 case "shl":
                     res = new RulesActionArithmeticOperation(this, parentAction, actionNode, step, "arg1", "<<", "arg2", "dst");
                     break;
@@ -169,7 +180,12 @@ namespace VieweD.Engine.Common
                     res = new RulesActionArithmeticOperation(this, parentAction, actionNode, step, "arg1", "|", "arg2", "dst");
                     break;
                 case "mov":
+                case "assign":
                     res = new RulesActionArithmeticOperation(this, parentAction, actionNode, step, "val", "=", "", "dst");
+                    break;
+                case "movf":
+                case "assignf":
+                    res = new RulesActionDoubleArithmeticOperation(this, parentAction, actionNode, step, "val", "=", "", "dst");
                     break;
                 case "loop":
                     res = new RulesActionLoop(this, parentAction, actionNode, step);
@@ -181,7 +197,7 @@ namespace VieweD.Engine.Common
                     res = new RulesActionContinue(this, parentAction, actionNode, step);
                     break;
                 case "lookup":
-                    res = new RulesActionSaveLookup(this, parentAction, actionNode, step, "source", "val", "altlookup", "save");
+                    res = new RulesActionSaveLookup(this, parentAction, actionNode, step, "source", "val", "altlookup", "save", "savelookup");
                     break;
                 case "template":
                     res = new RulesActionTemplate(this, parentAction, actionNode, step, "name");
@@ -220,12 +236,12 @@ namespace VieweD.Engine.Common
         public virtual void RunRule(PacketParser packetParser, ref ushort dataFieldIndex)
         {
             // Settings some defaults
-            SetLocalVar("p_size", packetParser.PD.PacketDataSize.ToString());
-            SetLocalVar("p_type", packetParser.PD.PacketId.ToString());
-            SetLocalVar("p_level", packetParser.PD.OriginalPacketLevel.ToString());
-            SetLocalVar("pSize", packetParser.PD.PacketDataSize.ToString());
-            SetLocalVar("pType", packetParser.PD.PacketId.ToString());
-            SetLocalVar("pLevel", packetParser.PD.OriginalPacketLevel.ToString());
+            SetLocalVar("p_size", packetParser.PD.PacketDataSize.ToString(CultureInfo.InvariantCulture));
+            SetLocalVar("p_type", packetParser.PD.PacketId.ToString(CultureInfo.InvariantCulture));
+            SetLocalVar("p_level", packetParser.PD.OriginalPacketLevel.ToString(CultureInfo.InvariantCulture));
+            SetLocalVar("pSize", packetParser.PD.PacketDataSize.ToString(CultureInfo.InvariantCulture));
+            SetLocalVar("pType", packetParser.PD.PacketId.ToString(CultureInfo.InvariantCulture));
+            SetLocalVar("pLevel", packetParser.PD.OriginalPacketLevel.ToString(CultureInfo.InvariantCulture));
 
             // Run all actions
             foreach (var action in Actions)

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Xml;
@@ -169,7 +170,7 @@ namespace VieweD.Engine.Common
             var dataString = d.ToString() + " - 0x" + d.ToString("X2") + " - " + pp.ByteToBits(d) + " - '" + (char)d + "'";
             var VARName = XmlHelper.GetAttributeString(Attribs, "name");
             var LookupVal = GetLookup(d);
-            ParentRule.SetLocalVar(VARName, d.ToString());
+            ParentRule.SetLocalVar(VARName, d.ToString(CultureInfo.InvariantCulture));
             pp.AddParseLineToView(FieldIndex, "0x" + pos.ToString("X2"), pp.GetDataColor(FieldIndex), DepthString+VARName, LookupVal + dataString, "", d);
             pp.MarkParsed(pos, 1, FieldIndex);
         }
@@ -192,7 +193,7 @@ namespace VieweD.Engine.Common
             var dataString = d.ToString() + " (0x" + d.ToString("X4") + ")";
             var VARName = XmlHelper.GetAttributeString(Attribs, "name");
             var LookupVal = GetLookup(d);
-            ParentRule.SetLocalVar(VARName, d.ToString());
+            ParentRule.SetLocalVar(VARName, d.ToString(CultureInfo.InvariantCulture));
             pp.AddParseLineToView(FieldIndex, "0x" + pos.ToString("X2"), pp.GetDataColor(FieldIndex), DepthString+VARName, LookupVal + dataString, "", d);
             pp.MarkParsed(pos, 2, FieldIndex);
         }
@@ -215,7 +216,7 @@ namespace VieweD.Engine.Common
             var dataString = d.ToString() + " (0x" + d.ToString("X4") + ")";
             var VARName = XmlHelper.GetAttributeString(Attribs, "name");
             var LookupVal = GetLookup((ulong)d);
-            ParentRule.SetLocalVar(VARName, d.ToString());
+            ParentRule.SetLocalVar(VARName, d.ToString(CultureInfo.InvariantCulture));
             pp.AddParseLineToView(FieldIndex, "0x" + pos.ToString("X2"), pp.GetDataColor(FieldIndex), DepthString+VARName, LookupVal + dataString, "", unchecked((ushort)d));
             pp.MarkParsed(pos, 2, FieldIndex);
         }
@@ -238,7 +239,7 @@ namespace VieweD.Engine.Common
             var dataString = d.ToString() + " (0x" + d.ToString("X8") + ")";
             var VARName = XmlHelper.GetAttributeString(Attribs, "name");
             var LookupVal = GetLookup(d);
-            ParentRule.SetLocalVar(VARName, d.ToString());
+            ParentRule.SetLocalVar(VARName, d.ToString(CultureInfo.InvariantCulture));
             pp.AddParseLineToView(FieldIndex, "0x" + pos.ToString("X2"), pp.GetDataColor(FieldIndex), DepthString+VARName, LookupVal + dataString, "",d);
             pp.MarkParsed(pos, 4, FieldIndex);
         }
@@ -261,7 +262,7 @@ namespace VieweD.Engine.Common
             var dataString = d.ToString() + " (0x" + d.ToString("X8") + ")";
             var VARName = XmlHelper.GetAttributeString(Attribs, "name");
             var LookupVal = GetLookup((ulong)d);
-            ParentRule.SetLocalVar(VARName, d.ToString());
+            ParentRule.SetLocalVar(VARName, d.ToString(CultureInfo.InvariantCulture));
             pp.AddParseLineToView(FieldIndex, "0x" + pos.ToString("X2"), pp.GetDataColor(FieldIndex), DepthString+VARName, LookupVal + dataString, "", unchecked((uint)d));
             pp.MarkParsed(pos, 4, FieldIndex);
         }
@@ -281,7 +282,7 @@ namespace VieweD.Engine.Common
             var d = pp.PD.GetFloatAtPos(pos);
             var dataString = d.ToString();
             var VARName = XmlHelper.GetAttributeString(Attribs, "name");
-            ParentRule.SetLocalVar(VARName, d.ToString());
+            ParentRule.SetLocalVar(VARName, d.ToString(CultureInfo.InvariantCulture));
             pp.AddParseLineToView(FieldIndex, "0x" + pos.ToString("X2"), pp.GetDataColor(FieldIndex), DepthString + VARName, dataString, "");
             pp.MarkParsed(pos, 4, FieldIndex);
         }
@@ -301,7 +302,7 @@ namespace VieweD.Engine.Common
             var d = pp.PD.GetDoubleAtPos(pos);
             var dataString = d.ToString();
             var VARName = XmlHelper.GetAttributeString(Attribs, "name");
-            ParentRule.SetLocalVar(VARName, d.ToString());
+            ParentRule.SetLocalVar(VARName, d.ToString(CultureInfo.InvariantCulture));
             pp.AddParseLineToView(FieldIndex, "0x" + pos.ToString("X2"), pp.GetDataColor(FieldIndex), DepthString + VARName, dataString, "");
             pp.MarkParsed(pos, 8, FieldIndex);
         }
@@ -324,7 +325,7 @@ namespace VieweD.Engine.Common
             Half d = Half.ToHalf(rd);
             var dataString = d.ToString();
             var VARName = XmlHelper.GetAttributeString(Attribs, "name");
-            ParentRule.SetLocalVar(VARName, d.ToString());
+            ParentRule.SetLocalVar(VARName, d.ToString(CultureInfo.InvariantCulture));
             pp.AddParseLineToView(FieldIndex, "0x" + pos.ToString("X2"), pp.GetDataColor(FieldIndex), DepthString+VARName, dataString, "");
             pp.MarkParsed(pos, 4, FieldIndex);
         }
@@ -347,7 +348,7 @@ namespace VieweD.Engine.Common
             var dataString = d.ToString() + " (0x" + d.ToString("X16") + ")";
             var VARName = XmlHelper.GetAttributeString(Attribs, "name");
             var LookupVal = GetLookup(d);
-            ParentRule.SetLocalVar(VARName, d.ToString());
+            ParentRule.SetLocalVar(VARName, d.ToString(CultureInfo.InvariantCulture));
             pp.AddParseLineToView(FieldIndex, "0x" + pos.ToString("X2"), pp.GetDataColor(FieldIndex), DepthString+VARName, LookupVal + dataString, "", d);
             pp.MarkParsed(pos, 8, FieldIndex);
         }
@@ -370,7 +371,7 @@ namespace VieweD.Engine.Common
             var dataString = d.ToString() + " (0x" + d.ToString("X16") + ")";
             var VARName = XmlHelper.GetAttributeString(Attribs, "name");
             var LookupVal = GetLookup((ulong)d);
-            ParentRule.SetLocalVar(VARName, d.ToString());
+            ParentRule.SetLocalVar(VARName, d.ToString(CultureInfo.InvariantCulture));
             pp.AddParseLineToView(FieldIndex, "0x" + pos.ToString("X2"), pp.GetDataColor(FieldIndex), DepthString+VARName, LookupVal + dataString, "", unchecked((ulong)d));
             pp.MarkParsed(pos, 8, FieldIndex);
         }
@@ -395,33 +396,8 @@ namespace VieweD.Engine.Common
             var dataString = d.ToString() + " (0x" + d.ToString("X6") + ")";
             var VARName = XmlHelper.GetAttributeString(Attribs, "name");
             var LookupVal = GetLookup(d);
-            ParentRule.SetLocalVar(VARName, d.ToString());
+            ParentRule.SetLocalVar(VARName, d.ToString(CultureInfo.InvariantCulture));
             pp.AddParseLineToView(FieldIndex, "0x" + pos.ToString("X2"), pp.GetDataColor(FieldIndex), DepthString+VARName, LookupVal + dataString, "", d);
-            pp.MarkParsed(pos, 3, FieldIndex);
-        }
-
-    }
-
-    public class RulesActionRead3ByteFloat : RulesAction
-    {
-        public RulesActionRead3ByteFloat(PacketRule parent, RulesAction parentAction, XmlNode thisNode, int thisStep, bool reversed) : base(parent, parentAction, thisNode, thisStep, reversed)
-        {
-        }
-
-        public override void RunAction(PacketParser pp, ref ushort FieldIndex)
-        {
-            var pos = pp.PD.Cursor;
-            pp.AddDataFieldEx(pos, 3, ref FieldIndex);
-            var rd = pp.PD.GetDataBytesAtPos(pos, 3).ToList();
-            if (isReversed)
-                rd.Reverse();
-            var d = (float)Math.Round(rd[0] * 0.002f + rd[1] * 0.5f + rd[2] * 128, 4, MidpointRounding.ToEven);
-            rd.Add(0);
-            UInt32 dForLookup = BitConverter.ToUInt32(rd.ToArray(), 0);
-            var dataString = d.ToString() + " (0x" + rd[0].ToString("X2") + rd[1].ToString("X2") + rd[2].ToString("X2") + ")";
-            var VARName = XmlHelper.GetAttributeString(Attribs, "name");
-            ParentRule.SetLocalVar(VARName, d.ToString());
-            pp.AddParseLineToView(FieldIndex, "0x" + pos.ToString("X2"), pp.GetDataColor(FieldIndex), DepthString+VARName, dataString, "", dForLookup);
             pp.MarkParsed(pos, 3, FieldIndex);
         }
 
@@ -459,7 +435,7 @@ namespace VieweD.Engine.Common
             }
             pp.AddDataFieldEx(pp.PD.Cursor, size, ref FieldIndex);
             var d = pp.PD.GetDataAtPos(pos,size);
-            ParentRule.SetLocalVar(VARName, d.ToString());
+            ParentRule.SetLocalVar(VARName, d);
             pp.AddParseLineToView(FieldIndex, "0x" + pos.ToString("X2"), pp.GetDataColor(FieldIndex), DepthString+XmlHelper.GetAttributeString(Attribs, "name"), d, "");
             pp.MarkParsed(pos, size, FieldIndex);
         }
@@ -492,7 +468,7 @@ namespace VieweD.Engine.Common
                 dataString = "Invalid (0x" + rd.ToString("X16") + ")";
             }
             var VARName = XmlHelper.GetAttributeString(Attribs, "name");
-            ParentRule.SetLocalVar(VARName, rd.ToString());
+            ParentRule.SetLocalVar(VARName, rd.ToString(CultureInfo.InvariantCulture));
             pp.AddParseLineToView(FieldIndex, "0x" + pos.ToString("X2"), pp.GetDataColor(FieldIndex), DepthString+VARName, dataString, "", rd);
             pp.MarkParsed(pos, 8, FieldIndex);
         }
@@ -849,7 +825,7 @@ namespace VieweD.Engine.Common
                     pp.AddParseLineToView(0xFFFF, "A" + GetActionStepName(), Color.Red, XmlHelper.GetAttributeString(Attribs, "name"), "Invalid opperator: " + OpperatorName, "");
                     break;
             }
-            ParentRule.SetLocalVar(DestAttrib, res.ToString());
+            ParentRule.SetLocalVar(DestAttrib, res.ToString(CultureInfo.InvariantCulture));
             if (Properties.Settings.Default.ShowDebugInfo)
             {
                 pp.AddParseLineToView(0xFFFF, "A" + GetActionStepName(), pp.GetDataColor(FieldIndex), Node.Name, "(" + Val1.ToString() + " " + OpperatorName + " " + Val2.ToString() + ") => " + res.ToString() + " => " + DestAttrib, "");
@@ -859,6 +835,112 @@ namespace VieweD.Engine.Common
 
     }
 
+    public class RulesActionDoubleArithmeticOperation : RulesAction
+    {
+        private string Arg1Name;
+        private string Arg2Name;
+        private string OpperatorName;
+        private string DestName;
+
+        public RulesActionDoubleArithmeticOperation(PacketRule parent, RulesAction parentAction, XmlNode thisNode, int thisStep, string arg1Name, string opperator, string arg2Name, string destName) : base(parent, parentAction, thisNode, thisStep, false)
+        {
+            Arg1Name = arg1Name;
+            OpperatorName = opperator;
+            Arg2Name = arg2Name;
+            DestName = destName;
+        }
+
+        public override void RunAction(PacketParser pp, ref ushort FieldIndex)
+        {
+            double val1 = 0;
+            var val1Attrib = XmlHelper.GetAttributeString(Attribs, Arg1Name);
+            if (val1Attrib == string.Empty)
+            {
+                pp.AddParseLineToView(0xFFFF, "A" + GetActionStepName(), Color.Red, Node.Name, Arg1Name + " can not be empty", "");
+                return;
+            }
+            if (val1Attrib.StartsWith("#"))
+            {
+                var arg1StringVal = ParentRule.GetLocalVar(val1Attrib.TrimStart('#'));
+                if (double.TryParse(arg1StringVal, NumberStyles.Float, CultureInfo.InvariantCulture, out var aVal))
+                {
+                    val1 = aVal;
+                }
+                else
+                {
+                    pp.AddParseLineToView(0xFFFF, "A" + GetActionStepName(), Color.Red, Node.Name, "Invalid "+Arg1Name+": " + val1Attrib, "");
+                }
+            }
+            else
+            if (double.TryParse(val1Attrib, NumberStyles.Float, CultureInfo.InvariantCulture, out var aVal))
+            {
+                val1 = aVal;
+            }
+
+            double Val2 = 0;
+            var val2Attrib = "<none>";
+            if ((Arg2Name != string.Empty) && (Arg2Name != "0"))
+            {
+                val2Attrib = XmlHelper.GetAttributeString(Attribs, Arg2Name);
+                if (val2Attrib == string.Empty)
+                {
+                    pp.AddParseLineToView(0xFFFF, "A" + GetActionStepName(), Color.Red, Node.Name, Arg2Name + " can not be empty", "");
+                    return;
+                }
+                if (val2Attrib.StartsWith("#"))
+                {
+                    var arg2StringVal = ParentRule.GetLocalVar(val2Attrib.TrimStart('#'));
+                    if (double.TryParse(arg2StringVal, NumberStyles.Float, CultureInfo.InvariantCulture, out var aVal))
+                    {
+                        Val2 = aVal;
+                    }
+                    else
+                    {
+                        pp.AddParseLineToView(0xFFFF, "A" + GetActionStepName(), Color.Red, Node.Name, "Invalid "+Arg2Name+": " + val2Attrib, "");
+                    }
+                }
+                else
+                if (double.TryParse(val2Attrib, NumberStyles.Float, CultureInfo.InvariantCulture, out var aVal))
+                {
+                    Val2 = aVal;
+                }
+            }
+            var DestAttrib = XmlHelper.GetAttributeString(Attribs, DestName);
+
+            double res ;
+            switch (OpperatorName)
+            {
+                case "+":
+                    res = (val1 + Val2);
+                    break;
+                case "-":
+                    res = (val1 - Val2);
+                    break;
+                case "x":
+                case "*":
+                    res = (val1 * Val2);
+                    break;
+                case "/":
+                    res = (val1 / Val2);
+                    break;
+                case "=":
+                    res = (val1);
+                    break;
+                default:
+                    res = 0 ;
+                    pp.AddParseLineToView(0xFFFF, "A" + GetActionStepName(), Color.Red, XmlHelper.GetAttributeString(Attribs, "name"), "Invalid opperator: " + OpperatorName, "");
+                    break;
+            }
+            ParentRule.SetLocalVar(DestAttrib, res.ToString(CultureInfo.InvariantCulture));
+            if (Properties.Settings.Default.ShowDebugInfo)
+            {
+                pp.AddParseLineToView(0xFFFF, "A" + GetActionStepName(), pp.GetDataColor(FieldIndex), Node.Name, "(" + val1.ToString(CultureInfo.InvariantCulture) + " " + OpperatorName + " " + Val2.ToString(CultureInfo.InvariantCulture) + ") => " + res.ToString(CultureInfo.InvariantCulture) + " => " + DestAttrib, "");
+                Debug.WriteLine("{8} {0}: {1}({2}) {3} {4}({5}) => {6}({7})", this.GetType().Name, val1Attrib, val1, OpperatorName, val2Attrib, Val2, DestAttrib, res, GetActionStepName());
+            }
+        }
+
+    }
+    
     public class RulesActionLoop : RulesAction
     {
         public List<RulesAction> ChildActions;
@@ -1009,63 +1091,77 @@ namespace VieweD.Engine.Common
         private string SourceIDName;
         private string DestName;
         private string AltLookupTableName;
+        private string SaveLookupName;
 
-        public RulesActionSaveLookup(PacketRule parent, RulesAction parentAction, XmlNode thisNode, int thisStep, string sourceIdField, string sourceValueField, string altLookupTable, string destName) : base(parent, parentAction, thisNode, thisStep, false)
+        public RulesActionSaveLookup(PacketRule parent, RulesAction parentAction, XmlNode thisNode, int thisStep, string sourceIdField, string sourceValueField, string altLookupTable, string destName, string saveLookupName) : base(parent, parentAction, thisNode, thisStep, false)
         {
             SourceIDName = sourceIdField;
             SourceValueName = sourceValueField;
             DestName = destName;
             AltLookupTableName = altLookupTable;
+            SaveLookupName = saveLookupName;
         }
 
         public override void RunAction(PacketParser pp, ref ushort FieldIndex)
         {
-            var IdAttrib = XmlHelper.GetAttributeString(Attribs, SourceIDName);
-            if (IdAttrib == string.Empty)
+            var idAttrib = XmlHelper.GetAttributeString(Attribs, SourceIDName);
+            if (idAttrib == string.Empty)
             {
                 pp.AddParseLineToView(0xFFFF, "A" + GetActionStepName(), Color.Red, Node.Name, SourceIDName + " can not be empty", "");
                 return;
             }
             long sourceId = 0;
-            var sourceIDString = ParentRule.GetLocalVar(IdAttrib);
-            if (XmlHelper.TryAttribParse(sourceIDString, out var sourceIDParse))
+            var sourceIdString = ParentRule.GetLocalVar(idAttrib);
+            if (XmlHelper.TryAttribParse(sourceIdString, out var sourceIdParse))
             {
-                sourceId = sourceIDParse;
+                sourceId = sourceIdParse;
             }
             else
             {
                 pp.AddParseLineToView(0xFFFF, "A" + GetActionStepName(), Color.Red, Node.Name, SourceIDName + " must be a int value field", "");
             }
 
-            var ValAttrib = XmlHelper.GetAttributeString(Attribs, SourceValueName);
-            if (ValAttrib == string.Empty)
+            var valAttrib = XmlHelper.GetAttributeString(Attribs, SourceValueName);
+            if (valAttrib == string.Empty)
             {
                 pp.AddParseLineToView(0xFFFF, "A" + GetActionStepName(), Color.Red, Node.Name, SourceValueName + " can not be empty", "");
                 return;
             }
-            var sourceValue = ParentRule.GetLocalVar(ValAttrib);
+            var sourceValue = ParentRule.GetLocalVar(valAttrib);
 
-            var AltLookupAttrib = XmlHelper.GetAttributeString(Attribs, AltLookupTableName);
-            if (AltLookupAttrib != string.Empty)
+            var saveLookup = XmlHelper.GetAttributeString(Attribs, SaveLookupName);
+            
+            var altLookupAttrib = XmlHelper.GetAttributeString(Attribs, AltLookupTableName);
+            if (altLookupAttrib != string.Empty)
             {
                 if (XmlHelper.TryAttribParse(sourceValue, out var sourceValueParsed))
                 {
-                    var AltLookupId = sourceValueParsed;
-                    sourceValue = "(" + AltLookupAttrib + ":" + AltLookupId.ToString() + ") " + pp.PD.Parent._parentTab.Engine.DataLookups.NLU(AltLookupAttrib).GetValue((ulong)AltLookupId);
+                    var altLookupId = sourceValueParsed;
+                    var lookedUpValue = pp.PD.Parent._parentTab.Engine.DataLookups.NLU(altLookupAttrib).GetValue((ulong)altLookupId);
+                    sourceValue = "(" + altLookupAttrib + ":" + altLookupId.ToString() + ") " + lookedUpValue;
+                    if (saveLookup != string.Empty)
+                    {
+                        // save result as var
+                        ParentRule.SetLocalVar(saveLookup, lookedUpValue);
+                    }
                 }
                 else
                 {
                     pp.AddParseLineToView(0xFFFF, "A" + GetActionStepName(), Color.Red, DepthString+Node.Name, SourceValueName + " must be a int value field to use the alt lookups function", "");
                 }
             }
+            else if (saveLookup != string.Empty)
+            {
+                pp.AddParseLineToView(0xFFFF, "A" + GetActionStepName(), Color.Red, DepthString+Node.Name, "Save lookup to local var requires to also have alt lookup set", "");
+            }
 
-            var DestListName = XmlHelper.GetAttributeString(Attribs, DestName);
+            var destListName = XmlHelper.GetAttributeString(Attribs, DestName);
 
-            pp.PD.Parent._parentTab.Engine.DataLookups.RegisterCustomLookup(DestListName, (ulong)sourceId, sourceValue);
+            pp.PD.Parent._parentTab.Engine.DataLookups.RegisterCustomLookup(destListName, (ulong)sourceId, sourceValue);
             if (Properties.Settings.Default.ShowDebugInfo)
             {
-                pp.AddParseLineToView(0xFFFF, "A" + GetActionStepName(), pp.GetDataColor(FieldIndex), DepthString+Node.Name, "Save (" + sourceId.ToString() + " => " + sourceValue.ToString() + ") into " + DestListName);
-                Console.WriteLine("{6} {0}: {1}({2}) => {3}({4}) into {5}", this.GetType().Name, sourceId, IdAttrib, sourceValue, ValAttrib, DestListName, GetActionStepName());
+                pp.AddParseLineToView(0xFFFF, "A" + GetActionStepName(), pp.GetDataColor(FieldIndex), DepthString+Node.Name, "Save (" + sourceId.ToString() + " => " + sourceValue.ToString() + ") into " + destListName);
+                Console.WriteLine("{6} {0}: {1}({2}) => {3}({4}) into {5}", this.GetType().Name, sourceId, idAttrib, sourceValue, valAttrib, destListName, GetActionStepName());
             }
         }
 
@@ -1105,7 +1201,7 @@ namespace VieweD.Engine.Common
             var dataString =  PacketParser.MSToString(d) + " (0x" + d.ToString("X8") + ")";
             var VARName = XmlHelper.GetAttributeString(Attribs, "name");
             var LookupVal = GetLookup(d);
-            ParentRule.SetLocalVar(VARName, d.ToString());
+            ParentRule.SetLocalVar(VARName, d.ToString(CultureInfo.InvariantCulture));
             pp.AddParseLineToView(FieldIndex, "0x" + pos.ToString("X2"), pp.GetDataColor(FieldIndex), DepthString + VARName, LookupVal + dataString, "", d);
             pp.MarkParsed(pos, 4, FieldIndex);
         }
@@ -1201,6 +1297,12 @@ namespace VieweD.Engine.Common
             var pos = pp.PD.Cursor;
             var dataString = ParentRule.GetLocalVar(FieldName);
             var hexString = string.Empty;
+            // Handle output differently if float val
+            if (double.TryParse(dataString, out var ValDouble) && (Math.Abs(Math.Floor(ValDouble) - ValDouble) > 0.00001))
+            {
+                pp.AddParseLineToView(FieldIndex, "0x" + pos.ToString("X2"), pp.GetDataColor(FieldIndex), DepthString + FieldName, ValDouble.ToString(CultureInfo.InvariantCulture), "");
+            }
+            else
             if (XmlHelper.TryAttribParse(dataString, out var ValNumber))
             {
                 hexString = " (0x" + ValNumber.ToString("X")+")";
@@ -1214,5 +1316,5 @@ namespace VieweD.Engine.Common
         }
 
     }
-
+    
 }

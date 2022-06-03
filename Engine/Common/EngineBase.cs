@@ -48,6 +48,7 @@ namespace VieweD.Engine.Common
         /// List of names of possible tools that need to be added to the menu 
         /// </summary>
         public virtual List<string> ToolNamesList { get; protected set; } = new List<string>();
+        public string CurrentRunningToolName { get; set; } = string.Empty;
 
         /// <summary>
         /// Lookup Data for this engine
@@ -221,7 +222,7 @@ namespace VieweD.Engine.Common
             return false;
         }
 
-        public virtual void RunTool(string toolName)
+        public virtual void RunTool(PacketTabPage currentTabPage, string toolName)
         {
             // Implement tools by overriding this
         }

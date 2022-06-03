@@ -845,7 +845,7 @@ namespace VieweD.Engine.FFXI
             AddValuesFromMobList(dataLookups.NLUOrCreate("npcname"), ref mobList); // Not sure if we're ever gonna use this, but meh
         }
 
-        public override void RunTool(string toolName)
+        public override void RunTool(PacketTabPage currentTabPage, string toolName)
         {
             if (toolName == ToolImportGame)
                 ImportFromGame();

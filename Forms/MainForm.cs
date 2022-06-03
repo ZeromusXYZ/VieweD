@@ -811,6 +811,9 @@ namespace VieweD
             mmFileClose.Enabled = true;
             mmSearch.Enabled = tp?.PL?.Count > 0;
             mmFilter.Enabled = tp?.PL?.Count > 0;
+
+            mmTools.Visible = tp?.Engine.ToolNamesList.Count > 0;
+            mmTools.Enabled = mmTools.Visible;
         }
 
         private void TcPackets_SelectedIndexChanged(object sender, EventArgs e)
@@ -1838,16 +1841,6 @@ namespace VieweD
             Process.Start(Url7ZipRequiredVer);
         }
 
-        private void MMExtraImportFromGame_Click(object sender, EventArgs e)
-        {
-            var toolName = "";
-            foreach (var engine in Engines.AllEngines)
-            {
-                if (engine.ToolNamesList.Contains(toolName))
-                    engine.RunTool(toolName);
-            }
-        }
-
         private void mmExtraExportPacketsAsCSV_Click(object sender, EventArgs e)
         {
             PacketTabPage thisTP = GetCurrentPacketTabPage();
@@ -1884,6 +1877,30 @@ namespace VieweD
             if (splitContainer3.SplitterDistance > maxRawSizeWidth)
                 splitContainer3.SplitterDistance = maxRawSizeWidth;
         }
+        
+        private void MMToolsRun_Click(object sender, EventArgs e)
+        {
+            if (sender is ToolStripMenuItem mi)
+            {
+                var currentTabPage = GetCurrentPacketTabPage();
+                currentTabPage?.Engine?.RunTool(currentTabPage, mi.Text);
+            }
+        }
 
+        private void mmTools_DropDownOpening(object sender, EventArgs e)
+        {
+            // Populate the tools menu
+            mmTools.DropDownItems.Clear();
+            var tp = GetCurrentPacketTabPage();
+            if (tp == null)
+                return;
+            
+            foreach (var toolName in tp?.Engine.ToolNamesList)
+            {
+                ToolStripMenuItem mi = new ToolStripMenuItem(toolName);
+                mi.Click += MMToolsRun_Click;
+                mmTools.DropDownItems.Add(mi);
+            }
+        }
     }
 }
