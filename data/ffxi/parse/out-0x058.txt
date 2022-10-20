@@ -1,0 +1,10 @@
+file;out-0x058;SmallPacket0x058;
+
+uint16;0x04;Skill Id
+uint16;0x06;Skill Level
+info;0x0A;Request Type;2= List View, 3 = Recipe
+byte;0x0A;Request Type
+uint16;0x0C;Result Min
+uint16;0x0E;Result Max
+uint16;0x10;Selected Recipe Offset
+byte;0x12;Skill Rank

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Windows.Forms;
 using VieweD.Engine.Common;
 
 namespace VieweD.Engine
@@ -58,24 +59,29 @@ namespace VieweD.Engine
 
         public static bool CompilePlugins()
         {
+            var appDir = Path.GetDirectoryName(Application.ExecutablePath);
+            var pluginsDir = Path.Combine(appDir, "Plugins");
+            // var oldDirectory = Directory.GetCurrentDirectory();
             var startTime = DateTime.UtcNow;
             using (var loadForm = new LoadingForm())
             {
                 loadForm.Text = @"VieweD - Compiling plugins ...";
                 loadForm.pb.Maximum = 100;
+
                 // Only actually show the form if we got debug enabled
                 if (Properties.Settings.Default.ShowDebugInfo)
                     loadForm.Show();
                 _pluginsAssembly = null;
+
                 // Get all source code files in Plugins folder
-                if (Directory.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Plugins")))
-                    PluginFiles = Directory.GetFiles(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Plugins"), "*.cs", SearchOption.AllDirectories).ToList();
+                if (Directory.Exists(pluginsDir))
+                    PluginFiles = Directory.GetFiles(pluginsDir, "*.cs", SearchOption.AllDirectories).ToList();
 
                 loadForm.pb.Value = 10;
 
-                if (Directory.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Plugins")))
+                if (Directory.Exists(pluginsDir))
                 {
-                    var pluginReferencesFiles = Directory.GetFiles(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Plugins"), "reference.txt", SearchOption.AllDirectories).ToList();
+                    var pluginReferencesFiles = Directory.GetFiles(pluginsDir, "reference.txt", SearchOption.AllDirectories).ToList();
                     foreach (var pluginReference in pluginReferencesFiles)
                     {
                         var s = File.ReadAllLines(pluginReference);
@@ -115,8 +121,11 @@ namespace VieweD.Engine
 
                 // Add references specified in plugins
                 foreach (var reference in PluginReferences)
-                    if (File.Exists(reference))
-                        references.Add(MetadataReference.CreateFromFile(reference));
+                {
+                    var referenceFileName = Path.Combine(appDir, reference);
+                    if (File.Exists(referenceFileName))
+                        references.Add(MetadataReference.CreateFromFile(referenceFileName));
+                }
 
                 loadForm.pb.Value = 60;
 
@@ -139,6 +148,8 @@ namespace VieweD.Engine
                     foreach (var error in emitResult.Diagnostics)
                         if (error.Severity == DiagnosticSeverity.Error)
                             PluginErrors.Add(error.ToString());
+
+                    // Directory.SetCurrentDirectory(oldDirectory);
                     return false;
                 }
 
@@ -152,6 +163,7 @@ namespace VieweD.Engine
             var endTime = DateTime.UtcNow;
             CompileTime = endTime - startTime;
 
+            // Directory.SetCurrentDirectory(oldDirectory);
             return true;
         }
 

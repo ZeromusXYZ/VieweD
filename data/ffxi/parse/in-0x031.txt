@@ -4,52 +4,51 @@ info;0;Info;This packet uses 2 different layout depending on what it's send for
 
 [[Recipe List]]
 info;0;Info (1);When you ask the guild NPC that provides regular Image Support for recipes
-uint32;$04;NPC ID;1-2
-uint16;$06;NPC Index;3
-data6;$08;_unknown?;4 5 6
-uint16:items;$0E;Item 1;7
-uint16:items;$10;Item 2;8
-uint16:items;$12;Item 3;9
-uint16:items;$14;Item 4;10
-uint16:items;$16;Item 5;11
-uint16:items;$18;Item 6;12
-uint16:items;$1A;Item 7;13
-uint16:items;$1C;Item 8;14
-uint16:items;$1E;Item 9;15
-uint16:items;$20;Item 10;16
-uint16:items;$22;Item 11;17
-uint16:items;$24;Item 12;18
-uint16:items;$26;Item 13;19
-uint16:items;$28;Item 14;20
-uint16:items;$2A;Item 15;21
-uint16:items;$2C;Item 16;22
-uint16;$2E;_unknown?;23
-uint16:items;$30;Next page Item?;24
+uint32;$04;NPC ID;
+uint16;$06;NPC Index;
+uint16;$08;_unknown;
+uint16:items;$10;Item 1;
+uint16:items;$12;Item 2;
+uint16:items;$14;Item 3;
+uint16:items;$16;Item 4;
+uint16:items;$18;Item 5;
+uint16:items;$1A;Item 6;
+uint16:items;$1C;Item 7;
+uint16:items;$1E;Item 8;
+uint16:items;$20;Item 9;
+uint16:items;$22;Item 10;
+uint16:items;$24;Item 11;
+uint16:items;$26;Item 12;
+uint16:items;$28;Item 13;
+uint16:items;$2A;Item 14;
+uint16:items;$2C;Item 15;
+uint16:items;$2E;Item 16;
+uint16:items;$30;Next page Item?;
 [[]]
 
 [[Recipe Details]]
 info;0;Info (2);When you ask a guild NPC for a specific recipe
-uint16:items;$04;Item to make;1
-uint16;$06;Subcraft 1;2
-uint16;$08;Subcraft 2;3
-uint16;$0A;Subcraft 3;4
-uint16:items;$0C;Crystal;5
-uint16;$0E;KeyItem needed;6
-uint16:items;$10;Ingredient 1;7
-uint16:items;$12;Ingredient 2;8
-uint16:items;$14;Ingredient 3;9
-uint16:items;$16;Ingredient 4;10
-uint16:items;$18;Ingredient 5;11
-uint16:items;$1A;Ingredient 6;12
-uint16:items;$1C;Ingredient 7;13
-uint16:items;$1E;Ingredient 8;14
-uint16:items;$20;Quantity 1;15
-uint16:items;$22;Quantity 2;16
-uint16:items;$24;Quantity 3;17
-uint16:items;$26;Quantity 4;18
-uint16:items;$28;Quantity 5;19
-uint16:items;$2A;Quantity 6;20
-uint16:items;$2C;Quantity 7;21
-uint16:items;$2E;Quantity 8;22
-data4;$30;_unknown?;23-24
+uint16:items;$04;Item to make;
+uint16;$06;Subcraft 1;
+uint16;$08;Subcraft 2;
+uint16;$0A;Subcraft 3;
+uint16:items;$0C;Crystal;
+uint16;$0E;KeyItem needed;
+uint16:items;$10;Ingredient 1;
+uint16:items;$12;Ingredient 2;
+uint16:items;$14;Ingredient 3;
+uint16:items;$16;Ingredient 4;
+uint16:items;$18;Ingredient 5;
+uint16:items;$1A;Ingredient 6;
+uint16:items;$1C;Ingredient 7;
+uint16:items;$1E;Ingredient 8;
+uint16;$20;Quantity 1;
+uint16;$22;Quantity 2;
+uint16;$24;Quantity 3;
+uint16;$26;Quantity 4;
+uint16;$28;Quantity 5;
+uint16;$2A;Quantity 6;
+uint16;$2C;Quantity 7;
+uint16;$2E;Quantity 8;
+data4;$30;_unknown?;
 [[]]
