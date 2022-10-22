@@ -88,6 +88,25 @@ namespace VieweD.Forms
             cbOpenedLog.Items.Add(shortDir);
         }
 
+        private void PopulateOpenedLogDropDownList()
+        {
+            cbOpenedLog.Items.Clear();
+            AddLogOption(tp.LoadedLogFile); // Current Log File
+            cbOpenedLog.Text = tp.LoadedLogFile;
+            List<string> files = new List<string>();
+            foreach (var ext in tp.Engine.FileExtensions)
+            {
+                var eFiles = Directory.GetFiles(tp.ProjectFolder, "*" + ext.Key, SearchOption.AllDirectories);
+                files.AddRange(eFiles);
+            }
+
+            foreach (var f in files)
+            {
+                if (!Path.GetFileName(f).ToLower().StartsWith("0x"))
+                    AddLogOption(f);
+            }
+        }
+
         public void LoadFromPacketTapPage(PacketTabPage sourceTp)
         {
             tp = sourceTp;
@@ -124,21 +143,8 @@ namespace VieweD.Forms
                 tVideoURL.Text = tp.LinkYoutubeUrl;
                 tRulesFile.Text = tp.LoadedRulesFile;
                 tPackedLogsURL.Text = tp.LinkPacketsDownloadUrl;
-                cbOpenedLog.Items.Clear();
-                AddLogOption(tp.LoadedLogFile); // Current Log File
-                cbOpenedLog.Text = tp.LoadedLogFile;
-                List<string> files = new List<string>();
-                foreach (var ext in tp.Engine.FileExtensions)
-                {
-                    var eFiles = Directory.GetFiles(tp.ProjectFolder, "*"+ext.Key, SearchOption.AllDirectories);
-                    files.AddRange(eFiles);
-                }
 
-                foreach (var f in files)
-                {
-                    if (!Path.GetFileName(f).ToLower().StartsWith("0x"))
-                        AddLogOption(f);
-                }
+                PopulateOpenedLogDropDownList();
 
                 var decryptVersion = tp.DecryptVersion;
                 if (ValidateRulesFile(Helper.TryMakeFullPath(tp.ProjectFolder,tRulesFile.Text), ref decryptVersion))
@@ -648,7 +654,7 @@ namespace VieweD.Forms
 
         private void ProjectInfoForm_Enter(object sender, EventArgs e)
         {
-            
+            // Do Nothing
         }
 
         private void ProjectInfoForm_Activated(object sender, EventArgs e)
@@ -681,7 +687,7 @@ namespace VieweD.Forms
             if (File.Exists(rulesFile) && (rulesFile != tRulesFile.Text))
             {
                 tRulesFile.Text = rulesFile;
-                MessageBox.Show("Rules file has been changed to\n" + rulesFile + "\n\nYou need to re-open the project for changes to take place", @"Rules Changed", MessageBoxButtons.OK);
+                MessageBox.Show($"Rules file has been changed to\r\n{rulesFile}\n\nYou need to re-open the project for changes to take place", @"Rules Changed", MessageBoxButtons.OK);
             }
         }
     }

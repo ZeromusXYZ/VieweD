@@ -10,46 +10,47 @@ namespace VieweD.Engine.Common
 {
     public class PacketTabPage: TabPage
     {
-        private MainForm ownerMainForm;
+        private MainForm OwnerMainForm { get; set; }
         // ReSharper disable once InconsistentNaming
         public PacketList PLLoaded; // File Loaded
         // ReSharper disable once InconsistentNaming
         public PacketList PL; // Filtered File Data Displayed
 
-        public uint CurrentSync;
-        public string LoadedLogFile ;
-        public string LoadedRulesFile;
-        public VideoLinkForm VideoLink ;
-        public string ProjectFolder;
-        public string ProjectFile;
-        public string ProjectTags;
-        public string LinkVideoFileName;
-        public string LinkYoutubeUrl;
-        public string LinkPacketsDownloadUrl;
-        public TimeSpan LinkVideoOffset;
-        public string DecryptVersion = "_None_";
+        public uint CurrentSync { get; set; }
+        public string LoadedLogFile { get; set; }
+        public string LoadedRulesFile { get; set; }
+        public VideoLinkForm VideoLink { get; set; }
+        public string ProjectFolder { get; set; }
+        public string ProjectFile { get; set; }
+        public string ProjectTags { get; set; }
+        public string LinkVideoFileName { get; set; }
+        public string LinkYoutubeUrl { get; set; }
+        public string LinkPacketsDownloadUrl { get; set; }
+        public TimeSpan LinkVideoOffset { get; set; }
+        public string DecryptVersion { get; set; } = "_None_";
 
-        public FlickerFreeListBox LbPackets;
+        public FlickerFreeListBox LbPackets { get; private set; }
         // Popup Menu Controls
-        private ContextMenuStrip pmPl;
-        private ToolStripMenuItem pmPlShowPacketName;
-        private ToolStripSeparator pmPls1;
-        private ToolStripMenuItem pmPlShowOnly;
-        private ToolStripMenuItem pmPlHideThis;
-        private ToolStripSeparator pmPls2;
-        private ToolStripMenuItem pmPlShowOutOnly;
-        private ToolStripMenuItem pmPlShowInOnly;
-        private ToolStripSeparator pmPls3;
-        private ToolStripMenuItem pmPlResetFilters;
-        private ToolStripSeparator pmPls4;
-        private ToolStripMenuItem pmPlEditParser;
-        private ToolStripMenuItem pmPlExportPacket;
+        private ContextMenuStrip PmPl { get; set; }
+        private ToolStripMenuItem PmPlShowPacketName { get; set; }
+        private ToolStripSeparator PmPls1 { get; set; }
+        private ToolStripMenuItem PmPlShowOnly { get; set; }
+        private ToolStripMenuItem PmPlHideThis { get; set; }
+        private ToolStripSeparator PmPls2 { get; set; }
+        private ToolStripMenuItem PmPlShowOutOnly { get; set; }
+        private ToolStripMenuItem PmPlShowInOnly { get; set; }
+        private ToolStripSeparator PmPls3 { get; set; }
+        private ToolStripMenuItem PmPlResetFilters { get; set; }
+        private ToolStripSeparator PmPls4 { get; set; }
+        private ToolStripMenuItem PmPlEditParser { get; set; }
+        private ToolStripMenuItem PmPlExportPacket { get; set; }
+
         // Engine Handler
-        public EngineBase Engine;
+        public EngineBase Engine { get; set; }
 
         public PacketTabPage(MainForm mainForm)
         {
-            ownerMainForm = mainForm;
+            OwnerMainForm = mainForm;
 
             Engine = new EngineBase(this); // Default NULL Handler
 
@@ -66,8 +67,8 @@ namespace VieweD.Engine.Common
 
             // Set ListBox Position
             LbPackets.Parent = this;
-            LbPackets.Location = new System.Drawing.Point(0, 0);
-            LbPackets.Size = new System.Drawing.Size(this.Width, this.Height);
+            LbPackets.Location = new Point(0, 0);
+            LbPackets.Size = new Size(this.Width, this.Height);
             LbPackets.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             LbPackets.Dock = DockStyle.Fill;
             LbPackets.Font = Properties.Settings.Default.PacketListFont ; // Add fixed sized font (to override the tab page itself)
@@ -84,53 +85,53 @@ namespace VieweD.Engine.Common
             ProjectTags = string.Empty;
 
             // Create Popup Menu
-            pmPl = new ContextMenuStrip();
-            pmPl.Opening += PmPL_Opening;
+            PmPl = new ContextMenuStrip();
+            PmPl.Opening += PmPL_Opening;
 
-            LbPackets.ContextMenuStrip = pmPl;
+            LbPackets.ContextMenuStrip = PmPl;
 
-            pmPlShowPacketName = new ToolStripMenuItem("Show packet name");
-            pmPl.Items.Add(pmPlShowPacketName);
+            PmPlShowPacketName = new ToolStripMenuItem("Show packet name");
+            PmPl.Items.Add(PmPlShowPacketName);
 
-            pmPls1 = new ToolStripSeparator();
-            pmPl.Items.Add(pmPls1);
+            PmPls1 = new ToolStripSeparator();
+            PmPl.Items.Add(PmPls1);
 
-            pmPlShowOnly = new ToolStripMenuItem("Show this type only");
-            pmPlShowOnly.Click += PmPLShowOnly_Click;
-            pmPl.Items.Add(pmPlShowOnly);
+            PmPlShowOnly = new ToolStripMenuItem("Show this type only");
+            PmPlShowOnly.Click += PmPLShowOnly_Click;
+            PmPl.Items.Add(PmPlShowOnly);
 
-            pmPlHideThis = new ToolStripMenuItem("Hide this type");
-            pmPlHideThis.Click += PmPLHideThis_Click;
-            pmPl.Items.Add(pmPlHideThis);
+            PmPlHideThis = new ToolStripMenuItem("Hide this type");
+            PmPlHideThis.Click += PmPLHideThis_Click;
+            PmPl.Items.Add(PmPlHideThis);
 
-            pmPls2 = new ToolStripSeparator();
-            pmPl.Items.Add(pmPls2);
+            PmPls2 = new ToolStripSeparator();
+            PmPl.Items.Add(PmPls2);
 
-            pmPlShowOutOnly = new ToolStripMenuItem("Show only Outgoing");
-            pmPlShowOutOnly.Click += PmPLShowOutgoingOnly_Click;
-            pmPl.Items.Add(pmPlShowOutOnly);
+            PmPlShowOutOnly = new ToolStripMenuItem("Show only Outgoing");
+            PmPlShowOutOnly.Click += PmPLShowOutgoingOnly_Click;
+            PmPl.Items.Add(PmPlShowOutOnly);
 
-            pmPlShowInOnly = new ToolStripMenuItem("Show only Incoming");
-            pmPlShowInOnly.Click += PmPLShowIncomingOnly_Click;
-            pmPl.Items.Add(pmPlShowInOnly);
+            PmPlShowInOnly = new ToolStripMenuItem("Show only Incoming");
+            PmPlShowInOnly.Click += PmPLShowIncomingOnly_Click;
+            PmPl.Items.Add(PmPlShowInOnly);
 
-            pmPls3 = new ToolStripSeparator();
-            pmPl.Items.Add(pmPls3);
+            PmPls3 = new ToolStripSeparator();
+            PmPl.Items.Add(PmPls3);
 
-            pmPlResetFilters = new ToolStripMenuItem("Reset all filters");
-            pmPlResetFilters.Click += PmPLResetFilter_Click;
-            pmPl.Items.Add(pmPlResetFilters);
+            PmPlResetFilters = new ToolStripMenuItem("Reset all filters");
+            PmPlResetFilters.Click += PmPLResetFilter_Click;
+            PmPl.Items.Add(PmPlResetFilters);
 
-            pmPls4 = new ToolStripSeparator();
-            pmPl.Items.Add(pmPls4);
+            PmPls4 = new ToolStripSeparator();
+            PmPl.Items.Add(PmPls4);
 
-            pmPlEditParser = new ToolStripMenuItem("Edit this parser");
-            pmPlEditParser.Click += PmPLEditParser_Click;
-            pmPl.Items.Add(pmPlEditParser);
+            PmPlEditParser = new ToolStripMenuItem("Edit this parser");
+            PmPlEditParser.Click += PmPLEditParser_Click;
+            PmPl.Items.Add(PmPlEditParser);
 
-            pmPlExportPacket = new ToolStripMenuItem("Export Packet");
-            pmPlExportPacket.Click += PmPLExport_Click;
-            pmPl.Items.Add(pmPlExportPacket);
+            PmPlExportPacket = new ToolStripMenuItem("Export Packet");
+            PmPlExportPacket.Click += PmPLExport_Click;
+            PmPl.Items.Add(PmPlExportPacket);
 
             // Init misc stuff
             CurrentSync = 0xFFFFFFFF;
@@ -300,7 +301,6 @@ namespace VieweD.Engine.Common
                         e.Graphics.DrawImage(Properties.Resources.mini_unk_ticon, icon1);
                     }
                     break;
-                case 0:
                 default:
                     textBounds = e.Bounds ;
                     // No icons, just text
@@ -352,7 +352,7 @@ namespace VieweD.Engine.Common
         {
             var gotoIndex = -1;
             Application.UseWaitCursor = true;
-            using (LoadingForm loadForm = new LoadingForm(ownerMainForm))
+            using (LoadingForm loadForm = new LoadingForm(OwnerMainForm))
             {
                 try
                 {
@@ -412,65 +412,65 @@ namespace VieweD.Engine.Common
                 if (r != null)
                 {
                     var lookupKey = r.LookupKey + (((ulong)pd.PacketLogType) * 0x0100000000);
-                    pmPlShowPacketName.Text = lookupKey.ToString("X8");
-                    pmPlEditParser.Tag = r ;
+                    PmPlShowPacketName.Text = lookupKey.ToString("X8");
+                    PmPlEditParser.Tag = r ;
                     if (pd.PacketLogType != PacketLogTypes.Unknown)
                     {
-                        pmPlEditParser.Text = @"Edit " + lookupKey.ToString("X8") + @" => " + r.Name;
-                        pmPlEditParser.Visible = true;
+                        PmPlEditParser.Text = @"Edit " + lookupKey.ToString("X8") + @" => " + r.Name;
+                        PmPlEditParser.Visible = true;
                     }
                     else
                     {
-                        pmPlEditParser.Text = @"Unknown direction, can't edit";
-                        pmPlEditParser.Visible = false;
+                        PmPlEditParser.Text = @"Unknown direction, can't edit";
+                        PmPlEditParser.Visible = false;
                     }
                 }
                 else
                 {
-                    pmPlShowPacketName.Text = @"No rule assigned";
-                    pmPlEditParser.Tag = null;
-                    pmPlEditParser.Text = @"Nothing to edit";
-                    pmPlEditParser.Visible = false;
+                    PmPlShowPacketName.Text = @"No rule assigned";
+                    PmPlEditParser.Tag = null;
+                    PmPlEditParser.Text = @"Nothing to edit";
+                    PmPlEditParser.Visible = false;
                 }
 
             }
             else
             {
-                pmPlShowPacketName.Text = pd.PacketLogType.ToString() + @" - 0x" + pd.PacketId.ToString("X3");
+                PmPlShowPacketName.Text = pd.PacketLogType.ToString() + @" - 0x" + pd.PacketId.ToString("X3");
                 string parserFileName;
                 switch (pd.PacketLogType)
                 {
                     case PacketLogTypes.Incoming:
                         parserFileName = Path.Combine("data", pd.Parent._parentTab.Engine.EngineId, "parse", "in-0x" + pd.PacketId.ToString("X3") + ".txt");
-                        pmPlEditParser.Text = @"Edit " + parserFileName;
-                        pmPlEditParser.Visible = true;
+                        PmPlEditParser.Text = @"Edit " + parserFileName;
+                        PmPlEditParser.Visible = true;
                         break;
                     case PacketLogTypes.Outgoing:
                         parserFileName = Path.Combine("data", pd.Parent._parentTab.Engine.EngineId, "parse", "out-0x" + pd.PacketId.ToString("X3") + ".txt");
-                        pmPlEditParser.Text = @"Edit " + parserFileName;
-                        pmPlEditParser.Visible = true;
+                        PmPlEditParser.Text = @"Edit " + parserFileName;
+                        PmPlEditParser.Visible = true;
                         break;
                     default:
                         parserFileName = "";
-                        pmPlEditParser.Text = "";
-                        pmPlEditParser.Visible = false;
+                        PmPlEditParser.Text = "";
+                        PmPlEditParser.Visible = false;
                         break;
                 }
-                pmPlEditParser.Tag = parserFileName;
+                PmPlEditParser.Tag = parserFileName;
             }
-            pmPlShowOnly.Enabled = (pd.PacketLogType != PacketLogTypes.Unknown);
-            pmPlHideThis.Enabled = (pd.PacketLogType != PacketLogTypes.Unknown);
+            PmPlShowOnly.Enabled = (pd.PacketLogType != PacketLogTypes.Unknown);
+            PmPlHideThis.Enabled = (pd.PacketLogType != PacketLogTypes.Unknown);
 
         }
 
         private void PmPLEditParser_Click(object sender, EventArgs e)
         {
-            if (pmPlEditParser.Tag == null)
+            if (PmPlEditParser.Tag == null)
                 return;
-            if (pmPlEditParser.Tag is string fName)
-                ownerMainForm.OpenBasicParseEditor(fName);
-            if (pmPlEditParser.Tag is PacketRule pr)
-                ownerMainForm.OpenXmlRulesParseEditor(pr);
+            if (PmPlEditParser.Tag is string fName)
+                OwnerMainForm.OpenBasicParseEditor(fName);
+            if (PmPlEditParser.Tag is PacketRule pr)
+                OwnerMainForm.OpenXmlRulesParseEditor(pr);
         }
 
         private void PmPLShowOnly_Click(object sender, EventArgs e)
@@ -641,7 +641,7 @@ namespace VieweD.Engine.Common
             }
             catch (Exception x)
             {
-                MessageBox.Show(@"Error saving raw packet " + exportName + "\r\nException: " + x.Message);
+                MessageBox.Show($"Error saving raw packet {exportName}\r\nException: {x.Message}");
             }
 
         }
@@ -798,7 +798,8 @@ namespace VieweD.Engine.Common
 
             if ( (Properties.Settings.Default.AskCreateNewProjectFile) && (!File.Exists(ProjectFile)) )
             {
-                if (MessageBox.Show("Do you want to save project settings as a new project file ?\r\n" + ProjectFile, @"Create Project File", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+                if (MessageBox.Show($"Do you want to save project settings as a new project file ?\r\n" +
+                                    $"{ProjectFile}", @"Create Project File", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
                 {
                     ProjectFile = string.Empty;
                     return false;
@@ -806,47 +807,49 @@ namespace VieweD.Engine.Common
             }
 
 
-            string relVideo = string.Empty;
+            var relVideo = string.Empty;
             if (!string.IsNullOrEmpty(LinkVideoFileName))
                 relVideo = Helper.MakeRelative(ProjectFolder, LinkVideoFileName);
 
-            string relLogFile = string.Empty;
+            var relLogFile = string.Empty;
             if (!string.IsNullOrEmpty(LoadedLogFile))
                 relLogFile = Helper.MakeRelative(ProjectFolder, LoadedLogFile);
 
-            string relRuleFile = string.Empty;
+            var relRuleFile = string.Empty;
             if (!string.IsNullOrEmpty(LoadedRulesFile))
                 relRuleFile = Helper.MakeRelative(ProjectFolder, LoadedRulesFile);
 
             try
             {
-                string pin = string.Empty;
+                var pin = string.Empty;
                 foreach(UInt16 n in PLLoaded.ContainsPacketsIn)
                 {
                     if (pin != string.Empty)
                         pin += ",";
                     pin += n.ToString("X3");
                 }
-                string pout = string.Empty;
-                foreach (UInt16 n in PLLoaded.ContainsPacketsOut)
+                var pout = string.Empty;
+                foreach (var n in PLLoaded.ContainsPacketsOut)
                 {
                     if (pout != string.Empty)
                         pout += ",";
                     pout += n.ToString("X3");
                 }
 
-                var sl = new List<string>();
-                sl.Add("rem;VieweD Project File");
-                sl.Add("packetlog;" + relLogFile);
-                sl.Add("rules;" + relRuleFile);
-                sl.Add("decrypt;" + DecryptVersion);
-                sl.Add("video;" + relVideo);
-                sl.Add("tags;" + ProjectTags);
-                sl.Add("packedsource;" + LinkPacketsDownloadUrl);
-                sl.Add("youtube;" + LinkYoutubeUrl);
-                sl.Add("offset;" + LinkVideoOffset.TotalMilliseconds.ToString());
-                sl.Add("pin;" + pin);
-                sl.Add("pout;" + pout);
+                var sl = new List<string>
+                {
+                    "rem;VieweD Project File",
+                    "packetlog;" + relLogFile,
+                    "rules;" + relRuleFile,
+                    "decrypt;" + DecryptVersion,
+                    "video;" + relVideo,
+                    "tags;" + ProjectTags,
+                    "packedsource;" + LinkPacketsDownloadUrl,
+                    "youtube;" + LinkYoutubeUrl,
+                    "offset;" + LinkVideoOffset.TotalMilliseconds,
+                    "pin;" + pin,
+                    "pout;" + pout
+                };
                 File.WriteAllLines(ProjectFile, sl);
                 return true;
             }

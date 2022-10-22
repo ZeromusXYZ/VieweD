@@ -287,18 +287,6 @@ namespace VieweD.Engine.Common
 
         public DataLookupList NLU(string lookupName,string lookupOffsetString = "")
         {
-            /*
-            if ((lookupName.ToLower() == EngineFFXI.LU_Item) && (ItemsList.items.Count > 0))
-            {
-                return ItemsList;
-            }
-            else
-            if ((lookupName.ToLower() == EngineFFXI.LU_Dialog) && (DialogsList.dialogsCache.Count > 0))
-            {
-                return DialogsList;
-            }
-            else
-            */
             if ((lookupOffsetString != string.Empty) && (lookupName.ToLower() == "@math"))
             {
                 if (!lookupOffsetString.StartsWith("?"))
@@ -348,38 +336,48 @@ namespace VieweD.Engine.Common
                     GameViewForm.GV.gbPlayer.Text = @"Player 0x" + customId.ToString("X8");
                     GameViewForm.GV.lPlayerName.Text = customValue;
                 }
+
                 return;
             }
+
             if (!customListName.StartsWith("@"))
                 customListName = "@" + customListName;
             DataLookupList list = null;
 
-            foreach(var ll in LookupLists)
+            foreach (var lookupList in LookupLists)
             {
-                if (ll.Key.ToLower() == customListName)
+                if (lookupList.Key.ToLower() == customListName)
                 {
-                    list = ll.Value;
+                    list = lookupList.Value;
                     break;
                 }
             }
+
             if (list == null)
             {
                 list = new DataLookupList();
                 LookupLists.Add(customListName, list);
             }
+
+            var keepOldValue = false;
             if (list.Data.TryGetValue(customId, out var entry))
             {
                 // Special case, don't update if this is a "null string" parsed
-                if ((customValue != "NULL") && (entry.Val != customValue))
-                    entry.Val = customValue;
-                entry.Extra = string.Empty;
-                return;
+                if (customValue != "NULL")
+                    list.Data.Remove(entry.Id);
+                else
+                    keepOldValue = true;
             }
-            var newlistv = new DataLookupEntry();
-            newlistv.Id = customId;
-            newlistv.Val = customValue;
-            newlistv.Extra = string.Empty;
-            list.Data.Add(customId, newlistv);
+
+            if (keepOldValue != false) return;
+
+            var newListValue = new DataLookupEntry
+            {
+                Id = customId,
+                Val = customValue,
+                Extra = string.Empty
+            };
+            list.Data.Add(customId, newListValue);
             AllValues.Add(customValue);
         }
     }

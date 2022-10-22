@@ -16,21 +16,18 @@ namespace VieweD
     public partial class GameViewForm : Form
     {
         public static GameViewForm GV = null;
-        private DataLookupList LastLookupList = null;
-        public PacketTabPage currentTab;
+        private DataLookupList LastLookupList { get; set; }
+        public PacketTabPage CurrentTab { get; set; }
 
         public class FilterEntry
         {
-            private string display;
-            private string value;
-
-            public string Display { get => display; set => display = value; }
-            public string Value { get => value; set => this.value = value; }
+            public string Display { get; set; }
+            public string Value { get; set; }
         }
 
         public GameViewForm(PacketTabPage parent)
         {
-            currentTab = parent;
+            CurrentTab = parent;
             InitializeComponent();
             GameViewForm.GV = this;
             warningTextBox.Visible = (parent != null);
@@ -52,12 +49,12 @@ namespace VieweD
             lbLookupGroups.Items.Clear();
 
             // Try to get current tab if none was open
-            if (currentTab == null)
-                currentTab = MainForm.ThisMainForm.GetCurrentPacketTabPage();
+            if (CurrentTab == null)
+                CurrentTab = MainForm.ThisMainForm.GetCurrentPacketTabPage();
 
-            if (currentTab != null)
+            if (CurrentTab != null)
             {
-                lbLookupGroups.Items.AddRange(currentTab.Engine.DataLookups.LookupLists.Keys.ToArray());
+                lbLookupGroups.Items.AddRange(CurrentTab.Engine.DataLookups.LookupLists.Keys.ToArray());
                 lbLookupGroups.Sorted = true;
             }
         }
@@ -73,7 +70,7 @@ namespace VieweD
                 LastLookupList = null;
                 return;
             }
-            LastLookupList = currentTab.Engine.DataLookups.NLU((string)item);
+            LastLookupList = CurrentTab.Engine.DataLookups.NLU((string)item);
             // lbLookupValues.Items.Clear();
             lbLookupValues.BeginUpdate();
             lbLookupValues.DataSource = null;

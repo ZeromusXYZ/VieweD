@@ -209,12 +209,12 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.ListBox lbLookupValues;
         private System.Windows.Forms.ListBox lbLookupGroups;
-        private System.Windows.Forms.Button btnRefreshLookups;
         private System.Windows.Forms.CheckBox cbHexIndex;
         private System.Windows.Forms.Button btnCopyID;
         private System.Windows.Forms.Button btnCopyVal;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox eTextFilter;
         private System.Windows.Forms.TextBox warningTextBox;
+        public System.Windows.Forms.Button btnRefreshLookups;
     }
 }

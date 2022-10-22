@@ -154,31 +154,41 @@ namespace VieweD
             {
                 TryOpenLogFile(aFileName, true);
             }
+
+            if (GameViewForm.GV != null)
+                GameViewForm.GV.btnRefreshLookups.PerformClick();
         }
 
         private void TryOpenProjectArchive(string projectArchive)
         {
-            PacketTabPage tp = CreateNewPacketsTabPage();
-            tp.LoadProjectFile(projectArchive);
-            tp.Text = Helper.MakeTabName(projectArchive);
+            if (!File.Exists(projectArchive))
+                return;
 
-            using (var projectDlg = new ProjectInfoForm())
+            if (MessageBox.Show($"Do you want to extract this archive file?", "Unpack Archive", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+                return;
+
+            using (var zipForm = new CompressForm())
             {
-                projectDlg.LoadFromPacketTapPage(tp);
-                projectDlg.btnSave.Text = "Open";
-                projectDlg.cbOpenedLog.Enabled = true;
-                if (projectDlg.ShowDialog() == DialogResult.OK)
+                zipForm.task = CompressForm.ZipTaskType.doUnZip;
+                zipForm.ArchiveFileName = projectArchive;
+                zipForm.ProjectName = Path.GetFileNameWithoutExtension(projectArchive);
+
+                if (zipForm.ShowDialog() != DialogResult.OK)
                 {
-                    projectDlg.ApplyPacketTapPage();
-                    TryOpenLogFile(tp.LoadedLogFile, false);
-                    tp.SaveProjectFile();
-                }
-                else
-                {
-                    tcPackets.TabPages.Remove(tp);
+                    MessageBox.Show($"Failed to extract files from archive\r\n{projectArchive}", "Unpack Archive",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error); 
+                    return;
                 }
             }
 
+            var expectedProjectFile = Path.ChangeExtension(projectArchive, ".pvd");
+            if (!File.Exists(expectedProjectFile))
+            {
+                MessageBox.Show($"The Archive got extracted, but didn't find the expected project file\r\n{projectArchive}\r\n\r\nTry to manually open the file.", "Unpack Archive", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                return;
+            }
+
+            TryOpenProjectFile(expectedProjectFile);
         }
 
         private void TryOpenProjectFile(string ProjectFile)

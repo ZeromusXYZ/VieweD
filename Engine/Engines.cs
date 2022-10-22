@@ -179,8 +179,12 @@ namespace VieweD.Engine
             var res = string.Empty;
             res += "Known Files|";
             if (includeProjects)
-                res += "*.pvd;*.pvlv";
-            foreach(var e in AllEngines)
+            {
+                res += "*.pvd;*.pvlv;*.7z";
+                // res += "*.pvd;*.pvlv";
+            }
+
+            foreach (var e in AllEngines)
             {
                 var exts = string.Empty;
                 foreach(var ext in e.FileExtensions)
@@ -189,8 +193,12 @@ namespace VieweD.Engine
                 }
                 res += exts;
             }
+
             if (includeProjects)
-                res += "|Project Files|*.pvd;*.pvlv";
+            {
+                res += "|Project Files|*.pvd;*.pvlv|7-Zip Archive Files|*.7z";
+                // res += "|Project Files|*.pvd;*.pvlv";
+            }
 
             foreach (var e in AllEngines)
             {
