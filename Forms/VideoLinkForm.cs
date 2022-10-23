@@ -259,7 +259,7 @@ namespace VieweD
 
             if ((sourceTP != null) && (updatePacketList))
             {
-                var start = sourceTP.PLLoaded.firstPacketTime;
+                var start = sourceTP.PLLoaded.FirstPacketTime;
                 var videopos = TimeSpan.FromMilliseconds(pos);
                 var off = start.Add(videopos).Add(sourceTP.LinkVideoOffset);
                 var nowIndex = sourceTP.LbPackets.SelectedIndex;
@@ -319,7 +319,7 @@ namespace VieweD
 
         public bool IsInTimeRange(DateTime packetTime)
         {
-            TimeSpan off = packetTime - sourceTP.PLLoaded.firstPacketTime;
+            TimeSpan off = packetTime - sourceTP.PLLoaded.FirstPacketTime;
             off = off.Subtract(sourceTP.LinkVideoOffset);
             if (off.TotalMilliseconds < 0)
             {
@@ -339,7 +339,7 @@ namespace VieweD
                 return;
             blockPositionUpdates = true;
 
-            TimeSpan off = packetTime - sourceTP.PL.firstPacketTime ;
+            TimeSpan off = packetTime - sourceTP.PL.FirstPacketTime ;
             off = off.Subtract(sourceTP.LinkVideoOffset);
             UpdateTimeLabelAndList((int)off.TotalMilliseconds, tb.Maximum, false);
             media.Time = (long)off.TotalMilliseconds;
@@ -445,7 +445,7 @@ namespace VieweD
             }
 
             TimeSpan videoTime = TimeSpan.FromMilliseconds(media.Time);// media.Position * media.Length);
-            TimeSpan packetTime = thisPacket.VirtualTimeStamp - sourceTP.PL.firstPacketTime ;
+            TimeSpan packetTime = thisPacket.VirtualTimeStamp - sourceTP.PL.FirstPacketTime ;
             var off = packetTime - videoTime;
             var currentvloff = sourceTP.LinkVideoOffset;
 

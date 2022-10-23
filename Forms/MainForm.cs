@@ -20,15 +20,15 @@ namespace VieweD
         public static MainForm ThisMainForm;
         public readonly List<string> AllUsedTempFiles = new List<string>();
 
-        private string defaultTitle = "";
-        static readonly string UrlGitHub = "https://github.com/ZeromusXYZ/VieweD";
-        static readonly string UrlDiscord = "https://discord.gg/GhVfDtK";
-        static readonly string UrlVideoLan = "https://www.videolan.org/";
-        static readonly string Url7Zip = "https://www.7-zip.org/";
-        static readonly string Url7ZipRequiredVer = "https://sourceforge.net/p/sevenzip/discussion/45797/thread/adc65bfa/";
+        private string DefaultTitle { get; set; } = string.Empty;
+        private const string UrlGitHub = "https://github.com/ZeromusXYZ/VieweD";
+        private const string UrlDiscord = "https://discord.gg/GhVfDtK";
+        private const string UrlVideoLan = "https://www.videolan.org/";
+        private const string Url7Zip = "https://www.7-zip.org/";
+        private const string Url7ZipRequiredVer = "https://sourceforge.net/p/sevenzip/discussion/45797/thread/adc65bfa/";
 
-        public PacketParser CurrentPP;
-        public static SearchParameters SearchParameters;
+        public PacketParser CurrentPP { get; set; }
+        public static SearchParameters SearchParameters { get; set; }
 
         private const string InfoGridHeader = "     |  0  1  2  3   4  5  6  7   8  9  A  B   C  D  E  F    | 0123456789ABCDEF\n" +
                                               "-----+----------------------------------------------------  -+------------------\n";
@@ -86,7 +86,7 @@ namespace VieweD
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            defaultTitle = Text;
+            DefaultTitle = Text;
 
             // Handle User settings upgrades when using a newer version
             if (Properties.Settings.Default.DoUpdateSettings)
@@ -103,7 +103,7 @@ namespace VieweD
 
             if (Engines.PluginErrors.Count > 0)
             {
-                MessageBox.Show(string.Join("\r\n", Engines.PluginErrors),"Plugin Compile Errors");
+                MessageBox.Show(string.Join("\r\n", Engines.PluginErrors),@"Plugin Compile Errors");
             }
 
             RegisterFileExt(); // Registers project files in Windows
@@ -125,8 +125,6 @@ namespace VieweD
             tcPackets.TabPages.Clear();
             Application.UseWaitCursor = false;
         }
-
-
 
         private void mmFileOpen_Click(object sender, EventArgs e)
         {
@@ -216,7 +214,6 @@ namespace VieweD
 
         }
 
-
         private void TryOpenLogFile(string logFile, bool alsoLoadProject)
         {
             PacketTabPage tp;
@@ -248,7 +245,7 @@ namespace VieweD
                 tcPackets.TabPages.Remove(tp);
                 return;
             }
-            Text = defaultTitle + " - " + logFile;
+            Text = DefaultTitle + " - " + logFile;
             tp.LoadedLogFile = logFile;
             if (tp.PLLoaded.Rules != null)
                 tp.LoadedRulesFile = tp.PLLoaded.Rules.LoadedRulesFileName;
@@ -284,7 +281,6 @@ namespace VieweD
                 tp.VideoLink.MoveToDateTime(pd.VirtualTimeStamp);
             }
         }
-
 
         private void cbOriginalData_CheckedChanged(object sender, EventArgs e)
         {
@@ -342,7 +338,7 @@ namespace VieweD
                 tp.PLLoaded.Clear();
                 return;
             }
-            Text = defaultTitle + " - " + tp.LoadedLogFile;
+            Text = DefaultTitle + " - " + tp.LoadedLogFile;
             if (tp.PLLoaded.Rules != null)
                 tp.LoadedRulesFile = tp.PLLoaded.Rules.LoadedRulesFileName;
             tp.PL.CopyFrom(tp.PLLoaded);
@@ -596,7 +592,6 @@ namespace VieweD
                 rtInfo.SelectionStart = rawPos;
                 rtInfo.SelectionLength = 0;
             }
-
         }
 
         public void UpdatePacketDetails(PacketTabPage tp, PacketData pd, string SwitchBlockName, bool dontReloadParser = false)
@@ -609,7 +604,7 @@ namespace VieweD
 
             if ((dontReloadParser == false) || (pd.PP == null))
             {
-                pd.PP = pd.Parent._parentTab.Engine.GetParser(pd);
+                pd.PP = pd.Parent.ParentTab.Engine.GetParser(pd);
                 pd.PP?.AssignPacket(pd);
             }
 
@@ -665,7 +660,6 @@ namespace VieweD
             {
                 RawDataToRichText(CurrentPP, rtInfo);
             }
-
         }
 
         private void mmFileSettings_Click(object sender, EventArgs e)
@@ -699,30 +693,23 @@ namespace VieweD
             if (!cbShowBlock.Enabled)
                 return;
 
-            if (!(tcPackets.SelectedTab is PacketTabPage))
+            if (!(tcPackets.SelectedTab is PacketTabPage tabPage))
                 return;
-            PacketTabPage tp = (tcPackets.SelectedTab as PacketTabPage);
 
             cbShowBlock.Enabled = false;
-            if ((tp.LbPackets.SelectedIndex < 0) || (tp.LbPackets.SelectedIndex >= tp.PL.Count))
+            if ((tabPage.LbPackets.SelectedIndex < 0) || (tabPage.LbPackets.SelectedIndex >= tabPage.PL.Count))
             {
                 rtInfo.SelectionColor = rtInfo.ForeColor;
                 rtInfo.SelectionBackColor = rtInfo.BackColor;
                 rtInfo.Text = "Please select a valid item from the list";
                 return;
             }
-            PacketData pd = tp.PL.GetPacket(tp.LbPackets.SelectedIndex);
-            var sw = cbShowBlock.SelectedIndex;
-            if (sw >= 0)
-            {
-                UpdatePacketDetails(tp, pd, cbShowBlock.Items[sw].ToString(), true);
-            }
-            else
-            {
-                UpdatePacketDetails(tp, pd, "-", true);
-            }
+
+            var packetData = tabPage.PL.GetPacket(tabPage.LbPackets.SelectedIndex);
+            var switchBlock = cbShowBlock.SelectedIndex;
+            UpdatePacketDetails(tabPage, packetData, switchBlock >= 0 ? cbShowBlock.Items[switchBlock].ToString() : "-", true);
             cbShowBlock.Enabled = true;
-            tp.LbPackets.Invalidate();
+            tabPage.LbPackets.Invalidate();
         }
 
         private void dGV_SelectionChanged(object sender, EventArgs e)
@@ -744,7 +731,6 @@ namespace VieweD
             CurrentPP.ToGridView(dGV);
             RawDataToRichText(CurrentPP, rtInfo);
         }
-
 
         public void UpdateStatusBarAndTitle(PacketTabPage tp)
         {
@@ -772,7 +758,7 @@ namespace VieweD
             var t = tp.LoadedLogFile;
             if (t.StartsWith("?"))
                 t = t.TrimStart('?');
-            Text = defaultTitle + " - " + t;
+            Text = DefaultTitle + " - " + t;
             if (tp.ProjectFolder != string.Empty)
             {
                 sbProjectInfo.Text = "Project Folder: " + tp.ProjectFolder;
@@ -878,7 +864,7 @@ namespace VieweD
                     }
                     clipBoardMemoryStream.Seek(0, SeekOrigin.Begin);
                     
-                    if (!tp.PLLoaded._parentTab.Engine.LoadFromStream(tp.PLLoaded, clipBoardMemoryStream, tp.LoadedLogFile, string.Empty,string.Empty))
+                    if (!tp.PLLoaded.ParentTab.Engine.LoadFromStream(tp.PLLoaded, clipBoardMemoryStream, tp.LoadedLogFile, string.Empty,string.Empty))
                     {
                         MessageBox.Show("Error loading data from clipboard", "Clipboard Paste Error",
                             MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -894,7 +880,7 @@ namespace VieweD
                     tcPackets.TabPages.Remove(tp);
                     return;
                 }
-                Text = defaultTitle + " - " + tp.LoadedLogFile;
+                Text = DefaultTitle + " - " + tp.LoadedLogFile;
                 tp.PL.CopyFrom(tp.PLLoaded);
                 tp.FillListBox();
                 UpdateStatusBarAndTitle(tp);
@@ -963,7 +949,7 @@ namespace VieweD
                     case DialogResult.Yes: // Highlight
                         filterDlg.SaveLocalToFilter();
                         tp.PL.Filter.CopyFrom(filterDlg.Filter);
-                        tp.PL.HightlightFilterFrom(tp.PLLoaded);
+                        tp.PL.HighlightFilterFrom(tp.PLLoaded);
                         tp.FillListBox(lastSync);
                         tp.CenterListBox();
                         break;
@@ -993,12 +979,11 @@ namespace VieweD
             if (tp == null)
                 return;
 
-            if (sender is ToolStripMenuItem)
+            if (sender is ToolStripMenuItem mItem)
             {
-                var mITem = (sender as ToolStripMenuItem);
                 // apply filter
                 var lastSync = tp.CurrentSync;
-                tp.PL.Filter.LoadFromFile(Path.Combine(Application.StartupPath, "data", tp.Engine.EngineId, "filter", mITem.Text + ".pfl"));
+                tp.PL.Filter.LoadFromFile(Path.Combine(Application.StartupPath, "data", tp.Engine.EngineId, "filter", mItem.Text + ".pfl"));
                 tp.PL.FilterFrom(tp.PLLoaded);
                 tp.FillListBox(lastSync);
                 tp.CenterListBox();
@@ -1011,13 +996,12 @@ namespace VieweD
             if (tp == null)
                 return;
 
-            if (sender is ToolStripMenuItem)
+            if (sender is ToolStripMenuItem mItem)
             {
-                var mITem = (sender as ToolStripMenuItem);
                 // apply filter
                 var lastSync = tp.CurrentSync;
-                tp.PL.Filter.LoadFromFile(Path.Combine(Application.StartupPath, "data", tp.Engine.EngineId, "filter", mITem.Text + ".pfl"));
-                tp.PL.HightlightFilterFrom(tp.PLLoaded);
+                tp.PL.Filter.LoadFromFile(Path.Combine(Application.StartupPath, "data", tp.Engine.EngineId, "filter", mItem.Text + ".pfl"));
+                tp.PL.HighlightFilterFrom(tp.PLLoaded);
                 tp.FillListBox(lastSync);
                 tp.CenterListBox();
             }
@@ -1069,16 +1053,17 @@ namespace VieweD
             MainForm.SearchParameters.FileFormat = tp.PL.LoadedLogFileFormat;
             using (SearchForm SearchDlg = new SearchForm())
             {
+                SearchDlg.Engine = tp.Engine;
                 if (tp.PL.IsPreParsed == false)
                 {
                     MainForm.SearchParameters.SearchByParsedData = false;
                     SearchDlg.gbSearchByField.Enabled = false;
                 }
-                SearchDlg.searchParameters.CopyFrom(MainForm.SearchParameters);
+                SearchDlg.SearchParameters.CopyFrom(MainForm.SearchParameters);
                 var res = SearchDlg.ShowDialog();
                 if ((res == DialogResult.OK) || (res == DialogResult.Retry))
                 {
-                    MainForm.SearchParameters.CopyFrom(SearchDlg.searchParameters);
+                    MainForm.SearchParameters.CopyFrom(SearchDlg.SearchParameters);
                     if (res == DialogResult.OK)
                         FindNext();
                     else
@@ -1230,7 +1215,7 @@ namespace VieweD
                     }
                     clipBoardMemoryStream.Seek(0, SeekOrigin.Begin);
 
-                    if (!tp.PLLoaded._parentTab.Engine.LoadFromStream(tp.PLLoaded, clipBoardMemoryStream, tp.LoadedLogFile, tp.LoadedRulesFile, tp.DecryptVersion))
+                    if (!tp.PLLoaded.ParentTab.Engine.LoadFromStream(tp.PLLoaded, clipBoardMemoryStream, tp.LoadedLogFile, tp.LoadedRulesFile, tp.DecryptVersion))
                     {
                         MessageBox.Show(@"Error loading data from clipboard", @"Clipboard Paste Error",
                             MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -1246,7 +1231,7 @@ namespace VieweD
                     tcPackets.TabPages.Remove(tp);
                     return;
                 }
-                Text = defaultTitle + " - " + tp.LoadedLogFile;
+                Text = DefaultTitle + " - " + tp.LoadedLogFile;
                 tp.PL.CopyFrom(tp.PLLoaded);
                 tp.FillListBox();
                 UpdateStatusBarAndTitle(tp);
@@ -1430,7 +1415,7 @@ namespace VieweD
                 var l = new Label();
                 l.AutoSize = true;
                 l.Text = typeName + ": 0x" + val.ToString("X"+hexWidth) + " - " + val.ToString();
-                foreach(var ll in CurrentPP.PD.Parent._parentTab.Engine.DataLookups.LookupLists)
+                foreach(var ll in CurrentPP.PD.Parent.ParentTab.Engine.DataLookups.LookupLists)
                 {
                     if (ll.Value.Data.TryGetValue(val, out var v))
                         if (v.Id > 0)
@@ -1464,7 +1449,7 @@ namespace VieweD
                 // Only lookups for negative values on signed
                 if (val < 0)
                 {
-                    foreach (var ll in CurrentPP.PD.Parent._parentTab.Engine.DataLookups.LookupLists)
+                    foreach (var ll in CurrentPP.PD.Parent.ParentTab.Engine.DataLookups.LookupLists)
                     {
                         if (ll.Value.Data.TryGetValue((ulong)val, out var v))
                             if (v.Id > 0)
@@ -1641,7 +1626,7 @@ namespace VieweD
                 catch { }
 
                 if (tcPackets.TabCount <= 1)
-                    Text = defaultTitle;
+                    Text = DefaultTitle;
             }
         }
 

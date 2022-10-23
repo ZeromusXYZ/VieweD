@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Linq;
+using PostSharp.Extensibility;
 
 namespace VieweD.Engine.Common
 {
@@ -22,8 +24,8 @@ namespace VieweD.Engine.Common
         // ReSharper disable once UnusedAutoPropertyAccessor.Global
         public byte OriginalPacketLevel { get; set; }
         public byte StreamId { get; set; }
-        public UInt16 PacketId { get; set; }
-        public UInt16 PacketDataSize { get; set; }
+        public ushort PacketId { get; set; }
+        public ushort PacketDataSize { get; set; }
         public uint PacketSync { get; set; } // Only UInt16 is used in FFXI
         public DateTime TimeStamp { get; set; }
         public DateTime VirtualTimeStamp { get; set; }
@@ -40,12 +42,12 @@ namespace VieweD.Engine.Common
 
         // ReSharper disable once InconsistentNaming
         public PacketParser PP;
-        public int Cursor { get => cursor; set { cursor = value; BitCursor = 0; } }
+        public int Cursor { get => _cursor; set { _cursor = value; BitCursor = 0; } }
         // ReSharper disable once UnusedAutoPropertyAccessor.Global
         // ReSharper disable once MemberCanBePrivate.Global
         public byte BitCursor { get; set; }
 
-        private int cursor;
+        private int _cursor;
 
         public PacketData(PacketList parent)
         {
@@ -61,8 +63,8 @@ namespace VieweD.Engine.Common
             PacketDataSize = 0x0000;
             PacketSync = 0x0000;
             StreamId = 0;
-            TimeStamp = new DateTime(0);
-            VirtualTimeStamp = new DateTime(0);
+            TimeStamp = DateTime.MinValue;;
+            VirtualTimeStamp = DateTime.MinValue;
             OriginalTimeString = "";
             CapturedZoneId = 0;
             PP = null;
@@ -78,9 +80,10 @@ namespace VieweD.Engine.Common
 
         public int AddRawLineAsBytes(string s)
         {
-
+            // Removes spaces and tabs
             var simpleLine = s.Replace(" ", "").Replace("\t", "");
 
+            // Data should start after the first pipeline symbol
             var dataStartPos = simpleLine.IndexOf("|", StringComparison.InvariantCulture) + 1;
             if (simpleLine.Length < dataStartPos + 32)
             {
@@ -95,16 +98,8 @@ namespace VieweD.Engine.Common
                 var h = dataString.Substring(i * 2, 2);
                 if (h != "--")
                 {
-                    try
-                    {
-                        byte b = byte.Parse(h, System.Globalization.NumberStyles.HexNumber);
+                    if (byte.TryParse(h, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out var b))
                         RawBytes.Add(b);
-                    }
-                    catch
-                    {
-                        // ignored
-                    }
-
                     c++;
                 }
             }
@@ -121,32 +116,6 @@ namespace VieweD.Engine.Common
                   1 | 00 00 02 00 5D 00 00 00 49 97 B8 69 00 00 00 00    1 | ....]...I..i....
             ...
                   5 | 00 00 00 00 -- -- -- -- -- -- -- -- -- -- -- --    5 | ....------------
-            */
-
-            /*
-            // if (s.Length < 81)
-            if (s.Length < 57)
-            {
-                // Doesn't look like a correct format
-                return 0;
-            }
-
-            int c = 0;
-            for (int i = 0; i <= 0xf; i++)
-            {
-                var h = s.Substring(10 + (i * 3), 2);
-                if (h != "--")
-                {
-                    try
-                    {
-                        byte b = byte.Parse(h, System.Globalization.NumberStyles.HexNumber);
-                        RawBytes.Add(b);
-                    }
-                    catch { }
-                    c++;
-                }
-            }
-            return c;
             */
         }
 
@@ -171,18 +140,17 @@ namespace VieweD.Engine.Common
                 return 0;
             }
 
-            int c = 0;
-            for (int i = 0; i <= 0xf; i++)
+            var c = 0;
+            for (var i = 0; i <= 0xf; i++)
             {
                 var h = s.Substring(4 + (i * 3), 2);
                 // If this fails, we're probably at the end of the packet
-                // Unlike windower, Packeteer doesn't add dashes for the blanks
+                // Unlike Windower, Packeteer doesn't add dashes for the blanks
                 if ((h != "--") && (h != "  ") && (h != " "))
                 {
-                    byte b = byte.Parse(h, System.Globalization.NumberStyles.HexNumber);
-                    //if (!byte.TryParse("0x" + h, out byte b))
-                    //    break;
-                    RawBytes.Add(b);
+                    if (byte.TryParse(h, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out var b))
+                        RawBytes.Add(b);
+
                     c++;
                 }
             }
@@ -191,31 +159,24 @@ namespace VieweD.Engine.Common
 
         public int AddRawHexStringDataAsBytes(string hexData)
         {
-            int res = 0;
+            var res = 0;
             try
             {
                 RawBytes.Clear();
-                string dataLine = hexData.Replace(" ", "").Replace("\r", "").Replace("\n", "").Replace("\t", "");
-                for (int i = 0; i < (dataLine.Length - 1); i += 2)
+                var dataLine = hexData.Replace(" ", "").Replace("\r", "").Replace("\n", "").Replace("\t", "");
+                for (var i = 0; i < (dataLine.Length - 1); i += 2)
                 {
-                    string num = dataLine.Substring(i, 2);
-                    byte b = byte.Parse(num, System.Globalization.NumberStyles.HexNumber);
-                    RawBytes.Add(b);
+                    var num = dataLine.Substring(i, 2);
+
+                    if (byte.TryParse(num, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out var b))
+                        RawBytes.Add(b);
+
                     res++;
                 }
-                /*
-                string[] nums = hexData.Split(' ');
-                foreach(string num in nums)
-                {
-                    byte b = byte.Parse(num, System.Globalization.NumberStyles.HexNumber);
-                    RawBytes.Add(b);
-                    res++;
-                }
-                */
             }
             catch
             {
-                //
+                // Do Nothing
             }
             return res;
         }
@@ -223,11 +184,11 @@ namespace VieweD.Engine.Common
         public string PrintRawBytesAsHex()
         {
             const int valuesPerRow = 16;
-            string res = "";
+            var res = string.Empty;
             res += "   |  0  1  2  3   4  5  6  7   8  9  A  B   C  D  E  F\r\n";
             res += "---+----------------------------------------------------\r\n";
-            int lineNumber = 0;
-            for (int i = 0; i < RawBytes.Count; i++)
+            var lineNumber = 0;
+            for (var i = 0; i < RawBytes.Count; i++)
             {
                 if ((i % valuesPerRow) == 0)
                     res += lineNumber.ToString("X2") + " | ";
@@ -265,21 +226,20 @@ namespace VieweD.Engine.Common
             return unchecked((sbyte)RawBytes[pos]);
         }
 
-
         // ReSharper disable once MemberCanBePrivate.Global
         public bool GetBitAtPos(int pos, int bit)
         {
             if ((pos > (RawBytes.Count - 1)) || ((bit < 0) || (bit > 7)))
                 return false;
-            byte b = RawBytes[pos];
-            byte bitmask = (byte)(0x01 << bit);
+            var b = RawBytes[pos];
+            var bitmask = (byte)(0x01 << bit);
             Cursor = pos;
             BitCursor = (byte)bit;
             return ((b & bitmask) != 0);
         }
 
         // ReSharper disable once BuiltInTypeReferenceStyle
-        public UInt16 GetUInt16AtPos(int pos)
+        public ushort GetUInt16AtPos(int pos)
         {
             if (pos > (RawBytes.Count - 2))
                 return 0;
@@ -288,7 +248,7 @@ namespace VieweD.Engine.Common
         }
 
         // ReSharper disable once BuiltInTypeReferenceStyle
-        public Int16 GetInt16AtPos(int pos)
+        public short GetInt16AtPos(int pos)
         {
             if (pos > (RawBytes.Count - 2))
                 return 0;
@@ -297,7 +257,7 @@ namespace VieweD.Engine.Common
         }
 
         // ReSharper disable once BuiltInTypeReferenceStyle
-        public UInt32 GetUInt32AtPos(int pos)
+        public uint GetUInt32AtPos(int pos)
         {
             if (pos > (RawBytes.Count - 4))
                 return 0;
@@ -306,7 +266,7 @@ namespace VieweD.Engine.Common
         }
 
         // ReSharper disable once BuiltInTypeReferenceStyle
-        public Int32 GetInt32AtPos(int pos)
+        public int GetInt32AtPos(int pos)
         {
             if (pos > (RawBytes.Count - 4))
                 return 0;
@@ -315,7 +275,7 @@ namespace VieweD.Engine.Common
         }
 
         // ReSharper disable once BuiltInTypeReferenceStyle
-        public UInt64 GetUInt64AtPos(int pos)
+        public ulong GetUInt64AtPos(int pos)
         {
             if (pos > (RawBytes.Count - 8))
                 return 0;
@@ -324,7 +284,7 @@ namespace VieweD.Engine.Common
         }
 
         // ReSharper disable once BuiltInTypeReferenceStyle
-        public Int64 GetInt64AtPos(int pos)
+        public long GetInt64AtPos(int pos)
         {
             if (pos > (RawBytes.Count - 8))
                 return 0;
@@ -357,8 +317,8 @@ namespace VieweD.Engine.Common
 
         public string GetStringAtPos(int pos, int maxSize = -1)
         {
-            string res = string.Empty;
-            int i = 0;
+            var res = string.Empty;
+            var i = 0;
             while (((i + pos) < RawBytes.Count) && (RawBytes[pos + i] != 0) && ((maxSize == -1) || (res.Length < maxSize)))
             {
                 res += (char)RawBytes[pos + i];
@@ -373,8 +333,8 @@ namespace VieweD.Engine.Common
 
         public string GetDataAtPos(int pos, int size)
         {
-            string res = "";
-            int i = 0;
+            var res = "";
+            var i = 0;
             while (((i + pos) < RawBytes.Count) && (i < size) && (i < 256))
             {
                 res += RawBytes[i + pos].ToString("X2") + " ";
@@ -386,8 +346,8 @@ namespace VieweD.Engine.Common
 
         public byte[] GetDataBytesAtPos(int pos, int size)
         {
-            List<Byte> res = new List<byte>();
-            int i = 0;
+            var res = new List<byte>();
+            var i = 0;
             while (((i + pos) < RawBytes.Count) && (i < size) && (i < 256))
             {
                 res.Add(RawBytes[i + pos]);
@@ -397,21 +357,20 @@ namespace VieweD.Engine.Common
             return res.ToArray();
         }
 
-
         // ReSharper disable once InconsistentNaming
         public string GetIP4AtPos(int pos)
         {
             if (pos > RawBytes.Count - 4)
                 return "";
             Cursor = pos + 4;
-            return RawBytes[pos + 0].ToString() + "." + RawBytes[pos + 1].ToString() + "." + RawBytes[pos + 2].ToString() + "." + RawBytes[pos + 3].ToString();
+            return RawBytes[pos + 0] + "." + RawBytes[pos + 1] + "." + RawBytes[pos + 2] + "." + RawBytes[pos + 3];
         }
 
         // ReSharper disable once BuiltInTypeReferenceStyle
         [SuppressMessage("ReSharper", "BuiltInTypeReferenceStyle")]
-        public Int64 GetBitsAtPos(int pos, int bitOffset, int bitsSize)
+        public long GetBitsAtPos(int pos, int bitOffset, int bitsSize)
         {
-            Int64 res = 0;
+            long res = 0;
             var p = pos;
             var b = bitOffset;
             var restBits = bitsSize;
@@ -430,7 +389,7 @@ namespace VieweD.Engine.Common
                 if (GetBitAtPos(p, b))
                     res += mask;
                 restBits--;
-                mask = mask << 1;
+                mask <<= 1;
                 b++;
             }
             return res;
@@ -446,7 +405,8 @@ namespace VieweD.Engine.Common
         {
             var res = "";
             // Hex: B8 81 68 24  72 14 4F 10  54 0C 8F 00  00 00 00 00
-            // Bit: 101110 00
+            // Bits:
+            // 101110 00
             // 1000 0001
             // 01 101000
             // 001001 00
@@ -482,7 +442,7 @@ namespace VieweD.Engine.Common
             {
                 byte encodedChar = 0;
                 byte bitMask = 0b00100000;
-                for (int bit = 0; bit < 6; bit++)
+                for (var bit = 0; bit < 6; bit++)
                 {
                     bool isSet = GetBitAtPos(pos + ((offset + bit) / 8), 7 - ((offset + bit) % 8));
                     if (isSet)
@@ -502,19 +462,19 @@ namespace VieweD.Engine.Common
         }
 
         // ReSharper disable once BuiltInTypeReferenceStyle
-        public Single GetFloatAtPos(int pos)
+        public float GetFloatAtPos(int pos)
         {
             if (pos > (RawBytes.Count - 4))
-                return 0;
+                return 0f;
             Cursor = pos + 4;
             return BitConverter.ToSingle(RawBytes.GetRange(pos, 4).ToArray(), 0);
         }
 
         // ReSharper disable once BuiltInTypeReferenceStyle
-        public Double GetDoubleAtPos(int pos)
+        public double GetDoubleAtPos(int pos)
         {
             if (pos > (RawBytes.Count - 8))
-                return 0;
+                return 0.0;
             Cursor = pos + 8;
             return BitConverter.ToDouble(RawBytes.GetRange(pos, 8).ToArray(), 0);
         }
@@ -525,9 +485,9 @@ namespace VieweD.Engine.Common
         }
 
         // ReSharper disable once BuiltInTypeReferenceStyle
-        public int FindUInt16(UInt16 aUInt16)
+        public int FindUInt16(ushort aUInt16)
         {
-            for (int i = 0; i < (RawBytes.Count - 2); i++)
+            for (var i = 0; i < (RawBytes.Count - 2); i++)
             {
                 if (GetUInt16AtPos(i) == aUInt16)
                     return i;
@@ -536,9 +496,9 @@ namespace VieweD.Engine.Common
         }
 
         // ReSharper disable once BuiltInTypeReferenceStyle
-        public int FindUInt32(UInt32 aUInt32)
+        public int FindUInt32(uint aUInt32)
         {
-            for (int i = 0; i < (RawBytes.Count - 4); i++)
+            for (var i = 0; i < (RawBytes.Count - 4); i++)
             {
                 if (GetUInt32AtPos(i) == aUInt32)
                     return i;
@@ -547,7 +507,7 @@ namespace VieweD.Engine.Common
         }
 
         // ReSharper disable once BuiltInTypeReferenceStyle
-        public int FindUInt64(UInt64 aUInt64)
+        public int FindUInt64(ulong aUInt64)
         {
             for (int i = 0; i < (RawBytes.Count - 8); i++)
             {
@@ -557,11 +517,19 @@ namespace VieweD.Engine.Common
             return -1;
         }
 
+        /// <summary>
+        /// Parses a string to a DateTime using "yyyy-mm-dd HH:nn:ss" format
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="res"></param>
+        /// <returns></returns>
         public bool DateTimeParse(string s, out DateTime res)
         {
-            res = new DateTime(0);
+            res = DateTime.MinValue;
+
             if (s.Length != 19)
                 return false;
+
             try
             {
                 // 0         1
@@ -578,7 +546,7 @@ namespace VieweD.Engine.Common
             }
             catch
             {
-                // ignored
+                // Ignored
             }
 
             return false;
@@ -586,12 +554,12 @@ namespace VieweD.Engine.Common
 
         public bool CompileData(string packetLogFileFormats)
         {
-            return Parent?._parentTab?.Engine?.CompileData(this, packetLogFileFormats) ?? false;
+            return Parent?.ParentTab?.Engine?.CompileData(this, packetLogFileFormats) ?? false;
         }
 
         public void CompileSpecial(PacketList packetList)
         {
-            Parent?._parentTab?.Engine?.CompileSpecial(this, packetList);
+            Parent?.ParentTab?.Engine?.CompileSpecial(this, packetList);
         }
 
         public bool MatchesSearch(SearchParameters p)
@@ -604,74 +572,58 @@ namespace VieweD.Engine.Common
             var res = true;
 
             if (p.SearchByPacketId)
-            {
-                res = false;
-                if (PacketId == p.SearchPacketId)
-                    res = true;
-            }
+                res = (PacketId == p.SearchPacketId);
 
             if ((res) && (p.SearchByPacketLevel))
-            {
-                res = false;
-                if ((PacketLevel == p.SearchPacketLevel) || (OriginalPacketLevel == p.SearchPacketLevel))
-                    res = true;
-            }
+                res = ((PacketLevel == p.SearchPacketLevel) || (OriginalPacketLevel == p.SearchPacketLevel));
 
             if ((res) && (p.SearchBySync))
-            {
-                res = false;
-                if (PacketSync == p.SearchSync)
-                    res = true;
-            }
+                res = (PacketSync == p.SearchSync);
 
             if ((res) && (p.SearchByByte))
-            {
-                res = false;
-                if (RawBytes.IndexOf(p.SearchByte) >= 0)
-                    res = true;
-            }
+                res = (RawBytes.IndexOf(p.SearchByte) >= 0);
 
             if ((res) && (p.SearchByUInt16))
             {
                 res = false;
-                for (int i = 0; i < RawBytes.Count - 2; i++)
+                for (var i = 0; i < RawBytes.Count - 2; i++)
                 {
                     var n = GetUInt16AtPos(i);
-                    if (n == p.SearchUInt16)
-                    {
-                        res = true;
-                        break;
-                    }
+                    if (n != p.SearchUInt16) 
+                        continue;
+
+                    res = true;
+                    break;
                 }
             }
 
             if ((res) && (p.SearchByUInt24))
             {
                 res = false;
-                for (int i = 0; i < RawBytes.Count - 3; i++)
+                for (var i = 0; i < RawBytes.Count - 3; i++)
                 {
                     var rd = GetDataBytesAtPos(i, 3).ToList();
                     rd.Add(0);
-                    UInt32 d = BitConverter.ToUInt32(rd.ToArray(), 0);
-                    if (d == p.SearchUInt24)
-                    {
-                        res = true;
-                        break;
-                    }
+                    var d = BitConverter.ToUInt32(rd.ToArray(), 0);
+                    if (d != p.SearchUInt24) 
+                        continue;
+
+                    res = true;
+                    break;
                 }
             }
 
             if ((res) && (p.SearchByUInt32))
             {
                 res = false;
-                for (int i = 0; i < RawBytes.Count - 4; i++)
+                for (var i = 0; i < RawBytes.Count - 4; i++)
                 {
                     var n = GetUInt32AtPos(i);
-                    if (n == p.SearchUInt32)
-                    {
-                        res = true;
-                        break;
-                    }
+                    if (n != p.SearchUInt32) 
+                        continue;
+
+                    res = true;
+                    break;
                 }
             }
 

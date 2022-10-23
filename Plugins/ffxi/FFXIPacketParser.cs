@@ -77,7 +77,7 @@ namespace VieweD.Engine.FFXI
             MarkParsed(0x04, 1, DataFieldIndex);
 
             AddDataFieldEx(0x05, 4, ref DataFieldIndex);
-            AddParseLineToView(DataFieldIndex, "0x05", GetDataColor(DataFieldIndex), "Actor", PD.Parent._parentTab.Engine.DataLookups.NLU("@actors").GetValue(pActor) + " <= 0x" + pActor.ToString("X8") + " - " + pActor.ToString(), pActor);
+            AddParseLineToView(DataFieldIndex, "0x05", GetDataColor(DataFieldIndex), "Actor", PD.Parent.ParentTab.Engine.DataLookups.NLU("@actors").GetValue(pActor) + " <= 0x" + pActor.ToString("X8") + " - " + pActor.ToString(), pActor);
             MarkParsed(0x05, 4, DataFieldIndex);
 
             AddDataFieldEx(0x09, 1, ref DataFieldIndex);
@@ -85,7 +85,7 @@ namespace VieweD.Engine.FFXI
             MarkParsed(0x09, 1, DataFieldIndex);
 
             AddDataFieldEx(0x0A, 1, ref DataFieldIndex);
-            AddParseLineToView(DataFieldIndex, "0x0A:2-4", GetDataColor(DataFieldIndex), "Action Category", pActionCategory.ToString() + " => " + PD.Parent._parentTab.Engine.DataLookups.NLU(EngineFFXI.LU_ActionCategory0x028).GetValue((UInt64)pActionCategory), (UInt64)pActionCategory);
+            AddParseLineToView(DataFieldIndex, "0x0A:2-4", GetDataColor(DataFieldIndex), "Action Category", pActionCategory.ToString() + " => " + PD.Parent.ParentTab.Engine.DataLookups.NLU(EngineFFXI.LU_ActionCategory0x028).GetValue((UInt64)pActionCategory), (UInt64)pActionCategory);
             MarkParsed(0x0A, 1, DataFieldIndex);
 
             AddDataFieldEx(0x0B, 1, ref DataFieldIndex);
@@ -110,7 +110,7 @@ namespace VieweD.Engine.FFXI
                 pTargetCountLoopCounter++;
 
                 var pActionTargetID = PD.GetBitsAtBitPos(BitOffset, 32);
-                AddField(ref DataFieldIndex, 32, "#" + pTargetCountLoopCounter + " : Target ID", PD.Parent._parentTab.Engine.DataLookups.NLU("@actors").GetValue((UInt64)pActionTargetID) + " <= 0x" + pActionTargetID.ToString("X8") + " - " + pActionTargetID.ToString());
+                AddField(ref DataFieldIndex, 32, "#" + pTargetCountLoopCounter + " : Target ID", PD.Parent.ParentTab.Engine.DataLookups.NLU("@actors").GetValue((UInt64)pActionTargetID) + " <= 0x" + pActionTargetID.ToString("X8") + " - " + pActionTargetID.ToString());
 
                 var pActionTargetIDSize = PD.GetBitsAtBitPos(BitOffset, 4);
                 AddField(ref DataFieldIndex, 4, "#" + pTargetCountLoopCounter + " : Effect Count", pActionTargetIDSize.ToString());
@@ -194,7 +194,7 @@ namespace VieweD.Engine.FFXI
             }
 
             ParsedView.Clear();
-            var ffxiEngine = PD.Parent._parentTab.Engine;
+            var ffxiEngine = PD.Parent.ParentTab.Engine;
             var ffxiLookup = ffxiEngine.DataLookups;
 
             // Fixed Header Info, Always 4 bytes, always listed
@@ -1214,11 +1214,11 @@ namespace VieweD.Engine.FFXI
                 {
                     var idVal = PD.GetBitsAtPos(Offset, 0, 12);
                     var progressVal = PD.GetBitsAtPos(Offset + 1, 4, 20);
-                    var maxVal = PD.Parent._parentTab.Engine.DataLookups.NLU(EngineFFXI.LU_RoE).GetExtra((UInt64)idVal);
+                    var maxVal = PD.Parent.ParentTab.Engine.DataLookups.NLU(EngineFFXI.LU_RoE).GetExtra((UInt64)idVal);
                     if (maxVal == "")
                         maxVal = "???";
                     string d = "";
-                    d += "ID; 0x" + idVal.ToString("X3") + " => " + PD.Parent._parentTab.Engine.DataLookups.NLU(EngineFFXI.LU_RoE).GetValue((UInt64)idVal) + "  ";
+                    d += "ID; 0x" + idVal.ToString("X3") + " => " + PD.Parent.ParentTab.Engine.DataLookups.NLU(EngineFFXI.LU_RoE).GetValue((UInt64)idVal) + "  ";
                     d += "Progress; " + progressVal.ToString() + " / " + maxVal;
 
                     AddDataField(Offset, 4);

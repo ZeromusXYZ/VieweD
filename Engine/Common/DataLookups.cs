@@ -9,211 +9,188 @@ namespace VieweD.Engine.Common
 {
     public class DataLookups
     {
+        // Default lookup table names for packet in and packet out names
         public static string LU_PacketOut = "out";
         public static string LU_PacketIn = "in";
 
-        public DataLookupList NullList = new DataLookupList();
-        public DataLookupEntry NullEntry = new DataLookupEntry();
-        public static DataLookupListSpecialMath MathList = new DataLookupListSpecialMath();
-        public List<string> AllValues = new List<string>();
-        public string AllLoadErrors = string.Empty ;
+        /// <summary>
+        /// Empty LookupList to undefined searches
+        /// </summary>
+        public DataLookupList NullList { get; } = new DataLookupList();
 
-        // lookupname, id, lookupresult
+        /// <summary>
+        /// Empty LookupEntry for undefined lookup keys
+        /// </summary>
+        public DataLookupEntry NullEntry { get; set; }
+
+        /// <summary>
+        /// Special Lookup table that can handle basic math statements
+        /// </summary>
+        public static DataLookupListSpecialMath MathList { get; } = new DataLookupListSpecialMath();
+
+        /// <summary>
+        /// A string list containing all added Values, used for auto-completion fields
+        /// </summary>
+        public List<string> AllValues { get; set; } = new List<string>();
+
+        /// <summary>
+        /// String containing all loading errors
+        /// </summary>
+        public string AllLoadErrors { get; set; } = string.Empty;
+
+        /// <summary>
+        /// List of all Lookup tables
+        /// </summary>
         public Dictionary<string, DataLookupList> LookupLists = new Dictionary<string, DataLookupList>();
 
+        /// <summary>
+        /// Handler for lookup tables
+        /// </summary>
         public DataLookups()
         {
-            NullEntry.Id = 0;
-            NullEntry.Val = "NULL";
-            NullEntry.Extra = "";
+            // Populate NullEntry
+            NullEntry = new DataLookupEntry()
+            {
+                Id = 0,
+                Val = "NULL",
+                Extra = "",
+            };
         }
 
+        /// <summary>
+        /// Parse a string as a int (int32) using various rules and notations
+        /// </summary>
+        /// <param name="field">string to parse</param>
+        /// <param name="res">resulting value</param>
+        /// <returns>Returns true if successful</returns>
         public static bool TryFieldParse(string field, out int res)
         {
-            bool result = false ;
-            bool isNegatice = field.StartsWith("-");
-            if (isNegatice)
+            bool result;
+
+            // Handle notation for forced positive and negative values
+            var isNegative = field.StartsWith("-");
+
+            // Remove the sign from the start of the string
+            if (isNegative)
                 field = field.TrimStart('-');
             if (field.StartsWith("+"))
                 field = field.TrimStart('+');
 
+            // Handle Hex numbers in 0x???? notation (default)
             if (field.StartsWith("0x"))
             {
-                try
-                {
-                    res = int.Parse(field.Substring(2, field.Length - 2), NumberStyles.HexNumber);
-                    result = true;
-                }
-                catch
-                {
-                    res = 0;
-                }
+                result = int.TryParse(field.Substring(2, field.Length - 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out res);
             }
             else
+            // Handle Hex numbers in $???? notation (Pascal/Delphi)
             if (field.StartsWith("$"))
             {
-                try
-                {
-                    res = int.Parse(field.Substring(1, field.Length - 1), NumberStyles.HexNumber);
-                    result = true;
-                }
-                catch
-                {
-                    res = 0;
-                }
+                result = int.TryParse(field.Substring(1, field.Length - 1), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out res);
             }
             else
+            // Handle Hex numbers in ????h notation (classic C)
             if ( (field.EndsWith("h")) || (field.EndsWith("H")))
             {
-                try
-                {
-                    res = int.Parse(field.Substring(0, field.Length - 1), NumberStyles.HexNumber);
-                    result = true;
-                }
-                catch
-                {
-                    res = 0;
-                }
+                result = int.TryParse(field.Substring(0, field.Length - 1), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out res);
             }
             else
             {
-                try
-                {
-                    res = int.Parse(field);
-                    result = true;
-                }
-                catch
-                {
-                    res = 0;
-                }
+                result = int.TryParse(field, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out res);
             }
-            if (isNegatice)
+
+            // Re-apply negative sign if required
+            if (isNegative)
                 res *= -1;
+
             return result;
         }
 
+        /// <summary>
+        /// Parse a string as a long (int64) using various rules and notations
+        /// </summary>
+        /// <param name="field">string to parse</param>
+        /// <param name="res">resulting value</param>
+        /// <returns>Returns true if successful</returns>
         public static bool TryFieldParse(string field, out long res)
         {
-            bool result = false;
-            bool isNegative = field.StartsWith("-");
+            bool result;
+
+            // Handle notation for forced positive and negative values
+            var isNegative = field.StartsWith("-");
+
+            // Remove the sign from the start of the string
             if (isNegative)
                 field = field.TrimStart('-');
             if (field.StartsWith("+"))
                 field = field.TrimStart('+');
 
+            // Handle Hex numbers in 0x???? notation (default)
             if (field.StartsWith("0x"))
             {
-                try
-                {
-                    res = long.Parse(field.Substring(2, field.Length - 2), NumberStyles.HexNumber);
-                    result = true;
-                }
-                catch
-                {
-                    res = 0;
-                }
+                result = long.TryParse(field.Substring(2, field.Length - 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out res);
             }
             else
+            // Handle Hex numbers in $???? notation (Pascal/Delphi)
             if (field.StartsWith("$"))
             {
-                try
-                {
-                    res = long.Parse(field.Substring(1, field.Length - 1), NumberStyles.HexNumber);
-                    result = true;
-                }
-                catch
-                {
-                    res = 0;
-                }
+                result = long.TryParse(field.Substring(1, field.Length - 1), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out res);
             }
             else
+            // Handle Hex numbers in ????h notation (classic C)
             if ((field.EndsWith("h")) || (field.EndsWith("H")))
             {
-                try
-                {
-                    res = long.Parse(field.Substring(0, field.Length - 1), NumberStyles.HexNumber);
-                    result = true;
-                }
-                catch
-                {
-                    res = 0;
-                }
+                result = long.TryParse(field.Substring(0, field.Length - 1), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out res);
             }
             else
             {
-                try
-                {
-                    res = long.Parse(field);
-                    result = true;
-                }
-                catch
-                {
-                    res = 0;
-                }
+                // Handle it as a regular long
+                result = long.TryParse(field, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out res);
             }
+
+            // Re-apply negative sign if required
             if (isNegative)
                 res *= -1;
+
             return result;
         }
 
-        public static bool TryFieldParseUInt64(string field, out UInt64 res)
+        /// <summary>
+        /// Parse a string as a ulong (uint64) using various rules and notations
+        /// </summary>
+        /// <param name="field">string to parse</param>
+        /// <param name="res">resulting value</param>
+        /// <returns>Returns true if successful</returns>
+        public static bool TryFieldParseUInt64(string field, out ulong res)
         {
-            bool result = false;
+            // Handle Hex numbers in 0x???? notation (default)
             if (field.StartsWith("0x"))
             {
-                try
-                {
-                    res = UInt64.Parse(field.Substring(2, field.Length - 2), NumberStyles.HexNumber);
-                    result = true;
-                }
-                catch
-                {
-                    res = 0;
-                }
+                return ulong.TryParse(field.Substring(2, field.Length - 2), 
+                    NumberStyles.HexNumber, CultureInfo.InvariantCulture, out res);
             }
-            else
+
+            // Handle Hex numbers in $???? notation (Pascal/Delphi)
             if (field.StartsWith("$"))
             {
-                try
-                {
-                    res = UInt64.Parse(field.Substring(1, field.Length - 1), NumberStyles.HexNumber);
-                    result = true;
-                }
-                catch
-                {
-                    res = 0;
-                }
+                return ulong.TryParse(field.Substring(1, field.Length - 1), 
+                    NumberStyles.HexNumber, CultureInfo.InvariantCulture, out res);
             }
-            else
+
+            // Handle Hex numbers in ????h notation (classic C)
             if ((field.EndsWith("h")) || (field.EndsWith("H")))
             {
-                try
-                {
-                    res = UInt64.Parse(field.Substring(0, field.Length - 1), NumberStyles.HexNumber);
-                    result = true;
-                }
-                catch
-                {
-                    res = 0;
-                }
+                return ulong.TryParse(field.Substring(0, field.Length - 1), 
+                    NumberStyles.HexNumber, CultureInfo.InvariantCulture, out res);
             }
-            else
-            {
-                try
-                {
-                    res = UInt64.Parse(field);
-                    result = true;
-                }
-                catch
-                {
-                    res = 0;
-                }
-            }
-            return result;
+
+            return ulong.TryParse(field, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out res);
         }
 
-        
-
+        /// <summary>
+        /// Load lookup table from file
+        /// </summary>
+        /// <param name="fileName">File to load</param>
+        /// <returns>Returns true if successful, otherwise returns false and errors are logged in AllLoadErrors</returns>
         public bool LoadLookupFile(string fileName)
         {
             // Extract name
@@ -224,67 +201,91 @@ namespace VieweD.Engine.Common
                 LookupLists.Remove(lookupName);
 
             // Create new list
-            DataLookupList dll = new DataLookupList();
+            var dataLookupList = new DataLookupList();
+
             // Add it
-            LookupLists.Add(lookupName,dll);
+            LookupLists.Add(lookupName, dataLookupList);
+
             // Load file
-            List<string> sl = File.ReadAllLines(fileName).ToList();
+            var lines = File.ReadAllLines(fileName).ToList();
+
             // Parse File
             var lineNumber = 0;
-            foreach(string line in sl)
+            foreach(var line in lines)
             {
                 lineNumber++;
                 try
                 {
-                    string[] fields = line.Split(';');
+                    var fields = line.Split(';');
                     if (fields.Length > 1)
                     {
                         if (TryFieldParse(fields[0], out int newId))
                         {
-                            DataLookupEntry dle = new DataLookupEntry();
-                            dle.Id = (UInt64)newId;
-                            dle.Val = fields[1];
-                            if (fields.Length > 2)
-                                dle.Extra = fields[2];
-                            dll.Data.Add((UInt64)newId, dle);
-                            // for autocomplete
-                            AllValues.Add(dle.Val);
+                            var dataLookupEntry = new DataLookupEntry
+                            {
+                                Id = (ulong)newId,
+                                Val = fields[1],
+                                Extra = fields.Length > 2 ? fields[2] : "",
+                            };
+                            dataLookupList.Data.Add((ulong)newId, dataLookupEntry);
+
+                            // For autocomplete
+                            AllValues.Add(dataLookupEntry.Val);
                         }
                     }
                 }
                 catch (Exception x)
                 {
-                    AllLoadErrors += string.Format("\n\r\n\rException loading {0} at line {1} :\n\r{2}\r\n=> {3}", fileName, lineNumber,x.Message,line);
+                    AllLoadErrors += $"\n\r\n\rException loading {fileName} at line {lineNumber} :\n\r{x.Message}\r\n=> {line}";
                     return false;
                 }
             }
             return true;
         }
 
+        /// <summary>
+        /// Constructs the default lookup location using a given EngineId
+        /// </summary>
+        /// <param name="engineId">EngineId name</param>
+        /// <returns>Returns the default lookup location for a given Engine</returns>
         public static string DefaultLookupPath(string engineId)
         {
             return Path.Combine(Application.StartupPath, "data", engineId, "lookup");
         }
 
+        /// <summary>
+        /// Load lookup data for a given EngineId
+        /// </summary>
+        /// <param name="engineId">EngineId to load data for</param>
+        /// <param name="initialLoading">Settings this to true will first wipe already existing data</param>
+        /// <returns>Returns true if successful or empty</returns>
         public bool LoadLookups(string engineId, bool initialLoading = true)
         {
             if (initialLoading)
                 LookupLists.Clear();
             AllLoadErrors = string.Empty ;
-            bool noErrors = true;
             var lookupPath = DefaultLookupPath(engineId);
-            DirectoryInfo di = new DirectoryInfo(lookupPath);
-            if (Directory.Exists(lookupPath))
+            
+            // If the directory doesn't exist, consider it loaded
+            if (!Directory.Exists(lookupPath)) 
+                return true;
+
+            var directoryInfo = new DirectoryInfo(lookupPath);
+            var hasNoErrors = true;
+            foreach (var fi in directoryInfo.GetFiles())
             {
-                foreach (var fi in di.GetFiles())
-                {
-                    if (!LoadLookupFile(fi.FullName))
-                        noErrors = false;
-                }
+                if (!LoadLookupFile(fi.FullName))
+                    hasNoErrors = false;
             }
-            return noErrors;
+            return hasNoErrors;
         }
 
+        /// <summary>
+        /// Main NameLookUp function
+        /// </summary>
+        /// <param name="lookupName">Name of the lookup list you want to return</param>
+        /// <param name="lookupOffsetString">Optional Offset value or expression</param>
+        /// <returns>Requested lookup list</returns>
         public DataLookupList NLU(string lookupName,string lookupOffsetString = "")
         {
             if ((lookupOffsetString != string.Empty) && (lookupName.ToLower() == "@math"))
@@ -302,16 +303,26 @@ namespace VieweD.Engine.Common
             return NullList;
         }
 
+        /// <summary>
+        /// Returns a LookupList or creates a new one. Does not support special lists like @MATH
+        /// </summary>
+        /// <param name="lookupName">Name of the lookup table</param>
+        /// <returns>Returns the (new) lookup list</returns>
         public DataLookupList NLUOrCreate(string lookupName)
         {
-            DataLookupList res;
-            if (LookupLists.TryGetValue(lookupName, out res))
+            if (LookupLists.TryGetValue(lookupName, out var res))
                 return res;
             res = new DataLookupList();
             LookupLists.Add(lookupName, res);
             return res;
         }
 
+        /// <summary>
+        /// Returns a packet name based on it's ID from the default lookup tables
+        /// </summary>
+        /// <param name="packetLogType">Direction of the packet</param>
+        /// <param name="packetId">The ID to lookup</param>
+        /// <returns>PacketName or "??? unknown"</returns>
         public string PacketTypeToString(PacketLogTypes packetLogType, uint packetId)
         {
             string res = "";
@@ -324,11 +335,23 @@ namespace VieweD.Engine.Common
             return res;
         }
 
-        public void RegisterCustomLookup(string customListName, UInt64 customId, string customValue)
+        /// <summary>
+        /// Registers new custom lookup data, used for storing lookup data while parsing
+        /// Overwrites previous values unless the new value is NULL
+        /// Also handles some special IDs like §playerid, which are not permanently stored
+        /// </summary>
+        /// <param name="customListName">Lookup table name to add to</param>
+        /// <param name="customId">ID to be added</param>
+        /// <param name="customValue">New value to add</param>
+        public void RegisterCustomLookup(string customListName, ulong customId, string customValue)
         {
             customListName = customListName.ToLower();
+
+            // Ignore if @MATH special list
             if (customListName == "@math")
                 return;
+
+            // Handle §playerid special case
             if (customListName.StartsWith("§"))
             {
                 if ((customListName == @"§playerid") && (GameViewForm.GV != null))
@@ -340,24 +363,11 @@ namespace VieweD.Engine.Common
                 return;
             }
 
+            // Prefix @ if it wasn't already
             if (!customListName.StartsWith("@"))
                 customListName = "@" + customListName;
-            DataLookupList list = null;
 
-            foreach (var lookupList in LookupLists)
-            {
-                if (lookupList.Key.ToLower() == customListName)
-                {
-                    list = lookupList.Value;
-                    break;
-                }
-            }
-
-            if (list == null)
-            {
-                list = new DataLookupList();
-                LookupLists.Add(customListName, list);
-            }
+            var list = NLUOrCreate(customListName);
 
             var keepOldValue = false;
             if (list.Data.TryGetValue(customId, out var entry))
@@ -369,7 +379,8 @@ namespace VieweD.Engine.Common
                     keepOldValue = true;
             }
 
-            if (keepOldValue != false) return;
+            if (keepOldValue) 
+                return;
 
             var newListValue = new DataLookupEntry
             {

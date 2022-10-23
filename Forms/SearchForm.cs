@@ -7,54 +7,79 @@ namespace VieweD
 {
     public partial class SearchForm : Form
     {
-        public SearchParameters searchParameters ;
-        bool isValidating = false;
+        public SearchParameters SearchParameters { get; set; }
+
+        public EngineBase Engine { get; set; }
+
+        private bool IsValidating { get; set; } = false;
 
         public SearchForm()
         {
             InitializeComponent();
-            searchParameters = new SearchParameters();
-            searchParameters.ClearValidSearchFlags();
+            SearchParameters = new SearchParameters();
+            SearchParameters.ClearValidSearchFlags();
         }
 
         private void SearchForm_Load(object sender, EventArgs e)
         {
             // temporary disable validate
-            isValidating = true;
-            rbAny.Checked = ((searchParameters.SearchIncoming && searchParameters.SearchOutgoing) || (!searchParameters.SearchIncoming && !searchParameters.SearchOutgoing));
-            rbIncoming.Checked = (searchParameters.SearchIncoming && !searchParameters.SearchOutgoing);
-            rbOutgoing.Checked = (!searchParameters.SearchIncoming && searchParameters.SearchOutgoing);
+            IsValidating = true;
+            rbAny.Checked = ((SearchParameters.SearchIncoming && SearchParameters.SearchOutgoing) || (!SearchParameters.SearchIncoming && !SearchParameters.SearchOutgoing));
+            rbIncoming.Checked = (SearchParameters.SearchIncoming && !SearchParameters.SearchOutgoing);
+            rbOutgoing.Checked = (!SearchParameters.SearchIncoming && SearchParameters.SearchOutgoing);
 
-            if (searchParameters.SearchByPacketId)
-                ePacketID.Text = "0x"+searchParameters.SearchPacketId.ToString("X");
+            if (SearchParameters.SearchByPacketId)
+                ePacketID.Text = "0x"+SearchParameters.SearchPacketId.ToString("X");
             else
                 ePacketID.Text = "";
 
-            if (searchParameters.SearchByPacketLevel)
-                ePacketLevel.Text = "0x" + searchParameters.SearchPacketLevel.ToString("X");
-            else
-                ePacketLevel.Text = "";
-
-            if (searchParameters.SearchBySync)
-                eSync.Text = "0x" + searchParameters.SearchSync.ToString("X");
-            else
-                eSync.Text = "";
-
-            if (searchParameters.SearchByByte)
+            if ((Engine == null) || (Engine?.AllowedPacketLevelSearch == true))
             {
-                eValue.Text = "0x" + searchParameters.SearchByte.ToString("X");
+                ePacketLevel.Enabled = true;
+                if (SearchParameters.SearchByPacketLevel)
+                    ePacketLevel.Text = "0x" + SearchParameters.SearchPacketLevel.ToString("X");
+                else
+                    ePacketLevel.Text = "";
+            }
+            else
+            {
+                ePacketLevel.Enabled = false;
+                ePacketLevel.Text = "";
+            }
+
+            lPacketLevel.Enabled = ePacketLevel.Enabled;
+
+            if ((Engine == null) || (Engine?.AllowedPacketSyncSearch == true))
+            {
+                eSync.Enabled = true;
+                if (SearchParameters.SearchBySync)
+                    eSync.Text = "0x" + SearchParameters.SearchSync.ToString("X");
+                else
+                    eSync.Text = "";
+            }
+            else
+            {
+                eSync.Enabled = false;
+                eSync.Text = "";
+            }
+
+            lPacketSync.Enabled = eSync.Enabled;
+
+            if (SearchParameters.SearchByByte)
+            {
+                eValue.Text = "0x" + SearchParameters.SearchByte.ToString("X");
                 rbByte.Checked = true;
             }
             else
-            if (searchParameters.SearchByUInt16)
+            if (SearchParameters.SearchByUInt16)
             {
-                eValue.Text = "0x" + searchParameters.SearchUInt16.ToString("X");
+                eValue.Text = "0x" + SearchParameters.SearchUInt16.ToString("X");
                 rbUInt16.Checked = true;
             }
             else
-            if (searchParameters.SearchByUInt32)
+            if (SearchParameters.SearchByUInt32)
             {
-                eValue.Text = "0x" + searchParameters.SearchUInt32.ToString("X");
+                eValue.Text = "0x" + SearchParameters.SearchUInt32.ToString("X");
                 rbUInt32.Checked = true;
             }
             else
@@ -66,13 +91,13 @@ namespace VieweD
             cbFieldNames.Items.AddRange(PacketParser.AllFieldNames.ToArray());
             cbFieldNames.Sorted = true;
 
-            if (searchParameters.SearchByParsedData)
+            if (SearchParameters.SearchByParsedData)
             {
-                cbFieldNames.Text = searchParameters.SearchParsedFieldName;
-                eFieldValue.Text = searchParameters.SearchParsedFieldValue;
+                cbFieldNames.Text = SearchParameters.SearchParsedFieldName;
+                eFieldValue.Text = SearchParameters.SearchParsedFieldValue;
             }
 
-            isValidating = false;
+            IsValidating = false;
             ValidateFields();
         }
 
@@ -100,29 +125,29 @@ namespace VieweD
         {
             bool isValid = true;
             bool hasData = false;
-            if (isValidating)
+            if (IsValidating)
                 return;
-            isValidating = true;
+            IsValidating = true;
 
             // Packet directions
-            searchParameters.SearchIncoming = (rbAny.Checked || rbIncoming.Checked);
-            searchParameters.SearchOutgoing = (rbAny.Checked || rbOutgoing.Checked);
+            SearchParameters.SearchIncoming = (rbAny.Checked || rbIncoming.Checked);
+            SearchParameters.SearchOutgoing = (rbAny.Checked || rbOutgoing.Checked);
 
             // Make sure no search options are on before validating
-            searchParameters.SearchByPacketId = false;
-            searchParameters.SearchByPacketLevel = false;
-            searchParameters.SearchBySync = false;
-            searchParameters.SearchByByte = false;
-            searchParameters.SearchByUInt16 = false;
-            searchParameters.SearchByUInt24 = false;
-            searchParameters.SearchByUInt32 = false;
-            searchParameters.SearchByParsedData = false;
-            searchParameters.SearchParsedFieldName = string.Empty;
-            searchParameters.SearchParsedFieldValue = string.Empty;
+            SearchParameters.SearchByPacketId = false;
+            SearchParameters.SearchByPacketLevel = false;
+            SearchParameters.SearchBySync = false;
+            SearchParameters.SearchByByte = false;
+            SearchParameters.SearchByUInt16 = false;
+            SearchParameters.SearchByUInt24 = false;
+            SearchParameters.SearchByUInt32 = false;
+            SearchParameters.SearchByParsedData = false;
+            SearchParameters.SearchParsedFieldName = string.Empty;
+            SearchParameters.SearchParsedFieldValue = string.Empty;
 
             UInt16 minID = 1;
             UInt16 maxID = 0x1FF;
-            if (searchParameters.FileFormat == "PDEC")
+            if (SearchParameters.FileFormat == "PDEC")
             {
                 minID = 0x0000;
                 maxID = 0xFFFF;
@@ -134,8 +159,8 @@ namespace VieweD
                 if ((nPacketID >= minID) && (nPacketID <= maxID))
                 {
                     hasData = true;
-                    searchParameters.SearchByPacketId = true;
-                    searchParameters.SearchPacketId = (UInt16)nPacketID;
+                    SearchParameters.SearchByPacketId = true;
+                    SearchParameters.SearchPacketId = (UInt16)nPacketID;
                     ePacketID.ForeColor = Color.Blue;
                 }
                 else
@@ -149,13 +174,13 @@ namespace VieweD
             }
 
             // PacketLevel (AA only)
-            if ((searchParameters.FileFormat == "PDEC") && (DataLookups.TryFieldParse(ePacketLevel.Text, out int nPacketLevel)))
+            if ((SearchParameters.FileFormat == "PDEC") && (DataLookups.TryFieldParse(ePacketLevel.Text, out int nPacketLevel)))
             {
                 if ((nPacketLevel >= 0) && (nPacketLevel <= 5))
                 {
                     hasData = true;
-                    searchParameters.SearchByPacketLevel = true;
-                    searchParameters.SearchPacketLevel = (byte)nPacketLevel;
+                    SearchParameters.SearchByPacketLevel = true;
+                    SearchParameters.SearchPacketLevel = (byte)nPacketLevel;
                     ePacketLevel.ForeColor = Color.Blue;
                 }
                 else
@@ -174,8 +199,8 @@ namespace VieweD
                 if ((nSync > 0) && (nSync < 0xFFFF))
                 {
                     hasData = true;
-                    searchParameters.SearchBySync = true;
-                    searchParameters.SearchSync = (UInt16)nSync;
+                    SearchParameters.SearchBySync = true;
+                    SearchParameters.SearchSync = (UInt16)nSync;
                     eSync.ForeColor = Color.Blue;
                 }
                 else
@@ -200,44 +225,44 @@ namespace VieweD
                 if ((nValue >= 0) && (nValue <= 0xFF) && (rbByte.Checked))
                 {
                     hasData = true;
-                    searchParameters.SearchByByte = true;
-                    searchParameters.SearchByUInt16 = false;
-                    searchParameters.SearchByUInt24 = false;
-                    searchParameters.SearchByUInt32 = false;
-                    searchParameters.SearchByte = (byte)nValue;
+                    SearchParameters.SearchByByte = true;
+                    SearchParameters.SearchByUInt16 = false;
+                    SearchParameters.SearchByUInt24 = false;
+                    SearchParameters.SearchByUInt32 = false;
+                    SearchParameters.SearchByte = (byte)nValue;
                     eValue.ForeColor = Color.Navy;
                 }
                 else
                 if ((nValue >= 0) && (nValue <= 0xFFFF) && (rbUInt16.Checked))
                 {
                     hasData = true;
-                    searchParameters.SearchByByte = false;
-                    searchParameters.SearchByUInt16 = true;
-                    searchParameters.SearchByUInt24 = false;
-                    searchParameters.SearchByUInt32 = false;
-                    searchParameters.SearchUInt16 = (UInt16)nValue;
+                    SearchParameters.SearchByByte = false;
+                    SearchParameters.SearchByUInt16 = true;
+                    SearchParameters.SearchByUInt24 = false;
+                    SearchParameters.SearchByUInt32 = false;
+                    SearchParameters.SearchUInt16 = (UInt16)nValue;
                     eValue.ForeColor = Color.RoyalBlue;
                 }
                 else
                 if ((nValue >= 0) && (nValue <= 0xFFFFFF) && (rbUInt24.Checked))
                 {
                     hasData = true;
-                    searchParameters.SearchByByte = false;
-                    searchParameters.SearchByUInt16 = false;
-                    searchParameters.SearchByUInt24 = true;
-                    searchParameters.SearchByUInt32 = false;
-                    searchParameters.SearchUInt24 = (UInt32)nValue;
+                    SearchParameters.SearchByByte = false;
+                    SearchParameters.SearchByUInt16 = false;
+                    SearchParameters.SearchByUInt24 = true;
+                    SearchParameters.SearchByUInt32 = false;
+                    SearchParameters.SearchUInt24 = (UInt32)nValue;
                     eValue.ForeColor = Color.Blue;
                 }
                 else
                 if ((nValue >= 0) && (nValue <= 0xFFFFFFFF) && (rbUInt32.Checked))
                 {
                     hasData = true;
-                    searchParameters.SearchByByte = false;
-                    searchParameters.SearchByUInt16 = false;
-                    searchParameters.SearchByUInt24 = false;
-                    searchParameters.SearchByUInt32 = true;
-                    searchParameters.SearchUInt32 = (UInt32)nValue;
+                    SearchParameters.SearchByByte = false;
+                    SearchParameters.SearchByUInt16 = false;
+                    SearchParameters.SearchByUInt24 = false;
+                    SearchParameters.SearchByUInt32 = true;
+                    SearchParameters.SearchUInt32 = (UInt32)nValue;
                     eValue.ForeColor = Color.Blue;
                 }
                 else
@@ -256,16 +281,16 @@ namespace VieweD
             if (eFieldValue.Text != string.Empty)
             {
                 hasData = true;
-                searchParameters.SearchByParsedData = true;
-                searchParameters.SearchParsedFieldName = cbFieldNames.Text.ToLower();
-                searchParameters.SearchParsedFieldValue = eFieldValue.Text.ToLower();
+                SearchParameters.SearchByParsedData = true;
+                SearchParameters.SearchParsedFieldName = cbFieldNames.Text.ToLower();
+                SearchParameters.SearchParsedFieldValue = eFieldValue.Text.ToLower();
             }
 
             if ((!isValid) || (!hasData))
-                searchParameters.ClearValidSearchFlags();
+                SearchParameters.ClearValidSearchFlags();
             btnFindNext.Enabled = isValid && hasData;
             btnAsNewTab.Enabled = isValid && hasData;
-            isValidating = false;
+            IsValidating = false;
         }
 
         private void SearchForm_Shown(object sender, EventArgs e)

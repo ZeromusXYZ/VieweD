@@ -16,10 +16,12 @@ namespace VieweD.Engine.Common
         /// Only used if the capture has multiple connections inside one log file to identify which connection this is supposed to be for 
         /// </summary>
         public byte StreamId { get; protected set; }
+
         /// <summary>
         /// Port of the associated port
         /// </summary>
-        public UInt16 Port { get; protected set; }
+        public ushort Port { get; protected set; }
+
         public string Decryptor { get; protected set; }
 
         public RulesGroup(RulesReader reader, XmlNode root,byte expectedStreamId = 0)
@@ -27,17 +29,17 @@ namespace VieweD.Engine.Common
             Parent = reader;
             StreamId = expectedStreamId;
             RootNode = root;
-            for (int i = 0; i < RootNode.ChildNodes.Count; i++)
+            for (var i = 0; i < RootNode.ChildNodes.Count; i++)
             {
                 var section = RootNode.ChildNodes.Item(i);
-                var attribs = XmlHelper.ReadNodeAttributes(section);
+                var attributes = XmlHelper.ReadNodeAttributes(section);
                 switch (section?.Name.ToLower())
                 {
                     case "server":
                         // Ignored
                         break;
                     case "decryptor":
-                        Decryptor = XmlHelper.GetAttributeString(attribs, "name");
+                        Decryptor = XmlHelper.GetAttributeString(attributes, "name");
                         break;
                     case "s2c":
                         S2C = section;
@@ -58,32 +60,34 @@ namespace VieweD.Engine.Common
             // S2C
             if (S2C != null)
             {
-                for (int i = 0; i < S2C.ChildNodes.Count; i++)
+                for (var i = 0; i < S2C.ChildNodes.Count; i++)
                 {
                     var pNode = S2C.ChildNodes.Item(i);
-                    if (pNode.Name.ToLower() == "packet")
+                    if (pNode?.Name.ToLower() == "packet")
                     {
-                        var attribs = XmlHelper.ReadNodeAttributes(pNode);
-                        var type = Convert.ToUInt16(XmlHelper.GetAttributeInt(attribs, "type"));
-                        var level = Convert.ToByte(XmlHelper.GetAttributeInt(attribs, "level"));
-                        var desc = XmlHelper.GetAttributeString(attribs, "desc");
-                        var pr = new PacketRule(this, this.StreamId, level, type, desc, pNode);
-                        if (this.Parent.S2C.ContainsKey(pr.LookupKey))
+                        var attributes = XmlHelper.ReadNodeAttributes(pNode);
+                        var pType = Convert.ToUInt16(XmlHelper.GetAttributeInt(attributes, "type"));
+                        var level = Convert.ToByte(XmlHelper.GetAttributeInt(attributes, "level"));
+                        var description = XmlHelper.GetAttributeString(attributes, "desc");
+                        var packetRule = new PacketRule(this, StreamId, level, pType, description, pNode);
+
+                        if (Parent.S2C.ContainsKey(packetRule.LookupKey))
                         {
-                            this.Parent.S2C.Remove(pr.LookupKey);
-                            Debug.WriteLine("Duplicate S2C Key 0x" + pr.LookupKey.ToString("X"));
+                            Parent.S2C.Remove(packetRule.LookupKey);
+                            Debug.WriteLine("Duplicate S2C Key 0x" + packetRule.LookupKey.ToString("X"));
                         }
 
-                        this.Parent.S2C.Add(pr.LookupKey, pr);
-                        var dll = this.Parent.parentTab.Engine.DataLookups.NLUOrCreate("in");
-                        if (dll.Data.TryGetValue(pr.LookupKey, out var dle))
+                        Parent.S2C.Add(packetRule.LookupKey, packetRule);
+
+                        var dataLookupList = Parent.ParentTab.Engine.DataLookups.NLUOrCreate("in");
+                        if (dataLookupList.Data.TryGetValue(packetRule.LookupKey, out var dataLookupEntry))
                         {
-                            dle.Val = pr.Name;
+                            dataLookupEntry.Val = packetRule.Name;
                         }
                         else
                         {
-                            dle = new DataLookupEntry() { Id = pr.LookupKey, Val = pr.Name };
-                            dll.Data.Add(dle.Id, dle);
+                            dataLookupEntry = new DataLookupEntry() { Id = packetRule.LookupKey, Val = packetRule.Name };
+                            dataLookupList.Data.Add(dataLookupEntry.Id, dataLookupEntry);
                         }
                     }
                 }
@@ -92,47 +96,46 @@ namespace VieweD.Engine.Common
             // C2S
             if (C2S != null)
             {
-                for (int i = 0; i < C2S.ChildNodes.Count; i++)
+                for (var i = 0; i < C2S.ChildNodes.Count; i++)
                 {
                     var pNode = C2S.ChildNodes.Item(i);
-                    if (pNode.Name.ToLower() == "packet")
+                    if (pNode?.Name.ToLower() == "packet")
                     {
-                        var attribs = XmlHelper.ReadNodeAttributes(pNode);
-                        UInt16 type = 0xFFFF;
+                        var attributes = XmlHelper.ReadNodeAttributes(pNode);
+                        ushort pType;
                         try
                         {
-                            type = Convert.ToUInt16(XmlHelper.GetAttributeInt(attribs, "type"));
+                            pType = Convert.ToUInt16(XmlHelper.GetAttributeInt(attributes, "type"));
                         }
                         catch
                         {
                             continue;
                         }
 
-                        var level = Convert.ToByte(XmlHelper.GetAttributeInt(attribs, "level"));
-                        var desc = XmlHelper.GetAttributeString(attribs, "desc");
-                        var pr = reader.parentTab.Engine.CreatePacketRule(this, this.StreamId, level, type, desc, pNode);
-                        if (this.Parent.C2S.ContainsKey(pr.LookupKey))
+                        var level = Convert.ToByte(XmlHelper.GetAttributeInt(attributes, "level"));
+                        var description = XmlHelper.GetAttributeString(attributes, "desc");
+                        var packetRule = reader.ParentTab.Engine.CreatePacketRule(this, this.StreamId, level, pType, description, pNode);
+                        if (Parent.C2S.ContainsKey(packetRule.LookupKey))
                         {
-                            this.Parent.C2S.Remove(pr.LookupKey);
-                            Debug.WriteLine("Duplicate C2S Key 0x" + pr.LookupKey.ToString("X"));
+                            Parent.C2S.Remove(packetRule.LookupKey);
+                            Debug.WriteLine("Duplicate C2S Key 0x" + packetRule.LookupKey.ToString("X"));
                         }
 
-                        this.Parent.C2S.Add(pr.LookupKey, pr);
-                        var dll = this.Parent.parentTab.Engine.DataLookups.NLUOrCreate("out");
-                        if (dll.Data.TryGetValue(pr.LookupKey, out var dle))
+                        Parent.C2S.Add(packetRule.LookupKey, packetRule);
+
+                        var dll = Parent.ParentTab.Engine.DataLookups.NLUOrCreate("out");
+                        if (dll.Data.TryGetValue(packetRule.LookupKey, out var dataLookupEntry))
                         {
-                            dle.Val = pr.Name;
+                            dataLookupEntry.Val = packetRule.Name;
                         }
                         else
                         {
-                            dle = new DataLookupEntry() { Id = pr.LookupKey, Val = pr.Name };
-                            dll.Data.Add(dle.Id, dle);
+                            dataLookupEntry = new DataLookupEntry() { Id = packetRule.LookupKey, Val = packetRule.Name };
+                            dll.Data.Add(dataLookupEntry.Id, dataLookupEntry);
                         }
                     }
                 }
             }
-            
         }
     }
-
 }

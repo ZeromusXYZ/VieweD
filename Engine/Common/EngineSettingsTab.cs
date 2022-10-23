@@ -5,16 +5,16 @@ namespace VieweD.Engine.Common
     // ReSharper disable once ClassWithVirtualMembersNeverInherited.Global
     public class EngineSettingsTab : TabPage
     {
-        protected GroupBox panel;
+        protected GroupBox Panel;
 
         public EngineSettingsTab(TabControl parent)
         {
             parent.TabPages.Add(this);
             Padding = new Padding(5);
-            panel = new GroupBox();
-            Controls.Add(panel);
-            panel.Dock = DockStyle.Fill;
-            panel.Text = @" Plugin Settings ";
+            Panel = new GroupBox();
+            Controls.Add(Panel);
+            Panel.Dock = DockStyle.Fill;
+            Panel.Text = @" Plugin Settings ";
         }
 
         /// <summary>

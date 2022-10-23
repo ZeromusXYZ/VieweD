@@ -6,7 +6,7 @@ namespace VieweD.Engine.Common
     {
         public string EvalString { get; set; }
         
-        public static double EvalDouble(String expression)
+        public static double EvalDouble(string expression)
         {
             using (var table = new System.Data.DataTable())
             {
@@ -14,7 +14,7 @@ namespace VieweD.Engine.Common
             }
         }
 
-        public static UInt64 EvalUInt64(String expression)
+        public static ulong EvalUInt64(string expression)
         {
             using (var table = new System.Data.DataTable())
             {
@@ -22,7 +22,7 @@ namespace VieweD.Engine.Common
             }
         }
 
-        public override string GetValue(UInt64 id)
+        public override string GetValue(ulong id)
         {
             try
             {

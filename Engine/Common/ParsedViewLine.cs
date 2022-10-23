@@ -12,15 +12,13 @@ namespace VieweD.Engine.Common
         public string Data ;
         public ushort FieldIndex;
         public Color FieldColor;
-        public UInt64 DataAsUInt64;
+        public ulong DataAsUInt64;
         public string ExtraInfo;
 
         public bool MatchesSearch(SearchParameters p)
         {
             var res = true;
             var rawBytes = BitConverter.GetBytes(DataAsUInt64);
-            //var stringSearchHex = string.Empty;
-            //var stringSearchDec = string.Empty;
 
             if (p.SearchByByte)
             {

@@ -12,28 +12,34 @@ namespace VieweD.Engine.Common
         /// <summary>
         /// The main project TabPage
         /// </summary>
-        public PacketTabPage ParentTab;
+        public PacketTabPage ParentTab { get; set; }
+
         /// <summary>
         /// Unique ID for this engine
         /// </summary>
         public virtual string EngineId { get; } = "null";
+
         /// <summary>
         /// Full name of the engine
         /// </summary>
-        public virtual string EngineName { get; } = "Noname";
+        public virtual string EngineName { get; } = "NoName";
+
         /// <summary>
         /// Does this engine support XML-style rules
         /// </summary>
         public virtual bool HasRulesFile { get; } = false;
+
         /// <summary>
         /// Does this engine support manual decryption selection?
         /// The main program will try to pull the default value that is associated with the rules file if enabled
         /// </summary>
         public virtual bool HasDecrypt { get; } = false;
+
         /// <summary>
-        /// List of possible Decrypt IDs
+        /// List of possible Decryption handler IDs
         /// </summary>
-        public virtual List<string> DecryptorList { get; } = new List<string>();
+        public virtual List<string> DecryptionHandlerList { get; } = new List<string>();
+
         /// <summary>
         /// List of supported file extension that this engine supports (extension, description)
         /// </summary>
@@ -48,12 +54,26 @@ namespace VieweD.Engine.Common
         /// List of names of possible tools that need to be added to the menu 
         /// </summary>
         public virtual List<string> ToolNamesList { get; protected set; } = new List<string>();
+
+        /// <summary>
+        /// Name of a currently running Tool while it's parsing the packets
+        /// </summary>
         public string CurrentRunningToolName { get; set; } = string.Empty;
 
         /// <summary>
         /// Lookup Data for this engine
         /// </summary>
         public readonly DataLookups DataLookups = new DataLookups();
+
+        /// <summary>
+        /// Checks if you are allowed to search by Packet Level
+        /// </summary>
+        public virtual bool AllowedPacketLevelSearch { get; } = false;
+
+        /// <summary>
+        /// Checks if you are allowed to search by Packet SyncId
+        /// </summary>
+        public virtual bool AllowedPacketSyncSearch { get; } = false;
 
         public static string DepthSpacerVertical = "⁞";
         public static string DepthSpacerHorizontalSingle = "── ";

@@ -11,33 +11,31 @@ namespace VieweD.Engine.Common
 {
     public class RulesReader
     {
-        protected XmlDocument _doc;
-        protected XmlNodeList _allRulesGroups;
-        protected XmlNodeList _allTemplates;
-        protected Dictionary<byte, RulesGroup> RuleGroups = new Dictionary<byte, RulesGroup>();
-        public Dictionary<uint, PacketRule> C2S = new Dictionary<uint, PacketRule>(); // out: client to server
-        public Dictionary<uint, PacketRule> S2C = new Dictionary<uint, PacketRule>(); // In : server to client
-        public Dictionary<string, XmlNode> Templates = new Dictionary<string, XmlNode>();
+        protected XmlDocument XmlDoc;
+        protected XmlNodeList AllRulesGroups;
+        protected XmlNodeList AllTemplates;
+        protected Dictionary<byte, RulesGroup> RuleGroups { get; set; } = new Dictionary<byte, RulesGroup>();
+        public Dictionary<uint, PacketRule> C2S { get; set; } = new Dictionary<uint, PacketRule>(); // out: client to server
+        public Dictionary<uint, PacketRule> S2C { get; set; } = new Dictionary<uint, PacketRule>(); // In : server to client
+        public Dictionary<string, XmlNode> Templates { get; set; } = new Dictionary<string, XmlNode>();
         public string LoadedRulesFileName { get; protected set; }
-
-        public PacketTabPage parentTab;
-        protected ZlibCodec decompressor = new ZlibCodec(Ionic.Zlib.CompressionMode.Decompress);
-        public string ExpectedClientVersion = string.Empty;
-
+        public PacketTabPage ParentTab { get; set; }
+        protected ZlibCodec DecompressionHandler { get; set; } = new ZlibCodec(Ionic.Zlib.CompressionMode.Decompress);
+        public string ExpectedClientVersion { get; set; } = string.Empty;
 
         protected RulesReader(PacketTabPage parent)
         {
-            parentTab = parent;
+            ParentTab = parent;
         }
 
         protected virtual bool LoadRulesFromXmlString(string xmlData)
         {
             LoadedRulesFileName = "";
             // Open XML file
-            _doc = new XmlDocument();
-            _doc.Load(new StringReader(xmlData));
+            XmlDoc = new XmlDocument();
+            XmlDoc.Load(new StringReader(xmlData));
 
-            var versionNode = _doc.SelectSingleNode("/root/version");
+            var versionNode = XmlDoc.SelectSingleNode("/root/version");
             if (versionNode != null)
             {
                 var client = XmlHelper.GetAttributeString(XmlHelper.ReadNodeAttributes(versionNode), "client");
@@ -45,23 +43,23 @@ namespace VieweD.Engine.Common
             }
             
             // Read and Save template nodes in a List
-            _allTemplates = _doc.SelectNodes("/root/templates/template");
+            AllTemplates = XmlDoc.SelectNodes("/root/templates/template");
             Templates.Clear();
-            if (_allTemplates != null)
-                for (var i = 0; i < _allTemplates.Count; i++)
+            if (AllTemplates != null)
+                for (var i = 0; i < AllTemplates.Count; i++)
                 {
-                    var node = _allTemplates.Item(i);
+                    var node = AllTemplates.Item(i);
                     var name = XmlHelper.GetAttributeString(XmlHelper.ReadNodeAttributes(node), "name");
                     Templates.Add(name, node);
                 }
 
             // Locate rule sections
-            _allRulesGroups = _doc.SelectNodes("/root/rule");
+            AllRulesGroups = XmlDoc.SelectNodes("/root/rule");
             RuleGroups.Clear();
-            if (_allRulesGroups != null)
-                for (var i = 0; i < _allRulesGroups.Count; i++)
+            if (AllRulesGroups != null)
+                for (var i = 0; i < AllRulesGroups.Count; i++)
                 {
-                    var ng = new RulesGroup(this, _allRulesGroups.Item(i), (byte)i);
+                    var ng = new RulesGroup(this, AllRulesGroups.Item(i), (byte)i);
                     RuleGroups.Add(ng.StreamId, ng);
                 }
 
@@ -87,36 +85,40 @@ namespace VieweD.Engine.Common
                 using (XmlTextWriter writer = new XmlTextWriter(fileName, null))
                 {
                     writer.Formatting = Formatting.Indented;
-                    _doc.Save(writer);
+                    XmlDoc.Save(writer);
                 }
                 File.Delete(fileName + ".bak");
                 return true;
             }
             catch (Exception x)
             {
-                MessageBox.Show("Failed to save rules: " + fileName + "\r\n" + x.Message);
+                MessageBox.Show($"Failed to save rules: {fileName}\r\n{x.Message}");
                 return false;
             }
         }
 
-        public virtual PacketRule GetPacketRule(PacketLogTypes pt, byte streamId, byte level, UInt16 packetId)
+        public virtual PacketRule GetPacketRule(PacketLogTypes pt, byte streamId, byte level, ushort packetId)
         {
-            uint key = (uint)((streamId * 0x01000000) + (level * 0x10000) + packetId);
-            uint l0key = (uint)((streamId * 0x01000000) + packetId);
+            var key = (uint)((streamId * 0x01000000) + (level * 0x10000) + packetId);
+            var level0Key = (uint)((streamId * 0x01000000) + packetId);
             switch (pt)
             {
                 case PacketLogTypes.Incoming:
                     if (S2C.TryGetValue(key, out var inP))
                         return inP;
-                    if (S2C.TryGetValue(l0key, out var inP0))
+                    if (S2C.TryGetValue(level0Key, out var inP0))
                         return inP0;
                     break;
                 case PacketLogTypes.Outgoing:
                     if (C2S.TryGetValue(key, out var outP))
                         return outP;
-                    if (C2S.TryGetValue(l0key, out var outP0))
+                    if (C2S.TryGetValue(level0Key, out var outP0))
                         return outP0;
                     break;
+                case PacketLogTypes.Unknown:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(pt), pt, null);
             }
             return null;
         }

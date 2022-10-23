@@ -9,14 +9,14 @@ namespace VieweD.Engine.Common
     public class PacketListFilter
     {
         public FilterType FilterOutType { get; set; }
-        public List<ulong> FilterOutList { get; set; }
+        public List<PacketFilterListEntry> FilterOutList { get; set; }
         public FilterType FilterInType { get; set; }
-        public List<ulong> FilterInList { get; set; }
+        public List<PacketFilterListEntry> FilterInList { get; set; }
 
         public PacketListFilter()
         {
-            FilterOutList = new List<ulong>();
-            FilterInList = new List<ulong>();
+            FilterOutList = new List<PacketFilterListEntry>();
+            FilterInList = new List<PacketFilterListEntry>();
             Clear();
         }
 
@@ -38,23 +38,29 @@ namespace VieweD.Engine.Common
             FilterInList.AddRange(aFilter.FilterInList);
         }
 
-        public void AddOutFilterValueToList(ulong value)
+        public void AddOutFilterValueToList(PacketFilterListEntry entry) => AddOutFilterValueToList(entry.Id, entry.Level, entry.StreamId);
+
+        public void AddOutFilterValueToList(ulong packetId, byte level, byte streamId)
         {
-            if ((value > 0) && (FilterOutList.IndexOf(value) < 0))
-                FilterOutList.Add(value);
+            var filter = new PacketFilterListEntry(packetId, level, streamId);
+            if ((packetId > 0) && !FilterOutList.Any(x => x.Id == filter.Id && x.Level == filter.Level && x.StreamId == filter.StreamId))
+                FilterOutList.Add(filter);
         }
 
-        public void AddInFilterValueToList(ulong value)
+        public void AddInFilterValueToList(PacketFilterListEntry entry) => AddInFilterValueToList(entry.Id, entry.Level, entry.StreamId);
+
+        public void AddInFilterValueToList(ulong packetId, byte level, byte streamId)
         {
-            if ((value > 0) && (FilterInList.IndexOf(value) < 0))
-                FilterInList.Add(value);
+            var filter = new PacketFilterListEntry(packetId, level, streamId);
+            if ((packetId > 0) && !FilterInList.Any(x => x.Id == filter.Id && x.Level == filter.Level && x.StreamId == filter.StreamId))
+                FilterInList.Add(filter);
         }
 
         public bool LoadFromFile(string filename)
         {
             try
             {
-                List<string> sl = File.ReadAllLines(filename).ToList();
+                var sl = File.ReadAllLines(filename).ToList();
 
                 Clear();
                 foreach (string line in sl)
@@ -69,7 +75,7 @@ namespace VieweD.Engine.Common
                     switch (f0)
                     {
                         case "outtype":
-                            switch(f1)
+                            switch (f1)
                             {
                                 case "off":
                                     FilterOutType = FilterType.Off;
@@ -84,6 +90,7 @@ namespace VieweD.Engine.Common
                                     FilterOutType = FilterType.AllowNone;
                                     break;
                             }
+
                             break;
                         case "intype":
                             switch (f1)
@@ -101,14 +108,41 @@ namespace VieweD.Engine.Common
                                     FilterInType = FilterType.AllowNone;
                                     break;
                             }
+
                             break;
                         case "out":
-                            if (DataLookups.TryFieldParse(f1, out long nout))
-                                AddOutFilterValueToList((ulong)nout);
+                            var outSplit = f1.Split('-');
+
+                            if (outSplit.Length == 1)
+                            {
+                                if (DataLookups.TryFieldParse(f1, out long nOut))
+                                    AddOutFilterValueToList((ulong)nOut,0,0);
+                            }
+                            else
+                            {
+                                if (DataLookups.TryFieldParse(outSplit[0], out long nOutId) &&
+                                    DataLookups.TryFieldParse(outSplit[1], out long nOutLv) &&
+                                    DataLookups.TryFieldParse(outSplit[2], out long nOutStream))
+                                    AddOutFilterValueToList((ulong)nOutId, (byte)nOutLv, (byte)nOutStream);
+                            }
+
                             break;
                         case "in":
-                            if (DataLookups.TryFieldParse(f1, out long nin))
-                                AddInFilterValueToList((ulong)nin);
+                            var inSplit = f1.Split('-');
+
+                            if (inSplit.Length == 1)
+                            {
+                                if (DataLookups.TryFieldParse(f1, out long nIn))
+                                    AddInFilterValueToList((ulong)nIn, 0, 0);
+                            }
+                            else
+                            {
+                                if (DataLookups.TryFieldParse(inSplit[0], out long nInId) &&
+                                    DataLookups.TryFieldParse(inSplit[1], out long nInLv) &&
+                                    DataLookups.TryFieldParse(inSplit[2], out long nInStream))
+                                    AddInFilterValueToList((ulong)nInId, (byte)nInLv, (byte)nInStream);
+                            }
+
                             break;
                     }
 
@@ -145,7 +179,13 @@ namespace VieweD.Engine.Common
             }
             foreach(var i in FilterOutList)
             {
-                sl.Add("out;0x"+ i.ToString("X3") + ";" + engine.DataLookups.NLU(DataLookups.LU_PacketOut).GetValue(i));
+                var fVal = "0x" + i.Id.ToString("X3");
+                if ((i.Level > 0) || (i.StreamId > 0))
+                {
+                    fVal += "-0x" + i.Level.ToString("X2");
+                    fVal += "-0x" + i.StreamId.ToString("X2");
+                }
+                sl.Add("out;"+ fVal + ";" + engine.DataLookups.NLU(DataLookups.LU_PacketOut).GetValue(i.AsMergedId()));
             }
 
             switch (FilterInType)
@@ -165,7 +205,13 @@ namespace VieweD.Engine.Common
             }
             foreach (var i in FilterInList)
             {
-                sl.Add("in;0x" + i.ToString("X3") + ";" + engine.DataLookups.NLU(DataLookups.LU_PacketIn).GetValue(i));
+                var fVal = "0x" + i.Id.ToString("X3");
+                if ((i.Level > 0) || (i.StreamId > 0))
+                {
+                    fVal += "-0x" + i.Level.ToString("X2");
+                    fVal += "-0x" + i.StreamId.ToString("X2");
+                }
+                sl.Add("in;" + fVal + ";" + engine.DataLookups.NLU(DataLookups.LU_PacketIn).GetValue(i.AsMergedId()));
             }
 
             try

@@ -4,7 +4,7 @@ namespace VieweD.Engine.Common
 {
     public struct DataLookupEntry
     {
-        public UInt64 Id ;
+        public ulong Id ;
         public string Val ;
         public string Extra ;
     }

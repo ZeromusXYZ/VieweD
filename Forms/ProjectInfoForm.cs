@@ -126,7 +126,7 @@ namespace VieweD.Forms
                     tp.Engine = Engines.GetEngineByFileName(tp.LoadedLogFile);
 
                 // Populate decryptors list
-                foreach (var d in tp.Engine.DecryptorList)
+                foreach (var d in tp.Engine.DecryptionHandlerList)
                     cbAADecryptor.Items.Add(d);
                 
                 cbAADecryptor.Sorted = true;
@@ -179,7 +179,7 @@ namespace VieweD.Forms
                 {
                     var clientName = versionNode.Attributes?["client"].Value;
                     // If it's a supported version, select it
-                    if (!string.IsNullOrEmpty(clientName) && tp.Engine.DecryptorList.Contains(clientName))
+                    if (!string.IsNullOrEmpty(clientName) && tp.Engine.DecryptionHandlerList.Contains(clientName))
                         decryptVersion = clientName;
                 }
             }
@@ -216,7 +216,7 @@ namespace VieweD.Forms
                 tp.LinkYoutubeUrl = tVideoURL.Text;
                 tp.LinkPacketsDownloadUrl = tPackedLogsURL.Text;
                 tp.LoadedRulesFile = tRulesFile.Text;
-                tp.DecryptVersion = tp.Engine.DecryptorList.Contains(cbAADecryptor.Text) ? cbAADecryptor.Text : "_None" ;
+                tp.DecryptVersion = tp.Engine.DecryptionHandlerList.Contains(cbAADecryptor.Text) ? cbAADecryptor.Text : "_None" ;
             }
         }
 

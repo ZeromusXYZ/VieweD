@@ -15,23 +15,21 @@ namespace VieweD.Engine.Common
     [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
     public class PacketRule
     {
-        // ReSharper disable once InconsistentNaming
-        public XmlNode _rootNode { get; protected set; }
-        // ReSharper disable once InconsistentNaming
-        public RulesGroup _parent { get; protected set; }
+        public XmlNode RootNode { get; protected set; }
+        public RulesGroup Parent { get; protected set; }
         public byte StreamId { get; protected set; }
         public byte Level { get; protected set; }
-        public UInt16 PacketId { get; protected set; }
+        public ushort PacketId { get; protected set; }
         public string Name { get; protected set; }
         public List<RulesAction> Actions { get; protected set; }
         public Dictionary<string, string> LocalVars { get; protected set; }
 
         public virtual uint LookupKey => (uint)((StreamId * 0x1000000) + (Level * 0x10000) + PacketId);
 
-        public PacketRule(RulesGroup parent, byte streamId, byte level, UInt16 packetId, string description, XmlNode node)
+        public PacketRule(RulesGroup parent, byte streamId, byte level, ushort packetId, string description, XmlNode node)
         {
-            _parent = parent;
-            _rootNode = node;
+            Parent = parent;
+            RootNode = node;
             StreamId = streamId;
             Level = level;
             PacketId = packetId;
@@ -40,13 +38,13 @@ namespace VieweD.Engine.Common
             LocalVars = new Dictionary<string, string>();
         }
 
-        public virtual RulesAction BuildRuleAction(RulesAction parentAction, XmlNode actionNode, Dictionary<string, string> attribs, int step)
+        public virtual RulesAction BuildRuleAction(RulesAction parentAction, XmlNode actionNode, Dictionary<string, string> attributes, int step)
         {
             RulesAction res = null;
             switch (actionNode.Name.ToLower())
             {
                 case "data": // Normal data
-                    var dataType = XmlHelper.GetAttributeString(attribs, "type").ToLower();
+                    var dataType = XmlHelper.GetAttributeString(attributes, "type").ToLower();
                     var isReversed = dataType.StartsWith("r");
                     switch (dataType)
                     {
@@ -223,11 +221,11 @@ namespace VieweD.Engine.Common
         public void Build()
         {
             Actions.Clear();
-            for (int i = 0; i < _rootNode.ChildNodes.Count; i++)
+            for (var i = 0; i < RootNode.ChildNodes.Count; i++)
             {
-                var actionNode = _rootNode.ChildNodes.Item(i);
-                var attribs = XmlHelper.ReadNodeAttributes(actionNode);
-                var newAction = BuildRuleAction(null, actionNode, attribs, i);
+                var actionNode = RootNode.ChildNodes.Item(i);
+                var attributes = XmlHelper.ReadNodeAttributes(actionNode);
+                var newAction = BuildRuleAction(null, actionNode, attributes, i);
                 if (newAction != null)
                     Actions.Add(newAction);
             }
@@ -265,7 +263,7 @@ namespace VieweD.Engine.Common
             LocalVars.Add(name, newValue);
             if (Properties.Settings.Default.ShowDebugInfo)
             {
-                Debug.WriteLine("SetLocalVar({0},{1})", name, newValue);
+                Debug.WriteLine($"SetLocalVar({name},{newValue})");
             }
         }
 
@@ -275,12 +273,9 @@ namespace VieweD.Engine.Common
             {
                 return res;
             }
-            else
-            {
-                SetLocalVar(name, string.Empty);
-                return string.Empty;
-            }
+
+            SetLocalVar(name, string.Empty);
+            return string.Empty;
         }
     }
-
 }

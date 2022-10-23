@@ -1,4 +1,9 @@
 ﻿namespace VieweD.Engine.Common
 {
-    public enum PacketLogTypes { Unknown, Outgoing, Incoming }
+    public enum PacketLogTypes
+    {
+        Unknown, 
+        Outgoing, 
+        Incoming
+    }
 }

@@ -23,6 +23,7 @@ namespace VieweD
             public string Value { get => value; set => this.value = value; }
             public string Display { get => display; set => display = value; }
             public string ShortDisplay { get => shortdisplay; set => shortdisplay = value; }
+            public PacketFilterListEntry FilterEntry { get; set; }
 
             public int CompareTo(object obj)
             {
@@ -70,10 +71,11 @@ namespace VieweD
             {
                 foreach (var key in currentEngine.DataLookups.NLU(DataLookups.LU_PacketOut).Data.Keys)
                 {
-                    var serverId = key / 0x1000000;
-                    var level = (key / 0x10000) & 0xFF;
+                    var pfkEntry = new PacketFilterListEntry(key);
+                    //var serverId = key / 0x1000000;
+                    //var level = (key / 0x10000) & 0xFF;
                     var server = string.Empty;
-                    switch (serverId)
+                    switch (pfkEntry.StreamId)
                     {
                         case 1:
                             server = "Auth ";
@@ -85,12 +87,13 @@ namespace VieweD
                             server = "Stream ";
                             break;
                     }
-                    if (level > 0)
-                        server += "L" + level.ToString() + " ";
+                    if (pfkEntry.Level > 0)
+                        server += "L" + pfkEntry.Level.ToString() + " ";
                     var pName = currentEngine.DataLookups.NLU(DataLookups.LU_PacketOut).GetValue(key);
+
                     var d = pName.PadRight(32) + " " + server + "0x" + (key & 0xFFFF).ToString("X3");
                     //var d = server+"0x" + (key & 0xFFFF).ToString("X3") + " - " + pName;
-                    OutDataSource.Add(new FilterListEntry() { Value = key.ToString("X"), Display = d, ShortDisplay = pName });
+                    OutDataSource.Add(new FilterListEntry() { Value = key.ToString("X"), Display = d, ShortDisplay = pName, FilterEntry = pfkEntry });
                     //cbOutIDs.Items.Add("0x" + key.ToString("X3") + " - " + DataLookups.NLU(DataLookups.LU_PacketOut).GetValue(key));
                 }
             }
@@ -101,10 +104,11 @@ namespace VieweD
             {
                 foreach (var key in currentEngine.DataLookups.NLU(DataLookups.LU_PacketIn).Data.Keys)
                 {
-                    var serverId = key / 0x1000000;
-                    var level = (key / 0x10000) & 0xFF;
+                    var pfkEntry = new PacketFilterListEntry(key);
+                    //var serverId = key / 0x1000000;
+                    //var level = (key / 0x10000) & 0xFF;
                     var server = string.Empty;
-                    switch (serverId)
+                    switch (pfkEntry.StreamId)
                     {
                         case 1:
                             server = "Auth ";
@@ -116,12 +120,12 @@ namespace VieweD
                             server = "Stream ";
                             break;
                     }
-                    if (level > 0)
-                        server += "L" + level.ToString() + " ";
+                    if (pfkEntry.Level > 0)
+                        server += "L" + pfkEntry.Level.ToString() + " ";
                     var pName = currentEngine.DataLookups.NLU(DataLookups.LU_PacketIn).GetValue(key);
                     var d = pName.PadRight(32) + " " + server + "0x" + (key & 0xFFFF).ToString("X3");
                     //var d = server+"0x" + (key & 0xFFFF).ToString("X3") + " - " + pName;
-                    InDataSource.Add(new FilterListEntry() { Value = key.ToString("X"), Display = d, ShortDisplay = pName });
+                    InDataSource.Add(new FilterListEntry() { Value = key.ToString("X"), Display = d, ShortDisplay = pName, FilterEntry = pfkEntry });
                     //cbInIDs.Items.Add("0x" + key.ToString("X3") + " - " + DataLookups.NLU(DataLookups.LU_PacketIn).GetValue(key));
                 }
             }
@@ -160,8 +164,11 @@ namespace VieweD
             rbOutShow.Checked = (Filter.FilterOutType == FilterType.ShowPackets);
             rbOutNone.Checked = (Filter.FilterOutType == FilterType.AllowNone);
             lbOut.Items.Clear();
-            foreach(var n in Filter.FilterOutList)
-                lbOut.Items.Add("0x" + n.ToString("X3") + " - " + currentEngine?.DataLookups.NLU(DataLookups.LU_PacketOut).GetValue(n) ?? "???");
+            foreach (var n in Filter.FilterOutList)
+            {
+                lbOut.Items.Add(n + " - " + currentEngine?.DataLookups.NLU(DataLookups.LU_PacketOut).GetValue(n.AsMergedId()) ?? "???");
+                // lbOut.Items.Add("0x" + n.Id.ToString("X3") + " - " + currentEngine?.DataLookups.NLU(DataLookups.LU_PacketOut).GetValue(n.AsMergedId()) ?? "???");
+            }
 
             rbInOff.Checked = (Filter.FilterInType == FilterType.Off);
             rbInHide.Checked = (Filter.FilterInType == FilterType.HidePackets);
@@ -169,7 +176,10 @@ namespace VieweD
             rbInNone.Checked = (Filter.FilterInType == FilterType.AllowNone);
             lbIn.Items.Clear();
             foreach (var n in Filter.FilterInList)
-                lbIn.Items.Add("0x" + n.ToString("X3") + " - " + currentEngine?.DataLookups.NLU(DataLookups.LU_PacketIn).GetValue(n) ?? "???");
+            {
+                lbIn.Items.Add(n + " - " + currentEngine?.DataLookups.NLU(DataLookups.LU_PacketIn).GetValue(n.AsMergedId()) ?? "???");
+                // lbIn.Items.Add("0x" + n.Id.ToString("X3") + " - " + currentEngine?.DataLookups.NLU(DataLookups.LU_PacketIn).GetValue(n.AsMergedId()) ?? "???");
+            }
         }
 
         public void SaveLocalToFilter()
@@ -185,8 +195,7 @@ namespace VieweD
             Filter.FilterOutList.Clear();
             foreach (string line in lbOut.Items)
             {
-                long n = ValForID(line);
-                Filter.AddOutFilterValueToList((ulong)n);
+                Filter.AddOutFilterValueToList(new PacketFilterListEntry(line));
             }
 
             if (rbInOff.Checked)
@@ -200,8 +209,7 @@ namespace VieweD
             Filter.FilterInList.Clear();
             foreach (string line in lbIn.Items)
             {
-                var n = ValForID(line);
-                Filter.AddInFilterValueToList((ulong)n);
+                Filter.AddInFilterValueToList(new PacketFilterListEntry(line));
             }
         }
 
@@ -228,14 +236,17 @@ namespace VieweD
             {
                 if (o.Display == s)
                 {
-                    lbOut.Items.Add("0x" + o.Value + " - " + o.ShortDisplay);
+                    lbOut.Items.Add(o.FilterEntry + " - " + currentEngine?.DataLookups.NLU(DataLookups.LU_PacketOut).GetValue(o.FilterEntry.AsMergedId()) ?? "???");
+                    // lbOut.Items.Add("0x" + o.Value + " - " + o.ShortDisplay);
                     return;
                 }
             }
+
             // If nothing found, parse it
             var n = ValForID(s);
             if ((rbOutOff.Checked) && (lbOut.Items.Count == 0))
                 rbOutShow.Checked = true;
+
             lbOut.Items.Add("0x" + n.ToString("X3") + " - " + currentEngine.DataLookups.NLU(DataLookups.LU_PacketOut).GetValue((ulong)n));
         }
 
@@ -254,14 +265,17 @@ namespace VieweD
             {
                 if (i.Display == s)
                 {
-                    lbIn.Items.Add("0x" + i.Value + " - " + i.ShortDisplay);
+                    lbIn.Items.Add(i.FilterEntry + " - " + currentEngine?.DataLookups.NLU(DataLookups.LU_PacketIn).GetValue(i.FilterEntry.AsMergedId()) ?? "???");
+                    // lbIn.Items.Add("0x" + i.Value + " - " + i.ShortDisplay);
                     return;
                 }
             }
+
             // If nothing found, parse it
             var n = ValForID(s);
             if ((rbInOff.Checked) && (lbIn.Items.Count == 0))
                 rbInShow.Checked = true;
+
             lbIn.Items.Add("0x" + n.ToString("X3") + " - " + currentEngine.DataLookups.NLU(DataLookups.LU_PacketIn).GetValue((UInt64)n));
         }
 

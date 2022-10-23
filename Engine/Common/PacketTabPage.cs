@@ -10,11 +10,11 @@ namespace VieweD.Engine.Common
 {
     public class PacketTabPage: TabPage
     {
-        private MainForm OwnerMainForm { get; set; }
+        private MainForm OwnerMainForm { get; }
         // ReSharper disable once InconsistentNaming
-        public PacketList PLLoaded; // File Loaded
+        public PacketList PLLoaded { get; set; } // File Loaded
         // ReSharper disable once InconsistentNaming
-        public PacketList PL; // Filtered File Data Displayed
+        public PacketList PL { get; set; } // Filtered File Data Displayed
 
         public uint CurrentSync { get; set; }
         public string LoadedLogFile { get; set; }
@@ -29,21 +29,22 @@ namespace VieweD.Engine.Common
         public TimeSpan LinkVideoOffset { get; set; }
         public string DecryptVersion { get; set; } = "_None_";
 
-        public FlickerFreeListBox LbPackets { get; private set; }
+        public FlickerFreeListBox LbPackets { get; }
+
         // Popup Menu Controls
-        private ContextMenuStrip PmPl { get; set; }
-        private ToolStripMenuItem PmPlShowPacketName { get; set; }
-        private ToolStripSeparator PmPls1 { get; set; }
-        private ToolStripMenuItem PmPlShowOnly { get; set; }
-        private ToolStripMenuItem PmPlHideThis { get; set; }
-        private ToolStripSeparator PmPls2 { get; set; }
-        private ToolStripMenuItem PmPlShowOutOnly { get; set; }
-        private ToolStripMenuItem PmPlShowInOnly { get; set; }
-        private ToolStripSeparator PmPls3 { get; set; }
-        private ToolStripMenuItem PmPlResetFilters { get; set; }
-        private ToolStripSeparator PmPls4 { get; set; }
-        private ToolStripMenuItem PmPlEditParser { get; set; }
-        private ToolStripMenuItem PmPlExportPacket { get; set; }
+        private ContextMenuStrip PmPl { get; }
+        private ToolStripMenuItem PmPlShowPacketName { get; }
+        private ToolStripSeparator PmPls1 { get; }
+        private ToolStripMenuItem PmPlShowOnly { get; }
+        private ToolStripMenuItem PmPlHideThis { get; }
+        private ToolStripSeparator PmPls2 { get; }
+        private ToolStripMenuItem PmPlShowOutOnly { get; }
+        private ToolStripMenuItem PmPlShowInOnly { get; }
+        private ToolStripSeparator PmPls3 { get; }
+        private ToolStripMenuItem PmPlResetFilters { get; }
+        private ToolStripSeparator PmPls4 { get; }
+        private ToolStripMenuItem PmPlEditParser { get; }
+        private ToolStripMenuItem PmPlExportPacket { get; }
 
         // Engine Handler
         public EngineBase Engine { get; set; }
@@ -76,7 +77,8 @@ namespace VieweD.Engine.Common
             //lbPackets.Font = new Font("Consolas", 9); // Add fixed sized font (to override the tab page itself)
             LbPackets.DrawMode = DrawMode.OwnerDrawFixed;
 
-            LbPackets.DrawItem += lbPackets_DrawItem;
+            LbPackets.DrawItem += ListboxPackets_DrawItem;
+
             // Add the SelectedIndexChanged for this from MainForm/process creating it, as it's too complex to handle internally
             // lbPackets.SelectedIndexChanged += new System.EventHandler(this.lbPackets_SelectedIndexChanged); 
 
@@ -144,7 +146,7 @@ namespace VieweD.Engine.Common
             return PL.GetPacket(LbPackets.SelectedIndex);
         }
 
-        private void lbPackets_DrawItem(object sender, DrawItemEventArgs e)
+        private void ListboxPackets_DrawItem(object sender, DrawItemEventArgs e)
         {
             if (!(sender is ListBox lb))
                 return;
@@ -234,7 +236,7 @@ namespace VieweD.Engine.Common
                         backCol.B > 128 ? 255 : backCol.B * 2);
 
                 textCol = Color.FromArgb(textCol.A, (backCol.R + textCol.R) / 2, (backCol.G + textCol.G) / 2, (backCol.B + textCol.B) / 2);
-                //barCol = Color.FromArgb(barCol.A, barCol.R / 4, barCol.G / 4, barCol.B / 4);
+                // barCol = Color.FromArgb(barCol.A, barCol.R / 4, barCol.G / 4, barCol.B / 4);
             }
 
             // Define the colors of our brushes.
@@ -406,17 +408,19 @@ namespace VieweD.Engine.Common
                 e.Cancel = true;
                 return;
             }
-            if (pd.Parent._parentTab.Engine.HasRulesFile)
+            if (pd.Parent.ParentTab.Engine.HasRulesFile)
             {
                 var r = pd.Parent.Rules.GetPacketRule(pd.PacketLogType, pd.StreamId, pd.PacketLevel, pd.PacketId);
                 if (r != null)
                 {
-                    var lookupKey = r.LookupKey + (((ulong)pd.PacketLogType) * 0x0100000000);
-                    PmPlShowPacketName.Text = lookupKey.ToString("X8");
+                    // var lookupKey = r.LookupKey + (((ulong)pd.PacketLogType) * 0x0100000000);
+                    var lookupName = PacketFilterListEntry.AsString(r.PacketId, r.Level, r.StreamId);
+                    PmPlShowPacketName.Text = lookupName + @" - " + r.Name; // lookupKey.ToString("X8");
                     PmPlEditParser.Tag = r ;
                     if (pd.PacketLogType != PacketLogTypes.Unknown)
                     {
-                        PmPlEditParser.Text = @"Edit " + lookupKey.ToString("X8") + @" => " + r.Name;
+                        PmPlEditParser.Text = @"Edit " + lookupName + @" => " + r.Name;
+                        //PmPlEditParser.Text = @"Edit " + lookupKey.ToString("X8") + @" => " + r.Name;
                         PmPlEditParser.Visible = true;
                     }
                     else
@@ -441,12 +445,12 @@ namespace VieweD.Engine.Common
                 switch (pd.PacketLogType)
                 {
                     case PacketLogTypes.Incoming:
-                        parserFileName = Path.Combine("data", pd.Parent._parentTab.Engine.EngineId, "parse", "in-0x" + pd.PacketId.ToString("X3") + ".txt");
+                        parserFileName = Path.Combine("data", pd.Parent.ParentTab.Engine.EngineId, "parse", "in-0x" + pd.PacketId.ToString("X3") + ".txt");
                         PmPlEditParser.Text = @"Edit " + parserFileName;
                         PmPlEditParser.Visible = true;
                         break;
                     case PacketLogTypes.Outgoing:
-                        parserFileName = Path.Combine("data", pd.Parent._parentTab.Engine.EngineId, "parse", "out-0x" + pd.PacketId.ToString("X3") + ".txt");
+                        parserFileName = Path.Combine("data", pd.Parent.ParentTab.Engine.EngineId, "parse", "out-0x" + pd.PacketId.ToString("X3") + ".txt");
                         PmPlEditParser.Text = @"Edit " + parserFileName;
                         PmPlEditParser.Visible = true;
                         break;
@@ -458,9 +462,9 @@ namespace VieweD.Engine.Common
                 }
                 PmPlEditParser.Tag = parserFileName;
             }
+
             PmPlShowOnly.Enabled = (pd.PacketLogType != PacketLogTypes.Unknown);
             PmPlHideThis.Enabled = (pd.PacketLogType != PacketLogTypes.Unknown);
-
         }
 
         private void PmPLEditParser_Click(object sender, EventArgs e)
@@ -480,8 +484,9 @@ namespace VieweD.Engine.Common
             if (pd == null)
                 return;
 
-            // ulong packetKey = (ulong)(pd.PacketID + (pd.StreamId * 0x01000000));
-            ulong packetKey = (ulong)(pd.PacketId + (pd.PacketLevel * 0x010000) + (pd.StreamId * 0x01000000));
+            // ulong packetKey = (ulong)(pd.PacketId + (pd.PacketLevel * 0x010000) + (pd.StreamId * 0x01000000));
+            var packetKey = new PacketFilterListEntry(pd.PacketId, pd.PacketLevel, pd.StreamId);
+
             switch (pd.PacketLogType)
             {
                 case PacketLogTypes.Incoming:
@@ -501,7 +506,7 @@ namespace VieweD.Engine.Common
             }
             var lastSync = CurrentSync;
             if (hasShift)
-                PL.HightlightFilterFrom(PLLoaded);
+                PL.HighlightFilterFrom(PLLoaded);
             else
                 PL.FilterFrom(PLLoaded);
             FillListBox(lastSync);
@@ -515,8 +520,9 @@ namespace VieweD.Engine.Common
             if (pd == null)
                 return;
 
-            //ulong packetKey = (ulong)(pd.PacketID + (pd.StreamId * 0x01000000));
-            ulong packetKey = (ulong)(pd.PacketId + (pd.PacketLevel * 0x010000) + (pd.StreamId * 0x01000000));
+            // ulong packetKey = (ulong)(pd.PacketId + (pd.PacketLevel * 0x010000) + (pd.StreamId * 0x01000000));
+            var packetKey = new PacketFilterListEntry(pd.PacketId, pd.PacketLevel, pd.StreamId);
+
             switch (pd.PacketLogType)
             {
                 case PacketLogTypes.Incoming:
@@ -541,7 +547,7 @@ namespace VieweD.Engine.Common
             }
             var lastSync = CurrentSync;
             if (hasShift)
-                PL.HightlightFilterFrom(PLLoaded);
+                PL.HighlightFilterFrom(PLLoaded);
             else
                 PL.FilterFrom(PLLoaded);
             FillListBox(lastSync);
@@ -563,7 +569,7 @@ namespace VieweD.Engine.Common
 
             var lastSync = CurrentSync;
             if (hasShift)
-                PL.HightlightFilterFrom(PLLoaded);
+                PL.HighlightFilterFrom(PLLoaded);
             else
                 PL.FilterFrom(PLLoaded);
             FillListBox(lastSync);
@@ -585,7 +591,7 @@ namespace VieweD.Engine.Common
 
             var lastSync = CurrentSync;
             if (hasShift)
-                PL.HightlightFilterFrom(PLLoaded);
+                PL.HighlightFilterFrom(PLLoaded);
             else
                 PL.FilterFrom(PLLoaded);
             FillListBox(lastSync);
@@ -798,14 +804,13 @@ namespace VieweD.Engine.Common
 
             if ( (Properties.Settings.Default.AskCreateNewProjectFile) && (!File.Exists(ProjectFile)) )
             {
-                if (MessageBox.Show($"Do you want to save project settings as a new project file ?\r\n" +
-                                    $"{ProjectFile}", @"Create Project File", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+                if (MessageBox.Show($"Do you want to save project settings as a new project file ?\r\n{ProjectFile}", 
+                        @"Create Project File", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
                 {
                     ProjectFile = string.Empty;
                     return false;
                 }
             }
-
 
             var relVideo = string.Empty;
             if (!string.IsNullOrEmpty(LinkVideoFileName))
@@ -822,12 +827,13 @@ namespace VieweD.Engine.Common
             try
             {
                 var pin = string.Empty;
-                foreach(UInt16 n in PLLoaded.ContainsPacketsIn)
+                foreach(var n in PLLoaded.ContainsPacketsIn)
                 {
                     if (pin != string.Empty)
                         pin += ",";
                     pin += n.ToString("X3");
                 }
+
                 var pout = string.Empty;
                 foreach (var n in PLLoaded.ContainsPacketsOut)
                 {
@@ -850,7 +856,9 @@ namespace VieweD.Engine.Common
                     "pin;" + pin,
                     "pout;" + pout
                 };
+
                 File.WriteAllLines(ProjectFile, sl);
+
                 return true;
             }
             catch

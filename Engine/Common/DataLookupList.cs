@@ -5,9 +5,9 @@ namespace VieweD.Engine.Common
 {
     public class DataLookupList
     {
-        public Dictionary<UInt64, DataLookupEntry> Data = new Dictionary<UInt64, DataLookupEntry>();
+        public Dictionary<ulong, DataLookupEntry> Data { get; set; } = new Dictionary<ulong, DataLookupEntry>();
 
-        public virtual string GetValue(UInt64 id, string defaultValue = "")
+        public virtual string GetValue(ulong id, string defaultValue)
         {
             if (defaultValue == null)
                 defaultValue = string.Empty;
@@ -15,29 +15,20 @@ namespace VieweD.Engine.Common
             var res = GetValue(id);
             if (res == "")
             {
-                if (defaultValue == "?")
-                    return id.ToString();
-                else
-                    return defaultValue;
+                return defaultValue == "?" ? id.ToString() : defaultValue;
             }
             else
                 return res;
         }
 
-        public virtual string GetValue(UInt64 id)
+        public virtual string GetValue(ulong id)
         {
-            DataLookupEntry res;
-            if (Data.TryGetValue(id, out res))
-                return res.Val;
-            return "";
+            return Data.TryGetValue(id, out var res) ? res.Val : "";
         }
 
-        public virtual string GetExtra(UInt64 id)
+        public virtual string GetExtra(ulong id)
         {
-            DataLookupEntry res;
-            if (Data.TryGetValue(id, out res))
-                return res.Extra;
-            return "";
+            return Data.TryGetValue(id, out var res) ? res.Extra : "";
         }
         
     }

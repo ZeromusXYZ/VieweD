@@ -12,15 +12,15 @@ namespace VieweD.Engine.FFXI
         /// <param name="pl"></param>
         public static void In0x00a(PacketData pd, PacketList pl)
         {
-            pl.currentParsePlayerID = pd.GetUInt32AtPos(0x04);
-            pl.currentParseZone = pd.GetUInt16AtPos(0x30);
-            pl.currentParsePlayerName = pd.GetStringAtPos(0x84,16);
+            pl.CurrentParsePlayerId = pd.GetUInt32AtPos(0x04);
+            pl.CurrentParseZone = pd.GetUInt16AtPos(0x30);
+            pl.CurrentParsePlayerName = pd.GetStringAtPos(0x84,16);
 
             if (GameViewForm.GV != null)
             {
                 var GV = GameViewForm.GV;
-                GV.gbPlayer.Text = "Player 0x" + pl.currentParsePlayerID.ToString("X8");
-                GV.lPlayerName.Text = pl.currentParsePlayerName;
+                GV.gbPlayer.Text = "Player 0x" + pl.CurrentParsePlayerId.ToString("X8");
+                GV.lPlayerName.Text = pl.CurrentParsePlayerName;
             }
         }
 
@@ -31,7 +31,7 @@ namespace VieweD.Engine.FFXI
         /// <param name="pl"></param>
         public static void In0x032(PacketData pd, PacketList pl)
         {
-            pl.currentParseZone = pd.GetUInt16AtPos(0x0A);
+            pl.CurrentParseZone = pd.GetUInt16AtPos(0x0A);
         }
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace VieweD.Engine.FFXI
         /// <param name="pl"></param>
         public static void In0x034(PacketData pd, PacketList pl)
         {
-            pl.currentParseZone = pd.GetUInt16AtPos(0x2A);
+            pl.CurrentParseZone = pd.GetUInt16AtPos(0x2A);
         }
 
     }

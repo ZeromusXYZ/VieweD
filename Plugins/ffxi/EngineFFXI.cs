@@ -21,6 +21,8 @@ namespace VieweD.Engine.FFXI
         public override string EngineName { get; } = "Final Fantasy XI";
         public override bool HasRulesFile { get; } = false ;
         public override bool HasDecrypt { get; } = false;
+        public override bool AllowedPacketSyncSearch { get; } = true;
+        public override bool AllowedPacketLevelSearch { get; } = false;
 
         #region LookupConstants
         public static readonly string LU_Zones = "zones";
@@ -350,7 +352,7 @@ namespace VieweD.Engine.FFXI
                     break;
             }
             s = ts + "  " + s + "0x" + packetData.PacketId.ToString("X3") + " - ";
-            packetData.HeaderText = s + packetData.Parent._parentTab.Engine.DataLookups.PacketTypeToString(packetData.PacketLogType, packetData.PacketId);
+            packetData.HeaderText = s + packetData.Parent.ParentTab.Engine.DataLookups.PacketTypeToString(packetData.PacketLogType, packetData.PacketId);
             return true;
         }
 
@@ -475,7 +477,7 @@ namespace VieweD.Engine.FFXI
 
                                 if (packetList.IsPreParsed)
                                 {
-                                    pd.PP = pd.Parent._parentTab.Engine.GetParser(pd);
+                                    pd.PP = pd.Parent.ParentTab.Engine.GetParser(pd);
                                     pd.PP?.AssignPacket(pd);
                                     pd.PP?.ParseData("-");
                                 }
@@ -515,7 +517,7 @@ namespace VieweD.Engine.FFXI
 
             packetList.LoadedLogFileFormat = "PacketDB";
             if (packetList.PacketDataList.Count > 0)
-                packetList.firstPacketTime = packetList.PacketDataList[0].TimeStamp;
+                packetList.FirstPacketTime = packetList.PacketDataList[0].TimeStamp;
             return true;
         }
         
@@ -686,11 +688,11 @@ namespace VieweD.Engine.FFXI
                             {
                                 pd.CompileSpecial(packetList);
                                 // Set zone after CompileSpecial, this is only needed if not captured by PacketDB
-                                pd.CapturedZoneId = packetList.currentParseZone;
+                                pd.CapturedZoneId = packetList.CurrentParseZone;
 
                                 if (packetList.IsPreParsed)
                                 {
-                                    pd.PP = pd.Parent._parentTab.Engine.GetParser(pd);
+                                    pd.PP = pd.Parent.ParentTab.Engine.GetParser(pd);
 
                                     if (pd.PP != null)
                                     {
@@ -752,7 +754,7 @@ namespace VieweD.Engine.FFXI
                 }
             }
             if (packetList.PacketDataList.Count > 0)
-                packetList.firstPacketTime = packetList.PacketDataList[0].TimeStamp;
+                packetList.FirstPacketTime = packetList.PacketDataList[0].TimeStamp;
             
             Application.UseWaitCursor = false;
             return true;

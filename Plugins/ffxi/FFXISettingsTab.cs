@@ -10,11 +10,11 @@ namespace VieweD.Engine.FFXI
         
         public FFXISettingsTab(TabControl parent) : base(parent)
         {
-            panel.Controls.Add(new Label() { Text = "Installation Folder", Left = 8, Top = 20, AutoSize = true});
+            Panel.Controls.Add(new Label() { Text = "Installation Folder", Left = 8, Top = 20, AutoSize = true});
             eFFXIPath = new TextBox() { Left = 8, Top = 44, Width = this.Width - 100, Anchor = (AnchorStyles.Left & AnchorStyles.Top & AnchorStyles.Right), Enabled = false };
-            panel.Controls.Add(eFFXIPath);
+            Panel.Controls.Add(eFFXIPath);
             lFFXIFileCount = new Label() { Left = eFFXIPath.Left + eFFXIPath.Width + 8, Top = eFFXIPath.Top , AutoSize = true, Anchor = (AnchorStyles.Top & AnchorStyles.Right) };
-            panel.Controls.Add(lFFXIFileCount);
+            Panel.Controls.Add(lFFXIFileCount);
         }
         
     }

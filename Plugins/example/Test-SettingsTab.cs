@@ -7,7 +7,7 @@ namespace VieweD.Plugins
     {
         public TestSettingsTab(TabControl parent) : base(parent)
         {
-            panel.Controls.Add(new Label() { Parent = panel, Text = "No additional settings for Test Plugin", Left = 8, Top = 20, AutoSize = true});
+            Panel.Controls.Add(new Label() { Parent = panel, Text = "No additional settings for Test Plugin", Left = 8, Top = 20, AutoSize = true});
         }
         
     }

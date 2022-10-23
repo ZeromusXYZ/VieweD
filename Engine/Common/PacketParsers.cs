@@ -16,19 +16,19 @@ namespace VieweD.Engine.Common
         private const int ColumnVar = 1;
         private const int ColumnData = 2;
         private const int ColumnSize = 3;
-        public UInt16 ThisPacketID { get; set; }
+        public ushort ThisPacketID { get; set; }
         public PacketLogTypes ThisPacketLogType { get; set; }
-        public List<ushort> ParsedBytes = new List<ushort>();
-        public List<ParsedViewLine> ParsedView = new List<ParsedViewLine>();
-        public List<ushort> SelectedFields = new List<ushort>();
-        public PacketData PD;
-        public List<string> SwitchBlocks = new List<string>();
-        public string LastSwitchedBlock = "";
-        public string PreParsedSwitchBlock = "?" ;
-        public List<string> RawParseData = new List<string>(); // not used by all engines
-        static public List<string> AllFieldNames = new List<string>();
+        public List<ushort> ParsedBytes { get; set; } = new List<ushort>();
+        public List<ParsedViewLine> ParsedView { get; set; } = new List<ParsedViewLine>();
+        public List<ushort> SelectedFields { get; set; } = new List<ushort>();
+        public PacketData PD { get; set; }
+        public List<string> SwitchBlocks { get; set; } = new List<string>();
+        public string LastSwitchedBlock { get; set; }
+        public string PreParsedSwitchBlock { get; set; } = "?" ;
+        public List<string> RawParseData { get; set; } = new List<string>(); // not used by all engines
+        public static List<string> AllFieldNames { get; set; } = new List<string>();
 
-        static protected void AddFieldNameToList(string fieldName)
+        protected static void AddFieldNameToList(string fieldName)
         {
             var FilteredFieldName = EngineBase.StripSpacer(fieldName);
             if (FilteredFieldName.StartsWith("??"))
@@ -61,10 +61,8 @@ namespace VieweD.Engine.Common
             PD = PacketData;
             ParsedBytes.Clear();
             SelectedFields.Clear();
-            for (int i = 0; i < PD.RawBytes.Count(); i++)
-            {
+            for (var i = 0; i < PD.RawBytes.Count; i++)
                 ParsedBytes.Add(0x00); // 0 = unparsed
-            }
         }
 
         public string ByteToBits(byte b)
@@ -88,78 +86,79 @@ namespace VieweD.Engine.Common
             return res;
         }
 
-        static public string MSToString(UInt32 ms)
+        public static string MSToString(uint ms)
         {
-            UInt32 r = ms % 1000;
-            UInt32 v = ms / 1000;
-            string res = r.ToString("0000")+"ms";
+            var r = ms % 1000;
+            var v = ms / 1000;
+            var res = r.ToString("0000")+"ms";
+            if (v <= 0) 
+                return res;
+
+            r = v % 60;
+            v /= 60;
+            res = r.ToString("00") + "s " + res ;
+
+            if (v <= 0) 
+                return res;
+
+            r = v % 60;
+            v /= 60;
+            res = r.ToString("00") + "m " + res;
+
+            if (v <= 0) 
+                return res;
+
+            r = v % 24;
+            v /= 24;
+            res = r.ToString("00") + "h " + res;
+
             if (v > 0)
-            {
-                r = v % 60;
-                v = v / 60;
-                res = r.ToString("00") + "s " + res ;
-                if (v > 0)
-                {
-                    r = v % 60;
-                    v = v / 60;
-                    res = r.ToString("00") + "m " + res;
-                    if (v > 0)
-                    {
-                        r = v % 24;
-                        v = v / 24;
-                        res = r.ToString("00") + "h " + res;
-                        if (v > 0)
-                        {
-                            res = v.ToString() + "d " + res;
-                        }
-                    }
-                }
-            }
+                res = v + "d " + res;
+
             return res;
         }
 
-        public string FramesToString(UInt32 frames)
+        public string FramesToString(uint frames)
         {
-            UInt32 r = frames % 60;
-            UInt32 v = frames / 60;
-            string res = r.ToString("00") + "f";
+            var r = frames % 60;
+            var v = frames / 60;
+            var res = r.ToString("00") + "f";
+            
+            if (v <= 0) 
+                return res;
+
+            r = v % 60;
+            v /= 60;
+            res = r.ToString("00") + " / " + res;
+
+            if (v <= 0) return res;
+            r = v % 60;
+            v /= 60;
+            res = r.ToString("00") + "." + res;
+
+            if (v <= 0) return res;
+            r = v % 24;
+            v /= 24;
+
+            res = r.ToString("00") + ":" + res;
             if (v > 0)
-            {
-                r = v % 60;
-                v = v / 60;
-                res = r.ToString("00") + " / " + res;
-                if (v > 0)
-                {
-                    r = v % 60;
-                    v = v / 60;
-                    res = r.ToString("00") + "." + res;
-                    if (v > 0)
-                    {
-                        r = v % 24;
-                        v = v / 24;
-                        res = r.ToString("00") + ":" + res;
-                        if (v > 0)
-                        {
-                            res = v.ToString() + "d " + res;
-                        }
-                    }
-                }
-            }
+                res = v + "d " + res;
+
             return res;
         }
 
-        public string Lookup(string lookupName,UInt64 value)
+        public string Lookup(string lookupName, ulong value)
         {
             if (lookupName == string.Empty)
                 return "";
-            return PD.Parent._parentTab.Engine.DataLookups.NLU(lookupName).GetValue(value) + " <= " ;
+            return PD.Parent.ParentTab.Engine.DataLookups.NLU(lookupName).GetValue(value) + " <= ";
         }
 
-        public string Lookup(string lookupName, UInt64 value, string evalString)
+        public string Lookup(string lookupName, ulong value, string evalString)
         {
             if (lookupName == string.Empty)
                 return "";
-            return PD.Parent._parentTab.Engine.DataLookups.NLU(lookupName,evalString).GetValue(value) + " <= ";
+            return PD.Parent.ParentTab.Engine.DataLookups.NLU(lookupName,evalString).GetValue(value) + " <= ";
         }
 
         public void ToGridView(DataGridView DGV)
@@ -189,12 +188,12 @@ namespace VieweD.Engine.Common
 
             //DGV.Columns[columnSize].HeaderText = "Size";
             //DGV.Columns[columnSize].Width = 32;
-            for(int thisRow = 0;thisRow < ParsedView.Count;thisRow++)
+            for(var thisRow = 0;thisRow < ParsedView.Count;thisRow++)
             {
                 if (DGV.RowCount <= thisRow)
                     DGV.Rows.Add();
                 
-                ParsedViewLine pvl = ParsedView[thisRow];
+                var pvl = ParsedView[thisRow];
                 var isSearchResult = MainForm.SearchParameters.HasSearchForData() && pvl.MatchesSearch(MainForm.SearchParameters);
 
                 DGV.Rows[thisRow].DefaultCellStyle.BackColor = isSearchResult ? Color.Yellow : SystemColors.Window ;
@@ -205,16 +204,8 @@ namespace VieweD.Engine.Common
                 DGV.Rows[thisRow].Cells[ColumnVar].Value = pvl.Var;
                 DGV.Rows[thisRow].Cells[ColumnVar].Style.ForeColor = pvl.FieldColor;
                 DGV.Rows[thisRow].Cells[ColumnData].Value = pvl.Data ;
-                // DGV.Rows[thisRow].Cells[3].Value = pvl.FieldIndex.ToString();
-                if (SelectedFields.IndexOf(pvl.FieldIndex) >= 0)
-                {
-                    // this field is selected 
-                    DGV.Rows[thisRow].Selected = true;
-                }
-                else
-                {
-                    DGV.Rows[thisRow].Selected = false;
-                }
+                // Check if this field is selected 
+                DGV.Rows[thisRow].Selected = SelectedFields.IndexOf(pvl.FieldIndex) >= 0;
                 DGV.Rows[thisRow].Cells[ColumnOffset].ToolTipText = pvl.ExtraInfo;
                 DGV.Rows[thisRow].Cells[ColumnVar].ToolTipText = pvl.ExtraInfo;
                 // DGV.Rows[thisRow].Cells[columnDATA].ToolTipText = pvl.ExtraInfo;
@@ -228,24 +219,23 @@ namespace VieweD.Engine.Common
             DGV.ResumeLayout();
         }
 
-        public void AddParseLineToView(ushort FieldIndex,string POSString, Color POSColor, string VARName, string DATAString,string EXTRAString, UInt64 DataUInt64)
+        public void AddParseLineToView(ushort FieldIndex,string POSString, Color POSColor, string VARName, string DATAString,string EXTRAString, ulong DataUInt64)
         {
-            ParsedViewLine pvl = new ParsedViewLine();
-            pvl.Pos = POSString;
-            pvl.Var = VARName;
-            pvl.Data = DATAString;
-            pvl.FieldIndex = FieldIndex;
-            pvl.FieldColor = POSColor;
-            pvl.DataAsUInt64 = DataUInt64;
-            if (EXTRAString == string.Empty)
-                pvl.ExtraInfo = DATAString;
-            else
-                pvl.ExtraInfo = EXTRAString;
+            var pvl = new ParsedViewLine
+            {
+                Pos = POSString,
+                Var = VARName,
+                Data = DATAString,
+                FieldIndex = FieldIndex,
+                FieldColor = POSColor,
+                DataAsUInt64 = DataUInt64,
+                ExtraInfo = EXTRAString == string.Empty ? DATAString : EXTRAString
+            };
             ParsedView.Add(pvl);
             AddFieldNameToList(VARName);
         }
 
-        public void AddParseLineToView(ushort FieldIndex, string POSString, Color POSColor, string VARName, string DATAString, UInt64 DataUInt64 = 0)
+        public void AddParseLineToView(ushort FieldIndex, string POSString, Color POSColor, string VARName, string DATAString, ulong DataUInt64 = 0)
         {
             AddParseLineToView(FieldIndex, POSString, POSColor, VARName, DATAString, DATAString, DataUInt64);
         }
@@ -255,16 +245,16 @@ namespace VieweD.Engine.Common
             AddParseLineToView(FieldIndex, POSString, POSColor, VARName, DATAString, EXTRAString, 0);
         }
 
-        public void MarkParsed(int offset, int bytesize, ushort fieldindex)
+        public void MarkParsed(int offset, int byteSize, ushort fieldIndex)
         {
-            if (bytesize <= 0)
-                bytesize = 1;
+            if (byteSize <= 0)
+                byteSize = 1;
 
-            for(int i = 0; i < bytesize;i++)
+            for(var i = 0; i < byteSize;i++)
             {
                 var p = offset + i;
                 if ((p >= 0) && (p < ParsedBytes.Count))
-                    ParsedBytes[p] = fieldindex;
+                    ParsedBytes[p] = fieldIndex;
             }
         }
 
@@ -272,39 +262,44 @@ namespace VieweD.Engine.Common
         {
             if ((searchList == null) || (searchList == string.Empty))
                 return false;
+
             var searchStrings = searchList.Split(',').ToList();
-            foreach(string s in searchStrings)
+            foreach (var s in searchStrings)
             {
-                if (DataLookups.TryFieldParse(s.Trim(' '), out int n))
-                    if (n == searchValue)
-                        return true;
+                if ((DataLookups.TryFieldParse(s.Trim(' '), out int n)) && (n == searchValue))
+                    return true;
             }
+
             return false;
         }
 
-        public string BitFlagsToString(string lookupname,UInt64 value,string concatString)
+        public string BitFlagsToString(string lookupName, ulong value, string concatString)
         {
-            string res = "";
-            if (concatString == "")
+            var res = string.Empty;
+            if (concatString == string.Empty)
                 concatString = " ";
-            UInt64 bitmask = 0x1;
-            for(UInt64 i = 0; i < 64;i++)
+
+            ulong bitmask = 0x1;
+            for (ulong i = 0; i < 64; i++)
             {
                 if ((value & bitmask) != 0)
                 {
-                    string item = "";
-                    if (lookupname != "")
-                        item = PD.Parent._parentTab.Engine.DataLookups.NLU(lookupname).GetValue(i);
-                    if (item == "")
-                        item = "Bit" + i.ToString();
-                    if (res != "")
+                    var item = string.Empty;
+                    if (lookupName != string.Empty)
+                        item = PD.Parent.ParentTab.Engine.DataLookups.NLU(lookupName).GetValue(i);
+                    if (item == string.Empty)
+                        item = "Bit" + i;
+                    if (res != string.Empty)
                         res += concatString;
                     res += item;
                 }
+
                 bitmask <<= 1;
             }
-            if (res == "")
+
+            if (res == string.Empty)
                 res = "No bits set";
+
             return res;
         }
 
@@ -312,13 +307,16 @@ namespace VieweD.Engine.Common
         {
             if (FieldByteSize < 1)
                 FieldByteSize = 1;
+
             if ((StartPos < 0) || (StartPos >= ParsedBytes.Count))
                 return;
+
             // Set markers to zero
-            for (int i = StartPos; (i < ParsedBytes.Count) && (i < (StartPos + FieldByteSize)); i++)
+            for (var i = StartPos; (i < ParsedBytes.Count) && (i < (StartPos + FieldByteSize)); i++)
                 ParsedBytes[i] = 0x0000;
+
             // Remove unparsed
-            for (int i = ParsedView.Count-1 ; i >= 0;i--)
+            for (var i = ParsedView.Count-1 ; i >= 0;i--)
             {
                 if (ParsedView[i].Var.StartsWith("??_"))
                     ParsedView.RemoveAt(i);
@@ -330,62 +328,59 @@ namespace VieweD.Engine.Common
         {
             if (FieldByteSize < 1)
                 FieldByteSize = 1;
+
             if ((StartPos < 0) || (StartPos >= ParsedBytes.Count))
                 return;
+
             // DataFieldIndex++;
-            if (ParsedBytes[StartPos] == 0)
+            if (ParsedBytes[StartPos] != 0) 
+                return;
+
+            DataFieldIndex++;
+            for (var i = StartPos; (i < ParsedBytes.Count) && (i < (StartPos + FieldByteSize)); i++)
             {
-                DataFieldIndex++;
-                for (int i = StartPos; (i < ParsedBytes.Count) && (i < (StartPos + FieldByteSize)); i++)
-                {
-                    ParsedBytes[i] = DataFieldIndex;
-                }
+                ParsedBytes[i] = DataFieldIndex;
             }
         }
 
-        public UInt64 GetParsedBaseValue(string fieldName)
+        public ulong GetParsedBaseValue(string fieldName)
         {
             foreach(var line in ParsedView)
             {
                 if (line.Var.ToLower() == fieldName)
-                {
                     return line.DataAsUInt64;
-                }
             }
-            // If the fieldname is not found try to return the fieldname as a parsed uint64
-            if (DataLookups.TryFieldParseUInt64(fieldName, out UInt64 res))
-                return res;
-            else
-                return 0;
+
+            // If the fieldName is not found try to return the fieldName as a parsed uint64
+            return DataLookups.TryFieldParseUInt64(fieldName, out var res) ? res : 0;
         }
 
         public string GetParsedValue(string fieldName)
         {
             if (fieldName.StartsWith("\"") && fieldName.EndsWith("\""))
-            {
                 return fieldName.Trim('\"');
-            }
+
             foreach (var line in ParsedView)
             {
                 if (line.Var.ToLower() == fieldName)
-                {
                     return line.Data ;
-                }
             }
+
             return "<"+fieldName+">";
         }
 
         public virtual void ParseData(string ActiveSwitchBlock)
         {
-            
+            // Do nothing
         }
 
         public virtual void ParseUnusedData(ref ushort DataFieldIndex)
         {
             var endCursor = PD.Cursor;
             var first = true;
+
             // List unparsed bytes
-            for (int i = 0; i < PD.RawBytes.Count(); i++)
+            for (var i = 0; i < PD.RawBytes.Count(); i++)
             {
                 if ((first) && (ParsedBytes[i] == 0))
                 {
@@ -418,7 +413,9 @@ namespace VieweD.Engine.Common
                     MarkParsed(i, 1, DataFieldIndex);
                 }
             }
-            PD.Cursor = endCursor; // Reset cursor to last parsed value, this is still required later in Level 4 packets
+
+            // Reset cursor to last parsed value, this is still required later in Level 4 compressed packets
+            PD.Cursor = endCursor; 
         }
     }
 }

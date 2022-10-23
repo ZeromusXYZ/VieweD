@@ -54,7 +54,7 @@ namespace VieweD
             }
             else
             {
-                // LoadedRule._rootNode.InnerXml = OldRuleXml;
+                // LoadedRule.RootNode.InnerXml = OldRuleXml;
                 LoadedRule.Build();
 
                 PacketTabPage tp = MainForm.ThisMainForm.GetCurrentPacketTabPage();
@@ -71,7 +71,7 @@ namespace VieweD
         {
             if (LoadedRule != null)
             {
-                LoadedRule._rootNode.InnerXml = OldRuleXml;
+                LoadedRule.RootNode.InnerXml = OldRuleXml;
                 LoadedRule.Build();
                 LoadedRule = null;
             }
@@ -91,7 +91,7 @@ namespace VieweD
         public void LoadFromRule(PacketRule rule)
         {
             LoadedRule = rule;
-            OldRuleXml = LoadedRule._rootNode.InnerXml;
+            OldRuleXml = LoadedRule.RootNode.InnerXml;
             var sList = OldRuleXml.Replace("><", ">\n<").Split('\n').ToList();
             var indentCount = 0 ;
             string s = string.Empty;
@@ -206,18 +206,18 @@ namespace VieweD
                 return;
             }
 
-            if (pd.Parent._parentTab.Engine.HasRulesFile)
+            if (pd.Parent.ParentTab.Engine.HasRulesFile)
             {
                 var aa = MainForm.ThisMainForm.CurrentPP;
                 try
                 {
-                    LoadedRule._rootNode.InnerXml = editBox.Text;
+                    LoadedRule.RootNode.InnerXml = editBox.Text;
                     LoadedRule.Build();
                 }
                 catch (Exception x)
                 {
                     MessageBox.Show("Exception: " + x.Message, "Error in rule", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    LoadedRule._rootNode.InnerXml = OldRuleXml;
+                    LoadedRule.RootNode.InnerXml = OldRuleXml;
                     LoadedRule.Build();
                     return;
                 }
@@ -314,7 +314,7 @@ namespace VieweD
         {
             if (LoadedRule != null)
             {
-                LoadedRule._rootNode.InnerXml = OldRuleXml;
+                LoadedRule.RootNode.InnerXml = OldRuleXml;
                 LoadedRule.Build();
                 LoadedRule = null;
             }
