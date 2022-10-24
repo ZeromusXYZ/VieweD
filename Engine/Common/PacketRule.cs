@@ -20,7 +20,7 @@ namespace VieweD.Engine.Common
         public byte StreamId { get; protected set; }
         public byte Level { get; protected set; }
         public ushort PacketId { get; protected set; }
-        public string Name { get; protected set; }
+        public string Name { get; set; }
         public List<RulesAction> Actions { get; protected set; }
         public Dictionary<string, string> LocalVars { get; protected set; }
 

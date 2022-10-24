@@ -177,5 +177,48 @@ namespace VieweD.Helpers.System
                 return 0;
             }
         }
+
+        /// <summary>
+        /// Adds new attribute to a node
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="attributeName"></param>
+        /// <param name="attributeValue"></param>
+        /// <returns></returns>
+        public static XmlNode AddAttribute(XmlNode node, string attributeName, string attributeValue)
+        {
+            var typeAttribute = node.OwnerDocument.CreateAttribute(attributeName);
+            typeAttribute.Value = attributeValue;
+            node.Attributes.Append(typeAttribute);
+
+            return node;
+        }
+
+        /// <summary>
+        /// Sets a attribute to a new value, or creates it if it doesn't exist
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="attributeName"></param>
+        /// <param name="attributeValue"></param>
+        /// <returns></returns>
+        public static XmlNode SetAttribute(XmlNode node, string attributeName, string attributeValue)
+        {
+            XmlAttribute typeAttribute = null;
+            foreach (XmlAttribute attribute in node.Attributes)
+            {
+                if (attribute.Name == attributeName)
+                {
+                    typeAttribute = attribute;
+                    break;
+                }
+            }
+
+            if (typeAttribute == null)
+                return AddAttribute(node, attributeName, attributeValue);
+
+            typeAttribute.Value = attributeValue;;
+
+            return node;
+        }
     }
 }

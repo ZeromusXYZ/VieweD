@@ -52,6 +52,7 @@
             this.miBlank1 = new System.Windows.Forms.ToolStripSeparator();
             this.docMap = new FastColoredTextBoxNS.DocumentMap();
             this.pOldEditControl = new System.Windows.Forms.Panel();
+            this.btnRename = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.editBox)).BeginInit();
             this.pmEdit.SuspendLayout();
             this.pOldEditControl.SuspendLayout();
@@ -275,6 +276,7 @@
             this.editBox.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.editBox.DescriptionFile = "";
             this.editBox.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
+            this.editBox.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.editBox.IsReplaceMode = false;
             this.editBox.Language = FastColoredTextBoxNS.Language.XML;
             this.editBox.LeftBracket = '<';
@@ -344,11 +346,23 @@
             this.pOldEditControl.Size = new System.Drawing.Size(763, 99);
             this.pOldEditControl.TabIndex = 31;
             // 
+            // btnRename
+            // 
+            this.btnRename.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnRename.Location = new System.Drawing.Point(409, 495);
+            this.btnRename.Name = "btnRename";
+            this.btnRename.Size = new System.Drawing.Size(87, 25);
+            this.btnRename.TabIndex = 32;
+            this.btnRename.Text = "Rename";
+            this.btnRename.UseVisualStyleBackColor = true;
+            this.btnRename.Click += new System.EventHandler(this.btnRename_Click);
+            // 
             // ParseEditorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(787, 525);
+            this.Controls.Add(this.btnRename);
             this.Controls.Add(this.pOldEditControl);
             this.Controls.Add(this.docMap);
             this.Controls.Add(this.btnInsert);
@@ -392,5 +406,6 @@
         private System.Windows.Forms.ToolStripSeparator miBlank1;
         private System.Windows.Forms.ToolStripMenuItem miInsert;
         private System.Windows.Forms.Panel pOldEditControl;
+        private System.Windows.Forms.Button btnRename;
     }
 }

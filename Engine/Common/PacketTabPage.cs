@@ -432,9 +432,20 @@ namespace VieweD.Engine.Common
                 else
                 {
                     PmPlShowPacketName.Text = @"No rule assigned";
-                    PmPlEditParser.Tag = null;
-                    PmPlEditParser.Text = @"Nothing to edit";
-                    PmPlEditParser.Visible = false;
+
+                    var packetFilterEntry = new PacketFilterListEntry(pd.PacketId, pd.PacketLevel, pd.StreamId);
+                    if (pd.PacketLogType != PacketLogTypes.Unknown)
+                    {
+                        PmPlEditParser.Text = @"Create " + packetFilterEntry;
+                        PmPlEditParser.Visible = true;
+                        PmPlEditParser.Tag = packetFilterEntry;
+                    }
+                    else
+                    {
+                        PmPlEditParser.Tag = null;
+                        PmPlEditParser.Text = @"Nothing to edit";
+                        PmPlEditParser.Visible = false;
+                    }
                 }
 
             }
@@ -475,6 +486,8 @@ namespace VieweD.Engine.Common
                 OwnerMainForm.OpenBasicParseEditor(fName);
             if (PmPlEditParser.Tag is PacketRule pr)
                 OwnerMainForm.OpenXmlRulesParseEditor(pr);
+            if (PmPlEditParser.Tag is PacketFilterListEntry)
+                OwnerMainForm.OpenXmlRulesParseEditor(null);
         }
 
         private void PmPLShowOnly_Click(object sender, EventArgs e)

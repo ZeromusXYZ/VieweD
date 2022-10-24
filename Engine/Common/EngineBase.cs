@@ -4,6 +4,7 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using System.Xml;
+using VieweD.Helpers.System;
 
 namespace VieweD.Engine.Common
 {
@@ -245,6 +246,55 @@ namespace VieweD.Engine.Common
         public virtual void RunTool(PacketTabPage currentTabPage, string toolName)
         {
             // Implement tools by overriding this
+        }
+
+        public virtual PacketRule CreateNewUserPacketRule(PacketTabPage currentTabPage, PacketLogTypes packetLogType, PacketFilterListEntry packetId, string packetName)
+        {
+            if ((currentTabPage == null) || (currentTabPage.PLLoaded == null) ||
+                (currentTabPage.PLLoaded.Rules == null))
+                return null;
+
+            var currentRulesReader = currentTabPage.PLLoaded.Rules;
+            var verifyPacket = currentRulesReader.GetPacketRule(packetLogType, packetId.StreamId, packetId.Level, (ushort)packetId.Id);
+
+            // Already exists, don't create a new one
+            if (verifyPacket != null)
+                return verifyPacket;
+
+            if (!currentRulesReader.RuleGroups.TryGetValue(packetId.StreamId, out var ruleGroup))
+                return null;
+
+            var packetGroupDirectionNode = packetLogType == PacketLogTypes.Incoming ? ruleGroup.S2C :
+                packetLogType == PacketLogTypes.Outgoing ? ruleGroup.C2S : null;
+
+            var directionSet = packetLogType == PacketLogTypes.Incoming ? currentRulesReader.S2C :
+                packetLogType == PacketLogTypes.Outgoing ? currentRulesReader.C2S : null;
+
+            if ((packetGroupDirectionNode == null) || (directionSet == null))
+                return null;
+
+            var doc = ruleGroup.RootNode.OwnerDocument;
+            var newXmlElement = doc.CreateElement("packet", packetGroupDirectionNode.NamespaceURI);
+            XmlHelper.AddAttribute(newXmlElement, "type", "0x" + packetId.Id.ToString("X3"));
+            XmlHelper.AddAttribute(newXmlElement, "level", "0x" + packetId.Level.ToString("X2"));
+            XmlHelper.AddAttribute(newXmlElement, "desc", packetName);
+
+            newXmlElement.InnerXml = GetDefaultNewPacketRuleNodeContents(packetId);
+
+            packetGroupDirectionNode.AppendChild(newXmlElement);
+
+            var newPacketRule = CreatePacketRule(ruleGroup, packetId.StreamId, packetId.Level, (ushort)packetId.Id, packetName, newXmlElement);
+
+            directionSet.Add(newPacketRule.LookupKey, newPacketRule);
+
+            newPacketRule.Build();
+
+            return newPacketRule;
+        }
+
+        public virtual string GetDefaultNewPacketRuleNodeContents(PacketFilterListEntry packetId)
+        {
+            return "<!-- New Packet -->";
         }
     }
 }

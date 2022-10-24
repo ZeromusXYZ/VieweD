@@ -4,6 +4,8 @@ using System.Linq;
 using System.IO;
 using System.Windows.Forms;
 using VieweD.Engine.Common;
+using System.Drawing;
+using VieweD.Helpers.System;
 
 namespace VieweD
 {
@@ -13,6 +15,7 @@ namespace VieweD
         public PacketRule LoadedRule;
         public string OldRuleXml = "";
         public PacketTabPage CurrentTab;
+        private bool TestOk;
 
         public ParseEditorForm(PacketTabPage parent)
         {
@@ -48,6 +51,13 @@ namespace VieweD
                 return;
             }
             BtnTest_Click(null, null);
+
+            if (TestOk == false)
+            {
+                MessageBox.Show("Cannot save while there are syntax errors!");
+                return;
+            }
+
             if (LoadedRule == null)
             {
                 File.WriteAllText(LoadedFile, editBox.Text);
@@ -59,7 +69,9 @@ namespace VieweD
 
                 PacketTabPage tp = MainForm.ThisMainForm.GetCurrentPacketTabPage();
                 if ((tp != null) && (tp.PLLoaded.Rules != null))
+                {
                     tp.PLLoaded.Rules.SaveRulesFile(tp.LoadedRulesFile);
+                }
 
                 LoadedRule = null;
             }
@@ -82,9 +94,10 @@ namespace VieweD
         {
             editBox.Text = File.ReadAllText(filename);
             LoadedFile = filename;
-            Text += " - " + LoadedFile;
+            Text = LoadedFile;
             editBox.SelectionLength = 0;
             editBox.SelectionStart = editBox.Text.Length;
+            btnRename.Visible = false;
             FillTypes();
         }
 
@@ -129,9 +142,10 @@ namespace VieweD
             }
             editBox.Text = s;
             LoadedFile = string.Empty;
-            Text += " - " + LoadedRule.Name;
+            Text = Text = PacketFilterListEntry.AsString(LoadedRule.PacketId, LoadedRule.Level, LoadedRule.StreamId) + " - " + LoadedRule.Name;
             editBox.SelectionLength = 0;
             editBox.SelectionStart = editBox.Text.Length;
+            btnRename.Visible = true;
             FillTypes();
         }
 
@@ -194,18 +208,20 @@ namespace VieweD
 
         private void BtnTest_Click(object sender, EventArgs e)
         {
-            PacketTabPage tp = MainForm.ThisMainForm.GetCurrentPacketTabPage();
+            TestOk = false;
+            var tp = MainForm.ThisMainForm.GetCurrentPacketTabPage();
             if (tp == null)
             {
                 return;
             }
 
-            PacketData pd = tp.GetSelectedPacket();
+            var pd = tp.GetSelectedPacket();
             if (pd == null)
             {
                 return;
             }
 
+            var dontReloadParser = true;
             if (pd.Parent.ParentTab.Engine.HasRulesFile)
             {
                 var aa = MainForm.ThisMainForm.CurrentPP;
@@ -213,6 +229,7 @@ namespace VieweD
                 {
                     LoadedRule.RootNode.InnerXml = editBox.Text;
                     LoadedRule.Build();
+                    dontReloadParser = false; // need a reload when adding a new one
                 }
                 catch (Exception x)
                 {
@@ -231,7 +248,8 @@ namespace VieweD
                 ffxi.RawParseData.AddRange(editBox.Lines);
             }
             MainForm.ThisMainForm.CurrentPP.ParsedView.Clear();
-            MainForm.ThisMainForm.UpdatePacketDetails(tp, pd, "-", true);
+            MainForm.ThisMainForm.UpdatePacketDetails(tp, pd, "-", dontReloadParser);
+            TestOk = true;
         }
 
 
@@ -339,7 +357,89 @@ namespace VieweD
                     // MessageBox.Show(tsmi.Tag.ToString());
                 }
             }
+        }
 
+        private static DialogResult ShowInputDialogBox(ref string input, string prompt, string title = "Title", int width = 300, int height = 200, Form parentForm = null)
+        {
+            //This function creates the custom input dialog box by individually creating the different window elements and adding them to the dialog box
+
+            //Specify the size of the window using the parameters passed
+            Size size = new Size(width, height);
+            //Create a new form using a System.Windows Form
+            var inputBox = new Form();
+            if (parentForm != null)
+                inputBox.Location = new Point(
+                    parentForm.Left + (parentForm.Width / 2) - 175,
+                    parentForm.Top + (parentForm.Height / 2) - 50);
+
+            inputBox.FormBorderStyle = FormBorderStyle.FixedDialog;
+            inputBox.ClientSize = size;
+            //Set the window title using the parameter passed
+            inputBox.Text = title;
+
+            //Create a new label to hold the prompt
+            var label = new Label();
+            label.Text = prompt;
+            label.Location = new Point(5, 5);
+            label.Width = size.Width - 10;
+            inputBox.Controls.Add(label);
+
+            //Create a textbox to accept the user's input
+            var textBox = new TextBox();
+            textBox.Size = new Size(size.Width - 10, 23);
+            textBox.Location = new Point(5, label.Location.Y + 20);
+            textBox.Text = input;
+            inputBox.Controls.Add(textBox);
+
+            //Create an OK Button 
+            var okButton = new Button();
+            okButton.DialogResult = DialogResult.OK;
+            okButton.Name = "okButton";
+            okButton.Size = new Size(75, 23);
+            okButton.Text = "&OK";
+            okButton.Location = new Point(size.Width - 80 - 80, size.Height - 30);
+            inputBox.Controls.Add(okButton);
+
+            //Create a Cancel Button
+            var cancelButton = new Button();
+            cancelButton.DialogResult = DialogResult.Cancel;
+            cancelButton.Name = "cancelButton";
+            cancelButton.Size = new Size(75, 23);
+            cancelButton.Text = "&Cancel";
+            cancelButton.Location = new Point(size.Width - 80, size.Height - 30);
+            inputBox.Controls.Add(cancelButton);
+
+            //Set the input box's buttons to the created OK and Cancel Buttons respectively so the window appropriately behaves with the button clicks
+            inputBox.AcceptButton = okButton;
+            inputBox.CancelButton = cancelButton;
+
+            //Show the window dialog box 
+            var result = inputBox.ShowDialog();
+            input = textBox.Text;
+
+            //After input has been submitted, return the input value
+            return result;
+        }
+
+        private void btnRename_Click(object sender, EventArgs e)
+        {
+            if (LoadedRule == null)
+            {
+                MessageBox.Show("Rename packet is only available for Rules files");
+                return;
+            }
+
+            var s = LoadedRule.Name;
+            if (ShowInputDialogBox(ref s, "Name:", "Renamed Packet", 350, 100) == DialogResult.OK)
+            {
+                if (LoadedRule.Name != s)
+                {
+                    LoadedRule.Name = s;
+                    XmlHelper.SetAttribute(LoadedRule.RootNode, "desc", s);
+                    Text = PacketFilterListEntry.AsString(LoadedRule.PacketId, LoadedRule.Level, LoadedRule.StreamId) + " - " + LoadedRule.Name;
+                    MessageBox.Show("Note that packet names in the list are not updates until the file is reloaded!","Rename Packet", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                }
+            }
         }
     }
 }

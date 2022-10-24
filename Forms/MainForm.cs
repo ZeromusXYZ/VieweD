@@ -230,6 +230,7 @@ namespace VieweD
             //tp.ProjectFolder = Helper.MakeProjectDirectoryFromLogFileName(logFile);
             tp.Text = Helper.MakeTabName(logFile);
 
+            tp.PLLoaded.NumberPacketCounter = 0;
             tp.PLLoaded.Clear();
             tp.PLLoaded.Filter.Clear();
             if (!tp.PLLoaded.LoadFromFile(logFile,tp))
@@ -932,7 +933,7 @@ namespace VieweD
                 filterDlg.btnOK.Enabled = (tp != null);
                 if (tp != null)
                 {
-                    filterDlg.currentEngine = tp.Engine;
+                    filterDlg.CurrentEngine = tp.Engine;
                     filterDlg.Filter.CopyFrom(tp.PL.Filter);
                     filterDlg.LoadLocalFromFilter();
                 }
@@ -1358,7 +1359,7 @@ namespace VieweD
 
         public void OpenBasicParseEditor(string parseFileName)
         {
-            string editFile = Application.StartupPath + Path.DirectorySeparatorChar + parseFileName;
+            var editFile = Application.StartupPath + Path.DirectorySeparatorChar + parseFileName;
             if (!File.Exists(editFile))
             {
                 if (MessageBox.Show($"Parser \"{parseFileName}\" doesn't exists, create one ?", @"Edit Parse File", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
@@ -1394,10 +1395,29 @@ namespace VieweD
         {
             if (rule == null)
             {
-                MessageBox.Show("No rule attached to this packet, cannot edit", "Edit Parse File", MessageBoxButtons.OK,
-                    MessageBoxIcon.Information);
-                return;
+                if (MessageBox.Show("No rule attached to this packet, create a new one?", "Edit Rules File", MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Information) != DialogResult.Yes)
+                    return;
+
+                var tp = GetCurrentPacketTabPage();
+                var currentPacket = tp?.GetSelectedPacket();
+                if (currentPacket != null)
+                {
+                    var newName = $"0x{currentPacket.PacketId:X3} - {currentPacket.PacketLogType}";
+                    rule = tp.Engine.CreateNewUserPacketRule(tp, currentPacket.PacketLogType,
+                        new PacketFilterListEntry(currentPacket.PacketId, currentPacket.PacketLevel,
+                            currentPacket.StreamId), newName);
+                }
+                else
+                {
+                    MessageBox.Show("A error occured while creating a new rule entry", "Edit Rules File",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
             }
+
+            if (rule == null)
+                return;
 
             // Open in-app editor, since we're editing a node, we can't reliably use a external editor for this
             var editDlg = new ParseEditorForm(GetCurrentPacketTabPage());

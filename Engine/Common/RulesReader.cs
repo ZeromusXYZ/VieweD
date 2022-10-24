@@ -11,10 +11,10 @@ namespace VieweD.Engine.Common
 {
     public class RulesReader
     {
-        protected XmlDocument XmlDoc;
-        protected XmlNodeList AllRulesGroups;
-        protected XmlNodeList AllTemplates;
-        protected Dictionary<byte, RulesGroup> RuleGroups { get; set; } = new Dictionary<byte, RulesGroup>();
+        public XmlDocument XmlDoc { get; set; }
+        public XmlNodeList AllRulesGroups { get; set; }
+        public XmlNodeList AllTemplates { get; set; }
+        public Dictionary<byte, RulesGroup> RuleGroups { get; set; } = new Dictionary<byte, RulesGroup>();
         public Dictionary<uint, PacketRule> C2S { get; set; } = new Dictionary<uint, PacketRule>(); // out: client to server
         public Dictionary<uint, PacketRule> S2C { get; set; } = new Dictionary<uint, PacketRule>(); // In : server to client
         public Dictionary<string, XmlNode> Templates { get; set; } = new Dictionary<string, XmlNode>();
@@ -122,6 +122,16 @@ namespace VieweD.Engine.Common
             }
             return null;
         }
-        
+
+        public virtual PacketRule CreateNewPacketRule(PacketLogTypes pt, byte streamId, byte level, ushort packetId)
+        {
+            if (!RuleGroups.TryGetValue(streamId, out var ruleGroup))
+                return null;
+            var key = (uint)((streamId * 0x01000000) + (level * 0x10000) + packetId);
+            var level0Key = (uint)((streamId * 0x01000000) + packetId);
+
+            return null;
+        }
+
     }
 }

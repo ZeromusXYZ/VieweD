@@ -1,15 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
-using VieweD.Engine;
 using VieweD.Engine.Common;
+using System.Drawing;
 
 namespace VieweD
 {
@@ -17,17 +11,17 @@ namespace VieweD
     {
         protected class FilterListEntry : IComparable
         {
-            private string value;
-            private string display;
-            private string shortdisplay;
-            public string Value { get => value; set => this.value = value; }
-            public string Display { get => display; set => display = value; }
-            public string ShortDisplay { get => shortdisplay; set => shortdisplay = value; }
+            public string Value { get; set; }
+
+            public string Display { get; set; }
+
+            public string ShortDisplay { get; set; }
+
             public PacketFilterListEntry FilterEntry { get; set; }
 
             public int CompareTo(object obj)
             {
-                return Display.CompareTo((obj as FilterListEntry).Display);
+                return string.Compare(Display, (obj as FilterListEntry)?.Display, StringComparison.Ordinal);
             }
         }
 
@@ -36,9 +30,9 @@ namespace VieweD
         protected List<FilterListEntry> OutDataSource;
         protected List<FilterListEntry> InDataSource;
         private EngineBase _currentEngine;
-        public EngineBase currentEngine
+        public EngineBase CurrentEngine
         {
-            get { return _currentEngine; }
+            get => _currentEngine;
             set
             {
                 _currentEngine = value;
@@ -66,14 +60,11 @@ namespace VieweD
             cbOutIDs.Font = Properties.Settings.Default.PacketListFont;
             cbInIDs.Font = Properties.Settings.Default.PacketListFont;
             OutDataSource.Clear();
-            //cbOutIDs.Items.Clear();
-            if (currentEngine != null)
+            if (CurrentEngine != null)
             {
-                foreach (var key in currentEngine.DataLookups.NLU(DataLookups.LU_PacketOut).Data.Keys)
+                foreach (var key in CurrentEngine.DataLookups.NLU(DataLookups.LU_PacketOut).Data.Keys)
                 {
                     var pfkEntry = new PacketFilterListEntry(key);
-                    //var serverId = key / 0x1000000;
-                    //var level = (key / 0x10000) & 0xFF;
                     var server = string.Empty;
                     switch (pfkEntry.StreamId)
                     {
@@ -89,24 +80,19 @@ namespace VieweD
                     }
                     if (pfkEntry.Level > 0)
                         server += "L" + pfkEntry.Level.ToString() + " ";
-                    var pName = currentEngine.DataLookups.NLU(DataLookups.LU_PacketOut).GetValue(key);
+                    var pName = CurrentEngine.DataLookups.NLU(DataLookups.LU_PacketOut).GetValue(key);
 
                     var d = pName.PadRight(32) + " " + server + "0x" + (key & 0xFFFF).ToString("X3");
-                    //var d = server+"0x" + (key & 0xFFFF).ToString("X3") + " - " + pName;
                     OutDataSource.Add(new FilterListEntry() { Value = key.ToString("X"), Display = d, ShortDisplay = pName, FilterEntry = pfkEntry });
-                    //cbOutIDs.Items.Add("0x" + key.ToString("X3") + " - " + DataLookups.NLU(DataLookups.LU_PacketOut).GetValue(key));
                 }
             }
 
             InDataSource.Clear();
-            //cbInIDs.Items.Clear();
-            if (currentEngine != null)
+            if (CurrentEngine != null)
             {
-                foreach (var key in currentEngine.DataLookups.NLU(DataLookups.LU_PacketIn).Data.Keys)
+                foreach (var key in CurrentEngine.DataLookups.NLU(DataLookups.LU_PacketIn).Data.Keys)
                 {
                     var pfkEntry = new PacketFilterListEntry(key);
-                    //var serverId = key / 0x1000000;
-                    //var level = (key / 0x10000) & 0xFF;
                     var server = string.Empty;
                     switch (pfkEntry.StreamId)
                     {
@@ -122,11 +108,9 @@ namespace VieweD
                     }
                     if (pfkEntry.Level > 0)
                         server += "L" + pfkEntry.Level.ToString() + " ";
-                    var pName = currentEngine.DataLookups.NLU(DataLookups.LU_PacketIn).GetValue(key);
+                    var pName = CurrentEngine.DataLookups.NLU(DataLookups.LU_PacketIn).GetValue(key);
                     var d = pName.PadRight(32) + " " + server + "0x" + (key & 0xFFFF).ToString("X3");
-                    //var d = server+"0x" + (key & 0xFFFF).ToString("X3") + " - " + pName;
                     InDataSource.Add(new FilterListEntry() { Value = key.ToString("X"), Display = d, ShortDisplay = pName, FilterEntry = pfkEntry });
-                    //cbInIDs.Items.Add("0x" + key.ToString("X3") + " - " + DataLookups.NLU(DataLookups.LU_PacketIn).GetValue(key));
                 }
             }
 
@@ -166,8 +150,7 @@ namespace VieweD
             lbOut.Items.Clear();
             foreach (var n in Filter.FilterOutList)
             {
-                lbOut.Items.Add(n + " - " + currentEngine?.DataLookups.NLU(DataLookups.LU_PacketOut).GetValue(n.AsMergedId()) ?? "???");
-                // lbOut.Items.Add("0x" + n.Id.ToString("X3") + " - " + currentEngine?.DataLookups.NLU(DataLookups.LU_PacketOut).GetValue(n.AsMergedId()) ?? "???");
+                lbOut.Items.Add(n + " - " + CurrentEngine?.DataLookups.NLU(DataLookups.LU_PacketOut).GetValue(n.AsMergedId()) ?? "???");
             }
 
             rbInOff.Checked = (Filter.FilterInType == FilterType.Off);
@@ -177,8 +160,7 @@ namespace VieweD
             lbIn.Items.Clear();
             foreach (var n in Filter.FilterInList)
             {
-                lbIn.Items.Add(n + " - " + currentEngine?.DataLookups.NLU(DataLookups.LU_PacketIn).GetValue(n.AsMergedId()) ?? "???");
-                // lbIn.Items.Add("0x" + n.Id.ToString("X3") + " - " + currentEngine?.DataLookups.NLU(DataLookups.LU_PacketIn).GetValue(n.AsMergedId()) ?? "???");
+                lbIn.Items.Add(n + " - " + CurrentEngine?.DataLookups.NLU(DataLookups.LU_PacketIn).GetValue(n.AsMergedId()) ?? "???");
             }
         }
 
@@ -218,8 +200,8 @@ namespace VieweD
             if (s == string.Empty)
                 return 0;
             long res = 0;
-            char[] splitchars = new char[1] { '-' };
-            var fields = s.Split(splitchars,2);
+            var splitChars = new char[1] { '-' };
+            var fields = s.Split(splitChars,2);
             if (fields.Length >= 1)
             {
                 if (DataLookups.TryFieldParse(fields[0].Trim(' '),out long n))
@@ -232,22 +214,28 @@ namespace VieweD
         {
             var s = cbOutIDs.Text ;
             // First check our data list
+            var found = false;
             foreach(var o in OutDataSource)
             {
                 if (o.Display == s)
                 {
-                    lbOut.Items.Add(o.FilterEntry + " - " + currentEngine?.DataLookups.NLU(DataLookups.LU_PacketOut).GetValue(o.FilterEntry.AsMergedId()) ?? "???");
-                    // lbOut.Items.Add("0x" + o.Value + " - " + o.ShortDisplay);
-                    return;
+                    lbOut.Items.Add(o.FilterEntry + " - " + CurrentEngine?.DataLookups.NLU(DataLookups.LU_PacketOut).GetValue(o.FilterEntry.AsMergedId()) ?? "???");
+                    found = true;
+                    break;
                 }
             }
 
-            // If nothing found, parse it
-            var n = ValForID(s);
+            if (!found)
+            {
+                if (DataLookups.TryFieldParse(s, out long unknownValue))
+                {
+                    var unknownFilter = new PacketFilterListEntry((ulong)unknownValue);
+                    lbOut.Items.Add(unknownFilter + " - " + CurrentEngine?.DataLookups.NLU(DataLookups.LU_PacketOut).GetValue(unknownFilter.AsMergedId()) ?? "???");
+                }
+            }
+
             if ((rbOutOff.Checked) && (lbOut.Items.Count == 0))
                 rbOutShow.Checked = true;
-
-            lbOut.Items.Add("0x" + n.ToString("X3") + " - " + currentEngine.DataLookups.NLU(DataLookups.LU_PacketOut).GetValue((ulong)n));
         }
 
         private void BtnRemoveOut_Click(object sender, EventArgs e)
@@ -261,22 +249,28 @@ namespace VieweD
         {
             var s = cbInIDs.Text;
             // First check our data list
+            var found = false;
             foreach (var i in InDataSource)
             {
                 if (i.Display == s)
                 {
-                    lbIn.Items.Add(i.FilterEntry + " - " + currentEngine?.DataLookups.NLU(DataLookups.LU_PacketIn).GetValue(i.FilterEntry.AsMergedId()) ?? "???");
-                    // lbIn.Items.Add("0x" + i.Value + " - " + i.ShortDisplay);
-                    return;
+                    lbIn.Items.Add(i.FilterEntry + " - " + CurrentEngine?.DataLookups.NLU(DataLookups.LU_PacketIn).GetValue(i.FilterEntry.AsMergedId()) ?? "???");
+                    found = true;
+                    break;
                 }
             }
 
-            // If nothing found, parse it
-            var n = ValForID(s);
+            if (!found)
+            {
+                if (DataLookups.TryFieldParse(s, out long unknownValue))
+                {
+                    var unknownFilter = new PacketFilterListEntry((ulong)unknownValue);
+                    lbIn.Items.Add(unknownFilter + " - " + CurrentEngine?.DataLookups.NLU(DataLookups.LU_PacketIn).GetValue(unknownFilter.AsMergedId()) ?? "???");
+                }
+            }
+
             if ((rbInOff.Checked) && (lbIn.Items.Count == 0))
                 rbInShow.Checked = true;
-
-            lbIn.Items.Add("0x" + n.ToString("X3") + " - " + currentEngine.DataLookups.NLU(DataLookups.LU_PacketIn).GetValue((UInt64)n));
         }
 
         private void BtnRemoveIn_Click(object sender, EventArgs e)
@@ -291,7 +285,7 @@ namespace VieweD
             if (saveFileDlg.ShowDialog() == DialogResult.OK)
             {
                 SaveLocalToFilter();
-                Filter.SaveToFile(saveFileDlg.FileName,currentEngine);
+                Filter.SaveToFile(saveFileDlg.FileName,CurrentEngine);
             }
         }
 

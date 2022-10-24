@@ -7,9 +7,9 @@ namespace VieweD.Engine.Common
 {
     public class RulesGroup
     {
-        protected XmlNode RootNode;
-        protected XmlNode S2C;
-        protected XmlNode C2S;
+        public XmlNode RootNode;
+        public XmlNode S2C;
+        public XmlNode C2S;
         public RulesReader Parent { get; protected set; }
 
         /// <summary>

@@ -66,6 +66,7 @@ namespace VieweD.Engine.Common
                 return false;
 
             var fn = fileName.ToLower();
+            NumberPacketCounter = 0;
 
             // Try file type depending on it's extension
             var thisEngine = Engines.CreateEngineByFileExtension(Path.GetExtension(fn));
