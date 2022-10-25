@@ -23,30 +23,36 @@ namespace VieweD
         public PacketTabPage sourceTP { get; set; }
         private bool blockPositionUpdates = false;
         private bool closeOnStop = false;
+        private const string DefaultDllName = "libvlc.dll" ;
 
         public VideoLinkForm()
         {
             InitializeComponent();
         }
 
-        static public string GetVLCLibPath()
+        public static string GetVLCLibPath()
         {
             // First try to get from registry
-            string res ;
+            string res;
             try
             {
-                res = Registry.GetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\VideoLAN\\VLC", "InstallDir", "").ToString();
+                res = Registry.GetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\VideoLAN\\VLC", "InstallDir", "")?.ToString() ??
+                      "";
+                if (File.Exists(Path.Combine(res, DefaultDllName)))
+                    return res;
             }
-            catch
+            catch (Exception ex)
             {
-                res = "";
+                // Ignore
             }
-            if (File.Exists(res + Path.DirectorySeparatorChar + "libvlc.dll"))
-                return res;
 
             // Try default location
-            res = Path.Combine(Environment.GetFolderPath(Environment.Is64BitProcess ? Environment.SpecialFolder.ProgramFiles : Environment.SpecialFolder.ProgramFilesX86), "VideoLAN\\VLC");
-            if (File.Exists(res + Path.DirectorySeparatorChar + "libvlc.dll"))
+            res = Path.Combine(
+                Environment.GetFolderPath(Environment.Is64BitProcess
+                    ? Environment.SpecialFolder.ProgramFiles
+                    : Environment.SpecialFolder.ProgramFilesX86),
+                "VideoLAN", "VLC");
+            if (File.Exists(Path.Combine(res, DefaultDllName)))
                 return res;
 
             res = "";
@@ -219,7 +225,9 @@ namespace VieweD
                 sourceTP = null;
             }
 
-            if (media.IsPlaying)
+            if (!media.IsPlaying) 
+                return;
+
             try
             {
                 e.Cancel = true;
@@ -227,9 +235,9 @@ namespace VieweD
                 closeFixTimer.Enabled = true;
                 media.ResetMedia();
             }
-            catch
+            catch (Exception ex)
             {
-
+                // Do nothing
             }
         }
 
@@ -237,14 +245,19 @@ namespace VieweD
         {
             if (closeOnStop)
                 return;
+
             try
             {
-                Invoke((MethodInvoker)delegate { 
+                Invoke((MethodInvoker)delegate
+                {
                     tb.Maximum = (int)e.NewLength;
                     tb.Minimum = 0;
                 });
             }
-            catch { }
+            catch (Exception ex)
+            {
+                // Do nothing
+            }
         }
 
         private void UpdateTimeLabelAndList(long pos, long max, bool updatePacketList)
@@ -276,23 +289,29 @@ namespace VieweD
         {
             if (closeOnStop)
                 return;
+
             if (blockPositionUpdates)
                 return;
+
             blockPositionUpdates = true;
             try
             {
                 Invoke((MethodInvoker)delegate
                 {
                     lWarningLabel.Visible = false;
-                    UpdateTimeLabelAndList((long)(e.NewPosition * media.Length), media.Length, cbFollowPacketList.Checked);
+                    UpdateTimeLabelAndList((long)(e.NewPosition * media.Length), media.Length,
+                        cbFollowPacketList.Checked);
                     lVideoSpeed.Text = "x" + media.VlcMediaPlayer.Rate.ToString();
                 });
             }
-            catch { }
+            catch (Exception ex)
+            {
+                // Do nothing
+            }
             blockPositionUpdates = false;
         }
 
-        private string MediaTimeToString(long position)
+        private static string MediaTimeToString(long position)
         {
             var h = (position / 3600000);
             var m = ((position / 60000) % 60);
@@ -391,14 +410,19 @@ namespace VieweD
         {
             if (closeOnStop)
                 return;
+
             try
             {
-                Invoke((MethodInvoker)delegate {
+                Invoke((MethodInvoker)delegate
+                {
                     //btnPlay.Text = "Pause";
                     btnPlay.ImageIndex = 1;
                 });
             }
-            catch { }
+            catch (Exception ex)
+            {
+                // Do nothing
+            }
         }
 
         private void BtnTestYT_Click(object sender, EventArgs e)
@@ -444,13 +468,13 @@ namespace VieweD
                 return;
             }
 
-            TimeSpan videoTime = TimeSpan.FromMilliseconds(media.Time);// media.Position * media.Length);
-            TimeSpan packetTime = thisPacket.VirtualTimeStamp - sourceTP.PL.FirstPacketTime ;
+            var videoTime = TimeSpan.FromMilliseconds(media.Time);// media.Position * media.Length);
+            var packetTime = thisPacket.VirtualTimeStamp - sourceTP.PL.FirstPacketTime ;
             var off = packetTime - videoTime;
-            var currentvloff = sourceTP.LinkVideoOffset;
+            var currentVideoLinkOffset = sourceTP.LinkVideoOffset;
 
             if (MessageBox.Show("Set Link ?\r\n\r\n"+
-                "Current Offset: " + currentvloff.ToString() + "\r\n\r\n" +
+                "Current Offset: " + currentVideoLinkOffset.ToString() + "\r\n\r\n" +
                 "Packet Time: " + packetTime.ToString() + "\r\n" +
                 "Video Time: " +videoTime.ToString() + "\r\n\r\n" +
                 "Difference: " + off.ToString(),
@@ -467,7 +491,7 @@ namespace VieweD
             if (media.State == Vlc.DotNet.Core.Interops.Signatures.MediaStates.Playing)
                 media.Pause();
             media.VlcMediaPlayer.NextFrame();
-            long newPos = media.Time;// (long)(media.Position * media.Length);
+            var newPos = media.Time;// (long)(media.Position * media.Length);
             UpdateTimeLabelAndList(newPos, media.Length, cbFollowPacketList.Checked);
         }
 
@@ -475,7 +499,7 @@ namespace VieweD
         {
             if (media.State == Vlc.DotNet.Core.Interops.Signatures.MediaStates.Playing)
                 media.Pause();
-            long newPos = media.Time;// (long)(media.Position * media.Length);
+            var newPos = media.Time;// (long)(media.Position * media.Length);
             newPos -= 1000;
             if (newPos < 0)
                 newPos = 0;
@@ -509,13 +533,15 @@ namespace VieweD
         {
             if (!closeOnStop)
                 return;
+
             try
             {
-                Invoke((MethodInvoker)delegate {
-                    Close();
-                });
+                Invoke((MethodInvoker)Close);
             }
-            catch { }
+            catch (Exception ex)
+            {
+                // Do nothing
+            }
         }
 
         private void CloseFixTimer_Tick(object sender, EventArgs e)
@@ -543,7 +569,7 @@ namespace VieweD
         private void tbPlaybackSpeed_ValueChanged(object sender, EventArgs e)
         {
             media.VlcMediaPlayer.Rate = SpeedTrackBarToSpeedRate(tbPlaybackSpeed.Value);
-            lVideoSpeed.Text = "x" + media.VlcMediaPlayer.Rate.ToString();
+            lVideoSpeed.Text = "x" + media.VlcMediaPlayer.Rate;
         }
     }
 }

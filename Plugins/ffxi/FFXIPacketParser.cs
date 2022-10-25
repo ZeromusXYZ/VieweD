@@ -249,8 +249,9 @@ namespace VieweD.Engine.FFXI
 
                 string line = RawParseData[parseLineNumber - 1];
                 // Cut out comments
-                if (line.IndexOf("//", StringComparison.InvariantCulture) >= 0)
-                    line = line.Substring(0, line.IndexOf("//", StringComparison.InvariantCulture));
+                var commentStartPos = line.IndexOf("//", StringComparison.InvariantCulture);
+                if (commentStartPos >= 0)
+                    line = line.Substring(0, commentStartPos);
                 line = line.Trim(' ');
 
                 // Skip blank lines

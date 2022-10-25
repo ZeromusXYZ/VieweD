@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Linq;
 using System.IO;
@@ -224,7 +224,7 @@ namespace VieweD
             var dontReloadParser = true;
             if (pd.Parent.ParentTab.Engine.HasRulesFile)
             {
-                var aa = MainForm.ThisMainForm.CurrentPP;
+                // var currentPP = MainForm.ThisMainForm.CurrentPP;
                 try
                 {
                     LoadedRule.RootNode.InnerXml = editBox.Text;
@@ -243,9 +243,9 @@ namespace VieweD
             }
             else
             {
-                var ffxi = MainForm.ThisMainForm.CurrentPP;
-                ffxi.RawParseData.Clear();
-                ffxi.RawParseData.AddRange(editBox.Lines);
+                var currentPP = MainForm.ThisMainForm.CurrentPP;
+                currentPP.RawParseData.Clear();
+                currentPP.RawParseData.AddRange(editBox.Lines);
             }
             MainForm.ThisMainForm.CurrentPP.ParsedView.Clear();
             MainForm.ThisMainForm.UpdatePacketDetails(tp, pd, "-", dontReloadParser);

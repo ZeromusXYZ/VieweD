@@ -1576,7 +1576,7 @@ namespace VieweD
         {
             if (VideoLinkForm.GetVLCLibPath() == string.Empty)
             {
-                MessageBox.Show("VideoLAN VLC needs to be installed on your PC to use the video linking feature", "libvlc not found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("VideoLAN VLC (x"+ (Environment.Is64BitProcess ? "64" : "32") + ") needs to be installed on your PC to use the video linking feature", "libvlc.dll not found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             Application.UseWaitCursor = true;
