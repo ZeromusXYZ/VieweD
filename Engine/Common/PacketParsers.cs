@@ -4,6 +4,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Windows.Forms;
 using System.Drawing;
+using VieweD.Helpers;
+using VieweD.Helpers.System;
 
 namespace VieweD.Engine.Common
 {
@@ -266,7 +268,7 @@ namespace VieweD.Engine.Common
             var searchStrings = searchList.Split(',').ToList();
             foreach (var s in searchStrings)
             {
-                if ((DataLookups.TryFieldParse(s.Trim(' '), out int n)) && (n == searchValue))
+                if ((NumberHelper.TryFieldParse(s.Trim(' '), out int n)) && (n == searchValue))
                     return true;
             }
 
@@ -323,7 +325,6 @@ namespace VieweD.Engine.Common
             }
         }
 
-
         public void AddDataFieldEx(int StartPos, int FieldByteSize, ref ushort DataFieldIndex)
         {
             if (FieldByteSize < 1)
@@ -352,7 +353,7 @@ namespace VieweD.Engine.Common
             }
 
             // If the fieldName is not found try to return the fieldName as a parsed uint64
-            return DataLookups.TryFieldParseUInt64(fieldName, out var res) ? res : 0;
+            return NumberHelper.TryFieldParse(fieldName, out ulong res) ? res : 0;
         }
 
         public string GetParsedValue(string fieldName)

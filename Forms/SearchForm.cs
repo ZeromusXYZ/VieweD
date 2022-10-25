@@ -2,6 +2,8 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using VieweD.Engine.Common;
+using VieweD.Helpers;
+using VieweD.Helpers.System;
 
 namespace VieweD
 {
@@ -123,8 +125,8 @@ namespace VieweD
 
         private void ValidateFields()
         {
-            bool isValid = true;
-            bool hasData = false;
+            var isValid = true;
+            var hasData = false;
             if (IsValidating)
                 return;
             IsValidating = true;
@@ -145,22 +147,17 @@ namespace VieweD
             SearchParameters.SearchParsedFieldName = string.Empty;
             SearchParameters.SearchParsedFieldValue = string.Empty;
 
-            UInt16 minID = 1;
-            UInt16 maxID = 0x1FF;
-            if (SearchParameters.FileFormat == "PDEC")
-            {
-                minID = 0x0000;
-                maxID = 0xFFFF;
-            }
+            var minId = Engine?.PacketIdMinimum ?? 1;
+            var maxId = Engine?.PacketIdMaximum ?? 0xFFF;
 
             // PacketID
-            if (DataLookups.TryFieldParse(ePacketID.Text, out int nPacketID))
+            if (NumberHelper.TryFieldParse(ePacketID.Text, out int nPacketId))
             {
-                if ((nPacketID >= minID) && (nPacketID <= maxID))
+                if ((nPacketId >= minId) && (nPacketId <= maxId))
                 {
                     hasData = true;
                     SearchParameters.SearchByPacketId = true;
-                    SearchParameters.SearchPacketId = (UInt16)nPacketID;
+                    SearchParameters.SearchPacketId = (ushort)nPacketId;
                     ePacketID.ForeColor = Color.Blue;
                 }
                 else
@@ -173,10 +170,10 @@ namespace VieweD
                 ePacketID.ForeColor = Color.DarkGray;
             }
 
-            // PacketLevel (AA only)
-            if ((SearchParameters.FileFormat == "PDEC") && (DataLookups.TryFieldParse(ePacketLevel.Text, out int nPacketLevel)))
+            // PacketLevel if allowed
+            if ((Engine?.PacketLevelMaximum > 0) && (NumberHelper.TryFieldParse(ePacketLevel.Text, out int nPacketLevel)))
             {
-                if ((nPacketLevel >= 0) && (nPacketLevel <= 5))
+                if ((nPacketLevel >= 0) && (nPacketLevel <= Engine.PacketLevelMaximum))
                 {
                     hasData = true;
                     SearchParameters.SearchByPacketLevel = true;
@@ -194,13 +191,13 @@ namespace VieweD
             }
 
             // Sync
-            if (DataLookups.TryFieldParse(eSync.Text, out int nSync))
+            if (NumberHelper.TryFieldParse(eSync.Text, out long nSync))
             {
                 if ((nSync > 0) && (nSync < 0xFFFF))
                 {
                     hasData = true;
                     SearchParameters.SearchBySync = true;
-                    SearchParameters.SearchSync = (UInt16)nSync;
+                    SearchParameters.SearchSync = (ushort)nSync;
                     eSync.ForeColor = Color.Blue;
                 }
                 else
@@ -210,7 +207,7 @@ namespace VieweD
                 eSync.ForeColor = Color.DarkGray;
 
             // Value
-            if (DataLookups.TryFieldParseUInt64(eValue.Text, out UInt64 nValue))
+            if (NumberHelper.TryFieldParse(eValue.Text, out long nValue))
             {
                 // Check the correct type
                 if ((nValue > 0xFFFFFF) && (rbByte.Checked || rbUInt16.Checked || rbUInt24.Checked))
@@ -240,7 +237,7 @@ namespace VieweD
                     SearchParameters.SearchByUInt16 = true;
                     SearchParameters.SearchByUInt24 = false;
                     SearchParameters.SearchByUInt32 = false;
-                    SearchParameters.SearchUInt16 = (UInt16)nValue;
+                    SearchParameters.SearchUInt16 = (ushort)nValue;
                     eValue.ForeColor = Color.RoyalBlue;
                 }
                 else
@@ -251,7 +248,7 @@ namespace VieweD
                     SearchParameters.SearchByUInt16 = false;
                     SearchParameters.SearchByUInt24 = true;
                     SearchParameters.SearchByUInt32 = false;
-                    SearchParameters.SearchUInt24 = (UInt32)nValue;
+                    SearchParameters.SearchUInt24 = (uint)nValue;
                     eValue.ForeColor = Color.Blue;
                 }
                 else
@@ -262,7 +259,7 @@ namespace VieweD
                     SearchParameters.SearchByUInt16 = false;
                     SearchParameters.SearchByUInt24 = false;
                     SearchParameters.SearchByUInt32 = true;
-                    SearchParameters.SearchUInt32 = (UInt32)nValue;
+                    SearchParameters.SearchUInt32 = (uint)nValue;
                     eValue.ForeColor = Color.Blue;
                 }
                 else
@@ -288,6 +285,7 @@ namespace VieweD
 
             if ((!isValid) || (!hasData))
                 SearchParameters.ClearValidSearchFlags();
+
             btnFindNext.Enabled = isValid && hasData;
             btnAsNewTab.Enabled = isValid && hasData;
             IsValidating = false;

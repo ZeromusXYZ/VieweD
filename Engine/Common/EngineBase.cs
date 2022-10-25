@@ -76,6 +76,18 @@ namespace VieweD.Engine.Common
         /// </summary>
         public virtual bool AllowedPacketSyncSearch { get; } = false;
 
+        /// <summary>
+        /// Minimum allowed packet id for searching
+        /// </summary>
+        public virtual ushort PacketIdMinimum { get; } = ushort.MinValue;
+
+        /// <summary>
+        /// Maximum allowed packet id for searching
+        /// </summary>
+        public virtual ushort PacketIdMaximum { get; } = ushort.MaxValue;
+
+        public virtual byte PacketLevelMaximum { get; } = byte.MinValue;
+
         public static string DepthSpacerVertical = "⁞";
         public static string DepthSpacerHorizontalSingle = "── ";
         public static string DepthSpacerHorizontalTop    = "┌─ ";

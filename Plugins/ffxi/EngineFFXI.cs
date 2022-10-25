@@ -23,6 +23,7 @@ namespace VieweD.Engine.FFXI
         public override bool HasDecrypt { get; } = false;
         public override bool AllowedPacketSyncSearch { get; } = true;
         public override bool AllowedPacketLevelSearch { get; } = false;
+        public override ushort PacketIdMaximum { get; } = 0x1FF;
 
         #region LookupConstants
         public static readonly string LU_Zones = "zones";

@@ -6,6 +6,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Xml;
+using VieweD.Helpers;
 using VieweD.Helpers.System;
 
 namespace VieweD.Engine.Common
@@ -421,18 +422,20 @@ namespace VieweD.Engine.Common
             var pos = pp.PD.Cursor;
             var size = 0;
             var sizeAttribute = XmlHelper.GetAttributeString(Attributes, "arg");
+
             if (sizeAttribute.StartsWith("#"))
             {
-                if (XmlHelper.TryAttribParse(ParentRule.GetLocalVar(sizeAttribute.TrimStart('#')), out var sizeVal))
+                if (NumberHelper.TryFieldParse(ParentRule.GetLocalVar(sizeAttribute.TrimStart('#')), out int sizeVal))
                 {
-                    size = (int)sizeVal;
+                    size = sizeVal;
                 }
             }
             else
-            if (XmlHelper.TryAttribParse(sizeAttribute ,out var sizeVal))
+            if (NumberHelper.TryFieldParse(sizeAttribute ,out int sizeVal))
             {
-                size = (int)sizeVal;
+                size = sizeVal;
             }
+
             var varName = XmlHelper.GetAttributeString(Attributes, "name");
             if (size <= 0)
             {
@@ -508,15 +511,15 @@ namespace VieweD.Engine.Common
                 var sizeAttribute = XmlHelper.GetAttributeString(Attributes, "arg");
                 if (sizeAttribute.StartsWith("#"))
                 {
-                    if (XmlHelper.TryAttribParse(ParentRule.GetLocalVar(sizeAttribute.TrimStart('#')), out var sizeVal))
+                    if (NumberHelper.TryFieldParse(ParentRule.GetLocalVar(sizeAttribute.TrimStart('#')), out int sizeVal))
                     {
-                        size = (int)sizeVal;
+                        size = sizeVal;
                     }
                 }
                 else
-                if (XmlHelper.TryAttribParse(sizeAttribute, out var sizeVal))
+                if (NumberHelper.TryFieldParse(sizeAttribute, out int sizeVal))
                 {
-                    size = (int)sizeVal;
+                    size = sizeVal;
                 }
             }
 
@@ -601,7 +604,7 @@ namespace VieweD.Engine.Common
             if (val1Attribute.StartsWith("#"))
             {
                 var arg1Name = ParentRule.GetLocalVar(val1Attribute.TrimStart('#'));
-                if (XmlHelper.TryAttribParse(arg1Name, out var aVal))
+                if (NumberHelper.TryFieldParse(arg1Name, out long aVal))
                 {
                     val1 = aVal;
                 }
@@ -611,7 +614,7 @@ namespace VieweD.Engine.Common
                 }
             }
             else
-            if (XmlHelper.TryAttribParse(val1Attribute, out var aVal))
+            if (NumberHelper.TryFieldParse(val1Attribute, out long aVal))
             {
                 val1 = aVal;
             }
@@ -629,7 +632,7 @@ namespace VieweD.Engine.Common
                 if (val2Attribute.StartsWith("#"))
                 {
                     var arg2Name = ParentRule.GetLocalVar(val2Attribute.TrimStart('#'));
-                    if (XmlHelper.TryAttribParse(arg2Name, out var aVal))
+                    if (NumberHelper.TryFieldParse(arg2Name, out long aVal))
                     {
                         val2 = aVal;
                     }
@@ -639,7 +642,7 @@ namespace VieweD.Engine.Common
                     }
                 }
                 else
-                if (XmlHelper.TryAttribParse(val2Attribute, out var aVal))
+                if (NumberHelper.TryFieldParse(val2Attribute, out long aVal))
                 {
                     val2 = aVal;
                 }
@@ -647,7 +650,6 @@ namespace VieweD.Engine.Common
             else
             {
                 val2 = 0;
-                // Arg2 = 0
             }
 
             var res = false;
@@ -746,7 +748,7 @@ namespace VieweD.Engine.Common
             if (val1Attribute.StartsWith("#"))
             {
                 var arg1Name = ParentRule.GetLocalVar(val1Attribute.TrimStart('#'));
-                if (XmlHelper.TryAttribParse(arg1Name, out var aVal))
+                if (NumberHelper.TryFieldParse(arg1Name, out long aVal))
                 {
                     val1 = aVal;
                 }
@@ -756,7 +758,7 @@ namespace VieweD.Engine.Common
                 }
             }
             else
-            if (XmlHelper.TryAttribParse(val1Attribute, out var aVal))
+            if (NumberHelper.TryFieldParse(val1Attribute, out long aVal))
             {
                 val1 = aVal;
             }
@@ -775,7 +777,7 @@ namespace VieweD.Engine.Common
                 if (val2Attribute.StartsWith("#"))
                 {
                     var arg2Name = ParentRule.GetLocalVar(val2Attribute.TrimStart('#'));
-                    if (XmlHelper.TryAttribParse(arg2Name, out var aVal))
+                    if (NumberHelper.TryFieldParse(arg2Name, out long aVal))
                     {
                         val2 = aVal;
                     }
@@ -785,7 +787,7 @@ namespace VieweD.Engine.Common
                     }
                 }
                 else
-                if (XmlHelper.TryAttribParse(val2Attribute, out var aVal))
+                if (NumberHelper.TryFieldParse(val2Attribute, out long aVal))
                 {
                     val2 = aVal;
                 }
@@ -1115,7 +1117,7 @@ namespace VieweD.Engine.Common
             }
             long sourceId = 0;
             var sourceIdString = ParentRule.GetLocalVar(idAttribute);
-            if (XmlHelper.TryAttribParse(sourceIdString, out var sourceIdParse))
+            if (NumberHelper.TryFieldParse(sourceIdString, out long sourceIdParse))
             {
                 sourceId = sourceIdParse;
             }
@@ -1137,11 +1139,10 @@ namespace VieweD.Engine.Common
             var altLookupAttribute = XmlHelper.GetAttributeString(Attributes, _altLookupTableName);
             if (altLookupAttribute != string.Empty)
             {
-                if (XmlHelper.TryAttribParse(sourceValue, out var sourceValueParsed))
+                if (NumberHelper.TryFieldParse(sourceValue, out long sourceValueParsed))
                 {
-                    var altLookupId = sourceValueParsed;
-                    var lookedUpValue = pp.PD.Parent.ParentTab.Engine.DataLookups.NLU(altLookupAttribute).GetValue((ulong)altLookupId);
-                    sourceValue = "(" + altLookupAttribute + ":" + altLookupId + ") " + lookedUpValue;
+                    var lookedUpValue = pp.PD.Parent.ParentTab.Engine.DataLookups.NLU(altLookupAttribute).GetValue((ulong)sourceValueParsed);
+                    sourceValue = "(" + altLookupAttribute + ":" + sourceValueParsed + ") " + lookedUpValue;
                     if (saveLookup != string.Empty)
                     {
                         // save result as var
@@ -1295,16 +1296,17 @@ namespace VieweD.Engine.Common
             var pos = pp.PD.Cursor;
             var dataString = ParentRule.GetLocalVar(FieldName);
             var hexString = string.Empty;
+
             // Handle output differently if float val
             if (double.TryParse(dataString, out var valDouble) && (Math.Abs(Math.Floor(valDouble) - valDouble) > 0.00001))
             {
                 pp.AddParseLineToView(fieldIndex, "0x" + pos.ToString("X2"), pp.GetDataColor(fieldIndex), DepthString + FieldName, valDouble.ToString(CultureInfo.InvariantCulture), "");
             }
             else
-            if (XmlHelper.TryAttribParse(dataString, out var valNumber))
+            if (NumberHelper.TryFieldParse(dataString, out ulong valNumber))
             {
                 hexString = " (0x" + valNumber.ToString("X")+")";
-                var lookupVal = GetLookup((ulong)valNumber);
+                var lookupVal = GetLookup(valNumber);
                 pp.AddParseLineToView(fieldIndex, "0x" + pos.ToString("X2"), pp.GetDataColor(fieldIndex), DepthString + FieldName, lookupVal + dataString + hexString, "");
             }
             else

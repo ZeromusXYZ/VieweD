@@ -5,6 +5,7 @@ using System.Windows.Forms ;
 using System.ComponentModel;
 using System.Drawing;
 using VieweD.Helpers.System;
+using VieweD.Helpers;
 
 namespace VieweD.Engine.Common
 {
@@ -719,7 +720,7 @@ namespace VieweD.Engine.Common
                     else
                     if (fieldType == "offset")
                     {
-                        if (DataLookups.TryFieldParse(fieldVal, out int n))
+                        if (NumberHelper.TryFieldParse(fieldVal, out int n))
                             LinkVideoOffset = TimeSpan.FromMilliseconds(n);
                     }
                     else

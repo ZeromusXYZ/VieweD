@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using VieweD.Engine.Common;
+using VieweD.Helpers.System;
 
 namespace VieweD.Engine.FFXI
 {
@@ -248,8 +249,8 @@ namespace VieweD.Engine.FFXI
 
                 string line = RawParseData[parseLineNumber - 1];
                 // Cut out comments
-                if (line.IndexOf("//") >= 0)
-                    line = line.Substring(0, line.IndexOf("//"));
+                if (line.IndexOf("//", StringComparison.InvariantCulture) >= 0)
+                    line = line.Substring(0, line.IndexOf("//", StringComparison.InvariantCulture));
                 line = line.Trim(' ');
 
                 // Skip blank lines
@@ -336,7 +337,7 @@ namespace VieweD.Engine.FFXI
                 }
 
                 // Parse type lookup (if present)
-                var lookupFieldSplitPos = typeField.IndexOf(":");
+                var lookupFieldSplitPos = typeField.IndexOf(":", StringComparison.InvariantCulture);
                 if (lookupFieldSplitPos > 0)
                 {
                     var lookupFields = typeField.Split(':');
@@ -345,8 +346,8 @@ namespace VieweD.Engine.FFXI
                     if (lookupFields.Length > 2)
                     {
                         lookupOffsetEvalString = lookupFields[2];
-                        if (DataLookups.TryFieldParse(lookupOffsetEvalString, out int lookupoffsetres))
-                            lookupFieldOffset = lookupoffsetres;
+                        if (NumberHelper.TryFieldParse(lookupOffsetEvalString, out int lookupOffsetResult))
+                            lookupFieldOffset = lookupOffsetResult;
                     }
                 }
 
@@ -356,7 +357,7 @@ namespace VieweD.Engine.FFXI
                 int SubOffsetRange = 0;
                 bool hasSubOffset = false;
                 bool hasSubOffsetRange = false;
-                int posSplitPos = posField.IndexOf(":");
+                int posSplitPos = posField.IndexOf(":", StringComparison.InvariantCulture);
                 if (posSplitPos > 0)
                 {
                     // Has sub offset
@@ -365,7 +366,7 @@ namespace VieweD.Engine.FFXI
                     hasSubOffset = true;
 
                     // Get normal offset for this
-                    if (!DataLookups.TryFieldParse(offsetStr, out Offset))
+                    if (!NumberHelper.TryFieldParse(offsetStr, out Offset))
                     {
                         Offset = 0;
                         AddParseLineToView(0xFF, "L " + parseLineNumber.ToString(), Color.Red, "Parse Error", "Invalid Offset Value in: " + posField + " ("+ offsetStr + ")");
@@ -373,7 +374,7 @@ namespace VieweD.Engine.FFXI
                     }
 
                     // Check for bit range
-                    int rangeSplitPos = subOffsetStr.IndexOf("-");
+                    int rangeSplitPos = subOffsetStr.IndexOf("-", StringComparison.InvariantCulture);
                     if (rangeSplitPos > 0)
                     {
                         // We have a range
@@ -381,14 +382,14 @@ namespace VieweD.Engine.FFXI
                         var subOffsetRangeStr = subOffsetStr.Substring(rangeSplitPos + 1, subOffsetStr.Length - rangeSplitPos - 1);
                         hasSubOffsetRange = true;
 
-                        if (!DataLookups.TryFieldParse(subOffsetBitStr, out SubOffset))
+                        if (!NumberHelper.TryFieldParse(subOffsetBitStr, out SubOffset))
                         {
                             Offset = 0;
                             AddParseLineToView(0xFF, "L " + parseLineNumber.ToString(), Color.Red, "Parse Error", "Invalid SubOffset Value in: " + posField + " ("+ subOffsetBitStr + ")");
                             continue;
                         }
 
-                        if (!DataLookups.TryFieldParse(subOffsetRangeStr, out SubOffsetRange))
+                        if (!NumberHelper.TryFieldParse(subOffsetRangeStr, out SubOffsetRange))
                         {
                             Offset = 0;
                             AddParseLineToView(0xFF, "L " + parseLineNumber.ToString(), Color.Red, "Parse Error", "Invalid SubOffsetRange Value in: " + posField + " ("+ subOffsetRangeStr + ")");
@@ -398,7 +399,7 @@ namespace VieweD.Engine.FFXI
                     else
                     {
                         // doesn't have a range
-                        if (!DataLookups.TryFieldParse(subOffsetStr, out SubOffset))
+                        if (!NumberHelper.TryFieldParse(subOffsetStr, out SubOffset))
                         {
                             Offset = 0;
                             AddParseLineToView(0xFF, "L " + parseLineNumber.ToString(), Color.Red, "Parse Error", "Invalid SubOffset Value in: " + posField + " ("+ subOffsetStr + ")");
@@ -409,7 +410,7 @@ namespace VieweD.Engine.FFXI
                 else
                 {
                     // Normal single offset value
-                    if (!DataLookups.TryFieldParse(posField, out Offset))
+                    if (!NumberHelper.TryFieldParse(posField, out Offset))
                     {
                         Offset = 0;
                         AddParseLineToView(0xFF, "L " + parseLineNumber.ToString(), Color.Red, "Parse Error", "Invalid Offset Value in: " + posField);

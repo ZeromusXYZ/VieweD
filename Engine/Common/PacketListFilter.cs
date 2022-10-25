@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using VieweD.Helpers;
+using VieweD.Helpers.System;
 
 namespace VieweD.Engine.Common
 {
@@ -115,14 +117,14 @@ namespace VieweD.Engine.Common
 
                             if (outSplit.Length == 1)
                             {
-                                if (DataLookups.TryFieldParse(f1, out long nOut))
+                                if (NumberHelper.TryFieldParse(f1, out long nOut))
                                     AddOutFilterValueToList((ulong)nOut,0,0);
                             }
                             else
                             {
-                                if (DataLookups.TryFieldParse(outSplit[0], out long nOutId) &&
-                                    DataLookups.TryFieldParse(outSplit[1], out long nOutLv) &&
-                                    DataLookups.TryFieldParse(outSplit[2], out long nOutStream))
+                                if (NumberHelper.TryFieldParse(outSplit[0], out long nOutId) &&
+                                    NumberHelper.TryFieldParse(outSplit[1], out long nOutLv) &&
+                                    NumberHelper.TryFieldParse(outSplit[2], out long nOutStream))
                                     AddOutFilterValueToList((ulong)nOutId, (byte)nOutLv, (byte)nOutStream);
                             }
 
@@ -132,14 +134,14 @@ namespace VieweD.Engine.Common
 
                             if (inSplit.Length == 1)
                             {
-                                if (DataLookups.TryFieldParse(f1, out long nIn))
+                                if (NumberHelper.TryFieldParse(f1, out long nIn))
                                     AddInFilterValueToList((ulong)nIn, 0, 0);
                             }
                             else
                             {
-                                if (DataLookups.TryFieldParse(inSplit[0], out long nInId) &&
-                                    DataLookups.TryFieldParse(inSplit[1], out long nInLv) &&
-                                    DataLookups.TryFieldParse(inSplit[2], out long nInStream))
+                                if (NumberHelper.TryFieldParse(inSplit[0], out long nInId) &&
+                                    NumberHelper.TryFieldParse(inSplit[1], out long nInLv) &&
+                                    NumberHelper.TryFieldParse(inSplit[2], out long nInStream))
                                     AddInFilterValueToList((ulong)nInId, (byte)nInLv, (byte)nInStream);
                             }
 

@@ -4,6 +4,8 @@ using System.Windows.Forms;
 using System.IO;
 using VieweD.Engine.Common;
 using System.Drawing;
+using VieweD.Helpers;
+using VieweD.Helpers.System;
 
 namespace VieweD
 {
@@ -199,14 +201,16 @@ namespace VieweD
         {
             if (s == string.Empty)
                 return 0;
+
             long res = 0;
-            var splitChars = new char[1] { '-' };
+            var splitChars = new [] { '-' };
             var fields = s.Split(splitChars,2);
             if (fields.Length >= 1)
             {
-                if (DataLookups.TryFieldParse(fields[0].Trim(' '),out long n))
+                if (NumberHelper.TryFieldParse(fields[0].Trim(' '),out long n))
                     res = n;
             }
+
             return res;
         }
 
@@ -227,9 +231,9 @@ namespace VieweD
 
             if (!found)
             {
-                if (DataLookups.TryFieldParse(s, out long unknownValue))
+                if (NumberHelper.TryFieldParse(s, out ulong unknownValue))
                 {
-                    var unknownFilter = new PacketFilterListEntry((ulong)unknownValue);
+                    var unknownFilter = new PacketFilterListEntry(unknownValue);
                     lbOut.Items.Add(unknownFilter + " - " + CurrentEngine?.DataLookups.NLU(DataLookups.LU_PacketOut).GetValue(unknownFilter.AsMergedId()) ?? "???");
                 }
             }
@@ -262,9 +266,9 @@ namespace VieweD
 
             if (!found)
             {
-                if (DataLookups.TryFieldParse(s, out long unknownValue))
+                if (NumberHelper.TryFieldParse(s, out ulong unknownValue))
                 {
-                    var unknownFilter = new PacketFilterListEntry((ulong)unknownValue);
+                    var unknownFilter = new PacketFilterListEntry(unknownValue);
                     lbIn.Items.Add(unknownFilter + " - " + CurrentEngine?.DataLookups.NLU(DataLookups.LU_PacketIn).GetValue(unknownFilter.AsMergedId()) ?? "???");
                 }
             }
