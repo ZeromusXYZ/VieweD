@@ -3,7 +3,7 @@
 ;--------------------------------
 
 ; The name of the installer
-Name "VieweD Setup"
+Name "VieweD"
 
 ; The file to write
 OutFile "viewedsetup.exe"
@@ -39,11 +39,11 @@ Section "" ;No components page, name is not important
 
   ; Extra library files
   ; x64
-  SetOutPath $INSTDIR\runtimes\win-x64\native
-  File runtimes\win-x64\native\*.*
+  SetOutPath $INSTDIR\x64
+  File x64\*.*
   ; x86
-  SetOutPath $INSTDIR\runtimes\win-x86\native
-  File runtimes\win-x86\native\*.*
+  SetOutPath $INSTDIR\x86
+  File x86\*.*
 
   ; Program Data
 
