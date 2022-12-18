@@ -23,6 +23,7 @@ namespace VieweD
         private string DefaultTitle { get; set; } = string.Empty;
         private const string UrlGitHub = "https://github.com/ZeromusXYZ/VieweD";
         private const string UrlDiscord = "https://discord.gg/GhVfDtK";
+        private const string UrlKofi = "https://ko-fi.com/zeromusxyz";
         private const string UrlVideoLan = "https://www.videolan.org/";
         private const string Url7Zip = "https://www.7-zip.org/";
         private const string Url7ZipRequiredVer = "https://sourceforge.net/p/sevenzip/discussion/45797/thread/adc65bfa/";
@@ -1916,6 +1917,11 @@ namespace VieweD
                 mi.Click += MMToolsRun_Click;
                 mmTools.DropDownItems.Add(mi);
             }
+        }
+
+        private void mmAboutKofi_Click(object sender, EventArgs e)
+        {
+            Process.Start(UrlKofi);
         }
     }
 }

@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.MM = new System.Windows.Forms.MenuStrip();
             this.mmFile = new System.Windows.Forms.ToolStripMenuItem();
@@ -108,6 +108,7 @@
             this.sbProjectInfo = new System.Windows.Forms.ToolStripStatusLabel();
             this.sbRules = new System.Windows.Forms.ToolStripStatusLabel();
             this.saveCSVFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.mmAboutKofi = new System.Windows.Forms.ToolStripMenuItem();
             this.MM.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -297,14 +298,14 @@
             this.mmFilterApply.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.MMFilterApplyItem});
             this.mmFilterApply.Name = "mmFilterApply";
-            this.mmFilterApply.Size = new System.Drawing.Size(180, 22);
+            this.mmFilterApply.Size = new System.Drawing.Size(170, 22);
             this.mmFilterApply.Text = "Apply";
             this.mmFilterApply.DropDownOpening += new System.EventHandler(this.MmFilterApply_DropDownOpening);
             // 
             // MMFilterApplyItem
             // 
             this.MMFilterApplyItem.Name = "MMFilterApplyItem";
-            this.MMFilterApplyItem.Size = new System.Drawing.Size(177, 6);
+            this.MMFilterApplyItem.Size = new System.Drawing.Size(57, 6);
             this.MMFilterApplyItem.Click += new System.EventHandler(this.MMFilterApplyItem_Click);
             // 
             // mmFilterHighlight
@@ -312,7 +313,7 @@
             this.mmFilterHighlight.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mmFilterHighlightApply});
             this.mmFilterHighlight.Name = "mmFilterHighlight";
-            this.mmFilterHighlight.Size = new System.Drawing.Size(180, 22);
+            this.mmFilterHighlight.Size = new System.Drawing.Size(170, 22);
             this.mmFilterHighlight.Text = "Highlight";
             this.mmFilterHighlight.DropDownOpening += new System.EventHandler(this.MmFilterApply_DropDownOpening);
             // 
@@ -325,13 +326,13 @@
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(177, 6);
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(167, 6);
             // 
             // mmFilterEdit
             // 
             this.mmFilterEdit.Name = "mmFilterEdit";
             this.mmFilterEdit.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F)));
-            this.mmFilterEdit.Size = new System.Drawing.Size(180, 22);
+            this.mmFilterEdit.Size = new System.Drawing.Size(170, 22);
             this.mmFilterEdit.Text = "Edit ...";
             this.mmFilterEdit.Click += new System.EventHandler(this.MmFilterEdit_Click);
             // 
@@ -340,7 +341,7 @@
             this.mmFilterReset.Name = "mmFilterReset";
             this.mmFilterReset.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.F)));
-            this.mmFilterReset.Size = new System.Drawing.Size(180, 22);
+            this.mmFilterReset.Size = new System.Drawing.Size(170, 22);
             this.mmFilterReset.Text = "Reset";
             this.mmFilterReset.Click += new System.EventHandler(this.MmFilterReset_Click);
             // 
@@ -407,6 +408,7 @@
             this.mmAbout.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mmAboutGithub,
             this.mmAboutDiscord,
+            this.mmAboutKofi,
             this.MMAboutN1,
             this.MMAbout7Zip,
             this.mmAboutVideoLAN,
@@ -659,11 +661,11 @@
             // 
             this.dGV.AllowUserToAddRows = false;
             this.dGV.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            this.dGV.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            this.dGV.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
             this.dGV.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -861,6 +863,13 @@
             this.saveCSVFileDialog.RestoreDirectory = true;
             this.saveCSVFileDialog.Title = "Export CSV File";
             // 
+            // mmAboutKofi
+            // 
+            this.mmAboutKofi.Name = "mmAboutKofi";
+            this.mmAboutKofi.Size = new System.Drawing.Size(197, 22);
+            this.mmAboutKofi.Text = "Buy me a coffee";
+            this.mmAboutKofi.Click += new System.EventHandler(this.mmAboutKofi_Click);
+            // 
             // MainForm
             // 
             this.AllowDrop = true;
@@ -993,6 +1002,7 @@
         private System.Windows.Forms.Label lUint16;
         private System.Windows.Forms.ToolStripMenuItem mmFilterHighlight;
         private System.Windows.Forms.ToolStripSeparator mmFilterHighlightApply;
+        private System.Windows.Forms.ToolStripMenuItem mmAboutKofi;
     }
 }
 
