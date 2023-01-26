@@ -66,7 +66,7 @@ namespace VieweD.Helpers.System
             }
             else
             {
-                result = int.TryParse(field, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out res);
+                result = int.TryParse(field, NumberStyles.Integer, CultureInfo.InvariantCulture, out res);
             }
 
             // Re-apply negative sign if required
@@ -115,7 +115,7 @@ namespace VieweD.Helpers.System
             else
             {
                 // Handle it as a regular long
-                result = long.TryParse(field, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out res);
+                result = long.TryParse(field, NumberStyles.Integer, CultureInfo.InvariantCulture, out res);
             }
 
             // Re-apply negative sign if required
@@ -154,7 +154,7 @@ namespace VieweD.Helpers.System
                     NumberStyles.HexNumber, CultureInfo.InvariantCulture, out res);
             }
 
-            return ulong.TryParse(field, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out res);
+            return ulong.TryParse(field, NumberStyles.Integer, CultureInfo.InvariantCulture, out res);
         }
     }
 }
