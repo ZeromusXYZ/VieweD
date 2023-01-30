@@ -41,7 +41,7 @@ namespace VieweD
                 if (File.Exists(Path.Combine(res, DefaultDllName)))
                     return res;
             }
-            catch (Exception ex)
+            catch
             {
                 // Ignore
             }
@@ -235,7 +235,7 @@ namespace VieweD
                 closeFixTimer.Enabled = true;
                 media.ResetMedia();
             }
-            catch (Exception ex)
+            catch
             {
                 // Do nothing
             }
@@ -254,7 +254,7 @@ namespace VieweD
                     tb.Minimum = 0;
                 });
             }
-            catch (Exception ex)
+            catch
             {
                 // Do nothing
             }
@@ -304,7 +304,7 @@ namespace VieweD
                     lVideoSpeed.Text = "x" + media.VlcMediaPlayer.Rate.ToString();
                 });
             }
-            catch (Exception ex)
+            catch
             {
                 // Do nothing
             }
@@ -419,7 +419,7 @@ namespace VieweD
                     btnPlay.ImageIndex = 1;
                 });
             }
-            catch (Exception ex)
+            catch 
             {
                 // Do nothing
             }
@@ -538,7 +538,7 @@ namespace VieweD
             {
                 Invoke((MethodInvoker)Close);
             }
-            catch (Exception ex)
+            catch 
             {
                 // Do nothing
             }
