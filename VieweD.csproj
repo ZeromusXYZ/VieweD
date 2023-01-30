@@ -540,6 +540,11 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\cone_altglass_2_x48.png" />
+    <None Include="Resources\7zip_x64.png" />
+    <None Include="Resources\github-mark.png" />
+    <None Include="Resources\discord_x32.png" />
+    <None Include="Resources\kofi_p_logo_nolabel_x32.png" />
     <None Include="Original-Resources\icons\icon_explore.ico" />
     <None Include="Original-Resources\icons\found-it!.ico" />
     <None Include="viewedsetup.nsi">

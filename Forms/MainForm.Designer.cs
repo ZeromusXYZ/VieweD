@@ -29,18 +29,13 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.MM = new System.Windows.Forms.MenuStrip();
             this.mmFile = new System.Windows.Forms.ToolStripMenuItem();
-            this.mmFileOpen = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.mmFileAppend = new System.Windows.Forms.ToolStripMenuItem();
-            this.mmFileAddFromClipboard = new System.Windows.Forms.ToolStripMenuItem();
-            this.mmFilePasteNew = new System.Windows.Forms.ToolStripMenuItem();
             this.mmFileS2 = new System.Windows.Forms.ToolStripSeparator();
             this.mmFileProjectDetails = new System.Windows.Forms.ToolStripMenuItem();
-            this.mmFileClose = new System.Windows.Forms.ToolStripMenuItem();
             this.mmFileS1 = new System.Windows.Forms.ToolStripSeparator();
             this.mmFileSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.mmFileS3 = new System.Windows.Forms.ToolStripSeparator();
@@ -57,19 +52,12 @@
             this.mmFilterEdit = new System.Windows.Forms.ToolStripMenuItem();
             this.mmFilterReset = new System.Windows.Forms.ToolStripMenuItem();
             this.mmExtra = new System.Windows.Forms.ToolStripMenuItem();
-            this.mmVideoOpenLink = new System.Windows.Forms.ToolStripMenuItem();
-            this.MMExtraGameView = new System.Windows.Forms.ToolStripMenuItem();
             this.MMExtraN1 = new System.Windows.Forms.ToolStripSeparator();
             this.MMExtraUpdateParser = new System.Windows.Forms.ToolStripMenuItem();
             this.mmExtraExportPacketsAsCSV = new System.Windows.Forms.ToolStripMenuItem();
             this.mmTools = new System.Windows.Forms.ToolStripMenuItem();
             this.mmAbout = new System.Windows.Forms.ToolStripMenuItem();
-            this.mmAboutGithub = new System.Windows.Forms.ToolStripMenuItem();
-            this.mmAboutDiscord = new System.Windows.Forms.ToolStripMenuItem();
             this.MMAboutN1 = new System.Windows.Forms.ToolStripSeparator();
-            this.MMAbout7Zip = new System.Windows.Forms.ToolStripMenuItem();
-            this.MMAbout7ZipMain = new System.Windows.Forms.ToolStripMenuItem();
-            this.MMAbout7ZipDownload = new System.Windows.Forms.ToolStripMenuItem();
             this.mmAboutVideoLAN = new System.Windows.Forms.ToolStripMenuItem();
             this.MMAboutN2 = new System.Windows.Forms.ToolStripSeparator();
             this.mmAboutAbout = new System.Windows.Forms.ToolStripMenuItem();
@@ -108,7 +96,19 @@
             this.sbProjectInfo = new System.Windows.Forms.ToolStripStatusLabel();
             this.sbRules = new System.Windows.Forms.ToolStripStatusLabel();
             this.saveCSVFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.mmFileOpen = new System.Windows.Forms.ToolStripMenuItem();
+            this.mmFileAppend = new System.Windows.Forms.ToolStripMenuItem();
+            this.mmFileAddFromClipboard = new System.Windows.Forms.ToolStripMenuItem();
+            this.mmFilePasteNew = new System.Windows.Forms.ToolStripMenuItem();
+            this.mmFileClose = new System.Windows.Forms.ToolStripMenuItem();
+            this.mmVideoOpenLink = new System.Windows.Forms.ToolStripMenuItem();
+            this.MMExtraGameView = new System.Windows.Forms.ToolStripMenuItem();
+            this.mmAboutGithub = new System.Windows.Forms.ToolStripMenuItem();
+            this.mmAboutDiscord = new System.Windows.Forms.ToolStripMenuItem();
             this.mmAboutKofi = new System.Windows.Forms.ToolStripMenuItem();
+            this.MMAbout7Zip = new System.Windows.Forms.ToolStripMenuItem();
+            this.MMAbout7ZipMain = new System.Windows.Forms.ToolStripMenuItem();
+            this.MMAbout7ZipDownload = new System.Windows.Forms.ToolStripMenuItem();
             this.MM.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -167,92 +167,46 @@
             this.mmFile.Text = "Fil&e";
             this.mmFile.Click += new System.EventHandler(this.MmFile_Click);
             // 
-            // mmFileOpen
-            // 
-            this.mmFileOpen.Image = global::VieweD.Properties.Resources.Fairytale_fileopen;
-            this.mmFileOpen.Name = "mmFileOpen";
-            this.mmFileOpen.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.O)));
-            this.mmFileOpen.Size = new System.Drawing.Size(249, 24);
-            this.mmFileOpen.Text = "Open ...";
-            this.mmFileOpen.Click += new System.EventHandler(this.mmFileOpen_Click);
-            // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(246, 6);
-            // 
-            // mmFileAppend
-            // 
-            this.mmFileAppend.Image = global::VieweD.Properties.Resources.Fairytale_filenew3;
-            this.mmFileAppend.Name = "mmFileAppend";
-            this.mmFileAppend.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.O)));
-            this.mmFileAppend.Size = new System.Drawing.Size(249, 24);
-            this.mmFileAppend.Text = "Append Log ...";
-            this.mmFileAppend.Click += new System.EventHandler(this.mmFileAppend_Click);
-            // 
-            // mmFileAddFromClipboard
-            // 
-            this.mmFileAddFromClipboard.Image = global::VieweD.Properties.Resources.Fairytale_editcopy;
-            this.mmFileAddFromClipboard.Name = "mmFileAddFromClipboard";
-            this.mmFileAddFromClipboard.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.V)));
-            this.mmFileAddFromClipboard.Size = new System.Drawing.Size(249, 24);
-            this.mmFileAddFromClipboard.Text = "Add from clipboard";
-            this.mmFileAddFromClipboard.Click += new System.EventHandler(this.MmAddFromClipboard_Click);
-            // 
-            // mmFilePasteNew
-            // 
-            this.mmFilePasteNew.Image = global::VieweD.Properties.Resources.Fairytale_filenew2;
-            this.mmFilePasteNew.Name = "mmFilePasteNew";
-            this.mmFilePasteNew.Size = new System.Drawing.Size(249, 24);
-            this.mmFilePasteNew.Text = "New Tab from Clipboard";
-            this.mmFilePasteNew.Click += new System.EventHandler(this.MmFilePasteNew_Click);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(244, 6);
             // 
             // mmFileS2
             // 
             this.mmFileS2.Name = "mmFileS2";
-            this.mmFileS2.Size = new System.Drawing.Size(246, 6);
+            this.mmFileS2.Size = new System.Drawing.Size(244, 6);
             // 
             // mmFileProjectDetails
             // 
             this.mmFileProjectDetails.Name = "mmFileProjectDetails";
             this.mmFileProjectDetails.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.I)));
-            this.mmFileProjectDetails.Size = new System.Drawing.Size(249, 24);
+            this.mmFileProjectDetails.Size = new System.Drawing.Size(247, 22);
             this.mmFileProjectDetails.Text = "Project details ...";
             this.mmFileProjectDetails.Click += new System.EventHandler(this.MMFileProjectDetails_Click);
-            // 
-            // mmFileClose
-            // 
-            this.mmFileClose.Image = global::VieweD.Properties.Resources.Fairytale_button_cancel;
-            this.mmFileClose.Name = "mmFileClose";
-            this.mmFileClose.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.W)));
-            this.mmFileClose.Size = new System.Drawing.Size(249, 24);
-            this.mmFileClose.Text = "Close";
-            this.mmFileClose.Click += new System.EventHandler(this.mmFileClose_Click);
             // 
             // mmFileS1
             // 
             this.mmFileS1.Name = "mmFileS1";
-            this.mmFileS1.Size = new System.Drawing.Size(246, 6);
+            this.mmFileS1.Size = new System.Drawing.Size(244, 6);
             // 
             // mmFileSettings
             // 
             this.mmFileSettings.Name = "mmFileSettings";
-            this.mmFileSettings.Size = new System.Drawing.Size(249, 24);
+            this.mmFileSettings.Size = new System.Drawing.Size(247, 22);
             this.mmFileSettings.Text = "Program settings ...";
             this.mmFileSettings.Click += new System.EventHandler(this.mmFileSettings_Click);
             // 
             // mmFileS3
             // 
             this.mmFileS3.Name = "mmFileS3";
-            this.mmFileS3.Size = new System.Drawing.Size(246, 6);
+            this.mmFileS3.Size = new System.Drawing.Size(244, 6);
             // 
             // mmFileExit
             // 
             this.mmFileExit.Name = "mmFileExit";
             this.mmFileExit.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this.mmFileExit.Size = new System.Drawing.Size(249, 24);
+            this.mmFileExit.Size = new System.Drawing.Size(247, 22);
             this.mmFileExit.Text = "E&xit";
             this.mmFileExit.Click += new System.EventHandler(this.mmFileExit_Click);
             // 
@@ -357,33 +311,15 @@
             this.mmExtra.Size = new System.Drawing.Size(45, 20);
             this.mmExtra.Text = "E&xtra";
             // 
-            // mmVideoOpenLink
-            // 
-            this.mmVideoOpenLink.Image = global::VieweD.Properties.Resources.mini_video_icon;
-            this.mmVideoOpenLink.Name = "mmVideoOpenLink";
-            this.mmVideoOpenLink.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.L)));
-            this.mmVideoOpenLink.Size = new System.Drawing.Size(280, 24);
-            this.mmVideoOpenLink.Text = "Video link ...";
-            this.mmVideoOpenLink.Click += new System.EventHandler(this.MmVideoOpenLink_Click);
-            // 
-            // MMExtraGameView
-            // 
-            this.MMExtraGameView.Image = global::VieweD.Properties.Resources.mini_unk_ticon;
-            this.MMExtraGameView.Name = "MMExtraGameView";
-            this.MMExtraGameView.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.I)));
-            this.MMExtraGameView.Size = new System.Drawing.Size(280, 24);
-            this.MMExtraGameView.Text = "View Game Info ...";
-            this.MMExtraGameView.Click += new System.EventHandler(this.MMExtraGameView_Click);
-            // 
             // MMExtraN1
             // 
             this.MMExtraN1.Name = "MMExtraN1";
-            this.MMExtraN1.Size = new System.Drawing.Size(277, 6);
+            this.MMExtraN1.Size = new System.Drawing.Size(275, 6);
             // 
             // MMExtraUpdateParser
             // 
             this.MMExtraUpdateParser.Name = "MMExtraUpdateParser";
-            this.MMExtraUpdateParser.Size = new System.Drawing.Size(280, 24);
+            this.MMExtraUpdateParser.Size = new System.Drawing.Size(278, 22);
             this.MMExtraUpdateParser.Text = "Download parser updates from GitHub";
             this.MMExtraUpdateParser.Visible = false;
             this.MMExtraUpdateParser.Click += new System.EventHandler(this.MMExtraUpdateParser_Click);
@@ -391,7 +327,7 @@
             // mmExtraExportPacketsAsCSV
             // 
             this.mmExtraExportPacketsAsCSV.Name = "mmExtraExportPacketsAsCSV";
-            this.mmExtraExportPacketsAsCSV.Size = new System.Drawing.Size(280, 24);
+            this.mmExtraExportPacketsAsCSV.Size = new System.Drawing.Size(278, 22);
             this.mmExtraExportPacketsAsCSV.Text = "Export packets tab as CSV";
             this.mmExtraExportPacketsAsCSV.Click += new System.EventHandler(this.mmExtraExportPacketsAsCSV_Click);
             // 
@@ -418,64 +354,28 @@
             this.mmAbout.Size = new System.Drawing.Size(52, 20);
             this.mmAbout.Text = "&About";
             // 
-            // mmAboutGithub
-            // 
-            this.mmAboutGithub.Name = "mmAboutGithub";
-            this.mmAboutGithub.Size = new System.Drawing.Size(197, 22);
-            this.mmAboutGithub.Text = "Open source on Github";
-            this.mmAboutGithub.Click += new System.EventHandler(this.mmAboutGithub_Click);
-            // 
-            // mmAboutDiscord
-            // 
-            this.mmAboutDiscord.Name = "mmAboutDiscord";
-            this.mmAboutDiscord.Size = new System.Drawing.Size(197, 22);
-            this.mmAboutDiscord.Text = "Join Discord";
-            this.mmAboutDiscord.Click += new System.EventHandler(this.MmAboutDiscord_Click);
-            // 
             // MMAboutN1
             // 
             this.MMAboutN1.Name = "MMAboutN1";
-            this.MMAboutN1.Size = new System.Drawing.Size(194, 6);
-            // 
-            // MMAbout7Zip
-            // 
-            this.MMAbout7Zip.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.MMAbout7ZipMain,
-            this.MMAbout7ZipDownload});
-            this.MMAbout7Zip.Name = "MMAbout7Zip";
-            this.MMAbout7Zip.Size = new System.Drawing.Size(197, 22);
-            this.MMAbout7Zip.Text = "Visit 7-zip site";
-            // 
-            // MMAbout7ZipMain
-            // 
-            this.MMAbout7ZipMain.Name = "MMAbout7ZipMain";
-            this.MMAbout7ZipMain.Size = new System.Drawing.Size(222, 22);
-            this.MMAbout7ZipMain.Text = "Main site";
-            this.MMAbout7ZipMain.Click += new System.EventHandler(this.MMAbout7ZipMain_Click);
-            // 
-            // MMAbout7ZipDownload
-            // 
-            this.MMAbout7ZipDownload.Name = "MMAbout7ZipDownload";
-            this.MMAbout7ZipDownload.Size = new System.Drawing.Size(222, 22);
-            this.MMAbout7ZipDownload.Text = "Goto V18.05 download page";
-            this.MMAbout7ZipDownload.Click += new System.EventHandler(this.MMAbout7ZipDownload_Click);
+            this.MMAboutN1.Size = new System.Drawing.Size(196, 6);
             // 
             // mmAboutVideoLAN
             // 
+            this.mmAboutVideoLAN.Image = global::VieweD.Properties.Resources.cone_altglass_2_x48;
             this.mmAboutVideoLAN.Name = "mmAboutVideoLAN";
-            this.mmAboutVideoLAN.Size = new System.Drawing.Size(197, 22);
+            this.mmAboutVideoLAN.Size = new System.Drawing.Size(199, 24);
             this.mmAboutVideoLAN.Text = "Visit VideoLAN VLC site";
             this.mmAboutVideoLAN.Click += new System.EventHandler(this.mmAboutVideoLAN_Click);
             // 
             // MMAboutN2
             // 
             this.MMAboutN2.Name = "MMAboutN2";
-            this.MMAboutN2.Size = new System.Drawing.Size(194, 6);
+            this.MMAboutN2.Size = new System.Drawing.Size(196, 6);
             // 
             // mmAboutAbout
             // 
             this.mmAboutAbout.Name = "mmAboutAbout";
-            this.mmAboutAbout.Size = new System.Drawing.Size(197, 22);
+            this.mmAboutAbout.Size = new System.Drawing.Size(199, 24);
             this.mmAboutAbout.Text = "About ...";
             this.mmAboutAbout.Click += new System.EventHandler(this.mmAboutAbout_Click);
             // 
@@ -661,11 +561,11 @@
             // 
             this.dGV.AllowUserToAddRows = false;
             this.dGV.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            this.dGV.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            this.dGV.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dGV.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -863,12 +763,117 @@
             this.saveCSVFileDialog.RestoreDirectory = true;
             this.saveCSVFileDialog.Title = "Export CSV File";
             // 
+            // mmFileOpen
+            // 
+            this.mmFileOpen.Image = global::VieweD.Properties.Resources.Fairytale_fileopen;
+            this.mmFileOpen.Name = "mmFileOpen";
+            this.mmFileOpen.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.O)));
+            this.mmFileOpen.Size = new System.Drawing.Size(247, 22);
+            this.mmFileOpen.Text = "Open ...";
+            this.mmFileOpen.Click += new System.EventHandler(this.mmFileOpen_Click);
+            // 
+            // mmFileAppend
+            // 
+            this.mmFileAppend.Image = global::VieweD.Properties.Resources.Fairytale_filenew3;
+            this.mmFileAppend.Name = "mmFileAppend";
+            this.mmFileAppend.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.O)));
+            this.mmFileAppend.Size = new System.Drawing.Size(247, 22);
+            this.mmFileAppend.Text = "Append Log ...";
+            this.mmFileAppend.Click += new System.EventHandler(this.mmFileAppend_Click);
+            // 
+            // mmFileAddFromClipboard
+            // 
+            this.mmFileAddFromClipboard.Image = global::VieweD.Properties.Resources.Fairytale_editcopy;
+            this.mmFileAddFromClipboard.Name = "mmFileAddFromClipboard";
+            this.mmFileAddFromClipboard.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.V)));
+            this.mmFileAddFromClipboard.Size = new System.Drawing.Size(247, 22);
+            this.mmFileAddFromClipboard.Text = "Add from clipboard";
+            this.mmFileAddFromClipboard.Click += new System.EventHandler(this.MmAddFromClipboard_Click);
+            // 
+            // mmFilePasteNew
+            // 
+            this.mmFilePasteNew.Image = global::VieweD.Properties.Resources.Fairytale_filenew2;
+            this.mmFilePasteNew.Name = "mmFilePasteNew";
+            this.mmFilePasteNew.Size = new System.Drawing.Size(247, 22);
+            this.mmFilePasteNew.Text = "New Tab from Clipboard";
+            this.mmFilePasteNew.Click += new System.EventHandler(this.MmFilePasteNew_Click);
+            // 
+            // mmFileClose
+            // 
+            this.mmFileClose.Image = global::VieweD.Properties.Resources.Fairytale_button_cancel;
+            this.mmFileClose.Name = "mmFileClose";
+            this.mmFileClose.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.W)));
+            this.mmFileClose.Size = new System.Drawing.Size(247, 22);
+            this.mmFileClose.Text = "Close";
+            this.mmFileClose.Click += new System.EventHandler(this.mmFileClose_Click);
+            // 
+            // mmVideoOpenLink
+            // 
+            this.mmVideoOpenLink.Image = global::VieweD.Properties.Resources.mini_video_icon;
+            this.mmVideoOpenLink.Name = "mmVideoOpenLink";
+            this.mmVideoOpenLink.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.L)));
+            this.mmVideoOpenLink.Size = new System.Drawing.Size(278, 22);
+            this.mmVideoOpenLink.Text = "Video link ...";
+            this.mmVideoOpenLink.Click += new System.EventHandler(this.MmVideoOpenLink_Click);
+            // 
+            // MMExtraGameView
+            // 
+            this.MMExtraGameView.Image = global::VieweD.Properties.Resources.mini_unk_ticon;
+            this.MMExtraGameView.Name = "MMExtraGameView";
+            this.MMExtraGameView.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.I)));
+            this.MMExtraGameView.Size = new System.Drawing.Size(278, 22);
+            this.MMExtraGameView.Text = "View Game Info ...";
+            this.MMExtraGameView.Click += new System.EventHandler(this.MMExtraGameView_Click);
+            // 
+            // mmAboutGithub
+            // 
+            this.mmAboutGithub.Image = global::VieweD.Properties.Resources.github_mark;
+            this.mmAboutGithub.Name = "mmAboutGithub";
+            this.mmAboutGithub.Size = new System.Drawing.Size(199, 24);
+            this.mmAboutGithub.Text = "Open source on Github";
+            this.mmAboutGithub.Click += new System.EventHandler(this.mmAboutGithub_Click);
+            // 
+            // mmAboutDiscord
+            // 
+            this.mmAboutDiscord.Image = global::VieweD.Properties.Resources.discord_x32;
+            this.mmAboutDiscord.Name = "mmAboutDiscord";
+            this.mmAboutDiscord.Size = new System.Drawing.Size(199, 24);
+            this.mmAboutDiscord.Text = "Join Discord";
+            this.mmAboutDiscord.Click += new System.EventHandler(this.MmAboutDiscord_Click);
+            // 
             // mmAboutKofi
             // 
+            this.mmAboutKofi.Image = global::VieweD.Properties.Resources.kofi_p_logo_nolabel_x32;
             this.mmAboutKofi.Name = "mmAboutKofi";
-            this.mmAboutKofi.Size = new System.Drawing.Size(197, 22);
+            this.mmAboutKofi.Size = new System.Drawing.Size(199, 24);
             this.mmAboutKofi.Text = "Buy me a coffee";
             this.mmAboutKofi.Click += new System.EventHandler(this.mmAboutKofi_Click);
+            // 
+            // MMAbout7Zip
+            // 
+            this.MMAbout7Zip.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MMAbout7ZipMain,
+            this.MMAbout7ZipDownload});
+            this.MMAbout7Zip.Image = global::VieweD.Properties.Resources._7zip_x64;
+            this.MMAbout7Zip.Name = "MMAbout7Zip";
+            this.MMAbout7Zip.Size = new System.Drawing.Size(199, 24);
+            this.MMAbout7Zip.Text = "Visit 7-zip site";
+            // 
+            // MMAbout7ZipMain
+            // 
+            this.MMAbout7ZipMain.Name = "MMAbout7ZipMain";
+            this.MMAbout7ZipMain.Size = new System.Drawing.Size(222, 22);
+            this.MMAbout7ZipMain.Text = "Main site";
+            this.MMAbout7ZipMain.Click += new System.EventHandler(this.MMAbout7ZipMain_Click);
+            // 
+            // MMAbout7ZipDownload
+            // 
+            this.MMAbout7ZipDownload.Name = "MMAbout7ZipDownload";
+            this.MMAbout7ZipDownload.Size = new System.Drawing.Size(222, 22);
+            this.MMAbout7ZipDownload.Text = "Goto V18.05 download page";
+            this.MMAbout7ZipDownload.Click += new System.EventHandler(this.MMAbout7ZipDownload_Click);
             // 
             // MainForm
             // 

@@ -63,6 +63,16 @@ namespace VieweD.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap _7zip_x64 {
+            get {
+                object obj = ResourceManager.GetObject("_7zip_x64", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap add_icon {
             get {
                 object obj = ResourceManager.GetObject("add_icon", resourceCulture);
@@ -86,6 +96,26 @@ namespace VieweD.Properties {
         public static System.Drawing.Bitmap close_icon {
             get {
                 object obj = ResourceManager.GetObject("close_icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap cone_altglass_2_x48 {
+            get {
+                object obj = ResourceManager.GetObject("cone_altglass_2_x48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap discord_x32 {
+            get {
+                object obj = ResourceManager.GetObject("discord_x32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -266,6 +296,26 @@ namespace VieweD.Properties {
         public static System.Drawing.Bitmap Fairytale_right_blue {
             get {
                 object obj = ResourceManager.GetObject("Fairytale_right_blue", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap github_mark {
+            get {
+                object obj = ResourceManager.GetObject("github_mark", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap kofi_p_logo_nolabel_x32 {
+            get {
+                object obj = ResourceManager.GetObject("kofi_p_logo_nolabel_x32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
