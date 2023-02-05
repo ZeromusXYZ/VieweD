@@ -107,9 +107,9 @@ namespace VieweD.Engine.Common
                         }
                     }
                 }
-                catch (Exception x)
+                catch (Exception ex)
                 {
-                    AllLoadErrors += $"\n\r\n\rException loading {fileName} at line {lineNumber} :\n\r{x.Message}\r\n=> {line}";
+                    AllLoadErrors += $"\n\r\n\rException loading {fileName} at line {lineNumber} :\n\r{ex.Message}\r\n=> {line}";
                     return false;
                 }
             }

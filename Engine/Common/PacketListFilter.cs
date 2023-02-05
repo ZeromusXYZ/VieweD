@@ -152,9 +152,9 @@ namespace VieweD.Engine.Common
                 }
 
             }
-            catch (Exception x)
+            catch (Exception ex)
             {
-                MessageBox.Show(@"Failed to load " + filename + "\r\nException: " + x.Message, @"Load Filter Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(@"Failed to load " + filename + "\r\nException: " + ex.Message, @"Load Filter Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
             return true;
@@ -220,9 +220,9 @@ namespace VieweD.Engine.Common
             {
                 File.WriteAllLines(filename, sl);
             }
-            catch (Exception x)
+            catch (Exception ex)
             {
-                MessageBox.Show(@"Failed to save " + filename + "\r\nException: " + x.Message, @"Save Filter Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(@"Failed to save " + filename + "\r\nException: " + ex.Message, @"Save Filter Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
             return true;

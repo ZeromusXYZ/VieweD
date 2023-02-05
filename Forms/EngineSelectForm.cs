@@ -40,6 +40,11 @@ namespace VieweD.Forms
             cbEnginesList.SelectedIndex = cbEnginesList.Items.Count - 1;
         }
 
+        /// <summary>
+        /// Opens a form to select a engine from all registered engines
+        /// </summary>
+        /// <param name="appendOnly">If true, only lists engines that support appending of data</param>
+        /// <returns>Returns selected engine, or null if nothing was selected</returns>
         public static EngineBase SelectEngine(bool appendOnly)
         {
             using (var thisForm = new EngineSelectForm())

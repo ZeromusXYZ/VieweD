@@ -57,6 +57,12 @@ namespace VieweD.Engine.Common
         public virtual List<string> ToolNamesList { get; protected set; } = new List<string>();
 
         /// <summary>
+        /// This List can be used to return error messages back to the main program
+        /// For example, if a file fails to load, it will display this
+        /// </summary>
+        public List<string> ErrorMessages { get; protected set; } = new List<string>();
+
+        /// <summary>
         /// Name of a currently running Tool while it's parsing the packets
         /// </summary>
         public string CurrentRunningToolName { get; set; } = string.Empty;
@@ -104,7 +110,12 @@ namespace VieweD.Engine.Common
             res = res.Replace(DepthSpacerHorizontalBottom, "");
             res = res.Trim();
             return res;
-        }        
+        }
+
+        /// <summary>
+        /// Mapping to use to convert a target port number to a StreamId used by the parsers
+        /// </summary>
+        public Dictionary<ushort, byte> PortToStreamIdMapping = new Dictionary<ushort, byte>();
 
         /// <summary>
         /// Base creator, only used when adding loading/parsing the engines
@@ -251,7 +262,6 @@ namespace VieweD.Engine.Common
 
         public virtual bool LoadFromStream(PacketList packetList, Stream fileStream, string sourceFileName, string rulesFileName, string decryptVersion)
         {
-
             return false;
         }
 
@@ -307,6 +317,27 @@ namespace VieweD.Engine.Common
         public virtual string GetDefaultNewPacketRuleNodeContents(PacketFilterListEntry packetId)
         {
             return "<!-- New Packet -->";
+        }
+
+        /// <summary>
+        /// Get the rules' stream id based on a port number
+        /// </summary>
+        /// <param name="port"></param>
+        /// <param name="defaultValue"></param>
+        /// <returns></returns>
+        public byte GetExpectedStreamIdByPort(ushort port, byte defaultValue)
+        {
+            return PortToStreamIdMapping.TryGetValue(port, out var id) ? id : defaultValue;
+        }
+
+        /// <summary>
+        /// Makes sure that a port is a valid option, adds it at the end if not yet registered
+        /// </summary>
+        /// <param name="port"></param>
+        public void RegisterPort(ushort port)
+        {
+            if (!PortToStreamIdMapping.TryGetValue(port, out _))
+                PortToStreamIdMapping.Add(port, (byte)PortToStreamIdMapping.Count);
         }
     }
 }

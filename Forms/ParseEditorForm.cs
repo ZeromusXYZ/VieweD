@@ -231,9 +231,9 @@ namespace VieweD
                     LoadedRule.Build();
                     dontReloadParser = false; // need a reload when adding a new one
                 }
-                catch (Exception x)
+                catch (Exception ex)
                 {
-                    MessageBox.Show("Exception: " + x.Message, "Error in rule", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Exception: " + ex.Message, "Error in rule", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     LoadedRule.RootNode.InnerXml = OldRuleXml;
                     LoadedRule.Build();
                     return;

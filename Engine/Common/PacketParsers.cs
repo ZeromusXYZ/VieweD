@@ -163,62 +163,76 @@ namespace VieweD.Engine.Common
             return PD.Parent.ParentTab.Engine.DataLookups.NLU(lookupName,evalString).GetValue(value) + " <= ";
         }
 
-        public void ToGridView(DataGridView DGV)
+        public void ToGridView(DataGridView dataGridView)
         {
-            if (DGV.Tag != null)
+            if (dataGridView.Tag != null)
                 return;
-            DGV.SuspendLayout();
-            DGV.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb((int)Math.Round(DGV.DefaultCellStyle.BackColor.R * 0.95), (int)Math.Round(DGV.DefaultCellStyle.BackColor.G * 0.95), (int)Math.Round(DGV.DefaultCellStyle.BackColor.B * 0.95));
 
-            DGV.Tag = 1;
+            // var startTime = DateTime.UtcNow;
+            var oldFocus = dataGridView.Focused;
+            dataGridView.SuspendLayout();
+            dataGridView.Enabled = false;
+            dataGridView.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb((int)Math.Round(dataGridView.DefaultCellStyle.BackColor.R * 0.95), (int)Math.Round(dataGridView.DefaultCellStyle.BackColor.G * 0.95), (int)Math.Round(dataGridView.DefaultCellStyle.BackColor.B * 0.95));
+
+            dataGridView.Tag = 1;
+
             // Header
-            //DGV.Rows.Clear();
-            DGV.ColumnCount = 3;
+            //dataGridView.Rows.Clear();
+            dataGridView.ColumnCount = 3;
 
-            DGV.Columns[ColumnOffset].HeaderText = @"Pos";
-            DGV.Columns[ColumnOffset].Width = 88;
+            dataGridView.Columns[ColumnOffset].HeaderText = @"Pos";
+            dataGridView.Columns[ColumnOffset].Width = 88;
 
-            DGV.Columns[ColumnVar].HeaderText = @"Name";
-            DGV.Columns[ColumnVar].Width = 192;
+            dataGridView.Columns[ColumnVar].HeaderText = @"Name";
+            dataGridView.Columns[ColumnVar].Width = 192;
 
-            DGV.Columns[ColumnData].HeaderText = @"Data";
-            var dataWidth = DGV.Width - DGV.Columns[ColumnOffset].Width - DGV.Columns[ColumnVar].Width - 20;
+            dataGridView.Columns[ColumnData].HeaderText = @"Data";
+            var dataWidth = dataGridView.Width - dataGridView.Columns[ColumnOffset].Width - dataGridView.Columns[ColumnVar].Width - 20;
             if (dataWidth < 128)
                 dataWidth = 128;
-            DGV.Columns[ColumnData].Width = dataWidth;
+            dataGridView.Columns[ColumnData].Width = dataWidth;
 
-
-            //DGV.Columns[columnSize].HeaderText = "Size";
-            //DGV.Columns[columnSize].Width = 32;
+            //dataGridView.Columns[columnSize].HeaderText = "HeaderSize";
+            //dataGridView.Columns[columnSize].Width = 32;
             for(var thisRow = 0;thisRow < ParsedView.Count;thisRow++)
             {
-                if (DGV.RowCount <= thisRow)
-                    DGV.Rows.Add();
+                if (dataGridView.RowCount <= thisRow)
+                    dataGridView.Rows.Add();
                 
                 var pvl = ParsedView[thisRow];
                 var isSearchResult = MainForm.SearchParameters.HasSearchForData() && pvl.MatchesSearch(MainForm.SearchParameters);
 
-                DGV.Rows[thisRow].DefaultCellStyle.BackColor = isSearchResult ? Color.Yellow : SystemColors.Window ;
-                DGV.Rows[thisRow].Cells[ColumnOffset].Value = pvl.Pos;
-                DGV.Rows[thisRow].Cells[ColumnOffset].Style.ForeColor = pvl.FieldColor;
-                DGV.Rows[thisRow].Cells[ColumnOffset].Value = pvl.Pos;
-                DGV.Rows[thisRow].Cells[ColumnOffset].Style.ForeColor = pvl.FieldColor ;
-                DGV.Rows[thisRow].Cells[ColumnVar].Value = pvl.Var;
-                DGV.Rows[thisRow].Cells[ColumnVar].Style.ForeColor = pvl.FieldColor;
-                DGV.Rows[thisRow].Cells[ColumnData].Value = pvl.Data ;
+                dataGridView.Rows[thisRow].DefaultCellStyle.BackColor = isSearchResult ? Color.Yellow : SystemColors.Window ;
+                dataGridView.Rows[thisRow].Cells[ColumnOffset].Value = pvl.Pos;
+                dataGridView.Rows[thisRow].Cells[ColumnOffset].Style.ForeColor = pvl.FieldColor;
+                dataGridView.Rows[thisRow].Cells[ColumnOffset].Value = pvl.Pos;
+                dataGridView.Rows[thisRow].Cells[ColumnOffset].Style.ForeColor = pvl.FieldColor ;
+                dataGridView.Rows[thisRow].Cells[ColumnVar].Value = pvl.Var;
+                dataGridView.Rows[thisRow].Cells[ColumnVar].Style.ForeColor = pvl.FieldColor;
+                dataGridView.Rows[thisRow].Cells[ColumnData].Value = pvl.Data ;
                 // Check if this field is selected 
-                DGV.Rows[thisRow].Selected = SelectedFields.IndexOf(pvl.FieldIndex) >= 0;
-                DGV.Rows[thisRow].Cells[ColumnOffset].ToolTipText = pvl.ExtraInfo;
-                DGV.Rows[thisRow].Cells[ColumnVar].ToolTipText = pvl.ExtraInfo;
-                // DGV.Rows[thisRow].Cells[columnDATA].ToolTipText = pvl.ExtraInfo;
+                dataGridView.Rows[thisRow].Selected = SelectedFields.IndexOf(pvl.FieldIndex) >= 0;
+                dataGridView.Rows[thisRow].Cells[ColumnOffset].ToolTipText = pvl.ExtraInfo;
+                dataGridView.Rows[thisRow].Cells[ColumnVar].ToolTipText = pvl.ExtraInfo;
+                // dataGridView.Rows[thisRow].Cells[columnDATA].ToolTipText = pvl.ExtraInfo;
             }
 
-            while (DGV.Rows.Count > ParsedView.Count)
-                DGV.Rows.RemoveAt(DGV.Rows.Count - 1);
+            // Remove unused rows
+            while (dataGridView.Rows.Count > ParsedView.Count)
+                dataGridView.Rows.RemoveAt(dataGridView.Rows.Count - 1);
 
-            DGV.Tag = null;
-            // DGV.Refresh();
-            DGV.ResumeLayout();
+            dataGridView.Tag = null;
+
+            // dataGridView.Refresh();
+
+            dataGridView.Enabled = true;
+            dataGridView.ResumeLayout();
+
+            if (oldFocus)
+                dataGridView.Focus();
+
+            // var delta = DateTime.UtcNow - startTime;
+            // MainForm.ThisMainForm.sbExtraInfo.Text = delta.ToString();
         }
 
         public void AddParseLineToView(ushort FieldIndex,string POSString, Color POSColor, string VARName, string DATAString,string EXTRAString, ulong DataUInt64)

@@ -36,7 +36,9 @@ namespace VieweD.Engine.Common
                 switch (section?.Name.ToLower())
                 {
                     case "server":
-                        // Ignored
+                        Port = Convert.ToUInt16(XmlHelper.GetAttributeInt(attributes, "port"));
+                        Parent?.ParentTab?.Engine?.RegisterPort(Port);
+                        StreamId = Parent?.ParentTab?.Engine?.GetExpectedStreamIdByPort(Port, 0) ?? StreamId;
                         break;
                     case "decryptor":
                         Decryptor = XmlHelper.GetAttributeString(attributes, "name");
@@ -114,7 +116,7 @@ namespace VieweD.Engine.Common
 
                         var level = Convert.ToByte(XmlHelper.GetAttributeInt(attributes, "level"));
                         var description = XmlHelper.GetAttributeString(attributes, "desc");
-                        var packetRule = reader.ParentTab.Engine.CreatePacketRule(this, this.StreamId, level, pType, description, pNode);
+                        var packetRule = reader.ParentTab.Engine.CreatePacketRule(this, StreamId, level, pType, description, pNode);
                         if (Parent.C2S.ContainsKey(packetRule.LookupKey))
                         {
                             Parent.C2S.Remove(packetRule.LookupKey);

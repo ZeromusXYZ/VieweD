@@ -48,14 +48,17 @@ Section "" ;No components page, name is not important
   ; Program Data
 
   ; Engines Plugin Readme
-  SetOutPath $INSTDIR\Plugins
-  File /r Plugins\readme.txt
+  SetOutPath $INSTDIR\data
+  File data\readme.txt
 
+  ; Default Plugins
   ; FFXI Engine Data
   SetOutPath $INSTDIR\data\ffxi
   File /r data\ffxi\*.*
-  SetOutPath $INSTDIR\Plugins\ffxi
-  File /r Plugins\ffxi\*.*
+
+  ; PCapRaw Engine Data
+  SetOutPath $INSTDIR\data\pcapraw
+  File /r data\pcapraw\*.*
 
   SetOutPath $INSTDIR
   

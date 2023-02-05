@@ -631,20 +631,7 @@ namespace VieweD.Engine.Common
             if (pd == null)
                 return;
 
-            string exportName = "";
-            switch(pd.PacketLogType)
-            {
-                case PacketLogTypes.Incoming:
-                    exportName += "i";
-                    break;
-                case PacketLogTypes.Outgoing:
-                    exportName += "o";
-                    break;
-                default:
-                    exportName += "u";
-                    break;
-            }
-            exportName += pd.PacketLevel.ToString() + "-" + pd.PacketId.ToString("X4");
+            var exportName = pd.GenerateDataExportName();
 
             using (var saveDlg = new SaveFileDialog())
             {
@@ -659,9 +646,9 @@ namespace VieweD.Engine.Common
             {
                 File.WriteAllBytes(exportName,pd.RawBytes.ToArray());
             }
-            catch (Exception x)
+            catch (Exception ex)
             {
-                MessageBox.Show($"Error saving raw packet {exportName}\r\nException: {x.Message}");
+                MessageBox.Show($"Error saving raw packet {exportName}\r\nException: {ex.Message}");
             }
 
         }
@@ -754,9 +741,7 @@ namespace VieweD.Engine.Common
                         continue;
                     }
                     */
-
                 }
-
             }
             catch
             {

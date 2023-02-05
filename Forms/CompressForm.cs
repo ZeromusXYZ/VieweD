@@ -91,9 +91,9 @@ namespace VieweD
                     return false ;
                 }
             }
-            catch // (Exception x)
+            catch // (Exception ex)
             {
-                //MessageBox.Show("Couldn't load 7zip library Exception:\r\n" + x.Message+"\r\n"+dll, "Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //MessageBox.Show("Couldn't load 7zip library Exception:\r\n" + ex.Message+"\r\n"+dll, "Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
         }
@@ -198,9 +198,9 @@ namespace VieweD
                         zipper.ArchiveFormat = OutArchiveFormat.SevenZip;
                         bgwZipper.RunWorkerAsync();
                     }
-                    catch (Exception x)
+                    catch (Exception ex)
                     {
-                        MessageBox.Show("Exception:\r\n" + x.Message, "Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Exception:\r\n" + ex.Message, "Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         DialogResult = DialogResult.Abort;
                     }
                     break;
@@ -257,9 +257,9 @@ namespace VieweD
                             bgwUnZipper.RunWorkerAsync();
                         }
                     }
-                    catch (Exception x)
+                    catch (Exception ex)
                     {
-                        MessageBox.Show("Exception:\r\n" + x.Message, "Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Exception:\r\n" + ex.Message, "Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         DialogResult = DialogResult.Abort;
                     }
                     break;
@@ -318,7 +318,10 @@ namespace VieweD
             {
                 File.Delete(ArchiveFileName);
             }
-            catch { }
+            catch
+            {
+                // Ignore
+            }
             zipper.FileCompressionStarted += new EventHandler<FileNameEventArgs>(FileCompressionStarted);
             zipper.FileCompressionFinished += new EventHandler<EventArgs>(FileCompressionFinished);
             zipper.CompressFileDictionary(FilesToAdd, ArchiveFileName);
@@ -427,9 +430,9 @@ namespace VieweD
                     //}));
                     fs.Close();
                 }
-                catch (Exception x)
+                catch (Exception ex)
                 {
-                    if (MessageBox.Show("Exception extracting file:\r\n"+x+"\r\n"+fd+"\r\nDo you want to continue ?","Exception",MessageBoxButtons.YesNo,MessageBoxIcon.Error) == DialogResult.No)
+                    if (MessageBox.Show("Exception extracting file:\r\n"+ex+"\r\n"+fd+"\r\nDo you want to continue ?","Exception",MessageBoxButtons.YesNo,MessageBoxIcon.Error) == DialogResult.No)
                     {
                         break;
                     }

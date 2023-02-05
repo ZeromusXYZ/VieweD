@@ -98,16 +98,16 @@ namespace VieweD.Engine.Common
 
                 return res;
             }
-            catch (Exception x)
+            catch (Exception ex)
             {
-                if (x is PathTooLongException)
+                if (ex is PathTooLongException)
                 {
                     MessageBox.Show($"This program does not support file paths that are longer than MAX_PATH (260 characters by default)\r\nPlease consider shortening your directory or file names, and try again.",
                         @"Name too long", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 }
                 else
                 {
-                    MessageBox.Show("Exception:\r\n" + x.Message, parentTab?.Engine?.EngineId + @".LoadFromFile()",
+                    MessageBox.Show("Exception:\r\n" + ex.Message, parentTab?.Engine?.EngineId + @".LoadFromFile()",
                         MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 }
 

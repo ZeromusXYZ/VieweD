@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using System.IO;
 using System.Windows.Forms;
 using System.Diagnostics;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using static VieweD.Forms.ProjectInfoForm;
@@ -371,9 +372,9 @@ namespace VieweD.Helpers.System
                     res = true;
                 }
             }
-            catch (Exception x)
+            catch (Exception ex)
             {
-                MessageBox.Show(x.Message, "Download YouTube Exception");
+                MessageBox.Show(ex.Message, "Download YouTube Exception");
             }
             return res;
         }
@@ -412,16 +413,26 @@ namespace VieweD.Helpers.System
                 
                 client.Logout();
             }
-            catch (Exception x)
+            catch (Exception ex)
             {
-                MessageBox.Show(x.Message, "Download MEGA Exception");
+                MessageBox.Show(ex.Message, "Download MEGA Exception");
                 res = string.Empty;
             }
             return res;
         }
 
-    }
+        public static string Base64Encode(string plainText)
+        {
+            var plainTextBytes = Encoding.UTF8.GetBytes(plainText);
+            return Convert.ToBase64String(plainTextBytes);
+        }
 
+        public static string Base64Decode(string base64EncodedData)
+        {
+            var base64EncodedBytes = Convert.FromBase64String(base64EncodedData);
+            return Encoding.UTF8.GetString(base64EncodedBytes);
+        }
+    }
 
     // Might need this later at some point
     // Source: https://gist.github.com/yasirkula/d0ec0c07b138748e5feaecbd93b6223c
@@ -461,7 +472,7 @@ namespace VieweD.Helpers.System
                     return new FileInfo(path);
                 }
             }
-            catch (WebException)
+            catch
             {
                 return null;
             }

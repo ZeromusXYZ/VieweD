@@ -33,11 +33,11 @@ namespace VieweD.Engine
             var allClasses = Assembly.GetExecutingAssembly().GetTypes();
             foreach (var aClass in allClasses)
             {
-                if (aClass.BaseType == typeof(EngineBase))
-                {
-                    var engine = Activator.CreateInstance(aClass) as EngineBase;
-                    RegisterEngine(engine);
-                }
+                if (aClass.BaseType != typeof(EngineBase)) 
+                    continue;
+
+                var engine = Activator.CreateInstance(aClass) as EngineBase;
+                RegisterEngine(engine);
             }
 
             // Load plugin engines
@@ -59,8 +59,8 @@ namespace VieweD.Engine
 
         public static bool CompilePlugins()
         {
-            var appDir = Path.GetDirectoryName(Application.ExecutablePath);
-            var pluginsDir = Path.Combine(appDir, "Plugins");
+            var appDir = Path.GetDirectoryName(Application.ExecutablePath) ?? "";
+            var pluginsDir = Path.Combine(appDir, "data");
             // var oldDirectory = Directory.GetCurrentDirectory();
             var startTime = DateTime.UtcNow;
             using (var loadForm = new LoadingForm())
@@ -91,7 +91,7 @@ namespace VieweD.Engine
 
                 loadForm.pb.Value = 15;
 
-                // Define a tempfile to hold data
+                // Define a temp file to hold data
                 var tempAssemblyFile = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()); // name of temporary DLL/Assembly file
                 MainForm.ThisMainForm.AllUsedTempFiles.Add(tempAssemblyFile);
 

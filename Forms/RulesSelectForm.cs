@@ -41,23 +41,27 @@ namespace VieweD.Forms
             {
                 var def = string.Empty;
                 var lastDispSize = 0;
+                DetectedFiles = new List<string>();
                 try
                 {
                     if (Directory.Exists(defaultRulesPath))
                     {
-                        DetectedFiles = Directory.GetFiles(defaultRulesPath, "*.xml").ToList();
+                        var defFiles = Directory.GetFiles(defaultRulesPath, "*.xml").ToList();
+                        if (defFiles.Count > 0)
+                            DetectedFiles.AddRange(defFiles);
                     }
 
                     if (!string.IsNullOrWhiteSpace(LoadingPacketFileName) && File.Exists(LoadingPacketFileName))
                     {
                         var localPath = Path.GetDirectoryName(LoadingPacketFileName);
                         var localFiles = Directory.GetFiles(localPath, "*.xml", SearchOption.AllDirectories).ToList();
-                        DetectedFiles.AddRange(localFiles);
+                        if (localFiles.Count > 0)
+                            DetectedFiles.AddRange(localFiles);
                     }
                 }
                 catch
                 {
-                    DetectedFiles = new List<string>();
+                    DetectedFiles.Clear();
                 }
 
                 var list = new List<ComboBoxFileListValues>();

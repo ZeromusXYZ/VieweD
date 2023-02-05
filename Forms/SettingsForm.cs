@@ -19,6 +19,7 @@ namespace VieweD
         private void btnOK_Click(object sender, EventArgs e)
         {
             SaveButtonsIntoColorSettings();
+
             Properties.Settings.Default.ExternalParseEditor = cbUseExternalEditor.Checked ;
             Properties.Settings.Default.AutoOpenVideoForm = cbAutoOpenVideoForm.Checked;
             if (rbAutoLoadVideoNever.Checked)
@@ -33,6 +34,7 @@ namespace VieweD
                 Properties.Settings.Default.PacketListStyle = 1;
             if (rbListStyleTransparent.Checked)
                 Properties.Settings.Default.PacketListStyle = 2;
+
             Properties.Settings.Default.PreParseData = cbPreParseData.Checked;
             Properties.Settings.Default.ShowStringHexData = cbShowHexStringData.Checked;
             Properties.Settings.Default.AskCreateNewProjectFile = cbAskNewProject.Checked;
@@ -50,6 +52,8 @@ namespace VieweD
                     engineTab.OnSettingsTabSave();
             }
             
+            PluginSettingsManager.SavePluginSetting();
+
             DialogResult = DialogResult.OK;
         }
 
@@ -60,10 +64,10 @@ namespace VieweD
 
         private void SettingsForm_Load(object sender, EventArgs e)
         {
-            LoadSettingsIntoForm();
+            LoadSettingsIntoForm(false);
         }
 
-        private void LoadSettingsIntoForm()
+        private void LoadSettingsIntoForm(bool pressedDefaultButton)
         {
             // Manual loading
             btnBackIN.BackColor = Properties.Settings.Default.ColBackIN;
@@ -133,9 +137,21 @@ namespace VieweD
             cbShowDebug.Checked = Properties.Settings.Default.ShowDebugInfo;
 
             // Add Engine-specific Tab Pages
-            foreach (var engine in Engines.AllEngines)
+            if (pressedDefaultButton)
             {
-                _ = engine.CreateSettingsTab(tcSettings);
+                foreach (var tp in tcSettings.TabPages)
+                {
+                    if (tp is EngineSettingsTab engineSettingsTab)
+                        engineSettingsTab.OnSettingsResetDefaults();
+                }
+            }
+            else
+            {
+                foreach (var engine in Engines.AllEngines)
+                {
+                    var engineSettingsTab = engine.CreateSettingsTab(tcSettings);
+                    engineSettingsTab.OnSettingsLoaded();
+                }
             }
         }
 
@@ -183,7 +199,7 @@ namespace VieweD
         private void btnDefault_Click(object sender, EventArgs e)
         {
             Properties.Settings.Default.Reset();
-            LoadSettingsIntoForm();
+            LoadSettingsIntoForm(true);
         }
 
         private void btnColorButton_Click(object sender, EventArgs e)

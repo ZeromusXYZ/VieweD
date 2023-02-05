@@ -124,6 +124,18 @@ namespace VieweD.Forms
                 // Try to load engine by file name
                 if (File.Exists(tp.LoadedLogFile))
                     tp.Engine = Engines.GetEngineByFileName(tp.LoadedLogFile);
+                else
+                {
+                    tp.Engine = EngineSelectForm.SelectEngine(false);
+                }
+
+                // Safety check
+                if (tp.Engine == null)
+                {
+                    tp.Engine = new EngineBase(tp);
+                }
+
+                lEngineName.Text = tp.Engine.EngineName ?? "None";
 
                 // Populate decryptors list
                 foreach (var d in tp.Engine.DecryptionHandlerList)
@@ -168,8 +180,15 @@ namespace VieweD.Forms
                 var xmlData = File.ReadAllText(fileName, Encoding.UTF8);
                 var doc = new XmlDocument();
                 doc.Load(new StringReader(xmlData));
-                var testNode = doc.SelectSingleNode("/root/rule/s2c/chunk"); // select something at random that should always be in there
+                /*
+                var testNode = doc.SelectSingleNode("/root/rule/s2c/packet/data"); // select something at random that should always be in there
                 if (testNode?.Attributes?["type"] != null)
+                {
+                    res = true;
+                }
+                */
+                var testNode = doc.SelectSingleNode("/root/rule/s2c"); // select something at random that should always be in there
+                if (testNode != null)
                 {
                     res = true;
                 }

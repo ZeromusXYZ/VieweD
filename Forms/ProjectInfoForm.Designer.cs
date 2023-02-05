@@ -45,6 +45,8 @@
             this.btnDownloadVideo = new System.Windows.Forms.Button();
             this.btnUploadToYoutube = new System.Windows.Forms.Button();
             this.gbLocalFiles = new System.Windows.Forms.GroupBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.cbAADecryptor = new System.Windows.Forms.ComboBox();
             this.btnChangeRules = new System.Windows.Forms.Button();
             this.lRulesFileOK = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
@@ -67,6 +69,8 @@
             this.tcProjectInfo = new System.Windows.Forms.TabControl();
             this.tpMainInfo = new System.Windows.Forms.TabPage();
             this.tlProjectInfo = new System.Windows.Forms.TableLayoutPanel();
+            this.gbEngine = new System.Windows.Forms.GroupBox();
+            this.lEngineName = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tlCommunity = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -74,8 +78,6 @@
             this.label6 = new System.Windows.Forms.Label();
             this.lCurrentArchiveName = new System.Windows.Forms.Label();
             this.bgwDownloads = new System.ComponentModel.BackgroundWorker();
-            this.cbAADecryptor = new System.Windows.Forms.ComboBox();
-            this.label8 = new System.Windows.Forms.Label();
             this.gbLocalFiles.SuspendLayout();
             this.gbOnlineFile.SuspendLayout();
             this.gbProjectInfo.SuspendLayout();
@@ -83,6 +85,7 @@
             this.tcProjectInfo.SuspendLayout();
             this.tpMainInfo.SuspendLayout();
             this.tlProjectInfo.SuspendLayout();
+            this.gbEngine.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tlCommunity.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -259,10 +262,31 @@
             this.gbLocalFiles.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gbLocalFiles.Location = new System.Drawing.Point(3, 3);
             this.gbLocalFiles.Name = "gbLocalFiles";
-            this.gbLocalFiles.Size = new System.Drawing.Size(564, 225);
+            this.gbLocalFiles.Size = new System.Drawing.Size(564, 234);
             this.gbLocalFiles.TabIndex = 15;
             this.gbLocalFiles.TabStop = false;
             this.gbLocalFiles.Text = "Local Files";
+            // 
+            // label8
+            // 
+            this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(207, 197);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(83, 13);
+            this.label8.TabIndex = 25;
+            this.label8.Text = "decryptor to use";
+            // 
+            // cbAADecryptor
+            // 
+            this.cbAADecryptor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbAADecryptor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbAADecryptor.DropDownWidth = 200;
+            this.cbAADecryptor.FormattingEnabled = true;
+            this.cbAADecryptor.Location = new System.Drawing.Point(296, 194);
+            this.cbAADecryptor.Name = "cbAADecryptor";
+            this.cbAADecryptor.Size = new System.Drawing.Size(199, 21);
+            this.cbAADecryptor.TabIndex = 24;
             // 
             // btnChangeRules
             // 
@@ -410,9 +434,9 @@
             this.gbProjectInfo.Controls.Add(this.btnAddTag);
             this.gbProjectInfo.Controls.Add(this.tagContainer);
             this.gbProjectInfo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gbProjectInfo.Location = new System.Drawing.Point(3, 234);
+            this.gbProjectInfo.Location = new System.Drawing.Point(3, 243);
             this.gbProjectInfo.Name = "gbProjectInfo";
-            this.gbProjectInfo.Size = new System.Drawing.Size(564, 148);
+            this.gbProjectInfo.Size = new System.Drawing.Size(564, 96);
             this.gbProjectInfo.TabIndex = 17;
             this.gbProjectInfo.TabStop = false;
             this.gbProjectInfo.Text = "Project Info";
@@ -528,14 +552,36 @@
             this.tlProjectInfo.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tlProjectInfo.Controls.Add(this.gbLocalFiles, 0, 0);
             this.tlProjectInfo.Controls.Add(this.gbProjectInfo, 0, 1);
+            this.tlProjectInfo.Controls.Add(this.gbEngine, 0, 2);
             this.tlProjectInfo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlProjectInfo.Location = new System.Drawing.Point(3, 3);
             this.tlProjectInfo.Name = "tlProjectInfo";
-            this.tlProjectInfo.RowCount = 2;
-            this.tlProjectInfo.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 60F));
-            this.tlProjectInfo.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 40F));
+            this.tlProjectInfo.RowCount = 3;
+            this.tlProjectInfo.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 70F));
+            this.tlProjectInfo.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 30F));
+            this.tlProjectInfo.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 42F));
             this.tlProjectInfo.Size = new System.Drawing.Size(570, 385);
             this.tlProjectInfo.TabIndex = 18;
+            // 
+            // gbEngine
+            // 
+            this.gbEngine.Controls.Add(this.lEngineName);
+            this.gbEngine.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gbEngine.Location = new System.Drawing.Point(3, 345);
+            this.gbEngine.Name = "gbEngine";
+            this.gbEngine.Size = new System.Drawing.Size(564, 37);
+            this.gbEngine.TabIndex = 18;
+            this.gbEngine.TabStop = false;
+            this.gbEngine.Text = "Engine";
+            // 
+            // lEngineName
+            // 
+            this.lEngineName.AutoSize = true;
+            this.lEngineName.Location = new System.Drawing.Point(6, 16);
+            this.lEngineName.Name = "lEngineName";
+            this.lEngineName.Size = new System.Drawing.Size(40, 13);
+            this.lEngineName.TabIndex = 0;
+            this.lEngineName.Text = "Engine";
             // 
             // tabPage2
             // 
@@ -620,27 +666,6 @@
             this.bgwDownloads.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgwDownloads_DoWork);
             this.bgwDownloads.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgwDownloads_RunWorkerCompleted);
             // 
-            // cbAADecryptor
-            // 
-            this.cbAADecryptor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.cbAADecryptor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbAADecryptor.DropDownWidth = 200;
-            this.cbAADecryptor.FormattingEnabled = true;
-            this.cbAADecryptor.Location = new System.Drawing.Point(296, 194);
-            this.cbAADecryptor.Name = "cbAADecryptor";
-            this.cbAADecryptor.Size = new System.Drawing.Size(199, 21);
-            this.cbAADecryptor.TabIndex = 24;
-            // 
-            // label8
-            // 
-            this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(207, 197);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(83, 13);
-            this.label8.TabIndex = 25;
-            this.label8.Text = "decryptor to use";
-            // 
             // ProjectInfoForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -669,6 +694,8 @@
             this.tcProjectInfo.ResumeLayout(false);
             this.tpMainInfo.ResumeLayout(false);
             this.tlProjectInfo.ResumeLayout(false);
+            this.gbEngine.ResumeLayout(false);
+            this.gbEngine.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.tlCommunity.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
@@ -724,5 +751,7 @@
         private System.Windows.Forms.Button btnChangeRules;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.ComboBox cbAADecryptor;
+        private System.Windows.Forms.GroupBox gbEngine;
+        private System.Windows.Forms.Label lEngineName;
     }
 }

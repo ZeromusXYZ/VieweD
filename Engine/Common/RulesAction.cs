@@ -698,9 +698,9 @@ namespace VieweD.Engine.Common
                 {
                     child.RunAction(pp, ref fieldIndex);
                 }
-                catch (Exception x)
+                catch (Exception ex)
                 {
-                    pp.AddParseLineToView(0xFFFF, "A" + child?.GetActionStepName(), Color.Red, "Error at \"" + child?.Node.Name + "\"", "Exception: " + x.Message + " => "+child?.Node.OuterXml, this.Node.Name);
+                    pp.AddParseLineToView(0xFFFF, "A" + child?.GetActionStepName(), Color.Red, "Error at \"" + child?.Node.Name + "\"", "Exception: " + ex.Message + " => "+child?.Node.OuterXml, this.Node.Name);
                     break;
                 }
 
@@ -992,10 +992,10 @@ namespace VieweD.Engine.Common
                     {
                         child.RunAction(pp, ref fieldIndex);
                     }
-                    catch (Exception x)
+                    catch (Exception ex)
                     {
-                        Debug.WriteLine($"{GetActionStepName()} {this.GetType().Name} - Step {i} ({child.Node.Name}) Exception: {x.Message}");
-                        pp.AddParseLineToView(0xFFFF, "A" + child.GetActionStepName(), Color.Red, "Error at \"" + child.Node.Name + "\"", "Exception: " + x.Message + " => " + child.Node.OuterXml, Node.Name);
+                        Debug.WriteLine($"{GetActionStepName()} {this.GetType().Name} - Step {i} ({child.Node.Name}) Exception: {ex.Message}");
+                        pp.AddParseLineToView(0xFFFF, "A" + child.GetActionStepName(), Color.Red, "Error at \"" + child.Node.Name + "\"", "Exception: " + ex.Message + " => " + child.Node.OuterXml, Node.Name);
                         LoopActionResult = LoopActionResult.Break ;
                     }
                     
@@ -1258,10 +1258,10 @@ namespace VieweD.Engine.Common
                 {
                     child.RunAction(pp, ref fieldIndex);
                 }
-                catch (Exception x)
+                catch (Exception ex)
                 {
-                    Debug.WriteLine("{1} {0} - Template Step {2} ({3}) Exception: {4}", this.GetType().Name, GetActionStepName(), i, child.Node.Name, x.Message);
-                    pp.AddParseLineToView(0xFFFF, "A" + child.GetActionStepName(), Color.Red, "Error at \"" + child.Node.Name + "\"", "Exception: " + x.Message + " => " + child.Node.OuterXml, this.Node.Name);
+                    Debug.WriteLine("{1} {0} - Template Step {2} ({3}) Exception: {4}", this.GetType().Name, GetActionStepName(), i, child.Node.Name, ex.Message);
+                    pp.AddParseLineToView(0xFFFF, "A" + child.GetActionStepName(), Color.Red, "Error at \"" + child.Node.Name + "\"", "Exception: " + ex.Message + " => " + child.Node.OuterXml, this.Node.Name);
                     LoopActionResult = LoopActionResult.Break;
                 }
 

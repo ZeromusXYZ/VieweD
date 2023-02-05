@@ -53,14 +53,20 @@ namespace VieweD.Engine.Common
                             break;
                         case "word":
                         case "rword":
+                        case "ushort":
+                        case "rushort":
                             res = new RulesActionReadUInt16(this, parentAction, actionNode, step, isReversed);
                             break;
                         case "h":
                         case "rh":
+                        case "short":
+                        case "rshort":
                             res = new RulesActionReadInt16(this, parentAction, actionNode, step, isReversed);
                             break;
                         case "d":
                         case "rd":
+                        case "uint":
+                        case "ruint":
                             res = new RulesActionReadUInt32(this, parentAction, actionNode, step, isReversed);
                             break;
                         case "ms":
@@ -69,10 +75,14 @@ namespace VieweD.Engine.Common
                             break;
                         case "i":
                         case "ri":
+                        case "int":
+                        case "rint":
                             res = new RulesActionReadInt32(this, parentAction, actionNode, step, isReversed);
                             break;
                         case "f":
                         case "rf":
+                        case "float":
+                        case "rfloat":
                             res = new RulesActionReadSingle(this, parentAction, actionNode, step);
                             break;
                         case "double":
@@ -84,9 +94,12 @@ namespace VieweD.Engine.Common
                             break;
                         case "q":
                         case "rq":
+                        case "uint64":
+                        case "ruint64":
                             res = new RulesActionReadUInt64(this, parentAction, actionNode, step, isReversed);
                             break;
                         case "int64": // not used
+                        case "rint64": // not used
                             res = new RulesActionReadInt64(this, parentAction, actionNode, step, isReversed);
                             break;
                         case "a":
@@ -248,9 +261,9 @@ namespace VieweD.Engine.Common
                 {
                     action.RunAction(packetParser, ref dataFieldIndex);
                 }
-                catch (Exception x)
+                catch (Exception ex)
                 {
-                    packetParser.AddParseLineToView(0xFF, "A" + action?.GetActionStepName(), Color.Red, "Error at \"" + action?.Node.Name + "\"", "Exception: " + x.Message + " => " + action?.Node.OuterXml, this.Name);
+                    packetParser.AddParseLineToView(0xFF, "A" + action?.GetActionStepName(), Color.Red, "Error at \"" + action?.Node.Name + "\"", "Exception: " + ex.Message + " => " + action?.Node.OuterXml, this.Name);
                     break;
                 }
             }

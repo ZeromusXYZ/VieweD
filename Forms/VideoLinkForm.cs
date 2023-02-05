@@ -146,9 +146,9 @@ namespace VieweD
                     res = true;
                 }
             }
-            catch (Exception x)
+            catch (Exception ex)
             {
-                MessageBox.Show(x.Message, "Load YouTube Exception");
+                MessageBox.Show(ex.Message, "Load YouTube Exception");
                 if (sourceTP != null)
                     sourceTP.LinkYoutubeUrl = string.Empty;
             }
@@ -398,12 +398,16 @@ namespace VieweD
                 return;
             try
             {
-                Invoke((MethodInvoker)delegate {
+                Invoke((MethodInvoker)delegate
+                {
                     //btnPlay.Text = "Play";
                     btnPlay.ImageIndex = 0;
                 });
             }
-            catch { }
+            catch
+            {
+                // Do nothing
+            }
         }
 
         private void Media_Playing(object sender, Vlc.DotNet.Core.VlcMediaPlayerPlayingEventArgs e)

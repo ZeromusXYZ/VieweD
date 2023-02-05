@@ -10,6 +10,7 @@ using VieweD.Helpers.System;
 using VieweD.Engine;
 using VieweD.Engine.Common;
 using VieweD.Forms;
+using System.Reflection;
 
 namespace VieweD
 {
@@ -27,6 +28,7 @@ namespace VieweD
         private const string UrlVideoLan = "https://www.videolan.org/";
         private const string Url7Zip = "https://www.7-zip.org/";
         private const string Url7ZipRequiredVer = "https://sourceforge.net/p/sevenzip/discussion/45797/thread/adc65bfa/";
+        private const string UrlWireShark = "https://www.wireshark.org";
 
         public PacketParser CurrentPP { get; set; }
         public static SearchParameters SearchParameters { get; set; }
@@ -88,6 +90,7 @@ namespace VieweD
         private void MainForm_Load(object sender, EventArgs e)
         {
             DefaultTitle = Text;
+            mmVersion.Text = @"Version " + Assembly.GetExecutingAssembly().GetName().Version;
 
             // Handle User settings upgrades when using a newer version
             if (Properties.Settings.Default.DoUpdateSettings)
@@ -98,6 +101,8 @@ namespace VieweD
                 Properties.Settings.Default.DoUpdateSettings = false; // This is setting is true by default, so we reset it when done upgrading
                 Properties.Settings.Default.Save();
             }
+
+            PluginSettingsManager.LoadPluginSetting();
 
             // Create Engines Handler (and load engines)
             Engines.Instance = new Engines();
@@ -117,9 +122,9 @@ namespace VieweD
             {
                 Directory.SetCurrentDirectory(Application.StartupPath);
             }
-            catch (Exception x)
+            catch (Exception ex)
             {
-                MessageBox.Show("Exception: " + x.Message, "Loading Lookup Data", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                MessageBox.Show("Exception: " + ex.Message, "Loading Lookup Data", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 Close();
                 return;
             }
@@ -136,35 +141,37 @@ namespace VieweD
             TryOpenFile(openLogFileDialog.FileName);
         }
 
-        private void TryOpenFile(string aFileName)
+        private bool TryOpenFile(string aFileName)
         {
+            var res = false;
             if ((Path.GetExtension(aFileName).ToLower() == ".pvd") || (Path.GetExtension(aFileName).ToLower() == ".pvlv"))
             {
                 // Open Project File
-                TryOpenProjectFile(aFileName);
+                res = TryOpenProjectFile(aFileName);
             }
             else
             if ((Path.GetExtension(aFileName).ToLower() == ".7z") || (Path.GetExtension(aFileName).ToLower() == ".zip") || (Path.GetExtension(aFileName).ToLower() == ".rar"))
             {
                 // Open Archive as a Project Folder
-                TryOpenProjectArchive(aFileName);
+                res = TryOpenProjectArchive(aFileName);
             }
             else
             {
-                TryOpenLogFile(aFileName, true);
+                res = TryOpenLogFile(aFileName, true);
             }
 
             if (GameViewForm.GV != null)
                 GameViewForm.GV.btnRefreshLookups.PerformClick();
+            return res;
         }
 
-        private void TryOpenProjectArchive(string projectArchive)
+        private bool TryOpenProjectArchive(string projectArchive)
         {
             if (!File.Exists(projectArchive))
-                return;
+                return false;
 
             if (MessageBox.Show($"Do you want to extract this archive file?", "Unpack Archive", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
-                return;
+                return false;
 
             using (var zipForm = new CompressForm())
             {
@@ -176,7 +183,7 @@ namespace VieweD
                 {
                     MessageBox.Show($"Failed to extract files from archive\r\n{projectArchive}", "Unpack Archive",
                         MessageBoxButtons.OK, MessageBoxIcon.Error); 
-                    return;
+                    return false;
                 }
             }
 
@@ -184,16 +191,16 @@ namespace VieweD
             if (!File.Exists(expectedProjectFile))
             {
                 MessageBox.Show($"The Archive got extracted, but didn't find the expected project file\r\n{projectArchive}\r\n\r\nTry to manually open the file.", "Unpack Archive", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-                return;
+                return false;
             }
 
-            TryOpenProjectFile(expectedProjectFile);
+            return TryOpenProjectFile(expectedProjectFile);
         }
 
-        private void TryOpenProjectFile(string ProjectFile)
+        private bool TryOpenProjectFile(string ProjectFile)
         {
             PacketTabPage tp = CreateNewPacketsTabPage();
-            tp.LoadProjectFile(ProjectFile);
+            var res = tp.LoadProjectFile(ProjectFile);
             tp.Text = Helper.MakeTabName(ProjectFile);
 
             using (var projectDlg = new ProjectInfoForm())
@@ -204,7 +211,7 @@ namespace VieweD
                 if (projectDlg.ShowDialog() == DialogResult.OK)
                 {
                     projectDlg.ApplyPacketTapPage();
-                    TryOpenLogFile(tp.LoadedLogFile, false);
+                    res &= TryOpenLogFile(tp.LoadedLogFile, false);
                     tp.SaveProjectFile();
                 }
                 else
@@ -213,9 +220,10 @@ namespace VieweD
                 }
             }
 
+            return res;
         }
 
-        private void TryOpenLogFile(string logFile, bool alsoLoadProject)
+        private bool TryOpenLogFile(string logFile, bool alsoLoadProject)
         {
             PacketTabPage tp;
             if (alsoLoadProject)
@@ -236,16 +244,17 @@ namespace VieweD
             tp.PLLoaded.Filter.Clear();
             if (!tp.PLLoaded.LoadFromFile(logFile,tp))
             {
-                MessageBox.Show("Error loading file: " + logFile, "File Open Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                var errors = string.Join("\n", tp.Engine.ErrorMessages);
+                MessageBox.Show("Error loading file: " + logFile + "\n" + errors, "File Open Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 tp.PLLoaded.Clear();
                 tcPackets.TabPages.Remove(tp);
-                return;
+                return false;
             }
             if (tp.PLLoaded.Count <= 0)
             {
                 MessageBox.Show("File contains no useful data.\n" + logFile, "File Open Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 tcPackets.TabPages.Remove(tp);
-                return;
+                return false;
             }
             Text = DefaultTitle + " - " + logFile;
             tp.LoadedLogFile = logFile;
@@ -258,6 +267,8 @@ namespace VieweD
             {
                 MmVideoOpenLink_Click(null, null);
             }
+
+            return true;
         }
 
         public void lbPackets_SelectedIndexChanged(object sender, EventArgs e)
@@ -781,7 +792,7 @@ namespace VieweD
 
             if (tp.Engine.HasRulesFile)
             {
-                if (File.Exists(tp.PL.Rules.LoadedRulesFileName))
+                if (File.Exists(tp.PL.Rules?.LoadedRulesFileName))
                 {
                     sbRules.Text = "Rules: " + Path.GetFileNameWithoutExtension(tp.PL.Rules.LoadedRulesFileName);
                 }
@@ -790,7 +801,7 @@ namespace VieweD
                     sbRules.Text = "No Rules Loaded";
                 }
                 sbRules.Visible = true;
-                sbRules.ToolTipText = tp.PL.Rules.LoadedRulesFileName;
+                sbRules.ToolTipText = tp.PL.Rules?.LoadedRulesFileName ?? "No rules loaded";
             }
             else
             {
@@ -887,9 +898,9 @@ namespace VieweD
                 tp.FillListBox();
                 UpdateStatusBarAndTitle(tp);
             }
-            catch (Exception x)
+            catch (Exception ex)
             {
-                MessageBox.Show("Paste Failed, Exception: " + x.Message, "Paste from Clipboard", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Paste Failed, Exception: " + ex.Message, "Paste from Clipboard", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
         }
@@ -1238,9 +1249,9 @@ namespace VieweD
                 tp.FillListBox();
                 UpdateStatusBarAndTitle(tp);
             }
-            catch (Exception x)
+            catch (Exception ex)
             {
-                MessageBox.Show(@"Paste Failed, Exception: " + x.Message, @"Paste from Clipboard", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(@"Paste Failed, Exception: " + ex.Message, @"Paste from Clipboard", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
         }
@@ -1280,6 +1291,7 @@ namespace VieweD
             }
             catch
             {
+                // Do nothing
             }
         }
 
@@ -1303,8 +1315,7 @@ namespace VieweD
                     TextRenderer.DrawText(e.Graphics, tabPage.Text, tabPage.Font,
                         tabRect, tabPage.ForeColor, TextFormatFlags.Left);
                 }
-                else
-                if (tabControl.Alignment == TabAlignment.Left)
+                else if (tabControl.Alignment == TabAlignment.Left)
                 {
                     // for tabs to the left
                     e.Graphics.DrawImage(closeImage,
@@ -1314,14 +1325,18 @@ namespace VieweD
                     e.Graphics.TranslateTransform(tabRect.Left + tabRect.Width, tabRect.Bottom);
                     e.Graphics.RotateTransform(-90);
                     var textBrush = new SolidBrush(tabPage.ForeColor);
-                    e.Graphics.DrawString(tabPage.Text, tabPage.Font, textBrush, 0, -tabRect.Width - (tSize.Height / -4), StringFormat.GenericDefault);
+                    e.Graphics.DrawString(tabPage.Text, tabPage.Font, textBrush, 0,
+                        -tabRect.Width - (tSize.Height / -4), StringFormat.GenericDefault);
                 }
                 else
                 {
                     // If you want it on the right as well, you code it >.>
                 }
             }
-            catch (Exception ex) { throw new Exception(ex.Message); }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         private void TcPackets_MouseDown(object sender, MouseEventArgs e)
@@ -1605,11 +1620,11 @@ namespace VieweD
                 videoLink.BringToFront();
                 UpdateStatusBarAndTitle(thisTP);
             }
-            catch (Exception x)
+            catch (Exception ex)
             {
                 if (videoLink != null)
                     videoLink.Dispose();
-                MessageBox.Show("Could not create video link, likely libvlc not correcty installed !\r\n" + x.Message, "Video Link Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Could not create video link, likely libvlc not correcty installed !\r\n" + ex.Message, "Video Link Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Cursor = Cursors.Default;
                 Application.UseWaitCursor = false;
                 return;
@@ -1639,12 +1654,16 @@ namespace VieweD
                     lInfo.Text = "";
                     cbShowBlock.Visible = false;
                 }
+
                 try
                 {
                     if (tp.VideoLink != null)
                         tp.VideoLink.Close();
                 }
-                catch { }
+                catch
+                {
+                    // Do nothing
+                }
 
                 if (tcPackets.TabCount <= 1)
                     Text = DefaultTitle;
@@ -1786,7 +1805,8 @@ namespace VieweD
                     var localDataDir = Path.Combine(Application.StartupPath, "data");
                     var tempFile = Path.GetTempFileName();
 
-                    Helpers.System.FileDownloader.DownloadFileFromURLToPath(Properties.Settings.Default.ParserDataUpdateZipURL, tempFile);
+                    Helpers.System.FileDownloader.DownloadFileFromURLToPath(
+                        Properties.Settings.Default.ParserDataUpdateZipURL, tempFile);
 
                     loadform.lTextInfo.Text = "Unpacking ...";
                     loadform.lTextInfo.Refresh();
@@ -1819,14 +1839,18 @@ namespace VieweD
                             loadform.pb.PerformStep();
                             System.Threading.Thread.Sleep(25);
                         }
-                        catch (Exception x)
+                        catch (Exception ex)
                         {
-                            if (MessageBox.Show("Exception extracting file:\r\n" + x + "\r\n" + fd + "\r\nDo you want to continue ?", "Exception", MessageBoxButtons.YesNo, MessageBoxIcon.Error) == DialogResult.No)
+                            if (MessageBox.Show(
+                                    "Exception extracting file:\r\n" + ex + "\r\n" + fd +
+                                    "\r\nDo you want to continue ?", "Exception", MessageBoxButtons.YesNo,
+                                    MessageBoxIcon.Error) == DialogResult.No)
                             {
                                 break;
                             }
                         }
                     }
+
                     unzipper.Dispose();
                     loadform.pb.Hide();
 
@@ -1836,13 +1860,14 @@ namespace VieweD
                     File.Delete(tempFile);
 
                     MessageBox.Show("Done downloading and unpacking data from \r\n" +
-                        Properties.Settings.Default.ParserDataUpdateZipURL + "\r\n\r\n" +
-                        "Some changes will only be visible after you restart the program.", "Update data", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                    Properties.Settings.Default.ParserDataUpdateZipURL + "\r\n\r\n" +
+                                    "Some changes will only be visible after you restart the program.", "Update data",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
                 }
-                catch (Exception x)
+                catch (Exception ex)
                 {
-                    MessageBox.Show("Exception updating:\r\n" + x.Message, "Update Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Exception updating:\r\n" + ex.Message, "Update Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -1922,6 +1947,11 @@ namespace VieweD
         private void mmAboutKofi_Click(object sender, EventArgs e)
         {
             Process.Start(UrlKofi);
+        }
+
+        private void mmAboutWireshark_Click(object sender, EventArgs e)
+        {
+            Process.Start(UrlWireShark);
         }
     }
 }

@@ -156,5 +156,19 @@ namespace VieweD.Helpers.System
 
             return ulong.TryParse(field, NumberStyles.Integer, CultureInfo.InvariantCulture, out res);
         }
+
+        public static string BytesToHexString(byte[] bytes, string spacer = "")
+        {
+            var res = string.Empty;
+
+            for (int i = 0; i < bytes.Length; i++)
+            {
+                if (res != string.Empty)
+                    res += spacer;
+                res += bytes[i].ToString("X2");
+            }
+
+            return res;
+        }
     }
 }

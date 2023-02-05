@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!-- 
+This is the bare minimum for a rules file.
+For proper usage, you will need to create a plugin engine that does proper packet type/id parsing to be used here
+With the current PCapRaw example, it will always report PacketId (type) 0, and level 0, rules section get selected base on the server Port number
+-->
+<root>
+	<version client=""/>
+	<templates>
+	</templates>
+	<tools>
+	</tools>
+	<rule>
+		<server port="0"/>
+		<decryptor name=""/>
+		<s2c>
+			<packet type="0x00" desc="Data Packet">
+				<data type="uint" name="uint" />
+			</packet>
+		</s2c>
+		<c2s>
+			<packet type="0x00" desc="Data Packet">
+				<data type="uint" name="uint" />
+			</packet>
+		</c2s>
+	</rule>
+</root>

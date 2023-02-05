@@ -118,6 +118,7 @@ namespace VieweD
             }
             catch
             {
+                // Ignore
             }
         }
 

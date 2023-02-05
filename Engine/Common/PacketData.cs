@@ -10,45 +10,139 @@ namespace VieweD.Engine.Common
     // ReSharper disable once ClassNeverInstantiated.Global
     public class PacketData
     {
+        /// <summary>
+        /// Owning PacketList of this PacketData
+        /// </summary>
         public PacketList Parent { get; set; }
+        
         // ReSharper disable once MemberCanBePrivate.Global
         // ReSharper disable once UnusedAutoPropertyAccessor.Global
+        /// <summary>
+        /// Reference tp the original PacketData in case this is a generated one
+        /// </summary>
         public PacketData Creator { get; set; }
+
         // ReSharper disable once CollectionNeverUpdated.Global
+        /// <summary>
+        /// Text as represented by it's source (has no fixed format)
+        /// </summary>
         public List<string> RawText { get; set; }
+        
+        /// <summary>
+        /// HeaderText as shown in the Packet List
+        /// </summary>
         public string HeaderText { get; set; }
+        
+        /// <summary>
+        /// Original Header Text before it was processed, used for some dialogs
+        /// </summary>
         public string OriginalHeaderText { get; set; }
+
+        /// <summary>
+        /// Actual data to parse
+        /// </summary>
         public List<byte> RawBytes { get; set; }
+
+        /// <summary>
+        /// Direction of the data flow
+        /// </summary>
         public PacketLogTypes PacketLogType { get; set; }
+
+        /// <summary>
+        /// Internal Packet Level (used by some engines)
+        /// </summary>
         public byte PacketLevel { get; set; }
+
         // ReSharper disable once UnusedAutoPropertyAccessor.Global
+        /// <summary>
+        /// Original Packet Level before it was processed (used by some engines)
+        /// </summary>
         public byte OriginalPacketLevel { get; set; }
+
+        /// <summary>
+        /// Internal Stream identifier that can be used by Engines.
+        /// Can be used to differentiate between different connections within the same capture file
+        /// </summary>
         public byte StreamId { get; set; }
+
+        /// <summary>
+        /// Internal Packet Id used by the Engine
+        /// </summary>
         public ushort PacketId { get; set; }
-        public ushort PacketDataSize { get; set; }
+
+        /// <summary>
+        /// Size in bytes of the actual data
+        /// </summary>
+        public uint PacketDataSize { get; set; }
+
+        /// <summary>
+        /// Synchronization number that is used to mark packet data as belonging together
+        /// </summary>
         public uint PacketSync { get; set; } // Only UInt16 is used in FFXI
+
+        /// <summary>
+        /// Actual timestamp of the capture data
+        /// </summary>
         public DateTime TimeStamp { get; set; }
+
+        /// <summary>
+        /// Virtualized timestamp that is interpolated for video linking in case there are multiple packets with the same timestamp
+        /// </summary>
         public DateTime VirtualTimeStamp { get; set; }
+
         // ReSharper disable once UnusedAutoPropertyAccessor.Global
         // ReSharper disable once MemberCanBePrivate.Global
+        /// <summary>
+        /// Original String that was parsed from capture data (for text log files)
+        /// </summary>
         public string OriginalTimeString { get; set; }
         // ReSharper disable once UnusedAutoPropertyAccessor.Global
         // ReSharper disable once MemberCanBePrivate.Global
+
+        /// <summary>
+        /// For FFXI: Contains the ZoneId extracted from the previous capture data that is relevant for this packet
+        /// </summary>
         public ushort CapturedZoneId { get; set; }
         // ReSharper disable once UnusedAutoPropertyAccessor.Global
         // ReSharper disable once MemberCanBePrivate.Global
+
+        /// <summary>
+        /// When true, the packet is marked as a failed parse (displays in red)
+        /// </summary>
         public bool MarkedAsInvalid { get; set; }
+
+        /// <summary>
+        /// When true, this packet shows up as dimmed in the packet list (used for filters)
+        /// </summary>
         public bool MarkedAsDimmed { get; set; }
 
         // ReSharper disable once InconsistentNaming
+        /// <summary>
+        /// The Packet Parser object attached to this packet data
+        /// </summary>
         public PacketParser PP;
-        public int Cursor { get => _cursor; set { _cursor = value; BitCursor = 0; } }
-        // ReSharper disable once UnusedAutoPropertyAccessor.Global
-        // ReSharper disable once MemberCanBePrivate.Global
-        public byte BitCursor { get; set; }
 
         private int _cursor;
+        /// <summary>
+        /// Current Byte location within the data
+        /// Settings this will reset BitCursor to zero as well
+        /// </summary>
+        public int Cursor { get => _cursor; set { _cursor = value; BitCursor = 0; } }
 
+        // ReSharper disable once UnusedAutoPropertyAccessor.Global
+        // ReSharper disable once MemberCanBePrivate.Global
+        /// <summary>
+        /// Bit offset relative to the current Cursor byte
+        /// This is used by the Get Bit functions
+        /// </summary>
+        public byte BitCursor { get; set; }
+
+        public bool IsTruncatedByParser { get; set; } = false;
+
+        /// <summary>
+        /// One Packet Data Object
+        /// </summary>
+        /// <param name="parent"></param>
         public PacketData(PacketList parent)
         {
             Parent = parent;
@@ -74,10 +168,16 @@ namespace VieweD.Engine.Common
 
         ~PacketData()
         {
+            // Forcefully clean up some memory
             RawText.Clear();
-            RawBytes = null;
+            RawBytes.Clear();
         }
 
+        /// <summary>
+        /// Add a formatted hex text line as data (generic)
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
         public int AddRawLineAsBytes(string s)
         {
             // Removes spaces and tabs
@@ -119,12 +219,17 @@ namespace VieweD.Engine.Common
             */
         }
 
+        /// <summary>
+        /// Add a formatted hex text line as data (packeteer specific)
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
         public int AddRawPacketeerLineAsBytes(string s)
         {
             /* Example:
             //           1         2         3         4         5         6         7         8         9
             // 0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
-            // [C->S] Id: 001A | Size: 28
+            // [C->S] Id: 001A | HeaderSize: 28
             //     1A 0E ED 24 D5 10 10 01 D5 00 00 00 00 00 00 00  ..í$Õ...Õ.......
             */
 
@@ -157,6 +262,11 @@ namespace VieweD.Engine.Common
             return c;
         }
 
+        /// <summary>
+        /// Add a hex string as data
+        /// </summary>
+        /// <param name="hexData"></param>
+        /// <returns></returns>
         public int AddRawHexStringDataAsBytes(string hexData)
         {
             var res = 0;
@@ -181,6 +291,10 @@ namespace VieweD.Engine.Common
             return res;
         }
 
+        /// <summary>
+        /// Prints a byte array as a formatted string of 16 bytes per line including a header and offset
+        /// </summary>
+        /// <returns></returns>
         public string PrintRawBytesAsHex()
         {
             const int valuesPerRow = 16;
@@ -239,61 +353,79 @@ namespace VieweD.Engine.Common
         }
 
         // ReSharper disable once BuiltInTypeReferenceStyle
-        public ushort GetUInt16AtPos(int pos)
+        public ushort GetUInt16AtPos(int pos, bool reversed = false)
         {
             if (pos > (RawBytes.Count - 2))
                 return 0;
             Cursor = pos + 2;
-            return BitConverter.ToUInt16(RawBytes.GetRange(pos, 2).ToArray(), 0);
+            var bytes = RawBytes.GetRange(pos, 2).ToArray();
+            if (reversed)
+                bytes = bytes.Reverse().ToArray();
+            return BitConverter.ToUInt16(bytes, 0);
         }
 
         // ReSharper disable once BuiltInTypeReferenceStyle
-        public short GetInt16AtPos(int pos)
+        public short GetInt16AtPos(int pos, bool reversed = false)
         {
             if (pos > (RawBytes.Count - 2))
                 return 0;
             Cursor = pos + 2;
-            return BitConverter.ToInt16(RawBytes.GetRange(pos, 2).ToArray(), 0);
+            var bytes = RawBytes.GetRange(pos, 2).ToArray();
+            if (reversed)
+                bytes = bytes.Reverse().ToArray();
+            return BitConverter.ToInt16(bytes, 0);
         }
 
         // ReSharper disable once BuiltInTypeReferenceStyle
-        public uint GetUInt32AtPos(int pos)
+        public uint GetUInt32AtPos(int pos, bool reversed = false)
         {
             if (pos > (RawBytes.Count - 4))
                 return 0;
             Cursor = pos + 4;
-            return BitConverter.ToUInt32(RawBytes.GetRange(pos, 4).ToArray(), 0);
+            var bytes = RawBytes.GetRange(pos, 4).ToArray();
+            if (reversed)
+                bytes = bytes.Reverse().ToArray();
+            return BitConverter.ToUInt32(bytes, 0);
         }
 
         // ReSharper disable once BuiltInTypeReferenceStyle
-        public int GetInt32AtPos(int pos)
+        public int GetInt32AtPos(int pos, bool reversed = false)
         {
             if (pos > (RawBytes.Count - 4))
                 return 0;
             Cursor = pos + 4;
-            return BitConverter.ToInt32(RawBytes.GetRange(pos, 4).ToArray(), 0);
+            var bytes = RawBytes.GetRange(pos, 4).ToArray();
+            if (reversed)
+                bytes = bytes.Reverse().ToArray();
+            return BitConverter.ToInt32(bytes, 0);
         }
 
         // ReSharper disable once BuiltInTypeReferenceStyle
-        public ulong GetUInt64AtPos(int pos)
+        public ulong GetUInt64AtPos(int pos, bool reversed = false)
         {
             if (pos > (RawBytes.Count - 8))
                 return 0;
             Cursor = pos + 8;
-            return BitConverter.ToUInt64(RawBytes.GetRange(pos, 8).ToArray(), 0);
+            var bytes = RawBytes.GetRange(pos, 8).ToArray();
+            if (reversed)
+                bytes = bytes.Reverse().ToArray();
+            return BitConverter.ToUInt64(bytes, 0);
         }
 
         // ReSharper disable once BuiltInTypeReferenceStyle
-        public long GetInt64AtPos(int pos)
+        public long GetInt64AtPos(int pos, bool reversed = false)
         {
             if (pos > (RawBytes.Count - 8))
                 return 0;
             Cursor = pos + 8;
-            return BitConverter.ToInt64(RawBytes.GetRange(pos, 8).ToArray(), 0);
+            var bytes = RawBytes.GetRange(pos, 8).ToArray();
+            if (reversed)
+                bytes = bytes.Reverse().ToArray();
+            return BitConverter.ToInt64(bytes, 0);
         }
 
 
-        public string GetTimeStampAtPos(int pos)
+        public string GetTimeStampAtPos(int pos, bool reversed = false)
         {
             var res = "???";
             if (pos > (RawBytes.Count - 4))
@@ -301,7 +433,7 @@ namespace VieweD.Engine.Common
 
             try
             {
-                var dt = GetUInt32AtPos(pos);
+                var dt = GetUInt32AtPos(pos, reversed);
                 // Unix timestamp is seconds past epoch
                 var dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc).AddSeconds(dt).ToLocalTime();
                 //res = dtDateTime.ToLongDateString() + " " + dtDateTime.ToLongTimeString();
@@ -358,12 +490,15 @@ namespace VieweD.Engine.Common
         }
 
         // ReSharper disable once InconsistentNaming
-        public string GetIP4AtPos(int pos)
+        public string GetIP4AtPos(int pos, bool reversed = false)
         {
             if (pos > RawBytes.Count - 4)
                 return "";
             Cursor = pos + 4;
-            return RawBytes[pos + 0] + "." + RawBytes[pos + 1] + "." + RawBytes[pos + 2] + "." + RawBytes[pos + 3];
+            if (reversed)
+                return RawBytes[pos + 3] + "." + RawBytes[pos + 2] + "." + RawBytes[pos + 1] + "." + RawBytes[pos + 0];
+            else
+                return RawBytes[pos + 0] + "." + RawBytes[pos + 1] + "." + RawBytes[pos + 2] + "." + RawBytes[pos + 3];
         }
 
         // ReSharper disable once BuiltInTypeReferenceStyle
@@ -401,6 +536,12 @@ namespace VieweD.Engine.Common
             return GetBitsAtPos(bitOffset / 8, bitOffset % 8, bitsSize);
         }
 
+        /// <summary>
+        /// Special String encoding used by FFXI
+        /// </summary>
+        /// <param name="pos"></param>
+        /// <param name="encoded6BitKey"></param>
+        /// <returns></returns>
         public string GetPackedString16AtPos(int pos, char[] encoded6BitKey)
         {
             var res = "";
@@ -462,21 +603,27 @@ namespace VieweD.Engine.Common
         }
 
         // ReSharper disable once BuiltInTypeReferenceStyle
-        public float GetFloatAtPos(int pos)
+        public float GetFloatAtPos(int pos, bool reversed = false)
         {
             if (pos > (RawBytes.Count - 4))
                 return 0f;
             Cursor = pos + 4;
-            return BitConverter.ToSingle(RawBytes.GetRange(pos, 4).ToArray(), 0);
+            var bytes = RawBytes.GetRange(pos, 4).ToArray();
+            if (reversed)
+                bytes = bytes.Reverse().ToArray();
+            return BitConverter.ToSingle(bytes, 0);
         }
 
         // ReSharper disable once BuiltInTypeReferenceStyle
-        public double GetDoubleAtPos(int pos)
+        public double GetDoubleAtPos(int pos, bool reversed = false)
         {
             if (pos > (RawBytes.Count - 8))
                 return 0.0;
             Cursor = pos + 8;
-            return BitConverter.ToDouble(RawBytes.GetRange(pos, 8).ToArray(), 0);
+            var bytes = RawBytes.GetRange(pos, 8).ToArray();
+            if (reversed)
+                bytes = bytes.Reverse().ToArray();
+            return BitConverter.ToDouble(bytes, 0);
         }
 
         public int FindByte(byte aByte)
@@ -485,33 +632,33 @@ namespace VieweD.Engine.Common
         }
 
         // ReSharper disable once BuiltInTypeReferenceStyle
-        public int FindUInt16(ushort aUInt16)
+        public int FindUInt16(ushort aUInt16, bool reversed = false)
         {
             for (var i = 0; i < (RawBytes.Count - 2); i++)
             {
-                if (GetUInt16AtPos(i) == aUInt16)
+                if (GetUInt16AtPos(i, reversed) == aUInt16)
                     return i;
             }
             return -1;
         }
 
         // ReSharper disable once BuiltInTypeReferenceStyle
-        public int FindUInt32(uint aUInt32)
+        public int FindUInt32(uint aUInt32, bool reversed = false)
         {
             for (var i = 0; i < (RawBytes.Count - 4); i++)
             {
-                if (GetUInt32AtPos(i) == aUInt32)
+                if (GetUInt32AtPos(i, reversed) == aUInt32)
                     return i;
             }
             return -1;
         }
 
         // ReSharper disable once BuiltInTypeReferenceStyle
-        public int FindUInt64(ulong aUInt64)
+        public int FindUInt64(ulong aUInt64, bool reversed = false)
         {
             for (int i = 0; i < (RawBytes.Count - 8); i++)
             {
-                if (GetUInt64AtPos(i) == aUInt64)
+                if (GetUInt64AtPos(i, reversed) == aUInt64)
                     return i;
             }
             return -1;
@@ -650,5 +797,25 @@ namespace VieweD.Engine.Common
             return res;
         }
 
+        public virtual string GenerateDataExportName()
+        {
+            var exportName = "";
+            switch (PacketLogType)
+            {
+                case PacketLogTypes.Incoming:
+                    exportName += "i";
+                    break;
+                case PacketLogTypes.Outgoing:
+                    exportName += "o";
+                    break;
+                case PacketLogTypes.Unknown:
+                default:
+                    exportName += "u";
+                    break;
+            }
+
+            exportName += PacketLevel + "-" + PacketId.ToString("X4");
+            return exportName;
+        }
     }
 }

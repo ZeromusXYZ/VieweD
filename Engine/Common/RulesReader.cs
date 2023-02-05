@@ -23,7 +23,7 @@ namespace VieweD.Engine.Common
         protected ZlibCodec DecompressionHandler { get; set; } = new ZlibCodec(Ionic.Zlib.CompressionMode.Decompress);
         public string ExpectedClientVersion { get; set; } = string.Empty;
 
-        protected RulesReader(PacketTabPage parent)
+        public RulesReader(PacketTabPage parent)
         {
             ParentTab = parent;
         }
@@ -90,9 +90,9 @@ namespace VieweD.Engine.Common
                 File.Delete(fileName + ".bak");
                 return true;
             }
-            catch (Exception x)
+            catch (Exception ex)
             {
-                MessageBox.Show($"Failed to save rules: {fileName}\r\n{x.Message}");
+                MessageBox.Show($"Failed to save rules: {fileName}\r\n{ex.Message}");
                 return false;
             }
         }
