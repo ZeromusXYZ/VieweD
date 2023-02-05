@@ -31,7 +31,7 @@ namespace VieweD.Engine.pcapraw
         public override bool AllowedPacketLevelSearch { get; } = false;
         public override ushort PacketIdMaximum { get; } = 0xFFFF;
 
-        private string _assumedLocalMac = string.Empty;
+        private string _assumedLocalIp = string.Empty;
 
         private PacketList _currentPakList;
 
@@ -305,15 +305,6 @@ namespace VieweD.Engine.pcapraw
 
             // ---------------------
 
-            // Guess which machine is our "local/client" side
-            var fromMac = ethernetPacket.SourceHardwareAddress.ToString();
-            if (string.IsNullOrWhiteSpace(_assumedLocalMac))
-            {
-                _assumedLocalMac = fromMac;
-            }
-
-            var packetLogType = (_assumedLocalMac == fromMac) ? PacketLogTypes.Outgoing : PacketLogTypes.Incoming;
-
             // Get IPvX packet data
             var ipv4Packet = packet.Extract<IPv4Packet>();
             var ipv6Packet = packet.Extract<IPv6Packet>();
@@ -329,20 +320,21 @@ namespace VieweD.Engine.pcapraw
             pd.PacketSync = 0xFFFF;
             pd.TimeStamp = e.Header.Timeval.Date;
 
-            var relatedPort = packetLogType == PacketLogTypes.Outgoing ? destinationPort : sourcePort;
-            pd.StreamId = ParentTab.Engine?.GetExpectedStreamIdByPort(relatedPort, pd.StreamId) ?? pd.StreamId;
-
             var appendText = "";
             if (tcpPacket != null)
                 appendText += "TCP ";
             if (udpPacket != null)
                 appendText += "UDP ";
 
+            var sourceIp = "";
+            var destIp = "";
             if (ipv4Packet != null)
             {
                 appendText += "IPv4 " +
                              ipv4Packet.SourceAddress + ":" + sourcePort + " => " +
                              ipv4Packet.DestinationAddress + ":" + destinationPort;
+                sourceIp = ipv4Packet.SourceAddress.ToString();
+                destIp = ipv4Packet.DestinationAddress.ToString();
                 pd.PacketSync = ipv4Packet.Id;
             }
             if (ipv6Packet != null)
@@ -350,10 +342,39 @@ namespace VieweD.Engine.pcapraw
                 appendText += "IPv6 " +
                              ipv6Packet.SourceAddress + " : " + sourcePort + " => " +
                              ipv6Packet.DestinationAddress + " : " + destinationPort;
+                sourceIp = ipv6Packet.SourceAddress.ToString();
+                destIp = ipv6Packet.DestinationAddress.ToString();
                 pd.PacketSync = (ushort)(ipv6Packet.FlowLabel % 0x10000); // truncate it, should be good enough
             }
 
+            // Guess which machine is our "local/client" side
+            //var fromMac = ethernetPacket.SourceHardwareAddress.ToString();
+            //var toMac = ethernetPacket.DestinationHardwareAddress.ToString();
+            if (string.IsNullOrWhiteSpace(_assumedLocalIp))
+            {
+                if (PortToStreamIdMapping.TryGetValue(sourcePort, out _))
+                {
+                    // If source port is in the list of known ports, assume it's the server, instead of the client
+                    _assumedLocalIp = destIp;
+                }
+                else
+                {
+                    _assumedLocalIp = sourceIp;
+                }
+            }
+
+            PacketLogTypes packetLogType;
+            if (_assumedLocalIp == sourceIp)
+                packetLogType = PacketLogTypes.Outgoing;
+            else if (_assumedLocalIp == destIp)
+                packetLogType = PacketLogTypes.Incoming;
+            else
+                packetLogType = PacketLogTypes.Unknown;
+
             pd.PacketLogType = packetLogType;
+            var relatedPort = packetLogType == PacketLogTypes.Outgoing ? destinationPort : sourcePort;
+            pd.StreamId = ParentTab.Engine?.GetExpectedStreamIdByPort(relatedPort, pd.StreamId) ?? pd.StreamId;
+
 
             // Grab name from rules (if any)
             if (pd.Parent?.Rules != null)
@@ -367,7 +388,7 @@ namespace VieweD.Engine.pcapraw
         public override bool LoadFromStream(PacketList packetList, Stream fileStream, string sourceFileName, string rulesFileName, string decryptVersion)
         {
             packetList.IsPreParsed = Engines.PreParseData;
-            _assumedLocalMac = string.Empty;
+            _assumedLocalIp = string.Empty;
 
             using (var loadForm = new LoadingForm(MainForm.ThisMainForm))
             {
