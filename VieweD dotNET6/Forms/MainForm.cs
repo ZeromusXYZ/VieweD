@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
+using System.Windows.Forms;
 using VieweD.engine.common;
 using VieweD.Helpers.System;
 using VieweD.Properties; // This needs to be made dynamic
@@ -114,6 +115,8 @@ namespace VieweD.Forms
 
             var project = new ViewedProjectTab();
             TCProjects.TabPages.Add(project);
+            if (TCProjects.ImageList != null)
+                project.ImageIndex = 1; // viewed icon
             TCProjects.SelectedTab = project;
 
             // First check if the opened file is a existing project file
@@ -335,6 +338,8 @@ namespace VieweD.Forms
 
                 row.Cells[2].Value = parsedField.FieldValue;
                 // row.Cells[2].Style.ForeColor = parsedField.FieldColor;
+
+                row.Selected = parsedField.IsSelected;
 
                 y++;
             }
@@ -671,6 +676,130 @@ namespace VieweD.Forms
         {
             if (TCProjects.SelectedTab is ViewedProjectTab project)
                 project.SaveProjectSettingsFile(project.ProjectFile, project.ProjectFolder);
+        }
+
+        private void TCProjects_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            if (sender is not TabControl tabControl)
+                return;
+            // Source: https://social.technet.microsoft.com/wiki/contents/articles/50957.c-winform-tabcontrol-with-add-and-close-button.aspx
+            // Adapted to using resources and without the add button
+            try
+            {
+                var tabPage = tabControl.TabPages[e.Index];
+                var tabRect = tabControl.GetTabRect(e.Index);
+                //tabRect.Inflate(-2, -2);
+                var closeImage = tabControl.ImageList?.Images[0] ?? Resources.close;
+                var tabIcon = tabControl.ImageList?.Images[tabPage.ImageIndex];
+
+                if ((tabControl.Alignment == TabAlignment.Top) || (tabControl.Alignment == TabAlignment.Bottom))
+                {
+                    // for tabs at the top/bottom
+                    e.Graphics.DrawImage(closeImage,
+                        (tabRect.Right - closeImage.Width),
+                        tabRect.Top + (tabRect.Height - closeImage.Height) / 2);
+                    TextRenderer.DrawText(e.Graphics, tabPage.Text, tabPage.Font,
+                        tabRect, tabPage.ForeColor, TextFormatFlags.Left);
+                }
+                else if (tabControl.Alignment == TabAlignment.Left)
+                {
+                    // for tabs to the left
+                    e.Graphics.DrawImage(closeImage,
+                        tabRect.Left + (tabRect.Width - closeImage.Width) / 2,
+                        tabRect.Top);
+
+                    if (tabIcon != null)
+                    {
+                        e.Graphics.DrawImage(tabIcon, tabRect.Left + (tabRect.Width / 2) - (tabIcon.Width / 2) , tabRect.Bottom - tabIcon.Height - 4);
+                        tabRect = new Rectangle(tabRect.Left, tabRect.Top, tabRect.Width, tabRect.Height - tabIcon.Height - 4);
+                    }
+
+                    var tSize = e.Graphics.MeasureString(tabPage.Text, tabPage.Font);
+                    e.Graphics.TranslateTransform(tabRect.Left + tabRect.Width, tabRect.Bottom);
+                    e.Graphics.RotateTransform(-90);
+                    var textBrush = new SolidBrush(tabPage.ForeColor);
+                    e.Graphics.DrawString(tabPage.Text, tabPage.Font, textBrush, 0, -tabRect.Width - (tSize.Height / -4), StringFormat.GenericDefault);
+                }
+                else
+                {
+                    // If you want it on the right as well, you code it >.>
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        private void TCProjects_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            // Process MouseDown event only till (tabControl.TabPages.Count - 1) excluding the last TabPage
+            if (sender is not TabControl tabControl)
+                return;
+
+            for (var i = 0; i < tabControl.TabPages.Count; i++)
+            {
+                var tabRect = tabControl.GetTabRect(i);
+                tabRect.Inflate(-2, -2);
+
+                var inFront = tabControl.ImageList?.Images.Count > 1;
+                var iconImage = inFront ? tabControl.ImageList?.Images[0] : Resources.close;
+
+                if (iconImage == null)
+                    return;
+
+                Rectangle imageRect;
+                if ((tabControl.Alignment == TabAlignment.Top) || (tabControl.Alignment == TabAlignment.Bottom))
+                {
+                    if (inFront)
+                    {
+                        imageRect = new Rectangle(
+                            tabRect.Left,
+                            tabRect.Top + (tabRect.Height - iconImage.Height) / 2,
+                            iconImage.Width,
+                            iconImage.Height);
+                    }
+                    else
+                    {
+                        imageRect = new Rectangle(
+                            (tabRect.Right - iconImage.Width),
+                            tabRect.Top + (tabRect.Height - iconImage.Height) / 2,
+                            iconImage.Width,
+                            iconImage.Height);
+                    }
+                }
+                else
+                {
+                    if (inFront)
+                    {
+                        imageRect = new Rectangle(
+                            tabRect.Left + (tabRect.Width - iconImage.Width) / 2,
+                            tabRect.Bottom - iconImage.Height - 2,
+                            iconImage.Width,
+                            iconImage.Height);
+                    }
+                    else
+                    {
+                        imageRect = new Rectangle(
+                            tabRect.Left + (tabRect.Width - iconImage.Width) / 2,
+                            tabRect.Top,
+                            iconImage.Width,
+                            iconImage.Height);
+                    }
+
+                }
+
+                if (imageRect.Contains(e.Location))
+                {
+                    var tabText = tabControl.TabPages[i]?.Text ?? "Tab";
+                    if (MessageBox.Show("Close " + tabText + " ?", 
+                            "Confirm close", 
+                            MessageBoxButtons.YesNo,
+                            MessageBoxIcon.Question) == DialogResult.Yes)
+                        tabControl.TabPages[i].Dispose();// .RemoveAt(i);
+                    return;
+                }
+            }
         }
     }
 }

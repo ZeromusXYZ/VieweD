@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.MM = new System.Windows.Forms.MenuStrip();
@@ -53,6 +54,7 @@
             this.TPWelcomeLayout = new System.Windows.Forms.TableLayoutPanel();
             this.RichTextWelcome = new System.Windows.Forms.RichTextBox();
             this.TPWelcomeBtnClose = new System.Windows.Forms.Button();
+            this.ILTabs = new System.Windows.Forms.ImageList(this.components);
             this.DgvParsed = new System.Windows.Forms.DataGridView();
             this.DgvPosition = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DgvName = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -208,10 +210,13 @@
             // 
             resources.ApplyResources(this.TCProjects, "TCProjects");
             this.TCProjects.Controls.Add(this.TPWelcome);
+            this.TCProjects.ImageList = this.ILTabs;
             this.TCProjects.Multiline = true;
             this.TCProjects.Name = "TCProjects";
             this.TCProjects.SelectedIndex = 0;
+            this.TCProjects.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.TCProjects_DrawItem);
             this.TCProjects.SelectedIndexChanged += new System.EventHandler(this.TCProjects_SelectedIndexChanged);
+            this.TCProjects.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.TCProjects_MouseDoubleClick);
             // 
             // TPWelcome
             // 
@@ -239,6 +244,16 @@
             this.TPWelcomeBtnClose.Name = "TPWelcomeBtnClose";
             this.TPWelcomeBtnClose.UseVisualStyleBackColor = true;
             this.TPWelcomeBtnClose.Click += new System.EventHandler(this.TPWelcomeBtnClose_Click);
+            // 
+            // ILTabs
+            // 
+            this.ILTabs.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+            this.ILTabs.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("ILTabs.ImageStream")));
+            this.ILTabs.TransparentColor = System.Drawing.Color.Transparent;
+            this.ILTabs.Images.SetKeyName(0, "close.png");
+            this.ILTabs.Images.SetKeyName(1, "found_it!x44.png");
+            this.ILTabs.Images.SetKeyName(2, "add.png");
+            this.ILTabs.Images.SetKeyName(3, "mini_unk_icon.png");
             // 
             // DgvParsed
             // 
@@ -395,5 +410,6 @@
         private Button TPWelcomeBtnClose;
         private ToolStripMenuItem MMProjectSave;
         private ToolStripSeparator MMProjectN1;
+        private ImageList ILTabs;
     }
 }

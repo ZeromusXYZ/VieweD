@@ -142,13 +142,14 @@ namespace VieweD.Helpers.System
 
         public static string MakeTabName(string filename)
         {
+            const int maxChars = 40;
             string res;
-            string fn = Path.GetFileNameWithoutExtension(filename);
-            string fnl = fn.ToLower();
-            string fel = Path.GetExtension(filename).ToLower();
+            var fn = Path.GetFileNameWithoutExtension(filename);
+            var fnl = fn.ToLower();
+            var fel = Path.GetExtension(filename).ToLower();
             if ((fnl == "full") || (fnl == "incoming") || (fnl == "outgoing") || (fel == ".sqlite"))
             {
-                string ldir = Path.GetFileName(Path.GetDirectoryName(filename) ?? "").ToLower();
+                var ldir = Path.GetFileName(Path.GetDirectoryName(filename) ?? "").ToLower();
                 if (ExpectedLogFileRoots.IndexOf(ldir) >= 0)
                 //if ((ldir == "packetviewer") || (ldir == "logs") || (ldir == "packetdb") || (ldir == "wireshark") || (ldir == "packeteer"))
                 {
@@ -163,8 +164,8 @@ namespace VieweD.Helpers.System
             {
                 res = fn;
             }
-            if (res.Length > 20)
-                res = res.Substring(0, 16) + "...";
+            if (res.Length > maxChars)
+                res = res.Substring(0, maxChars-4) + "...";
             res += "  ";
             return res;
         }

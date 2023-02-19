@@ -1,4 +1,5 @@
-﻿using VieweD.Properties;
+﻿using VieweD.Helpers.System;
+using VieweD.Properties;
 
 namespace VieweD.engine.common;
 
@@ -123,7 +124,7 @@ public class BaseInputReader : IComparable<BaseInputReader>
             if (res)
             {
                 ParentProject.OpenedLogFile = source;
-                ParentProject.Text = Path.GetFileNameWithoutExtension(source);
+                ParentProject.Text = Helper.MakeTabName(source);
             }
             else
             {
