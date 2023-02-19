@@ -314,9 +314,9 @@
     <Compile Include="Engine\Common\RulesReader.cs" />
     <Compile Include="Engine\Common\SearchParameters.cs" />
     <Compile Include="Engine\Engines.cs" />
-    <Compile Include="data\pcapraw\plugin\PCapRawPacketParser.cs">
+    <Content Include="data\pcapraw\plugin\PCapRawPacketParser.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
+    </Content>
     <Compile Include="Forms\AboutBoxForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -453,13 +453,13 @@
     </Content>
     <Content Include="data\example\Test-Engine.cs" />
     <Compile Include="Helpers\System\XmlHelper.cs" />
-    <Compile Include="data\pcapraw\plugin\EnginePCapRaw.cs">
+    <Content Include="data\pcapraw\plugin\EnginePCapRaw.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="data\pcapraw\plugin\PCapRawSettingsTab.cs">
+    </Content>
+    <Content Include="data\pcapraw\plugin\PCapRawSettingsTab.cs">
       <SubType>Component</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
+    </Content>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Forms\SettingsForm.cs">
