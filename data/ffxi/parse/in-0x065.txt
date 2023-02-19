@@ -1,7 +1,0 @@
-file;in-0x065;Repositioning;Moves your character. Seems to be functionally idential to the Spawn packet
-
-pos;$04;Position
-uint32;$10;ID
-uint16;$14;Index
-byte;$16;_unknown?;-- 16   1 observed. May indicate repositoning type.
-byte;$17;_unknown?;-- 17   Unknown, but matches the same byte of a matching spawn packet

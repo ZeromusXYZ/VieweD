@@ -1,0 +1,14 @@
+file;in-0x027;String Message;Message that includes a string as a parameter.
+
+uint32:@actors;$04;Player ID;-- 04   0x0112413A in Omen, 0x010B7083 in Legion, Layer Reserve ID for Ambuscade queue, 0x01046062 for Chocobo circuit
+uint16;$08;Player Index;--08   0x013A in Omen, 0x0083 in Legion , Layer Reserve Index for Ambuscade queue, 0x0062 for Chocobo circuit
+uint16;$0A;Message ID;-- 0A   -0x8000
+uint32;$0C;Message Type;-- 0C   0x04 for Fishing/Salvage, 0x05 for Omen/Legion/Ambuscade queue/Chocobo Circuit
+uint32;$10;Parameter 1;-- 10   Parameter 0 on the display messages dat items
+uint32;$14;Parameter 2;-- 14   Parameter 1 on the display messages dat items
+uint32;$18;Parameter 3;-- 18   Parameter 2 on the display messages dat items
+uint32;$1C;Parameter 4;-- 1C   Parameter 3 on the display messages dat items
+string16;$20;Player Name
+string16;$30;_unknown1
+string16;$40;_dupePlayerName?
+data32;$50;_unknown2

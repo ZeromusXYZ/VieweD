@@ -1,0 +1,6 @@
+file;in-0x0E8;Toggle Heal;Toggle Heal info ?
+
+byte;$04;Movement?;--04  02 if caused by movement
+byte;$05;_unknown?
+byte;$06;_unknown?
+byte;$07;_unknown?

@@ -1,0 +1,5 @@
+file;in-0x05F;Music Change;Changes the current music
+
+info;0;BGM Type Info;0=Day  1=Night  2=Solo  3=Party  4=Mount  5=Death  6=Moghouse  7=Fishing
+uint16;$04;BGM Type
+uint16:music;$06;Song ID

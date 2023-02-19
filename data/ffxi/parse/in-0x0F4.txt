@@ -1,8 +1,0 @@
-file;in-0x0F4;Widescan Mob;Displays one monster
-
-uint16;$04;Index
-byte;$06;Level
-byte;$07;Type
-int16;$08;X Offset
-int16;$0A;Y Offset
-string16;$0C;Name;-- 0C   Slugged, may not extend all the way to 27. Up to 25 has been observed. This will be used if Type == 0

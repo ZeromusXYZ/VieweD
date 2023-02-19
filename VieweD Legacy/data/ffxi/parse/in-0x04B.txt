@@ -1,0 +1,6 @@
+file;in-0x04B;Deliveryitem;Item in delivery box
+
+byte;$04;Action
+byte;$05;Box ID
+byte;$06;Delivery Slot
+info;0;Info;Structure varies by Action type

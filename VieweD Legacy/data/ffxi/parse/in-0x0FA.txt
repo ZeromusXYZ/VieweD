@@ -1,0 +1,6 @@
+file;in-0x0FA;Furniture Interact;Confirms furniture manipulation
+
+uint16:items;$04;Item
+data6;$06;_unknown?;-- 06  Always 00s for me
+byte;$0C;Safe Slot;-- 0C  Safe slot for the furniture being interacted with
+data3;$0D;_unknown?;-- 0D  Takes values, but doesn't look particularly meaningful

@@ -1,4 +1,0 @@
-file;in-0x008;Zones Visited;Visited zones for the player ?
-
-info;0;Info;List of zones you have visted
-bitflaglist:zones;$04:0-300;Zone;zones

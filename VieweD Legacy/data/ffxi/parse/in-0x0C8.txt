@@ -1,0 +1,135 @@
+file;in-0x0C8;Party Struct Update;Updates all party member info in one struct. No player vital data (HP/MP/TP) or names are sent here
+
+byte;$04;_unknown?
+data3;$05;_junk?
+
+info;$08;Party;--- Main Party
+rem;Party Member 1
+uint32;$08;- #1 ID
+uint16;$0C;  #1 Index
+bitflaglist2:partymemberflag;$0E:0-16;  #1 Flags
+uint16:zones;$10;  #1 Zone
+uint16;$12;  #1 _unknown?
+
+rem;Party Member 2
+uint32;$14;- #2 ID
+uint16;$18;  #2 Index
+bitflaglist2:partymemberflag;$1A:0-16;  #2 Flags
+uint16:zones;$1C;  #2 Zone
+uint16;$1E;  #2 _unknown?
+
+rem;Party Member 3
+uint32;$20;- #3 ID
+uint16;$24;  #3 Index
+bitflaglist2:partymemberflag;$26:0-16;  #3 Flags
+uint16:zones;$28;  #3 Zone
+uint16;$2A;  #3 _unknown?
+
+rem;Party Member 4
+uint32;$2C;- #4 ID
+uint16;$30;  #4 Index
+bitflaglist2:partymemberflag;$32:0-16;  #4 Flags
+uint16:zones;$34;  #4 Zone
+uint16;$36;  #4 _unknown?
+
+rem;Party Member 5
+uint32;$38;- #5 ID
+uint16;$3C;  #5 Index
+bitflaglist2:partymemberflag;$3E:0-16;  #5 Flags
+uint16:zones;$40;  #5 Zone
+uint16;$42;  #5 _unknown?
+
+rem;Party Member 6
+uint32;$44;- #6 ID
+uint16;$48;  #6 Index
+bitflaglist2:partymemberflag;$4A:0-16;  #6 Flags
+uint16:zones;$4C;  #6 Zone
+uint16;$4E;  #6 _unknown?
+
+info;$50;Party;--- Second Party
+rem;Party Member 7
+uint32;$50;- #7 ID
+uint16;$54;  #7 Index
+bitflaglist2:partymemberflag;$56:0-16;  #7 Flags
+uint16:zones;$58;  #7 Zone
+uint16;$5A;  #7 _unknown?
+
+rem;Party Member 8
+uint32;$5C;- #8 ID
+uint16;$60;  #8 Index
+bitflaglist2:partymemberflag;$62:0-16;  #8 Flags
+uint16:zones;$64;  #8 Zone
+uint16;$66;  #8 _unknown?
+
+rem;Party Member 9
+uint32;$68;- #9 ID
+uint16;$6C;  #9 Index
+bitflaglist2:partymemberflag;$6E:0-16;  #9 Flags
+uint16:zones;$70;  #9 Zone
+uint16;$72;  #9 _unknown?
+
+rem;Party Member 10
+uint32;$74;- #10 ID
+uint16;$78;  #10 Index
+bitflaglist2:partymemberflag;$7A:0-16;  #10 Flags
+uint16:zones;$7C;  #10 Zone
+uint16;$7E;  #10 _unknown?
+
+rem;Party Member 11
+uint32;$80;- #11 ID
+uint16;$84;  #11 Index
+bitflaglist2:partymemberflag;$86:0-16;  #11 Flags
+uint16:zones;$88;  #11 Zone
+uint16;$8A;  #11 _unknown?
+
+rem;Party Member 12
+uint32;$8C;- #12 ID
+uint16;$90;  #12 Index
+bitflaglist2:partymemberflag;$92:0-16;  #12 Flags
+uint16:zones;$94;  #12 Zone
+uint16;$96;  #12 _unknown?
+
+info;$50;Party;--- Third Party
+rem;Party Member 13
+uint32;$98;- #13 ID
+uint16;$9C;  #13 Index
+bitflaglist2:partymemberflag;$9E:0-16;  #13 Flags
+uint16:zones;$A0;  #13 Zone
+uint16;$A2;  #13 _unknown?
+
+rem;Party Member 14
+uint32;$A4;- #14 ID
+uint16;$A8;  #14 Index
+bitflaglist2:partymemberflag;$AA:0-16;  #14 Flags
+uint16:zones;$AC;  #14 Zone
+uint16;$AE;  #14 _unknown?
+
+rem;Party Member 15
+uint32;$B0;- #15 ID
+uint16;$B4;  #15 Index
+bitflaglist2:partymemberflag;$B6:0-16;  #15 Flags
+uint16:zones;$B8;  #15 Zone
+uint16;$BA;  #15 _unknown?
+
+rem;Party Member 16
+uint32;$BC;- #16 ID
+uint16;$C0;  #16 Index
+bitflaglist2:partymemberflag;$C2:0-16;  #16 Flags
+uint16:zones;$C4;  #16 Zone
+uint16;$C6;  #16 _unknown?
+
+rem;Party Member 17
+uint32;$C8;- #17 ID
+uint16;$CC;  #17 Index
+bitflaglist:partymemberflag;$CE:0-16;  #17 Flags
+uint16:zones;$D0;  #17 Zone
+uint16;$D2;  #17 _unknown?
+
+rem;Party Member 18
+uint32;$D4;- #18 ID
+uint16;$D8;  #18 Index
+bitflaglist:partymemberflag;$DA:0-16;  #18 Flags
+uint16:zones;$DC;  #18 Zone
+uint16;$DE;  #18 _unknown?
+
+data18;$E0;_unknown?

@@ -1,8 +1,0 @@
-file;out-0x017;NPC Race Error;Packet sent in response to impossible incoming NPC packets (like trying to put equipment on a race 0 monster).
-
-uint16;0x04;NPC Index
-uint16;0x06;_unknown1
-uint32:@actors;0x08;NPC ID
-data6;0x0C;_unknown2
-byte;0x12;Reported NPC type
-byte;0x13;_unknown3

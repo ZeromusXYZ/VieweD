@@ -1,8 +1,0 @@
-file;in-0x078;Proposal;Carries proposal information from a /propose or /nominate command
-
-uint32;$04;Proposer ID
-uint32;$08;_unknown?;-- 08  Proposal ID?
-uint16;$0C;Proposer Index
-string15;$0E;Proposer Name
-byte;$1D;Chat mode;-- 1D  Not typical chat mode mapping. 1 = Party
-string;$1E;Proposal;-- 1E  Proposal text, complete with special characters

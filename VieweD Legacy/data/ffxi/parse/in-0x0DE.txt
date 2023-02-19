@@ -1,0 +1,6 @@
+file;in-0x0DE;unknown?;Related to opening/closing mog house ?
+
+info;0;Info;8 bytes long, sent in response to opening/closing mog house. Occasionally sent when zoning
+info;0;Info;Might change what options are available from the menu ?
+byte;$04;Type?
+data3;$05;_junk?

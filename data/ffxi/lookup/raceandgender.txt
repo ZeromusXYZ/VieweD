@@ -1,9 +1,0 @@
-﻿0;Hume ♂
-1;Hume ♀
-2;Elvaan ♂
-3;Elvaan ♀
-4;Tarutaru ♂
-5;Tarutaru ♀
-6;Galka
-7;Mithra
-8;Goblin?

@@ -1,0 +1,4 @@
+file;in-0x01D;Finish Inventory;Finish listing the items in inventory.
+
+byte;$04;Flag
+data3;$05;_junk?

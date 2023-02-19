@@ -1,0 +1,8 @@
+file;in-0x075;Unity Start;Creates the timer and glowing fence that accompanies Unity fights
+
+uint32;$04;Fight Designation;-- 04   Anything other than 0 makes a timer. 0 deletes the timer.
+uint32;$08;Timestamp Offset;-- 08   Number of seconds since 15:00:00 GMT 31/12/2002 (0x3C307D70)
+uint32;$0C;Fight Duration
+pos;$10;Position?;-- 10   This packet clearly needs position information, but it's unclear how these bytes carry it
+uint32;$1C;Battlefield Radius;-- 1C   Yalms*1000, so a 50 yalm battlefield would have 50,000 for this field
+uint32;$20;Render Radius;-- 20   Yalms*1000, so a fence that renders when you're 25 yalms away would have 25,000 for this field

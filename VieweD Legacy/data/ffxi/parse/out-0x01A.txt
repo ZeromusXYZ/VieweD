@@ -1,0 +1,8 @@
+file;out-0x01A;Action;Newly created parser.
+
+uint32:@actors;0x04;Target ID
+uint16;0x08;Target Index
+uint16:actioncategory;0x0A;Category
+uint16;0x0C;Param
+uint16;0x0E;_unknown1
+pos;0x10;Offset Position;non-zero values only observed for geo spells cast using a repositioned subtarget

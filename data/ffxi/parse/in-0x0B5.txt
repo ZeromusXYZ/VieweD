@@ -1,5 +1,0 @@
-file;in-0x0B5;Help Desk Open;Sent when you open the Help Desk submenu
-
-data14;$04;Unknown
-uint32;$18;Number of Opens
-uint32;$1C;Unknown

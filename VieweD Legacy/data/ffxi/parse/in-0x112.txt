@@ -1,0 +1,5 @@
+file;in-0x112;RoE Quest Log;Updates your RoE quest log on zone and when appropriate
+
+info;0;Info;RoE Completed Flags
+bitflaglist:roe;$04:0-1024;RoE Quest;roe
+uint32;$84;Order

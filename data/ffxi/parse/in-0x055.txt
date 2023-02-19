@@ -1,5 +1,0 @@
-file;in-0x055;Key Item Log;Updates your key item log on zone and when appropriate.
-
-uint16;$84;KeyItem List Type;-- 84   Goes from 0 to 5, determines which KI are being sent
-data40;$04;Has Keyitems (bits);-- 44   Bit field correlating to the previous, 1 if KI has been examined, 0 otherwise
-data40;$44;Checked Keyitems

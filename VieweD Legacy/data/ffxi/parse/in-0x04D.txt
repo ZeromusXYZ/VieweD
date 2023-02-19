@@ -1,0 +1,40 @@
+file;in-0x04D;Server Message Response;Server response when someone requests it.
+
+byte;0x04;Message Chunk Number;
+byte;0x05;_unknown?;Always 1 ?
+byte;0x06;Message Type;01 = SvrMsg 2 = FishRank
+byte:languages;0x07;Language;
+uint32;0x08;Timestamp;-- 08  UTC Timestamp
+uint32;0x0C;Message Size Total
+uint32;0x10;Message Offset
+uint32;0x14;This Message Length;Max 236?
+
+switchblock;0x06;SvrMsg;1
+switchblock;0x06;FishRank;2
+
+[[SvrMsg]]
+string;0x18;Text
+[[]]
+
+[[FishRank]]
+fishrankservermessage;0x18;Fish Rank
+rem;uint32;0x18;Fishing Entries Count
+rem;data204;0x1C;FishRank Data
+// struct fish_ranking_listing {
+//     uint8 name[16];     // 00:15
+//     uint8 mjob;         // 16
+//     uint8 sjob;         // 17
+//     uint8 mlevel;       // 18
+//     uint8 slevel;       // 19
+//     uint8 race;         // 20
+//     uint8 padding;      // 21
+//     uint8 allegience;   // 22
+//     uint8 fishrank;     // 23
+//     uint32 score;       // 24:27
+//     uint32 submittime;  // 28:31
+//     uint8 contestrank;  // 32
+//     uint8 resultcount;  // 33
+//     uint8 dataset_a;    // 34
+//     uint8 dataset_b;    // 35
+// };
+[[]]

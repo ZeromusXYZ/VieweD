@@ -1,7 +1,0 @@
-file;in-0x0F5;Widescan Track;Updates information when tracking a monster
-
-pos;$04;Position
-byte;$10;Level
-byte;$11;_unknown?
-uint16;$12;Index
-uint32;$14;Status

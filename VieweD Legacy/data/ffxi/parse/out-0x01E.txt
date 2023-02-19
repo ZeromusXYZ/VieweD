@@ -1,0 +1,3 @@
+file;out-0x01A;Volunteer;Sent in response to a /volunteer command.
+
+string;0x04;Target Name

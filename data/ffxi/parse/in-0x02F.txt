@@ -1,6 +1,0 @@
-file;in-0x02F;Digging Animation;Generates the chocobo digging animation
-
-uint32:@actors;$04;Player ID
-uint16;$08;Player Index
-byte;$0A;Animation;-- 0A   Changing it to anything other than 1 eliminates the animation
-byte;$0B;_junk?;-- 0B   Likely junk. Has no effect on anything notable.

@@ -1,0 +1,106 @@
+0x00A;Client Connect;(unencrypted/uncompressed) First packet sent when connecting to new zone.
+0x00C;Zone In 1;Likely triggers certain packets to be sent from the server.
+0x00D;Client Leave;Last packet sent from client before it leaves the zone.
+0x00F;Zone In 2;Likely triggers certain packets to be sent from the server.
+0x011;Zone In 3;Likely triggers certain packets to be sent from the server.
+0x015;Standard Client;Packet contains data that is sent almost every time (i.e your character\'s position).
+0x016;Update Request;Packet that requests a PC/NPC update packet.
+0x017;NPC Race Error;Packet sent in response to impossible incoming NPC packets (like trying to put equipment on a race 0 monster).
+0x01A;Action;An action being done on a target (i.e. an attack or spell).
+0x01E;Volunteer;Sent in response to a /volunteer command.
+0x028;Drop Item;Drops an item.
+0x029;Move Item;Move item from one inventory to another.
+0x02B;Translate Request;Request that a phrase be translated.
+0x032;Offer Trade;This is sent when you offer to trade somebody.
+0x033;Trade Tell;This packet allows you to accept or cancel a trade request.
+0x034;Trade Item;Sends the item you want to trade to the server.
+0x036;Menu Item;Use an item from the item menu.
+0x037;Use Item;Use an item.
+0x03A;Sort Item;Stacks the items in your inventory. Sent when hitting "Sort" in the menu.
+0x03D;Blacklist Command;Sent in response to /blacklist add or /blacklist delete.
+0x041;Lot Item;Lotting an item in the treasure pool.
+0x042;Pass Item;Passing an item in the treasure pool.
+0x04B;Request Server Message;Requests a server message (e.g. /servmes).
+0x04D;Delivery Box;Used to manipulate the delivery box.
+0x04E;Auction;Used to bid on an Auction House item.
+0x050;Equip;This command is used to equip your character.
+0x051;Equipset;This packet is sent when using /equipset.
+0x052;Equipset Build;This packet is sent when building an equipset.
+0x053;Lockstyleset;This packet is sent when locking to an equipset.
+0x059;End Synth;This packet is sent to end a synth.
+0x05A;Conquest;This command asks the server for data pertaining to conquest/besieged status.
+0x05B;Dialog choice;Chooses a dialog option.
+0x05C;Warp Request;Request a warp. Used by teleporters and the like.
+0x05D;Emote;This command is used in emotes.
+0x05E;Request Zone;Request from the client to zone.
+0x061;Equipment Screen;This command is used when you open your equipment screen.
+0x063;Digging Finished;This packet is sent when the chocobo digging animation is finished.
+0x064;New KI examination;Sent when you examine a key item with a "new" flag on it.
+0x06E;Party invite;Sent when inviting another player to either party or alliance.
+0x06F;Party leave;Sent when leaving the party or alliance.
+0x070;Party breakup;Sent when disbanding the entire party or alliance.
+0x071;Kick;Sent when you kick someone from linkshell or party.
+0x074;Party response;Sent when responding to a party or alliance invite.
+0x077;Change permissions;Sent when giving party or alliance leader to another player or elevating/decreasing linkshell permissions.
+0x078;Party list request;Sent when checking the party list.
+0x083;NPC Buy Item;Buy an item from a generic NPC.
+0x084;Appraise;Ask server for selling price.
+0x085;Sell Item;Sell an item from your inventory.
+0x096;Synth;Packet sent containing all data of an attempted synth.
+0x0A0;Nominate;Sent in response to a /nominate command.
+0x0A1;Vote;Sent in response to a /vote command.
+0x0A2;Random;Sent in response to a /random command.
+0x0AA;Guild Buy Item;Buy an item from a guild.
+0x0AB;Get Guild Inv List;Gets the offerings of the guild.
+0x0AC;Guild Sell Item;Sell an item to the guild.
+0x0AD;Get Guild Sale List;Gets the list of things the guild will buy.
+0x0B5;Speech;Packet contains normal speech.
+0x0B6;Tell;/tell\'s sent from client.
+0x0BE;Merit Point Increase;Sent when you increase a merit point ability.
+0x0BF;Job Point Increase;Sent when you increase a job point ability.
+0x0C0;Job Point Menu;Sent when you open the Job Point menu and triggers Job Point Information packets.
+0x0C3;Make Linkshell;Sent in response to the /makelinkshell command.
+0x0C4;Equip Linkshell;Sent to equip a linkshell.
+0x0CB;Open Mog;Sent when opening or closing your mog house.
+0x0D2;Party Marker Request;Requests map markers for your party.
+0x0D3;GM Call;Places a call to the GM queue.
+0x0D4;Help Desk Menu;Opens the Help Desk submenu.
+0x0DC;Type Bitmask;This command is sent when change your party-seek or /anon status.
+0x0DD;Check;Used to check other players.
+0x0DE;Set Bazaar Message;Sets your bazaar message.
+0x0E0;Search Comment;Sets your search comment.
+0x0E1;Get LS Message;Requests the current linkshell message.
+0x0E2;Set LS Message;Sets the current linkshell message.
+0x0EA;Sit;A request to sit or stand is sent to the server.
+0x0E7;Logout;A request to logout of the server.
+0x0E8;Toggle Heal;This command is used to both heal and cancel healing.
+0x0F1;Cancel;Sent when canceling a buff.
+0x0F2;Declare Subregion;Sent when moving to a new subregion of a zone (for instance, a different combination of open doors).
+0x0F4;Widescan;This command asks the server for a widescan.
+0x0F5;Widescan Track;Sent when you choose to track something on widescan.
+0x0F6;Widescan Cancel;Sent when you choose to stop track something on widescan.
+0x0FA;Place/Move Furniture;Sends new position for your furniture.
+0x0FB;Remove Furniture;Informs the server you have removed some furniture.
+0x0FC;Plant Flowerpot;Plants a seed in a flowerpot.
+0x0FD;Examine Flowerpot;Sent when you examine a flowerpot.
+0x0FE;Uproot Flowerpot;Uproots a flowerpot.
+0x100;Job Change;Sent when initiating a job change.
+0x102;Untraditional Equip;Sent when equipping a pseudo-item like an Automaton Attachment, Instinct, or Blue Magic Spell.
+0x104;Leave Bazaar;Sent when client leaves a bazaar.
+0x105;View Bazaar;Sent when viewing somebody\'s bazaar.
+0x106;Buy Bazaar Item;Buy an item from somebody\'s bazaar.
+0x109;Close Bazaar;Sent after closing your bazaar window.
+0x10A;Set Price;Set the price on a bazaar item.
+0x10B;Open Bazaar;Sent when opening your bazaar window to set prices.
+0x10C;Start RoE Quest;Sent to undertake a Records of Eminence Quest.
+0x10D;Cancel RoE Quest;Sent to cancel a Records of Eminence Quest.
+0x10E;Accept RoE Reward;Accept an RoE qust reward that was not given automatically due to inventory restrictions.
+0x10F;Currency Menu;Requests currency information for the menu.
+0x110;Fishing Action;Sent when casting, releasing a fish, catching a fish, and putting away your fishing rod.
+0x111;Lockstyle;Sent when using the lockstyle command to lock or unlock.
+0x112;RoE Log Request;Sent when zoning. Requests the ROE quest log.
+0x114;HP Map Trigger;Sent when entering a homepoint list for a zone to trigger maps to appear.
+0x115;Currency Menu 2;Requests currency 2 information for the menu.
+0x116;Unity Menu;Sent when opening the Status/Unity menu.
+0x117;Unity Ranking Menu;Sent when opening the Status/Unity/Unity Ranking menu.
+0x118;Unity Chat Status;Sent when changing unity chat status.

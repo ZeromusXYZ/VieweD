@@ -1,0 +1,3 @@
+file;in-0x08D;Job Points;Contains all job point information. 12 packets are sent.
+
+jobpointentries;$4:20;Job Point;

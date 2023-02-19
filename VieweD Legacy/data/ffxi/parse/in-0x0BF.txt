@@ -1,0 +1,4 @@
+file;in-0x0BF;Reservation Response;Sent to inform the client about the status of entry to an instanced area
+
+byte;$06;Response
+uint16;$0C;Target ID

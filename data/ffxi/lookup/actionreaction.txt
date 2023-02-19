@@ -1,6 +1,0 @@
-﻿rem;packet-in-0x028 action reaction bitflag names
-0;MISS; // Miss
-1;PARRY; // Parry
-2;BLOCK; // Block Attack
-3;HIT; // Get hit by Attack
-4;GUARD; // mnk guard (20 decimal)

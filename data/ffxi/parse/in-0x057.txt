@@ -1,6 +1,0 @@
-file;in-0x057;Weather Change;Updates the weather effect when the weather changes
-
-uint32;$04;Vana'diel Minutes?;
-uint16:weather;$08;Weather
-byte;$09;_unknown?
-uint16;$0A;_unknown?

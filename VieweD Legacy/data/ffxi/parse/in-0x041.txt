@@ -1,0 +1,16 @@
+file;in-0x041;Blacklist;Contains player ID and name for blacklist.
+
+blacklistentry;$04;Blacklist Entry 1
+blacklistentry;$18;Blacklist Entry 2
+blacklistentry;$2C;Blacklist Entry 3
+blacklistentry;$40;Blacklist Entry 4
+blacklistentry;$54;Blacklist Entry 5
+blacklistentry;$68;Blacklist Entry 6
+blacklistentry;$7C;Blacklist Entry 7
+blacklistentry;$90;Blacklist Entry 8
+blacklistentry;$A4;Blacklist Entry 9
+blacklistentry;$B8;Blacklist Entry 10
+blacklistentry;$CC;Blacklist Entry 11
+blacklistentry;$E0;Blacklist Entry 12
+byte;$F4;_unknown?;Should be 3
+byte;$F5;Size

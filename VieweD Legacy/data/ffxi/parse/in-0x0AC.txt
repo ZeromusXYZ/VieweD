@@ -1,0 +1,8 @@
+file;in-0x0AC;Ability List;Packet that shows the skills and abilities that you know
+
+rem;the sub-offset for these parsers are the size in bits to parse, comment field is used as lookup item name
+
+bitflaglist:weaponskill;$04:0-256;Weapon Skill;weaponskill
+bitflaglist:ability;$46:0-1024;Ability;ability
+bitflaglist:petcommand;$84:0-256;Pet Command;petcommand
+bitflaglist:trait;$C4:0-128;Trait;trait

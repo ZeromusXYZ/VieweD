@@ -1,5 +1,0 @@
-file;in-0x03F;Shop Buy Response;Sent when you buy something from normal vendors.
-
-uint16;$04;Shop Slot
-uint16;$06;_unknown?;-- 06   First byte always seems to be 1, second byte varies between 0 and 1? Unclear correlation to anything.
-uint32;$08;Count

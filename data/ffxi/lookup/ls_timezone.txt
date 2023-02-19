@@ -1,6 +1,0 @@
-id;days
-rem;used for linkshell concierge
-0;at no time in particular
-1;JST
-2;PST|PDT
-3;GMT

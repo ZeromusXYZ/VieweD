@@ -1,7 +1,0 @@
-flag;name
-0;2nd Party
-1;3rd Party
-2;Party Leader
-3;Alliance Leader
-4;Quartermaster
-5;Party Level Sync

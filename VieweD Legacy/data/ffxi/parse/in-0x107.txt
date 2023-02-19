@@ -1,0 +1,3 @@
+file;in-0x107;Bazaar closed;Tells you when a bazaar you are currently in has closed
+
+string16;$04;Name

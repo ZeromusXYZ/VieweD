@@ -1,0 +1,5 @@
+file;in-0x10A;Bazaar Buyer Info;Information on the purchase sent to the seller when a sale is successful
+
+uint32;$04;Quantity
+uint16:items;$08;Item ID
+string16;$0A;Buyer Name

@@ -1,8 +1,0 @@
-file;in-0x0CC;Linkshell Message;/lsmes text and headers
-
-uint32;$04;_unknown?
-string128;$08;Message
-ms;$88;Timestamp
-string16;$8C;Player Name
-uint32;$98;Permissions
-linkshellstring;$A0;Linkshell Name;-- 9C   6-bit packed string

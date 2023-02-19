@@ -1,0 +1,14 @@
+id;name
+rem;this file is not actually used (yet)
+0;None
+1;Pieuje
+2;Ayame
+3;Invincible Shield
+4;Apururu
+5;Maat
+6;Aldo
+7;Jakoh Wahcondalo
+8;Naja Salaheem
+9;Flaviria
+10;Sylvie
+11;Yoran-Oran

@@ -1,0 +1,42 @@
+file;in-0x05A;Server Emote;This packet is the server's response to a client /emote
+
+uint32:@actors;$04;Player ID
+uint32:@actors;$08;Target ID
+uint16;$0C;Player Index
+uint16;$0E;Target Index
+uint16;$10;Emote ID
+uint16;$16;Motion;-- 16   2 for motion, 0 otherwise
+
+swichblock;$10;$4A;JobEmote
+swichblock;$10;$4B;JobEmote
+swichblock;$10;$4C;JobEmote
+swichblock;$10;$4D;JobEmote
+swichblock;$10;$4E;JobEmote
+swichblock;$10;$4F;JobEmote
+swichblock;$10;$50;JobEmote
+swichblock;$10;$51;JobEmote
+swichblock;$10;$52;JobEmote
+swichblock;$10;$53;JobEmote
+swichblock;$10;$54;JobEmote
+swichblock;$10;$55;JobEmote
+swichblock;$10;$56;JobEmote
+swichblock;$10;$57;JobEmote
+swichblock;$10;$58;JobEmote
+swichblock;$10;$59;JobEmote
+swichblock;$10;$5A;JobEmote
+swichblock;$10;$5B;JobEmote
+swichblock;$10;$5C;JobEmote
+swichblock;$10;$5D;JobEmote
+swichblock;$10;$5E;JobEmote
+swichblock;$10;$5F;JobEmote
+rem;Not sure if MON has or will have a emote, but I'm adding it for good measure
+swichblock;$10;$60;JobEmote
+swichblock;$10;$2B;Hurray
+
+[[JobEmote]]
+byte;$12;Job ID -1
+[[]]
+
+[[Hurray]]
+uint16:items;$12;Weapon
+[[]]

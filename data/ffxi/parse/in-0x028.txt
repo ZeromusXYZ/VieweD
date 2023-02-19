@@ -1,3 +1,0 @@
-file;in-0x028;Action (incomplete);Packet sent when an NPC is attacking.
-
-packet-in-0x028;0;Data;Custom parser because this thing is way too complex ?

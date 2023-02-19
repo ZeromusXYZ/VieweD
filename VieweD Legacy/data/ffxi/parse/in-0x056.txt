@@ -1,0 +1,203 @@
+file;in-0x056;Quest/Mission Log;Updates your quest and mission log on zone and when appropriate
+
+uint32;$24;Type
+
+rem; these first 2 are actually 0x0100 and 0x0108, but as there is no overlap, I'm just going to use byte switches for the blocks
+rem; if need's be, we can always change this to a bits-wise check to cover more than one byte
+switchblock;$24;Current Coalition Quests;$00
+switchblock;$24;Completed Coalition Quests;$08
+switchblock;$24;Completed Campaign Missions;$30
+switchblock;$24;Completed Campaign Missions (2);$38
+switchblock;$24;Current San d'Oria Quests;$50
+switchblock;$24;Current Bastok Quests;$58
+switchblock;$24;Current Windurst Quests;$60
+switchblock;$24;Current Jeuno Quests;$68
+switchblock;$24;Current Other Quests;$70
+switchblock;$24;Current Outlands Quests;$78
+switchblock;$24;Current TOAU Quests and Missions;$80
+switchblock;$24;Current WOTG Quests;$88
+switchblock;$24;Completed San d'Oria Quests;$90
+switchblock;$24;Completed Bastok Quests;$98
+switchblock;$24;Completed Windurst Quests;$A0
+switchblock;$24;Completed Jeuno Quests;$A8
+switchblock;$24;Completed Other Quests;$B0
+switchblock;$24;Completed Outlands Quests;$B8
+switchblock;$24;Completed TOAU Quests and Assaults;$C0
+switchblock;$24;Completed WOTG Quests;$C8
+switchblock;$24;Completed Missions (Nations, Zilart);$D0
+switchblock;$24;Completed Missions (TOAU, WOTG);$D8
+switchblock;$24;Current Abyssea Quests;$E0
+switchblock;$24;Completed Abyssea Quests;$E8
+switchblock;$24;Current Adoulin Quests;$F0
+switchblock;$24;Completed Adoulin Quests;$F8
+switchblock;$24;Current Missions;$FF
+showblock;$24;Raw Data
+
+
+rem;0x0030
+[[Completed Campaign Missions]]
+Info;$24;Type;Completed Campaign Missions
+[[]]
+
+
+rem;0x0038 -- Starts at index 256
+[[Completed Campaign Missions (2)]]
+Info;$24;Type;Completed Campaign Missions (2)
+[[]]
+
+rem;0x0050
+[[Current San d'Oria Quests]]
+Info;$24;Type;Current San d'Oria Quests
+[[]]
+
+rem;0x0058
+[[Current Bastok Quests]]
+Info;$24;Type;Current Bastok Quests
+[[]]
+
+rem;0x0060
+[[Current Windurst Quests]]
+Info;$24;Type;Current Windurst Quests
+[[]]
+
+rem;0x0068
+[[Current Jeuno Quests]]
+Info;$24;Type;Current Jeuno Quests
+[[]]
+
+rem;0x0070
+[[Current Other Quests]]
+Info;$24;Type;Current Other Quests
+[[]]
+
+rem;0x0078
+[[Current Outlands Quests]]
+Info;$24;Type;Current Outlands Quests
+[[]]
+
+rem;0x0080
+[[Current TOAU Quests and Missions]]
+Info;$24;Type;Current TOAU Quests and Missions (TOAU, WOTG, Assault, Campaign)
+
+data16;$04;TOAU Quests
+uint32;$14;Assault Mission
+uint32;$18;TOAU Mission
+uint32;$1C;WOTG Mission
+uint32;$20;Campaign Mission
+[[]]
+
+rem;0x0088
+[[Current WOTG Quests]]
+Info;$24;Type;Current WOTG Quests
+[[]]
+
+rem;0x0090
+[[Completed San d'Oria Quests]]
+Info;$24;Type;Completed San d'Oria Quests
+[[]]
+
+rem;0x0098
+[[Completed Bastok Quests]]
+Info;$24;Type;Completed Bastok Quests
+[[]]
+
+rem;0x00A0
+[[Completed Windurst Quests]]
+Info;$24;Type;Completed Windurst Quests
+[[]]
+
+rem;0x00A8
+[[Completed Jeuno Quests]]
+Info;$24;Type;Completed Jeuno Quests
+[[]]
+
+rem;0x00B0
+[[Completed Other Quests]]
+Info;$24;Type;Completed Other Quests
+[[]]
+
+rem;0x00B8
+[[Completed Outlands Quests]]
+Info;$24;Type;Completed Outlands Quests
+[[]]
+
+rem;0x00C0
+[[Completed TOAU Quests and Assaults]]
+Info;$24;Type;Completed TOAU Quests and Assaults
+data16;$04;TOAU Quests
+data16;$14;Assaults
+[[]]
+
+rem;0x00C8
+[[Completed WOTG Quests]]
+Info;$24;Type;Completed WOTG Quests
+[[]]
+
+rem;0x00D0
+[[Completed Missions (Nations, Zilart)]]
+Info;$24;Type;Completed Missions (Nations, Zilart)
+data8;$04;San d'Oria Missions
+data8;$0C;Bastok Missions
+data8;$14;Windurst Missions
+data8;$1C;Zilart Missions
+[[]]
+
+rem;0x00D8
+[[Completed Missions (TOAU, WOTG)]]
+Info;$24;Type;Completed Missions (TOAU, WOTG)
+data8;$04;TOAU Missions
+data8;$0C;WOTG Missions
+data16;$14;_junk?
+[[]]
+
+rem;0x00E0
+[[Current Abyssea Quests]]
+Info;$24;Type;Current Abyssea Quests
+[[]]
+
+rem;0x00E8
+[[Completed Abyssea Quests]]
+Info;$24;Type;Completed Abyssea Quests
+[[]]
+
+rem;0x00F0
+[[Current Adoulin Quests]]
+Info;$24;Type;Current Adoulin Quests
+[[]]
+
+rem;0x00F8
+[[Completed Adoulin Quests]]
+Info;$24;Type;Completed Adoulin Quests
+[[]]
+
+rem;0x0100
+[[Current Coalition Quests]]
+Info;$24;Type;Current Coalition Quests
+[[]]
+
+rem;0x0108
+[[Completed Coalition Quests]]
+Info;$24;Type;Completed Coalition Quests
+[[]]
+
+rem;0xFFFF
+[[Current Missions]]
+Info;$24;Type;Current Missions
+uint32;$04; Nation
+uint32;$08; Nation Mission
+uint32;$0C; Zilart Mission
+uint32;$10; Chains of Promathia
+uint32;$14;_unknown?
+bits;$18:0-4; A Crystalline Prophecy
+bits;$18:4-4; A Moogle Kupo d'Etat
+bits;$19:0-4; A Shantotto Ascension
+bits;$19:4-4;_junk?
+uint16;$1A;_junk?
+uint32;$1C; Seekers of Adoulin
+uint32;$20; Rhapsodies of Vana'diel
+[[]]
+
+rem;end of list
+[[Raw Data]]
+data32;$04;Raw Quest Flags
+[[]]

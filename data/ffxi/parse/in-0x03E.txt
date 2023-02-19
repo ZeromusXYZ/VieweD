@@ -1,4 +1,0 @@
-file;in-0x03E;Open Buy/Sell;Opens the buy/sell menu for vendors.
-
-byte;$04;Type
-data3;$05;_junk?

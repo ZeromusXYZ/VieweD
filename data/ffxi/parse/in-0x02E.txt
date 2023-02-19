@@ -1,3 +1,0 @@
-file;in-0x02E;Mog House Menu;Sent when talking to moogle inside mog house.
-
-info;0;Info;Doesn't seem to have any data

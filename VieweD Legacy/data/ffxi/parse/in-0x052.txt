@@ -1,0 +1,6 @@
+file;in-0x052;NPC Release;Allows your PC to move after interacting with an NPC.
+
+byte;$04;Release Type
+bit;$04:1;  Bit1: Event
+bit;$04:2;  Bit2: Fishing
+uint16;$05;Event ID

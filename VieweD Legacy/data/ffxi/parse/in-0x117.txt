@@ -1,0 +1,24 @@
+file;in-0x117;Equipset Response;Returned from the server after the /equipset command
+
+byte;$04;Count
+data3;$05;_unknown?
+equipsetitemlist;$08:$04;Equip Item
+
+Info;0;0Info;Not sure if I formated this packet correctly, I don't have any examples to test, sorry >.>
+
+equipsetitem;$48;SLOT_MAIN
+equipsetitem;$4C;SLOT_SUB
+equipsetitem;$50;SLOT_RANGED
+equipsetitem;$54;SLOT_AMMO
+equipsetitem;$58;SLOT_HEAD
+equipsetitem;$5C;SLOT_BODY
+equipsetitem;$60;SLOT_HANDS
+equipsetitem;$64;SLOT_LEGS
+equipsetitem;$68;SLOT_FEET
+equipsetitem;$6C;SLOT_NECK
+equipsetitem;$70;SLOT_WAIST
+equipsetitem;$74;SLOT_EAR1
+equipsetitem;$78;SLOT_EAR2
+equipsetitem;$7C;SLOT_RING1
+equipsetitem;$80;SLOT_RING2
+equipsetitem;$84;SLOT_BACK

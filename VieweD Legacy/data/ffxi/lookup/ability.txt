@@ -1,0 +1,466 @@
+abilityid;name
+0;mighty strikes
+1;hundred fists
+2;benediction
+3;manafont
+4;chainspell
+5;perfect dodge
+6;invincible
+7;blood weapon
+8;familiar
+9;soul voice
+10;eagle eye shot
+11;meikyo shisui
+12;mijin gakure
+13;spirit surge
+14;astral flow
+15;berserk
+16;warcry
+17;defender
+18;aggressor
+19;provoke
+20;focus
+21;dodge
+22;chakra
+23;boost
+24;counterstance
+25;steal
+26;flee
+27;hide
+28;sneak attack
+29;mug
+30;shield bash
+31;holy circle
+32;sentinel
+33;souleater
+34;arcane circle
+35;last resort
+36;charm
+37;gauge
+38;tame
+39;pet commands
+40;scavenge
+41;shadowbind
+42;camouflage
+43;sharpshot
+44;barrage
+45;call wyvern
+46;third eye
+47;meditate
+48;warding circle
+49;ancient circle
+50;jump
+51;high jump
+52;super jump
+53;fight
+54;heel
+55;leave
+56;sic
+57;stay
+58;divine seal
+59;elemental seal
+60;trick attack
+61;weapon bash
+62;reward
+63;cover
+64;spirit link
+66;chi blast
+67;convert
+68;accomplice
+69;call beast
+70;unlimited shot
+71;dismiss
+72;assault
+73;retreat
+74;release
+75;blood pact rage
+76;rampart
+77;azure lore
+78;chain affinity
+79;burst affinity
+80;wild card
+81;phantom roll
+82;fighters roll
+83;monks roll
+84;healers roll
+85;wizards roll
+86;warlocks roll
+87;rogues roll
+88;gallants roll
+89;chaos roll
+90;beast roll
+91;choral roll
+92;hunters roll
+93;samurai roll
+94;ninja roll
+95;drachen roll
+96;evokers roll
+97;maguss roll
+98;corsairs roll
+99;puppet roll
+100;dancers roll
+101;scholars roll
+102;bolters roll
+103;casters roll
+104;coursers roll
+105;blitzers roll
+106;tacticians roll
+107;double-up
+108;quick draw
+109;fire shot
+110;ice shot
+111;wind shot
+112;earth shot
+113;thunder shot
+114;water shot
+115;light shot
+116;dark shot
+117;random deal
+119;overdrive
+120;activate
+121;repair
+122;deploy
+123;deactivate
+124;retrieve
+125;fire maneuver
+126;ice maneuver
+127;wind maneuver
+128;earth maneuver
+129;thunder maneuver
+130;water maneuver
+131;light maneuver
+132;dark maneuver
+133;warriors charge
+134;tomahawk
+135;mantra
+136;formless strikes
+137;martyr
+138;devotion
+139;assassins charge
+140;feint
+141;fealty
+142;chivalry
+143;dark seal
+144;diabolic eye
+145;feral howl
+146;killer instinct
+147;nightingale
+148;troubadour
+149;stealth shot
+150;flashy shot
+151;shikikoyo
+152;blade bash
+153;deep breathing
+154;angon
+155;sange
+156;blood pact ward
+157;hasso
+158;seigan
+159;convergence
+160;diffusion
+161;snake eye
+162;fold
+163;role reversal
+164;ventriloquy
+165;trance
+166;sambas
+167;waltzes
+168;drain samba
+169;drain samba ii
+170;drain samba iii
+171;aspir samba
+172;aspir samba ii
+173;haste samba
+174;curing waltz
+175;curing waltz ii
+176;curing waltz iii
+177;curing waltz iv
+178;healing waltz
+179;divine waltz
+180;spectral jig
+181;chocobo jig
+182;jigs
+183;steps
+184;flourishes i
+185;quickstep
+186;box step
+187;stutter step
+188;animated flourish
+189;desperate flourish
+190;reverse flourish
+191;violent flourish
+192;building flourish
+193;wild flourish
+194;tabula rasa
+195;light arts
+196;dark arts
+197;flourishes ii
+198;modus veritas
+199;penury
+200;celerity
+201;rapture
+202;accession
+203;parsimony
+204;alacrity
+205;ebullience
+206;manifestation
+207;stratagems
+208;velocity shot
+209;snarl
+210;retaliation
+211;footwork
+212;despoil
+213;pianissimo
+214;sekkanoki
+216;elemental siphon
+217;sublimation
+218;addendum white
+219;addendum black
+220;collaborator
+221;saber dance
+222;fan dance
+223;no foot rise
+224;altruism
+225;focalization
+226;tranquility
+227;equanimity
+228;enlightenment
+229;afflatus solace
+230;afflatus misery
+231;composure
+232;yonin
+233;innin
+235;ready
+241;double shot
+243;futae
+258;saboteur
+259;spontaneity
+267;tenuto
+268;marcato
+272;hagakure
+275;issekigan
+286;allies roll
+287;misers roll
+288;companions roll
+289;avengers roll
+294;deus ex automata
+304;konzen-ittai
+306;maintenance
+311;stymie
+319;mikage
+327;bolster
+340;elemental sforzo
+341;Rune enchantment
+342;Ignis
+343;Gelus
+344;Flabra
+345;Tellus
+346;Sulpor
+347;Unda
+348;Lux
+349;Tenebrae
+351;Swordplay
+358;One for all
+363;Ward
+364;Effusion
+367;Vivacious pulse
+369;apogee
+374;naturalists roll
+375;runeists roll
+496;healing ruby
+497;poison nails
+498;shining ruby
+499;glittering ruby
+500;meteorite
+501;healing ruby ii
+502;searing light
+512;moonlit charge
+513;crescent fang
+514;lunar cry
+515;lunar roar
+516;ecliptic growl
+517;ecliptic howl
+518;eclipse bite
+520;howling moon
+528;punch
+529;fire ii
+530;burning strike
+531;double punch
+532;crimson howl
+533;fire iv
+534;flaming crush
+535;meteor strike
+536;inferno
+544;rock throw
+545;stone ii
+546;rock buster
+547;megalith throw
+548;earthen ward
+549;stone iv
+550;mountain buster
+551;geocrush
+552;earthen fury
+560;barracuda dive
+561;water ii
+562;tail whip
+563;spring water
+564;slowga
+565;water iv
+566;spinning dive
+567;grand fall
+568;tidal wave
+576;claw
+577;aero ii
+578;whispering wind
+579;hastega
+580;aerial armor
+581;aero iv
+582;predator claws
+583;wind blade
+584;aerial blast
+592;axe kick
+593;blizzard ii
+594;frost armor
+595;sleepga
+596;double slap
+597;blizzard iv
+598;rush
+599;heavenly strike
+600;diamond dust
+608;shock strike
+609;thunder ii
+610;rolling thunder
+611;thunderspark
+612;lightning armor
+613;thunder iv
+614;chaotic strike
+615;thunderstorm
+616;judgment bolt
+623;healing breath iv
+624;healing breath
+625;healing breath ii
+626;healing breath iii
+627;remove poison
+628;remove blindness
+629;remove paralysis
+630;flame breath
+631;frost breath
+632;gust breath
+633;sand breath
+634;lightning breath
+635;hydro breath
+636;super climb
+637;remove curse
+638;remove disease
+640;camisado
+641;somnolence
+642;nightmare
+643;ultimate terror
+644;noctoshield
+645;dream shroud
+646;nether blast
+656;foot kick
+657;dust cloud
+658;whirl claws
+659;head butt
+660;dream flower
+661;wild oats
+662;leaf dagger
+663;scream
+664;roar
+665;razor fang
+666;claw cyclone
+667;tail blow
+668;fireball
+669;blockhead
+670;brain crush
+671;infrasonics
+672;secretion
+673;lamb chop
+674;rage
+675;sheep charge
+676;sheep song
+677;bubble shower
+678;bubble curtain
+679;big scissors
+680;scissor guard
+681;metallic body
+682;needleshot
+683;??? needles
+684;frogkick
+685;spore
+686;queasyshroom
+687;numbshroom
+688;shakeshroom
+689;silence gas
+690;dark spore
+691;power attack
+692;hi-freq field
+693;rhino attack
+694;rhino guard
+695;spoil
+696;cursed sphere
+697;venom
+698;sandblast
+699;sandpit
+700;venom spray
+701;mandibular bite
+702;soporific
+703;gloeosuccus
+704;palsy pollen
+705;geist wall
+706;numbing noise
+707;nimble snap
+708;cyclotail
+709;toxic spit
+710;double claw
+711;grapple
+712;spinning top
+713;filamented hold
+714;chaotic eye
+715;blaster
+716;suction
+717;drainkiss
+718;snow cloud
+719;wild carrot
+720;sudden lunge
+721;spiral spin
+722;noisome powder
+723;acid mist
+724;tp drainkiss
+726;scythe tail
+727;ripper fang
+728;chomp rush
+729;charged whisker
+730;purulent ooze
+731;corrosive ooze
+732;back heel
+733;jettatura
+734;choke breath
+735;fantod
+736;tortoise stomp
+737;harden shell
+738;aqua breath
+739;wing slap
+740;beak lunge
+741;intimidate
+742;recoil dive
+743;water wall
+744;sensilla blades
+745;tegmina buffet
+746;molting plumage
+747;swooping frenzy
+748;sweeping gouge
+749;zealous snort
+750;pentapeck
+751;tickling tendrils
+752;stink bomb
+753;nectarous deluge
+754;nepenthic plunge
+755;somersault
+757;foul waters
+758;pestilent plume
+759;pecking flurry
+760;sickle slash
+761;acid spray
+762;spider web

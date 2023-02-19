@@ -1,6 +1,0 @@
-file;in-0x025;Item Accepted;Sent when the server will allow you to trade an item.
-
-uint32;$04;Count
-uint16:items;$08;Item;-- 08   If the item is removed, gil is used with a count of zero
-byte;$0A;Trade Slot;-- 0A   Gil itself is in slot 0, whereas the other slots start at 1 and count up horizontally
-byte;$0B;Inventory Index

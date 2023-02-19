@@ -1,5 +1,0 @@
-file;in-0x084;Guild Sell Response;Sell an item to a guild
-
-uint16:items;$04;Item
-byte;$06;Stock
-byte;$07;Count

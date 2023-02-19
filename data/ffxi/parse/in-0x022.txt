@@ -1,6 +1,0 @@
-file;in-0x022;Trade Action;Sent whenever something happens with the trade window.
-
-uint32:@actors;$04;Player ID
-uint32;$08;Trade Type
-uint16;$0C;Index
-uint16;$0E;_junk?

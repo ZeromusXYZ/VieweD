@@ -1,4 +1,0 @@
-file;in-0x0E0;Linkshell Equip;Updates your linkshell menu with the current linkshell
-
-byte;$04;Linkshell Number
-byte;$05;Inventory Slot

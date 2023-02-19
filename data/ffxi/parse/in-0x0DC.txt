@@ -1,7 +1,0 @@
-file;in-0x0DC;Party Invite;Party Invite packet
-
-uint32;$04;Inviter ID
-uint32;$08;Flags?
-string16;$0C;Inviter Name
-uint16;$1C;_unknown?
-uint16;$1E;_junk?

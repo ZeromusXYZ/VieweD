@@ -1,8 +1,0 @@
-updatemaskbitflag;name
-0;[Pos, Rot, Walk]
-1;[Claimer ID]
-2;[HP, Status]
-3;[Name]
-4;[Look]
-5;[Despawn]
-6;[Name2?]

@@ -1,4 +1,0 @@
-file;in-0x04F;Data Download 2;The data that is sent to the client when it is "Downloading data..."
-
-uint32;$04;_unknown1
-

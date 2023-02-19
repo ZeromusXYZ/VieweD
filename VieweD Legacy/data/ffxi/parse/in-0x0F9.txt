@@ -1,0 +1,5 @@
+file;in-0x0F9;Reraise Activation;Reassigns targetable status on reraise activation?
+
+uint32;$04;ID
+uint16;$08;Index
+byte;$0A;Type

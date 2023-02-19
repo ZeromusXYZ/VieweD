@@ -1,0 +1,7 @@
+file;in-0x105;Bazaar Item Listing;The data that is sent to the client when it is "Downloading data..."
+
+uint32;$04;Price
+uint32;$08;Count
+uint16;$0C;Tax
+uint16:items;$0E;Item
+byte;$10;Inventory Index;-- 10   This is the seller's inventory index of the item

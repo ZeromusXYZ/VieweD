@@ -1,7 +1,0 @@
-file;in-0x108;Bazaar visitor;Sent when someone opens your bazaar
-
-uint32;$04;ID
-uint32;$08;Type (Enter/Leave)
-uint16;$0C;_unknown?
-uint16;$0E;Index
-string16;10;Name

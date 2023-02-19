@@ -1,0 +1,6 @@
+file;in-0x0CA;Bazaar Message;Shows another players bazaar message after using the Check command or sets your own on zoning
+
+string124;$04;Bazaar Message
+string16;$80;Player Name
+uint16;$90;Player Title ID
+uint16;$92;_unknown?

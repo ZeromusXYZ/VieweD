@@ -1,7 +1,0 @@
-file;in-0x110;Sparks Update;Occurs when you sparks increase and generates the related message
-
-uint16;$04;Sparks Total;Sparks are currently capped at 50,000
-uint16;$06;_unknown?
-byte;$08;Unity (Shared) Designator;-- 08   Unity (Shared) designator (0=A, 1=B, 2=C, etc.)
-byte;$09;Unity (Person) Designator;-- 09   The game does not distinguish these
-data6;$0A;_unknown?;-- 0A   Currently all 0xFF'd, never seen it change.

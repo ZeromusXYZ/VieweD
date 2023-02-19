@@ -1,5 +1,0 @@
-file;in-0x119;Ability Recasts;Contains the currently available job abilities and their remaining recast times
-
-rem;abilityrecastlist uses sub-offset as count
-info;0;Info;Unused Recast timers are hidden
-abilityrecastlist;$04:31;Ability Recast

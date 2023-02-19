@@ -1,5 +1,0 @@
-file;in-0x082;Guild Buy Response;Buy an item from a guild
-
-uint16:items;$04;Item
-byte;$06;Stock
-byte;$07;Count

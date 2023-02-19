@@ -1,8 +1,0 @@
-file;in-0x085;Guild Sale List;Provides the items, prices, and counts for guild inventories
-
-guildshopitems;$04;Guild Shop Item Entry
-byte;$F4;Item Count
-bits;$F5:0-4;Packet Count
-bits;$F5:4-2;_padding?
-bit;$F5:6;Is First Packet
-bit;$F5:7;Is Last Packet

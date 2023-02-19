@@ -1,6 +1,0 @@
-file;in-0x026;Count to 80;It counts to 80 and does not have any obvious function. May have something to do with populating inventory.
-rem;-- Sent after Item Update chunks for active inventory (sometimes) when zoning.
-
-byte;$04;_unknown1;Seems to be 0x00
-byte;$05;Slot
-data22;$06;_unknown2; Seems to be 0

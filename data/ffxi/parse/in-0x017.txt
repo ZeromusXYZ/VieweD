@@ -1,7 +1,0 @@
-file;in-0x017;Incoming Chat;Packet contains data about incoming chat messages
-
-byte;$04;Chat Mode
-byte;$05;GM flag
-uint16:zones;$06;Zone
-string;$08;Sender Name
-string;$18;Message

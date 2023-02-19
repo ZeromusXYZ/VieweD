@@ -1,0 +1,10 @@
+﻿<doc>
+	<!-- https://www.codeproject.com/Articles/161871/Fast-Colored-TextBox-for-syntax-highlighting-2 -->
+	<brackets left="\[" right="\]" />
+	<style name="Maroon" color="Maroon" fontStyle="Bold" />
+	<style name="Blue" color="Blue" />
+	<style name="Red" color="Red" />
+	<rule style="Blue">.+?(?=\;)</rule>
+	<rule style="Red">\:</rule>
+	<rule style="Maroon">\[|\]</rule>
+</doc>

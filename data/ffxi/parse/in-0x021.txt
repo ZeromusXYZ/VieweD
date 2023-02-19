@@ -1,5 +1,0 @@
-file;in-0x021;Trade Requested;Sent when somebody offers to trade with you.
-
-uint32:@actors;$04;Player ID
-uint16;$08;Index
-uint16;$0A;_junk?

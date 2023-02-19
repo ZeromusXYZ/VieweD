@@ -1,9 +1,0 @@
-file;in-0x032;NPC Interaction 1;Occurs before menus and some cutscenes
-
-uint32;$04;NPC ID
-uint16;$08;NPC Index
-uint16:zones;$0A;Zone
-uint16;$0C;Event ID;-- 0C   Seems to select between menus within a zone
-uint16;$0E;_unknown;Seems to be 0
-byte;$10;_dupeZone?
-data3;$11;_junk?

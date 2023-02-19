@@ -1,0 +1,10 @@
+file;in-0x02D;Kill Message;Packet sent when you gain XP/LP/CP/JP/MP, advance RoE objectives, etc. by defeating a mob.
+
+uint32:@actors;$04;Player ID
+uint32:@actors;$08;Target ID;-- 08   Player ID in the case of RoE log updates
+uint16;$0C;Player Index
+uint16;$0E;Target Index;-- 0E   Player Index in the case of RoE log updates
+uint32;$10;Param 1;-- 10   EXP gained, etc. Numerator for RoE objectives
+uint32;$14;Param 2;-- 14   Denominator for RoE objectives
+uint16;$18;Message;
+uint16;$1A;_flags?;-- 1A   This could also be a third parameter, but I suspect it is flags because I have only ever seen one bit set.

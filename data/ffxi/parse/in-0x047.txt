@@ -1,7 +1,0 @@
-file;in-0x047;Translate Response;Response to a translate request.
-
-uint16;$04;Autotranslate Code;-- 04   In a 6 byte autotranslate code, these are the 5th and 4 bytes respectively.
-byte;$06;Starting Language;-- 06   0 == JP, 1 == EN
-byte;$07;Ending Language;-- 07   0 == JP, 1 == EN
-string64;$08;Initial Phrase
-string64;$48;Translated Phrase;-- 48   Will be 00'd if no match was found.

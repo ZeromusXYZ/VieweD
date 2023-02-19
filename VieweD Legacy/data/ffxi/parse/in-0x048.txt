@@ -1,0 +1,117 @@
+file;in-0x048;Linkshell Concierge;Linkshell Concierge linkshell list response 
+
+info;0;Info;This is send 5 times in total in response to 5 queries by the client
+info;0;Info;First one seems to intialize and sets "slot offset" to 0xFE
+info;0;Info;Next 4 packets contain LS info if the offset isn't set to 0xFF
+info;0;Info;Requires a acompanying 0x05C (dialog info) to be valid
+
+byte;$04;Slot 1 List Offset
+byte;$05;Slot 2 List Offset
+byte;$06;Slot 3 List Offset
+byte;$07;Slot 4 List Offset
+
+switchblock;$04;Begining of List;$FE
+switchblock;$04;End of List;$FF
+switchblock;$04;LinkShell Data;$00,$01,$02,$03,$04,$05,$06,$07,$08,$09,$0A,$0B,$0C,$0D,$0E,$0F
+rem;Concierge should not be able to hold more than 16 entries, so above code should be enough
+
+[[Begining of List]]
+Info;0;Info;Start of Linkshell Concierge List
+uint32;$08;_unknown?
+[[]]
+[[End of List]]
+Info;0;Info;End of Linkshell Concierge List or No Entries in this block
+[[]]
+
+
+[[LinkShell Data]]
+uint16:items;$08;Slot 1 Icon
+uint16:items;$0A;Slot 2 Icon
+uint16:items;$0C;Slot 3 Icon
+uint16:items;$0E;Slot 4 Icon
+
+rem;-- SLOT 1 --
+uint16;$10;LS Slot 1 ID
+uint16;$12;  _0x0000?
+uint16;$14;  _junk?
+uint16;$16;  LS 1 Color
+byte;$18;  _unknown?;
+rem;unknown byte seems to be set to 3 or 0, hangs client interaction until reboot if set to 0 with other info present? not sure what it does
+linkshellstring;$19;  LS 1 Name
+
+rem;-- SLOT 2 --
+uint16;$28;LS Slot 2 ID
+uint16;$2A;  _0x0000?
+uint16;$2C;  _junk?
+uint16;$2E;  LS 2 Color
+byte;$30;  _unknown?;
+linkshellstring;$31;  LS 2 Name
+
+rem;-- SLOT 3 --
+uint16;$40;LS Slot 3 ID
+uint16;$42;  _0x0000?
+uint16;$44;  _junk?
+uint16;$46;  LS 3 Color
+byte;$48;  _unknown?;
+linkshellstring;$49;  LS 3 Name
+
+rem;-- SLOT 4 --
+uint16;$58;LS Slot 4 ID
+uint16;$5A;  _0x0000?
+uint16;$5C;  _junk?
+uint16;$5E;  LS 4 Color
+byte;$60;  _unknown?;
+linkshellstring;$61;  LS 4 Name
+
+uint32;$70;Slot 1 Parameters =>
+bit;$70:0;  Bit0: _active?
+bit;$70:1;  Bit1: Language Japanese
+bit;$70:2;  Bit2: Language English
+bit;$70:3;  Bit3: Unused French?
+bit;$70:4;  Bit4: Unused German?
+bit;$70:5;  Bit5: Language Other
+bits;$70:6-4;  Bit6-9: Pearl Count
+bits:ls_playdays;$71:2-4;  Bit10-13: Active Days
+bits:ls_timezone;$71:6-2;  Bit14-15: Time Zone
+bits:ls_timeslot;$72:0-3;  Bit16-18: Time of Day
+bits;$72:3-12;  Bit19-31: _junk?
+
+uint32;$74;Slot 2 Parameters =>
+bit;$74:0;  Bit0: _active?
+bit;$74:1;  Bit1: Language Japanese
+bit;$74:2;  Bit2: Language English
+bit;$74:3;  Bit3: Unused French?
+bit;$74:4;  Bit4: Unused German?
+bit;$74:5;  Bit5: Language Other
+bits;$74:6-4;  Bit6-9: Pearl Count
+bits:ls_playdays;$75:2-4;  Bit10-13: Active Days
+bits:ls_timezone;$75:6-2;  Bit14-15: Time Zone
+bits:ls_timeslot;$76:0-3;  Bit16-18: Time of Day
+bits;$76:3-12;  Bit19-31: _junk?
+
+uint32;$78;Slot 3 Parameters =>
+bit;$78:0;  Bit0: _active?
+bit;$78:1;  Bit1: Language Japanese
+bit;$78:2;  Bit2: Language English
+bit;$78:3;  Bit3: Unused French?
+bit;$78:4;  Bit4: Unused German?
+bit;$78:5;  Bit5: Language Other
+bits;$78:6-4;  Bit6-9: Pearl Count
+bits:ls_playdays;$78:2-4;  Bit10-13: Active Days
+bits:ls_timezone;$78:6-2;  Bit14-15: Time Zone
+bits:ls_timeslot;$79:0-3;  Bit16-18: Time of Day
+bits;$79:3-12;  Bit19-31: _junk?
+
+uint32;$7C;Slot 4 Parameters =>
+bit;$7C:0;  Bit0: _active?
+bit;$7C:1;  Bit1: Language Japanese
+bit;$7C:2;  Bit2: Language English
+bit;$7C:3;  Bit3: Unused French?
+bit;$7C:4;  Bit4: Unused German?
+bit;$7C:5;  Bit5: Language Other
+bits;$7C:6-4;  Bit6-9: Pearl Count
+bits:ls_playdays;$7D:2-4;  Bit10-13: Active Days
+bits:ls_timezone;$7D:6-2;  Bit14-15: Time Zone
+bits:ls_timeslot;$7E:0-3;  Bit16-18: Time of Day
+bits;$7E:3-12;  Bit19-31: _junk?
+[[]]
