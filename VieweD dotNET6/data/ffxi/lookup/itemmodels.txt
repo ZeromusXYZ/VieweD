@@ -1,0 +1,27 @@
+0x0;None;Empty slot
+0x1000;None;Empty slot
+0x1001;Bandana;head 1
+0x1182;Rarab Cap;head 386
+
+0x2000;None;Empty slot
+0x2001;Leather Vest;body 1
+
+0x3000;None;Empty slot
+0x3001;Leather Gloves;hands 1
+
+0x4000;None;Empty slot
+0x4001;Leather Trousers;legs 1
+
+0x5000;None;Empty slot
+0x5001;Leather Boots;feet 1
+
+0x6000;None;Empty slot
+0x6001;???;main 1
+0x6041;Deathbringer;main 65
+0x62C1;Aettir;main 705
+
+0x7000;None;Empty slot
+0x7001;???;sub 1
+
+0x8000;None;Empty slot
+0x8001;?Halcyon Rod;ranged 1

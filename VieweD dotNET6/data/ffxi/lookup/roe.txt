@@ -1,0 +1,4 @@
+id;name;max
+$00C;Vanquish Multiple Enemies I;200
+$010;Deal 500+ Damage;200
+$04A;Spoils (Earth Crystal);10
