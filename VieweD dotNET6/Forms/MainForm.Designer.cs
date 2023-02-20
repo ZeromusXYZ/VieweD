@@ -41,10 +41,24 @@
             this.MMVersion = new System.Windows.Forms.ToolStripMenuItem();
             this.MMProject = new System.Windows.Forms.ToolStripMenuItem();
             this.MMProjectSave = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+            this.projectDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.videoLinkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MMProjectN1 = new System.Windows.Forms.ToolStripSeparator();
             this.MMProjectSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.MMProjectN2 = new System.Windows.Forms.ToolStripSeparator();
             this.MMProjectClose = new System.Windows.Forms.ToolStripMenuItem();
+            this.MMLinks = new System.Windows.Forms.ToolStripMenuItem();
+            this.MMLinksGitHub = new System.Windows.Forms.ToolStripMenuItem();
+            this.MMLinksDikscord = new System.Windows.Forms.ToolStripMenuItem();
+            this.MMLinksN1 = new System.Windows.Forms.ToolStripSeparator();
+            this.MMLinksKoFi = new System.Windows.Forms.ToolStripMenuItem();
+            this.MMLinksN2 = new System.Windows.Forms.ToolStripSeparator();
+            this.MMLinks7Zip = new System.Windows.Forms.ToolStripMenuItem();
+            this.MMLinks7ZipMain = new System.Windows.Forms.ToolStripMenuItem();
+            this.MMLinks7ZipDownload = new System.Windows.Forms.ToolStripMenuItem();
+            this.MMLinksVLC = new System.Windows.Forms.ToolStripMenuItem();
+            this.MMLinksWireshark = new System.Windows.Forms.ToolStripMenuItem();
             this.StatusBar = new System.Windows.Forms.StatusStrip();
             this.StatusBarProgressBar = new System.Windows.Forms.ToolStripProgressBar();
             this.StatusBarEngineName = new System.Windows.Forms.ToolStripStatusLabel();
@@ -86,7 +100,8 @@
             this.MM.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.MMFile,
             this.MMVersion,
-            this.MMProject});
+            this.MMProject,
+            this.MMLinks});
             resources.ApplyResources(this.MM, "MM");
             this.MM.Name = "MM";
             // 
@@ -103,6 +118,7 @@
             // 
             // MMFileOpen
             // 
+            this.MMFileOpen.Image = global::VieweD.Properties.Resources.document_open_16;
             this.MMFileOpen.Name = "MMFileOpen";
             resources.ApplyResources(this.MMFileOpen, "MMFileOpen");
             this.MMFileOpen.Click += new System.EventHandler(this.MMFileOpen_Click);
@@ -124,6 +140,7 @@
             // 
             // MMFileExit
             // 
+            this.MMFileExit.Image = global::VieweD.Properties.Resources.application_exit_16;
             this.MMFileExit.Name = "MMFileExit";
             resources.ApplyResources(this.MMFileExit, "MMFileExit");
             this.MMFileExit.Click += new System.EventHandler(this.MMFileExit_Click);
@@ -131,13 +148,16 @@
             // MMVersion
             // 
             this.MMVersion.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.MMVersion.Name = "MMVersion";
             resources.ApplyResources(this.MMVersion, "MMVersion");
+            this.MMVersion.Name = "MMVersion";
             // 
             // MMProject
             // 
             this.MMProject.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.MMProjectSave,
+            this.toolStripMenuItem1,
+            this.projectDataToolStripMenuItem,
+            this.videoLinkToolStripMenuItem,
             this.MMProjectN1,
             this.MMProjectSettings,
             this.MMProjectN2,
@@ -147,9 +167,25 @@
             // 
             // MMProjectSave
             // 
+            this.MMProjectSave.Image = global::VieweD.Properties.Resources.document_save_16;
             this.MMProjectSave.Name = "MMProjectSave";
             resources.ApplyResources(this.MMProjectSave, "MMProjectSave");
             this.MMProjectSave.Click += new System.EventHandler(this.MMProjectSave_Click);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            resources.ApplyResources(this.toolStripMenuItem1, "toolStripMenuItem1");
+            // 
+            // projectDataToolStripMenuItem
+            // 
+            this.projectDataToolStripMenuItem.Name = "projectDataToolStripMenuItem";
+            resources.ApplyResources(this.projectDataToolStripMenuItem, "projectDataToolStripMenuItem");
+            // 
+            // videoLinkToolStripMenuItem
+            // 
+            this.videoLinkToolStripMenuItem.Name = "videoLinkToolStripMenuItem";
+            resources.ApplyResources(this.videoLinkToolStripMenuItem, "videoLinkToolStripMenuItem");
             // 
             // MMProjectN1
             // 
@@ -158,6 +194,7 @@
             // 
             // MMProjectSettings
             // 
+            this.MMProjectSettings.Image = global::VieweD.Properties.Resources.document_properties_16;
             this.MMProjectSettings.Name = "MMProjectSettings";
             resources.ApplyResources(this.MMProjectSettings, "MMProjectSettings");
             this.MMProjectSettings.Click += new System.EventHandler(this.MMProjectSettings_Click);
@@ -169,9 +206,97 @@
             // 
             // MMProjectClose
             // 
+            this.MMProjectClose.Image = global::VieweD.Properties.Resources.view_close_16;
             this.MMProjectClose.Name = "MMProjectClose";
             resources.ApplyResources(this.MMProjectClose, "MMProjectClose");
             this.MMProjectClose.Click += new System.EventHandler(this.MMProjectClose_Click);
+            // 
+            // MMLinks
+            // 
+            this.MMLinks.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MMLinksGitHub,
+            this.MMLinksDikscord,
+            this.MMLinksN1,
+            this.MMLinksKoFi,
+            this.MMLinksN2,
+            this.MMLinks7Zip,
+            this.MMLinksVLC,
+            this.MMLinksWireshark});
+            this.MMLinks.Name = "MMLinks";
+            resources.ApplyResources(this.MMLinks, "MMLinks");
+            // 
+            // MMLinksGitHub
+            // 
+            this.MMLinksGitHub.Image = global::VieweD.Properties.Resources.github_mark;
+            this.MMLinksGitHub.Name = "MMLinksGitHub";
+            resources.ApplyResources(this.MMLinksGitHub, "MMLinksGitHub");
+            this.MMLinksGitHub.Tag = "https://github.com/ZeromusXYZ/VieweD";
+            this.MMLinksGitHub.Click += new System.EventHandler(this.MMLinksOpen_Click);
+            // 
+            // MMLinksDikscord
+            // 
+            this.MMLinksDikscord.Image = global::VieweD.Properties.Resources.discord_x32;
+            this.MMLinksDikscord.Name = "MMLinksDikscord";
+            resources.ApplyResources(this.MMLinksDikscord, "MMLinksDikscord");
+            this.MMLinksDikscord.Tag = "https://discord.gg/GhVfDtK";
+            this.MMLinksDikscord.Click += new System.EventHandler(this.MMLinksOpen_Click);
+            // 
+            // MMLinksN1
+            // 
+            this.MMLinksN1.Name = "MMLinksN1";
+            resources.ApplyResources(this.MMLinksN1, "MMLinksN1");
+            // 
+            // MMLinksKoFi
+            // 
+            this.MMLinksKoFi.Image = global::VieweD.Properties.Resources.kofi_p_logo_nolabel_x32;
+            this.MMLinksKoFi.Name = "MMLinksKoFi";
+            resources.ApplyResources(this.MMLinksKoFi, "MMLinksKoFi");
+            this.MMLinksKoFi.Tag = "https://ko-fi.com/zeromusxyz";
+            this.MMLinksKoFi.Click += new System.EventHandler(this.MMLinksOpen_Click);
+            // 
+            // MMLinksN2
+            // 
+            this.MMLinksN2.Name = "MMLinksN2";
+            resources.ApplyResources(this.MMLinksN2, "MMLinksN2");
+            // 
+            // MMLinks7Zip
+            // 
+            this.MMLinks7Zip.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MMLinks7ZipMain,
+            this.MMLinks7ZipDownload});
+            resources.ApplyResources(this.MMLinks7Zip, "MMLinks7Zip");
+            this.MMLinks7Zip.Image = global::VieweD.Properties.Resources._7zip_x64;
+            this.MMLinks7Zip.Name = "MMLinks7Zip";
+            // 
+            // MMLinks7ZipMain
+            // 
+            this.MMLinks7ZipMain.Name = "MMLinks7ZipMain";
+            resources.ApplyResources(this.MMLinks7ZipMain, "MMLinks7ZipMain");
+            this.MMLinks7ZipMain.Tag = "https://www.7-zip.org/";
+            this.MMLinks7ZipMain.Click += new System.EventHandler(this.MMLinksOpen_Click);
+            // 
+            // MMLinks7ZipDownload
+            // 
+            this.MMLinks7ZipDownload.Name = "MMLinks7ZipDownload";
+            resources.ApplyResources(this.MMLinks7ZipDownload, "MMLinks7ZipDownload");
+            this.MMLinks7ZipDownload.Tag = "https://sourceforge.net/p/sevenzip/discussion/45797/thread/adc65bfa/";
+            this.MMLinks7ZipDownload.Click += new System.EventHandler(this.MMLinksOpen_Click);
+            // 
+            // MMLinksVLC
+            // 
+            resources.ApplyResources(this.MMLinksVLC, "MMLinksVLC");
+            this.MMLinksVLC.Image = global::VieweD.Properties.Resources.cone_altglass_2_x48;
+            this.MMLinksVLC.Name = "MMLinksVLC";
+            this.MMLinksVLC.Tag = "https://www.videolan.org/";
+            this.MMLinksVLC.Click += new System.EventHandler(this.MMLinksOpen_Click);
+            // 
+            // MMLinksWireshark
+            // 
+            resources.ApplyResources(this.MMLinksWireshark, "MMLinksWireshark");
+            this.MMLinksWireshark.Image = global::VieweD.Properties.Resources.wireshark_x48;
+            this.MMLinksWireshark.Name = "MMLinksWireshark";
+            this.MMLinksWireshark.Tag = "https://www.wireshark.org/";
+            this.MMLinksWireshark.Click += new System.EventHandler(this.MMLinksOpen_Click);
             // 
             // StatusBar
             // 
@@ -411,5 +536,19 @@
         private ToolStripMenuItem MMProjectSave;
         private ToolStripSeparator MMProjectN1;
         private ImageList ILTabs;
+        private ToolStripMenuItem videoLinkToolStripMenuItem;
+        private ToolStripMenuItem projectDataToolStripMenuItem;
+        private ToolStripSeparator toolStripMenuItem1;
+        private ToolStripMenuItem MMLinks;
+        private ToolStripMenuItem MMLinksGitHub;
+        private ToolStripMenuItem MMLinksDikscord;
+        private ToolStripSeparator MMLinksN1;
+        private ToolStripMenuItem MMLinksKoFi;
+        private ToolStripSeparator MMLinksN2;
+        private ToolStripMenuItem MMLinks7Zip;
+        private ToolStripMenuItem MMLinksVLC;
+        private ToolStripMenuItem MMLinksWireshark;
+        private ToolStripMenuItem MMLinks7ZipMain;
+        private ToolStripMenuItem MMLinks7ZipDownload;
     }
 }

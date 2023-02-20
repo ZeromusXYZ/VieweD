@@ -146,4 +146,10 @@ public class RulesReader
         return new PacketRule(ruleGroup, streamId, level, packetId, description, node);
     }
 
+    public virtual void ParsePacketHeader(BasePacketData packetData)
+    {
+        // Only reset the cursor if not a specific reader
+        packetData.Cursor = 0;
+    }
+
 }

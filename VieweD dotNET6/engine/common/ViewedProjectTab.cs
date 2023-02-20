@@ -70,6 +70,8 @@ public class ViewedProjectTab : TabPage
 
         PacketsListBox.DrawItem += PacketsListBox_DrawItem;
         PacketsListBox.SelectedIndexChanged += PacketsListBox_SelectedIndexChanged;
+        PacketsListBox.DoubleClick += PacketsListBox_DoubleClick;
+
         #endregion
 
         // Initialize Empty Project
@@ -86,6 +88,25 @@ public class ViewedProjectTab : TabPage
         PopulateListBox();
         IsDirty = false;
         OnProjectDataChanged();
+    }
+
+    private void PacketsListBox_DoubleClick(object? sender, EventArgs e)
+    {
+        if (PacketsListBox.Items[PacketsListBox.SelectedIndex] is BasePacketData data)
+        {
+            var rule = InputParser?.Rules?.GetPacketRule(data.PacketDataDirection, GetExpectedStreamIdByPort(data.SourcePort, 0), 0, (ushort)data.PacketId);
+            //rule?.Build();
+            //rule?.RunRule(data);
+            if (rule != null)
+            {
+                RulesEditorForm.OpenRuleEditor(rule, data);
+            }
+            else
+            {
+                MessageBox.Show("No rule linked to this packet", "No rule found", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+            }
+        }
     }
 
     public void OnProjectDataChanged()

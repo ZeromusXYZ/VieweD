@@ -144,7 +144,8 @@
     <value>OUT</value>
   </data>
   <data name="DirectionUnknown" xml:space="preserve">
-    <value>???</value><comment>Unknown, packet list view only</comment>
+    <value>???</value>
+    <comment>Unknown, packet list view only</comment>
   </data>
   <data name="discord_x32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\icons\discord_x32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -227,7 +228,8 @@
     <value>..\resources\icons\wireshark_x48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="UnableToOpenProject" xml:space="preserve">
-    <value>Unable to open project file {0}</value><comment>0: Project Filename</comment>
+    <value>Unable to open project file {0}</value>
+    <comment>0: Project Filename</comment>
   </data>
   <data name="ProjectReadingError" xml:space="preserve">
     <value>Project Reading Error</value>
@@ -237,5 +239,56 @@
   </data>
   <data name="ParserError" xml:space="preserve">
     <value>Parser Error</value>
+  </data>
+  <data name="ConfirmClose" xml:space="preserve">
+    <value>Confirm close</value>
+  </data>
+  <data name="CloseFile" xml:space="preserve">
+    <value>Close {0} ?</value>
+  </data>
+  <data name="application-exit-16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\kde-icons\application-exit-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="application-menu-16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\kde-icons\application-menu-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="document-open-16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\kde-icons\document-open-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="document-open-32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\kde-icons\document-open-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="document-open-folder-16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\kde-icons\document-open-folder-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="document-properties-16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\kde-icons\document-properties-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="document-save-16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\kde-icons\document-save-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="document-save-all-16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\kde-icons\document-save-all-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="document-save-as-16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\kde-icons\document-save-as-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="project-open-16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\kde-icons\project-open-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="document_close_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\kde-icons\document-close-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="view_close_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\kde-icons\view-close-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="window_close_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\kde-icons\window-close-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FailedToOpenUrl" xml:space="preserve">
+    <value>Failed to open {0} with error {1} </value>
+  </data>
+  <data name="FailedToOpen" xml:space="preserve">
+    <value>Failed to open</value>
   </data>
 </root>

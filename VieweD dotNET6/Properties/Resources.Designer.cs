@@ -81,6 +81,26 @@ namespace VieweD.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap application_exit_16 {
+            get {
+                object obj = ResourceManager.GetObject("application-exit-16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap application_menu_16 {
+            get {
+                object obj = ResourceManager.GetObject("application-menu-16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to VieweD .NET 6.0.
         /// </summary>
         internal static string AppTitle {
@@ -110,12 +130,30 @@ namespace VieweD.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Close {0} ?.
+        /// </summary>
+        internal static string CloseFile {
+            get {
+                return ResourceManager.GetString("CloseFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap cone_altglass_2_x48 {
             get {
                 object obj = ResourceManager.GetObject("cone_altglass_2_x48", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm close.
+        /// </summary>
+        internal static string ConfirmClose {
+            get {
+                return ResourceManager.GetString("ConfirmClose", resourceCulture);
             }
         }
         
@@ -153,6 +191,104 @@ namespace VieweD.Properties {
             get {
                 object obj = ResourceManager.GetObject("discord_x32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap document_close_16 {
+            get {
+                object obj = ResourceManager.GetObject("document_close_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap document_open_16 {
+            get {
+                object obj = ResourceManager.GetObject("document-open-16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap document_open_32 {
+            get {
+                object obj = ResourceManager.GetObject("document-open-32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap document_open_folder_16 {
+            get {
+                object obj = ResourceManager.GetObject("document-open-folder-16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap document_properties_16 {
+            get {
+                object obj = ResourceManager.GetObject("document-properties-16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap document_save_16 {
+            get {
+                object obj = ResourceManager.GetObject("document-save-16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap document_save_all_16 {
+            get {
+                object obj = ResourceManager.GetObject("document-save-all-16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap document_save_as_16 {
+            get {
+                object obj = ResourceManager.GetObject("document-save-as-16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to open.
+        /// </summary>
+        internal static string FailedToOpen {
+            get {
+                return ResourceManager.GetString("FailedToOpen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to open {0} with error {1} .
+        /// </summary>
+        internal static string FailedToOpenUrl {
+            get {
+                return ResourceManager.GetString("FailedToOpenUrl", resourceCulture);
             }
         }
         
@@ -310,6 +446,16 @@ namespace VieweD.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap project_open_16 {
+            get {
+                object obj = ResourceManager.GetObject("project-open-16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Project Reading Error.
         /// </summary>
         internal static string ProjectReadingError {
@@ -382,7 +528,7 @@ namespace VieweD.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unable to open project file.
+        ///   Looks up a localized string similar to Unable to open project file {0}.
         /// </summary>
         internal static string UnableToOpenProject {
             get {
@@ -406,6 +552,26 @@ namespace VieweD.Properties {
         internal static System.Drawing.Bitmap usgaiji_9 {
             get {
                 object obj = ResourceManager.GetObject("usgaiji-9", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap view_close_16 {
+            get {
+                object obj = ResourceManager.GetObject("view_close_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap window_close_16 {
+            get {
+                object obj = ResourceManager.GetObject("window_close_16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

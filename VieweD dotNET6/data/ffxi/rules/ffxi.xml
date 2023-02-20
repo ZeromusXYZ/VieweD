@@ -14,22 +14,18 @@ With the current PCapRaw example, it will always report PacketId (type) 0, and l
 		<server port="0"/>
 		<decryptor name=""/>
 		<s2c>
-      <packet type="0x008" desc="Zones Visited">
-        <!-- List of zones you have visited -->
-        <data type="uint" name="uint" />
-      </packet>
-			<packet type="0x00E" desc="NPC Update" 
-              comment="Packet contains info about another PC (i.e. coordinates)" 
-              credits="Various flags updated by KnowOne">
-        <data type="uint" name="NPC" lookup="@actors" />
-        <data type="ushort" name="Index" />
-        <data type="bits" name="Update Mask" bits="8" lookup="npcupdatemask" style="compact" />
-				<data type="dir" name="Direction" />
-				<data type="pos" name="Position" />
-        <data type="ushort" name="Walk Count" desc="Steadily increases until rotation changes. Does not reset while the mob isn't walking. Only goes until 0xFF1F" />
-
-        <data type="byte" name="Speed" pos="0x1C" />
-
+			<packet type="0x008" desc="Zones Visited">
+				<!-- List of zones you have visited -->
+				<data type="uint" name="uint"/>
+			</packet>
+			<packet type="0x00E" desc="NPC Update" comment="Packet contains info about another PC (i.e. coordinates)" credits="Various flags updated by KnowOne">
+				<data type="uint" name="NPC" lookup="@actors"/>
+				<data type="ushort" name="Index"/>
+				<data type="bits" name="Update Mask" bits="8" lookup="npcupdatemask" style="compact"/>
+				<data type="dir" name="Direction"/>
+				<data type="pos" name="Position"/>
+				<data type="ushort" name="Walk Count" desc="Steadily increases until rotation changes. Does not reset while the mob isn't walking. Only goes until 0xFF1F"/>
+				<data type="byte" name="Speed" pos="0x1C"/>
 				<!--
 byte;0x1C;Speed
 byte;0x1D;SubSpeed

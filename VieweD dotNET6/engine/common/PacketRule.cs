@@ -278,6 +278,8 @@ public class PacketRule
 
     public virtual void RunRule(BasePacketData packetData)
     {
+        packetData.ParsedData.Clear();
+        Parent.Parent.ParsePacketHeader(packetData);
         // Settings some defaults
         SetLocalVar("p_size", packetData.PacketDataSize.ToString(CultureInfo.InvariantCulture));
         SetLocalVar("p_type", packetData.PacketId.ToString(CultureInfo.InvariantCulture));

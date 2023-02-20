@@ -1,6 +1,6 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
-using System.Windows.Forms;
 using VieweD.engine.common;
 using VieweD.Helpers.System;
 using VieweD.Properties; // This needs to be made dynamic
@@ -121,11 +121,11 @@ namespace VieweD.Forms
 
             // First check if the opened file is a existing project file
             var expectedProjectFileName = string.Empty;
-            var expectedProjectFolder = string.Empty;
+            string expectedProjectFolder;
             var ext = Path.GetExtension(logFileName).ToLower();
 
             // If the existing file is a project file, try using that
-            if (((ext == ".pvd") || (ext == ".pvlv")) && (File.Exists(logFileName)))
+            if (File.Exists(logFileName) && (ext is ".pvd" or ".pvlv"))
             {
                 expectedProjectFolder = Path.GetDirectoryName(logFileName) ?? string.Empty;
                 expectedProjectFileName = logFileName;
@@ -143,7 +143,7 @@ namespace VieweD.Forms
 
                 // If there is exactly 1 project file found, use it
                 if (projectFiles.Count == 1)
-                    expectedProjectFileName = projectFiles[0] ?? "";
+                    expectedProjectFileName = projectFiles[0];
             }
             else
             {
@@ -179,8 +179,7 @@ namespace VieweD.Forms
 
             project.Text = Helper.MakeTabName(expectedProjectFileName);
 
-            if (project.InputReader == null)
-                project.InputReader = EngineManager.Instance.GetExpectedInputReaderForFile(project, logFileName);
+            project.InputReader ??= EngineManager.Instance.GetExpectedInputReaderForFile(project, logFileName);
 
             if (project.InputReader == null)
             {
@@ -228,11 +227,11 @@ namespace VieweD.Forms
             }
         }
 
-        public static string DepthSpacerVertical = "⁞";
-        public static string DepthSpacerHorizontalSingle = "── ";
-        public static string DepthSpacerHorizontalTop = "┌─ ";
-        public static string DepthSpacerHorizontalMiddle = "├─ ";
-        public static string DepthSpacerHorizontalBottom = "└─ ";
+        private const string DepthSpacerVertical = "⁞";
+        private const string DepthSpacerHorizontalSingle = "── ";
+        private const string DepthSpacerHorizontalTop = "┌─ ";
+        private const string DepthSpacerHorizontalMiddle = "├─ ";
+        private const string DepthSpacerHorizontalBottom = "└─ ";
 
         /// <summary>
         /// Generates a string that can be used as a fake tree view for the Field Grid
@@ -241,7 +240,7 @@ namespace VieweD.Forms
         /// <param name="previousField"></param>
         /// <param name="nextField"></param>
         /// <returns></returns>
-        private string GetNestedString(ParsedField thisField, ParsedField? previousField, ParsedField? nextField)
+        private static string GetNestedString(ParsedField thisField, ParsedField? previousField, ParsedField? nextField)
         {
             var res = string.Empty;
 
@@ -315,10 +314,12 @@ namespace VieweD.Forms
 
                 var nestString = GetNestedString(parsedField, previousField, nextField);
 
-                DataGridViewRow? row = null;
+                DataGridViewRow? row;
                 if (y >= DgvParsed.RowCount)
                 {
+                    #pragma warning disable IDE0017 // Simplify object initialization
                     row = new DataGridViewRow();
+                    #pragma warning restore IDE0017 // Simplify object initialization
                     row.Height = DgvParsed.Font.Height + 4;
                     row.Cells.Add(new DataGridViewTextBoxCell() { Value = parsedField.DisplayedByteOffset });
                     row.Cells.Add(new DataGridViewTextBoxCell() { Value = parsedField.FieldName });
@@ -359,8 +360,10 @@ namespace VieweD.Forms
             #endregion
         }
 
+#pragma warning disable IDE0079 // Remove unnecessary suppression
         [SuppressMessage("ReSharper", "StringLiteralTypo")]
-        private void PacketDataToRichText(BasePacketData packetData, RichTextBox rt)
+#pragma warning restore IDE0079 // Remove unnecessary suppression
+        private static void PacketDataToRichText(BasePacketData packetData, RichTextBox rt)
         {
             rt.Tag = packetData;
             var rtInfo = rt;
@@ -401,7 +404,7 @@ namespace VieweD.Forms
             {
                 var rtfHead = string.Empty;
 
-                rtfHead += "{\\rtf1\\ansi\\ansicpg1252\\deff0\\nouicompat\\deflang2057{\\fonttbl{\\f0\\fnil\\fcharset0 " + Properties.Settings.Default.RawViewFont.Name + ";}}";
+                rtfHead += "{\\rtf1\\ansi\\ansicpg1252\\deff0\\nouicompat\\deflang2057{\\fonttbl{\\f0\\fnil\\fcharset0 " + Settings.Default.RawViewFont.Name + ";}}";
                 rtfHead += "{\\colortbl;";
 
                 foreach (var col in colorTable)
@@ -413,7 +416,7 @@ namespace VieweD.Forms
                 return rtfHead;
             }
 
-            void SetColorBasic(int fieldIndex)
+            void SetColorBasic()
             {
                 SetRtfColor(rtInfo.ForeColor, rtInfo.BackColor);
             }
@@ -423,7 +426,7 @@ namespace VieweD.Forms
                 SetRtfColor(Color.DarkGray, rtInfo.BackColor);
             }
 
-            void SetColorSelect(int fieldIndex, bool forChars)
+            void SetColorSelect()
             {
                 SetRtfColor(Color.Yellow, Color.DarkBlue);
             }
@@ -449,7 +452,7 @@ namespace VieweD.Forms
                     var n = thisByteField != null ? packetData.ParsedData.IndexOf(thisByteField) : 0;
 
                     if (thisByteField?.IsSelected ?? false)
-                        SetColorSelect(n, true);
+                        SetColorSelect();
                     else
                         SetColorNotSelect(n, true);
 
@@ -485,8 +488,8 @@ namespace VieweD.Forms
 
             var addCharCount = 0;
             var moveCursor = true;
-            var endCursor = -1;
-            ParsedField? lastParsedField = null;
+            //var endCursor = -1;
+            //ParsedField? lastParsedField;
             
             for (var i = 0; i < packetData.ByteData.Count; i += 0x10) // note this is +16, not +1
             {
@@ -510,11 +513,11 @@ namespace VieweD.Forms
                             if (thisByteField?.IsSelected ?? false)
                             {
                                 // Is selected field
-                                SetColorSelect(thisByteFieldIndex, false);
+                                SetColorSelect();
                                 if (moveCursor)
                                 {
                                     moveCursor = false;
-                                    endCursor = i + i2;
+                                    //endCursor = i + i2;
                                 }
                             }
                             else
@@ -547,7 +550,7 @@ namespace VieweD.Forms
                         var nextByteFieldIndex = nextByteField != null ? packetData.ParsedData.IndexOf(nextByteField) : -1;
 
                         if (thisByteFieldIndex != nextByteFieldIndex)
-                            SetColorBasic(nextByteFieldIndex);
+                            SetColorBasic();
                     }
                     else
                     {
@@ -563,7 +566,7 @@ namespace VieweD.Forms
                         rtf += " ";
                     }
 
-                    lastParsedField = thisByteField;
+                    //lastParsedField = thisByteField;
                 }
 
                 if (addCharCount > 0)
@@ -600,16 +603,16 @@ namespace VieweD.Forms
 
         private void DgvParsed_SelectionChanged(object sender, EventArgs e)
         {
-            if ((sender is not DataGridView Dgv) || (Dgv.Tag is not BasePacketData packetData))
+            if ((sender is not DataGridView { Tag: BasePacketData packetData } dataGridView))
                 return;
 
             // check if parsed field count actually matches the row count of the grid
-            if (Dgv.RowCount != packetData.ParsedData.Count)
+            if (dataGridView.RowCount != packetData.ParsedData.Count)
                 return;
 
-            for (var i = 0; i < Dgv.Rows.Count; i++)
+            for (var i = 0; i < dataGridView.Rows.Count; i++)
             {
-                var dgvRow = Dgv.Rows[i];
+                var dgvRow = dataGridView.Rows[i];
                 packetData.ParsedData[i].IsSelected = dgvRow.Selected;
             }
 
@@ -792,12 +795,35 @@ namespace VieweD.Forms
                 if (imageRect.Contains(e.Location))
                 {
                     var tabText = tabControl.TabPages[i]?.Text ?? "Tab";
-                    if (MessageBox.Show("Close " + tabText + " ?", 
-                            "Confirm close", 
+                    if (MessageBox.Show(string.Format(Resources.CloseFile,tabText),
+                            Resources.ConfirmClose, 
                             MessageBoxButtons.YesNo,
                             MessageBoxIcon.Question) == DialogResult.Yes)
                         tabControl.TabPages[i].Dispose();// .RemoveAt(i);
                     return;
+                }
+            }
+        }
+
+        private void MMLinksOpen_Click(object sender, EventArgs e)
+        {
+            if ((sender is ToolStripMenuItem menuItem) && 
+                (menuItem.Tag is string url) &&
+                (string.IsNullOrWhiteSpace(url) == false))
+            {
+                try
+                {
+                    var psi = new ProcessStartInfo
+                    {
+                        UseShellExecute = true,
+                        FileName = url
+                    };
+                    Process.Start(psi);
+                }
+                catch (Exception exception)
+                {
+                    MessageBox.Show(string.Format(Resources.FailedToOpenUrl, url, exception.Message), Resources.FailedToOpen, 
+                        MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
             }
         }

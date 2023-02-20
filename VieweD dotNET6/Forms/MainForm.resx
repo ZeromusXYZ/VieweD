@@ -98,6 +98,10 @@
   <data name="MMFile.Text" xml:space="preserve">
     <value>&amp;File</value>
   </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="MMVersion.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
   <data name="MMVersion.Size" type="System.Drawing.Size, System.Drawing">
     <value>57, 20</value>
   </data>
@@ -112,6 +116,21 @@
   </data>
   <data name="MMProjectSave.Text" xml:space="preserve">
     <value>&amp;Save</value>
+  </data>
+  <data name="toolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>145, 6</value>
+  </data>
+  <data name="projectDataToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>148, 22</value>
+  </data>
+  <data name="projectDataToolStripMenuItem.Text" xml:space="preserve">
+    <value>Game Data ...</value>
+  </data>
+  <data name="videoLinkToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>148, 22</value>
+  </data>
+  <data name="videoLinkToolStripMenuItem.Text" xml:space="preserve">
+    <value>Video Link ...</value>
   </data>
   <data name="MMProjectN1.Size" type="System.Drawing.Size, System.Drawing">
     <value>145, 6</value>
@@ -140,18 +159,86 @@
   <data name="MMProject.Text" xml:space="preserve">
     <value>&amp;Project</value>
   </data>
+  <data name="MMLinksGitHub.Size" type="System.Drawing.Size, System.Drawing">
+    <value>199, 22</value>
+  </data>
+  <data name="MMLinksGitHub.Text" xml:space="preserve">
+    <value>Source Code on GitHub</value>
+  </data>
+  <data name="MMLinksDikscord.Size" type="System.Drawing.Size, System.Drawing">
+    <value>199, 22</value>
+  </data>
+  <data name="MMLinksDikscord.Text" xml:space="preserve">
+    <value>Join Discord</value>
+  </data>
+  <data name="MMLinksN1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>196, 6</value>
+  </data>
+  <data name="MMLinksKoFi.Size" type="System.Drawing.Size, System.Drawing">
+    <value>199, 22</value>
+  </data>
+  <data name="MMLinksKoFi.Text" xml:space="preserve">
+    <value>Buy me a coffee</value>
+  </data>
+  <data name="MMLinksN2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>196, 6</value>
+  </data>
+  <data name="MMLinks7ZipMain.Size" type="System.Drawing.Size, System.Drawing">
+    <value>216, 22</value>
+  </data>
+  <data name="MMLinks7ZipMain.Text" xml:space="preserve">
+    <value>Visit 7-Zip site</value>
+  </data>
+  <data name="MMLinks7ZipDownload.Size" type="System.Drawing.Size, System.Drawing">
+    <value>216, 22</value>
+  </data>
+  <data name="MMLinks7ZipDownload.Text" xml:space="preserve">
+    <value>Download required version</value>
+  </data>
+  <data name="MMLinks7Zip.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="MMLinks7Zip.Size" type="System.Drawing.Size, System.Drawing">
+    <value>199, 22</value>
+  </data>
+  <data name="MMLinks7Zip.Text" xml:space="preserve">
+    <value>7-zip</value>
+  </data>
+  <data name="MMLinksVLC.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="MMLinksVLC.Size" type="System.Drawing.Size, System.Drawing">
+    <value>199, 22</value>
+  </data>
+  <data name="MMLinksVLC.Text" xml:space="preserve">
+    <value>Visit VideoLAN VLC site</value>
+  </data>
+  <data name="MMLinksWireshark.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="MMLinksWireshark.Size" type="System.Drawing.Size, System.Drawing">
+    <value>199, 22</value>
+  </data>
+  <data name="MMLinksWireshark.Text" xml:space="preserve">
+    <value>Visit Wireshark site</value>
+  </data>
+  <data name="MMLinks.Size" type="System.Drawing.Size, System.Drawing">
+    <value>46, 20</value>
+  </data>
+  <data name="MMLinks.Text" xml:space="preserve">
+    <value>Links</value>
+  </data>
   <data name="MM.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
   </data>
   <data name="MM.Size" type="System.Drawing.Size, System.Drawing">
     <value>1008, 24</value>
   </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="MM.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
   <data name="MM.Text" xml:space="preserve">
-    <value>menuStrip1</value>
+    <value>mainmenu</value>
   </data>
   <data name="&gt;&gt;MM.Name" xml:space="preserve">
     <value>MM</value>
@@ -354,7 +441,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAEZTeXN0ZW0uV2luZG93cy5Gb3JtcywgQ3VsdHVyZT1uZXV0cmFs
         LCBQdWJsaWNLZXlUb2tlbj1iNzdhNWM1NjE5MzRlMDg5BQEAAAAmU3lzdGVtLldpbmRvd3MuRm9ybXMu
         SW1hZ2VMaXN0U3RyZWFtZXIBAAAABERhdGEHAgIAAAAJAwAAAA8DAAAAUgsAAAJNU0Z0AUkBTAIBAQQB
-        AAEwAQABMAEAARABAAEQAQAE/wEJAQAI/wFCAU0BNgEEBgABNgEEAgABKAMAAUADAAEgAwABAQEAAQgG
+        AAFQAQABUAEAARABAAEQAQAE/wEJAQAI/wFCAU0BNgEEBgABNgEEAgABKAMAAUADAAEgAwABAQEAAQgG
         AAEIGAABgAIAAYADAAKAAQABgAMAAYABAAGAAQACgAIAA8ABAAHAAdwBwAEAAfABygGmAQABMwUAATMB
         AAEzAQABMwEAAjMCAAMWAQADHAEAAyIBAAMpAQADVQEAA00BAANCAQADOQEAAYABfAH/AQACUAH/AQAB
         kwEAAdYBAAH/AewBzAEAAcYB1gHvAQAB1gLnAQABkAGpAa0CAAH/ATMDAAFmAwABmQMAAcwCAAEzAwAC
@@ -822,6 +909,24 @@
   <data name="&gt;&gt;MMProjectSave.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;toolStripMenuItem1.Name" xml:space="preserve">
+    <value>toolStripMenuItem1</value>
+  </data>
+  <data name="&gt;&gt;toolStripMenuItem1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;projectDataToolStripMenuItem.Name" xml:space="preserve">
+    <value>projectDataToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;projectDataToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;videoLinkToolStripMenuItem.Name" xml:space="preserve">
+    <value>videoLinkToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;videoLinkToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;MMProjectN1.Name" xml:space="preserve">
     <value>MMProjectN1</value>
   </data>
@@ -844,6 +949,72 @@
     <value>MMProjectClose</value>
   </data>
   <data name="&gt;&gt;MMProjectClose.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MMLinks.Name" xml:space="preserve">
+    <value>MMLinks</value>
+  </data>
+  <data name="&gt;&gt;MMLinks.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MMLinksGitHub.Name" xml:space="preserve">
+    <value>MMLinksGitHub</value>
+  </data>
+  <data name="&gt;&gt;MMLinksGitHub.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MMLinksDikscord.Name" xml:space="preserve">
+    <value>MMLinksDikscord</value>
+  </data>
+  <data name="&gt;&gt;MMLinksDikscord.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MMLinksN1.Name" xml:space="preserve">
+    <value>MMLinksN1</value>
+  </data>
+  <data name="&gt;&gt;MMLinksN1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MMLinksKoFi.Name" xml:space="preserve">
+    <value>MMLinksKoFi</value>
+  </data>
+  <data name="&gt;&gt;MMLinksKoFi.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MMLinksN2.Name" xml:space="preserve">
+    <value>MMLinksN2</value>
+  </data>
+  <data name="&gt;&gt;MMLinksN2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MMLinks7Zip.Name" xml:space="preserve">
+    <value>MMLinks7Zip</value>
+  </data>
+  <data name="&gt;&gt;MMLinks7Zip.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MMLinks7ZipMain.Name" xml:space="preserve">
+    <value>MMLinks7ZipMain</value>
+  </data>
+  <data name="&gt;&gt;MMLinks7ZipMain.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MMLinks7ZipDownload.Name" xml:space="preserve">
+    <value>MMLinks7ZipDownload</value>
+  </data>
+  <data name="&gt;&gt;MMLinks7ZipDownload.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MMLinksVLC.Name" xml:space="preserve">
+    <value>MMLinksVLC</value>
+  </data>
+  <data name="&gt;&gt;MMLinksVLC.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MMLinksWireshark.Name" xml:space="preserve">
+    <value>MMLinksWireshark</value>
+  </data>
+  <data name="&gt;&gt;MMLinksWireshark.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;StatusBarProgressBar.Name" xml:space="preserve">
