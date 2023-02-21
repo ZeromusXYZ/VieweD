@@ -1,7 +1,9 @@
-﻿using System.Diagnostics;
+﻿using System.Data;
+using System.Diagnostics;
 using System.Globalization;
 using System.Text;
 using System.Xml;
+using VieweD.Forms;
 using VieweD.Helpers.System;
 
 namespace VieweD.engine.common;
@@ -228,7 +230,7 @@ public class PacketRule
                 res = new RulesActionDoubleArithmeticOperation(this, parentAction, actionNode, step, "val", "=", "", "dst");
                 break;
             case "loop":
-                res = new RulesActionLoop(this, parentAction, actionNode, step);
+                res = new RulesActionLoop(this, parentAction, actionNode, step, "max");
                 break;
             case "break":
                 res = new RulesActionBreak(this, parentAction, actionNode, step);
@@ -262,6 +264,7 @@ public class PacketRule
 
     public void Build()
     {
+        LocalVars.Clear();
         Actions.Clear();
         for (var i = 0; i < RootNode.ChildNodes.Count; i++)
         {
@@ -284,8 +287,8 @@ public class PacketRule
         SetLocalVar("p_size", packetData.PacketDataSize.ToString(CultureInfo.InvariantCulture));
         SetLocalVar("p_type", packetData.PacketId.ToString(CultureInfo.InvariantCulture));
         //SetLocalVar("p_level", packetData.OriginalPacketLevel.ToString(CultureInfo.InvariantCulture));
-        SetLocalVar("pSize", packetData.PacketDataSize.ToString(CultureInfo.InvariantCulture));
-        SetLocalVar("pType", packetData.PacketId.ToString(CultureInfo.InvariantCulture));
+        //SetLocalVar("pSize", packetData.PacketDataSize.ToString(CultureInfo.InvariantCulture));
+        //SetLocalVar("pType", packetData.PacketId.ToString(CultureInfo.InvariantCulture));
         //SetLocalVar("pLevel", packetData.OriginalPacketLevel.ToString(CultureInfo.InvariantCulture));
 
         // Run all actions
@@ -305,10 +308,11 @@ public class PacketRule
 
     public void SetLocalVar(string name, string newValue)
     {
+        newValue = newValue.TrimEnd().TrimEnd('\0');
         if (LocalVars.TryGetValue(name, out _))
             LocalVars.Remove(name);
         LocalVars.Add(name, newValue);
-        if (Properties.Settings.Default.ShowDebugInfo)
+        if (MainForm.Instance?.ShowDebugInfo ?? false)
             Debug.WriteLine($"SetLocalVar({name},{newValue})");
     }
 

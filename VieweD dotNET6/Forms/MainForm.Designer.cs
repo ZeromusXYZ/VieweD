@@ -73,6 +73,11 @@
             this.DgvPosition = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DgvName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DgvValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MiFieldView = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.MiFieldFields = new System.Windows.Forms.ToolStripMenuItem();
+            this.MIFieldLocalVars = new System.Windows.Forms.ToolStripMenuItem();
+            this.MiFieldN1 = new System.Windows.Forms.ToolStripSeparator();
+            this.MiFieldDebug = new System.Windows.Forms.ToolStripMenuItem();
             this.openProjectFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.SplitContainerListAndFields = new System.Windows.Forms.SplitContainer();
             this.SplitContainerFieldsAndRawData = new System.Windows.Forms.SplitContainer();
@@ -84,6 +89,7 @@
             this.TPWelcome.SuspendLayout();
             this.TPWelcomeLayout.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DgvParsed)).BeginInit();
+            this.MiFieldView.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SplitContainerListAndFields)).BeginInit();
             this.SplitContainerListAndFields.Panel1.SuspendLayout();
             this.SplitContainerListAndFields.Panel2.SuspendLayout();
@@ -396,6 +402,7 @@
             this.DgvPosition,
             this.DgvName,
             this.DgvValue});
+            this.DgvParsed.ContextMenuStrip = this.MiFieldView;
             resources.ApplyResources(this.DgvParsed, "DgvParsed");
             this.DgvParsed.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnF2;
             this.DgvParsed.Name = "DgvParsed";
@@ -425,6 +432,42 @@
             resources.ApplyResources(this.DgvValue, "DgvValue");
             this.DgvValue.MaxInputLength = 4096;
             this.DgvValue.Name = "DgvValue";
+            // 
+            // MiFieldView
+            // 
+            this.MiFieldView.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MiFieldFields,
+            this.MIFieldLocalVars,
+            this.MiFieldN1,
+            this.MiFieldDebug});
+            this.MiFieldView.Name = "MiFieldView";
+            resources.ApplyResources(this.MiFieldView, "MiFieldView");
+            this.MiFieldView.Opening += new System.ComponentModel.CancelEventHandler(this.MiFieldView_Opening);
+            // 
+            // MiFieldFields
+            // 
+            this.MiFieldFields.Checked = true;
+            this.MiFieldFields.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.MiFieldFields.Name = "MiFieldFields";
+            resources.ApplyResources(this.MiFieldFields, "MiFieldFields");
+            this.MiFieldFields.Click += new System.EventHandler(this.MiFieldFields_Click);
+            // 
+            // MIFieldLocalVars
+            // 
+            this.MIFieldLocalVars.Name = "MIFieldLocalVars";
+            resources.ApplyResources(this.MIFieldLocalVars, "MIFieldLocalVars");
+            this.MIFieldLocalVars.Click += new System.EventHandler(this.MIFieldLocalVars_Click);
+            // 
+            // MiFieldN1
+            // 
+            this.MiFieldN1.Name = "MiFieldN1";
+            resources.ApplyResources(this.MiFieldN1, "MiFieldN1");
+            // 
+            // MiFieldDebug
+            // 
+            this.MiFieldDebug.Name = "MiFieldDebug";
+            resources.ApplyResources(this.MiFieldDebug, "MiFieldDebug");
+            this.MiFieldDebug.Click += new System.EventHandler(this.MiFieldDebug_Click);
             // 
             // openProjectFileDialog
             // 
@@ -487,6 +530,7 @@
             this.TPWelcome.ResumeLayout(false);
             this.TPWelcomeLayout.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.DgvParsed)).EndInit();
+            this.MiFieldView.ResumeLayout(false);
             this.SplitContainerListAndFields.Panel1.ResumeLayout(false);
             this.SplitContainerListAndFields.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.SplitContainerListAndFields)).EndInit();
@@ -550,5 +594,10 @@
         private ToolStripMenuItem MMLinksWireshark;
         private ToolStripMenuItem MMLinks7ZipMain;
         private ToolStripMenuItem MMLinks7ZipDownload;
+        private ContextMenuStrip MiFieldView;
+        private ToolStripMenuItem MiFieldFields;
+        private ToolStripMenuItem MIFieldLocalVars;
+        private ToolStripSeparator MiFieldN1;
+        private ToolStripMenuItem MiFieldDebug;
     }
 }

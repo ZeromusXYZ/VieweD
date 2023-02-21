@@ -250,7 +250,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;MM.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <metadata name="StatusBar.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>91, 17</value>
@@ -307,7 +307,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;StatusBar.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="TCProjects.Alignment" type="System.Windows.Forms.TabAlignment, System.Windows.Forms">
     <value>Left</value>
@@ -441,7 +441,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAEZTeXN0ZW0uV2luZG93cy5Gb3JtcywgQ3VsdHVyZT1uZXV0cmFs
         LCBQdWJsaWNLZXlUb2tlbj1iNzdhNWM1NjE5MzRlMDg5BQEAAAAmU3lzdGVtLldpbmRvd3MuRm9ybXMu
         SW1hZ2VMaXN0U3RyZWFtZXIBAAAABERhdGEHAgIAAAAJAwAAAA8DAAAAUgsAAAJNU0Z0AUkBTAIBAQQB
-        AAFQAQABUAEAARABAAEQAQAE/wEJAQAI/wFCAU0BNgEEBgABNgEEAgABKAMAAUADAAEgAwABAQEAAQgG
+        AAFwAQABcAEAARABAAEQAQAE/wEJAQAI/wFCAU0BNgEEBgABNgEEAgABKAMAAUADAAEgAwABAQEAAQgG
         AAEIGAABgAIAAYADAAKAAQABgAMAAYABAAGAAQACgAIAA8ABAAHAAdwBwAEAAfABygGmAQABMwUAATMB
         AAEzAQABMwEAAjMCAAMWAQADHAEAAyIBAAMpAQADVQEAA00BAANCAQADOQEAAYABfAH/AQACUAH/AQAB
         kwEAAdYBAAH/AewBzAEAAcYB1gHvAQAB1gLnAQABkAGpAa0CAAH/ATMDAAFmAwABmQMAAcwCAAEzAwAC
@@ -548,6 +548,39 @@
   </data>
   <data name="DgvValue.MinimumWidth" type="System.Int32, mscorlib">
     <value>20</value>
+  </data>
+  <metadata name="MiFieldView.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>451, 17</value>
+  </metadata>
+  <data name="MiFieldFields.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
+  </data>
+  <data name="MiFieldFields.Text" xml:space="preserve">
+    <value>Fields</value>
+  </data>
+  <data name="MIFieldLocalVars.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
+  </data>
+  <data name="MIFieldLocalVars.Text" xml:space="preserve">
+    <value>Local Vars</value>
+  </data>
+  <data name="MiFieldN1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>177, 6</value>
+  </data>
+  <data name="MiFieldDebug.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
+  </data>
+  <data name="MiFieldDebug.Text" xml:space="preserve">
+    <value>Debug information</value>
+  </data>
+  <data name="MiFieldView.Size" type="System.Drawing.Size, System.Drawing">
+    <value>181, 98</value>
+  </data>
+  <data name="&gt;&gt;MiFieldView.Name" xml:space="preserve">
+    <value>MiFieldView</value>
+  </data>
+  <data name="&gt;&gt;MiFieldView.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="DgvParsed.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -757,7 +790,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;SplitContainerListAndFields.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -1058,6 +1091,30 @@
   </data>
   <data name="&gt;&gt;DgvValue.Type" xml:space="preserve">
     <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MiFieldFields.Name" xml:space="preserve">
+    <value>MiFieldFields</value>
+  </data>
+  <data name="&gt;&gt;MiFieldFields.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MIFieldLocalVars.Name" xml:space="preserve">
+    <value>MIFieldLocalVars</value>
+  </data>
+  <data name="&gt;&gt;MIFieldLocalVars.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MiFieldN1.Name" xml:space="preserve">
+    <value>MiFieldN1</value>
+  </data>
+  <data name="&gt;&gt;MiFieldN1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MiFieldDebug.Name" xml:space="preserve">
+    <value>MiFieldDebug</value>
+  </data>
+  <data name="&gt;&gt;MiFieldDebug.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;openProjectFileDialog.Name" xml:space="preserve">
     <value>openProjectFileDialog</value>

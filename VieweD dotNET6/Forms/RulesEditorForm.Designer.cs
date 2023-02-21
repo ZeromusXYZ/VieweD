@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RulesEditorForm));
             this.RuleEdit = new FastColoredTextBoxNS.FastColoredTextBox();
+            this.MiInsert = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
@@ -67,6 +68,7 @@
             this.RuleEdit.CharHeight = 14;
             this.RuleEdit.CharWidth = 8;
             this.RuleEdit.CommentPrefix = null;
+            this.RuleEdit.ContextMenuStrip = this.MiInsert;
             this.RuleEdit.DefaultMarkerSize = 8;
             this.RuleEdit.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.RuleEdit.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -87,6 +89,11 @@
             this.RuleEdit.Text = "<ruledata />";
             this.RuleEdit.Zoom = 100;
             this.RuleEdit.TextChanged += new System.EventHandler<FastColoredTextBoxNS.TextChangedEventArgs>(this.RuleEdit_TextChanged);
+            // 
+            // MiInsert
+            // 
+            this.MiInsert.Name = "MiInsert";
+            this.MiInsert.Size = new System.Drawing.Size(181, 26);
             // 
             // tableLayoutPanel1
             // 
@@ -224,5 +231,6 @@
         private Button BtnTest;
         private Panel panel4;
         private Panel panel3;
+        private ContextMenuStrip MiInsert;
     }
 }

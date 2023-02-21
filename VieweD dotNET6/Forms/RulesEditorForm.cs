@@ -1,5 +1,6 @@
 ﻿using System.Data;
 using System.Xml;
+using System.Xml.Linq;
 using VieweD.engine.common;
 using VieweD.Helpers.System;
 
@@ -24,6 +25,7 @@ namespace VieweD.Forms
             editor.Show();
             editor.BringToFront();
             editor.RuleEdit.Focus();
+            editor.BuildInsertMenu();
         }
 
         private void RulesEditorForm_FormClosed(object sender, FormClosedEventArgs e)
@@ -156,11 +158,11 @@ namespace VieweD.Forms
         {
             var lines = ruleText.Replace("\r", "").FormatXml(true, false, "\t", ConformanceLevel.Fragment).Split("\n").ToList();
             var resLines = new List<string>();
-            var indentCount = 0;
+
             var nextIndentCount = 0;
             foreach (var theLine in lines)
             {
-                indentCount = nextIndentCount;
+                var indentCount = nextIndentCount;
                 var line = theLine.Replace("\r", "").Trim();
 
                 // check single line tag
@@ -226,6 +228,100 @@ namespace VieweD.Forms
         private void RuleEdit_TextChanged(object sender, FastColoredTextBoxNS.TextChangedEventArgs e)
         {
             BtnSave.Enabled = true;
+        }
+
+        public ToolStripMenuItem? AddMenuItem(ToolStripItemCollection toolStripItemCollection, string title, string command)
+        {
+            var reader = Rule?.Parent?.Parent;
+            if (reader == null)
+                return null;
+
+            if ((title == "-") || (title == ""))
+            {
+                var si = new ToolStripSeparator();
+                toolStripItemCollection.Add(si);
+                return null;
+            }
+
+            var ni = new ToolStripMenuItem();
+
+            ni.Text = title;
+            ni.Tag = command;
+            ni.Click += miCustomInsert_Click;
+            toolStripItemCollection.Add(ni);
+            return ni;
+        }
+
+        private void miCustomInsert_Click(object? sender, EventArgs? e)
+        {
+            if (sender is not ToolStripMenuItem { Tag: string insertText }) 
+                return;
+
+            var currentCursorStart = RuleEdit.SelectionStart;
+            var hasCursorMarker = insertText.IndexOf('|') >= 0;
+            var lineCount = insertText.Split('\n').Length;
+
+            if (lineCount > 1)
+            {
+                RuleEdit.SelectedText = insertText;
+                RuleEdit.SelectionStart = currentCursorStart;
+                RuleEdit.SelectionLength = 0;
+                return;
+            }
+
+            if (!hasCursorMarker)
+            {
+                RuleEdit.SelectedText = insertText;
+                RuleEdit.SelectionStart = currentCursorStart;
+                RuleEdit.SelectionLength = insertText.Length;
+                return;
+            }
+
+            var insertSplit = insertText.Split('|');
+            var mergedInsertText = string.Concat(insertSplit);
+            if (insertSplit.Length == 2)
+            {
+                // only one marker
+                RuleEdit.SelectedText = mergedInsertText;
+                RuleEdit.SelectionStart = currentCursorStart + insertSplit[0].Length;
+                RuleEdit.SelectionLength = 0;
+            }
+            else
+            if (insertSplit.Length == 3)
+            {
+                // two markers (select range)
+                RuleEdit.SelectedText = mergedInsertText;
+                RuleEdit.SelectionStart = currentCursorStart + insertSplit[0].Length;
+                RuleEdit.SelectionLength = insertSplit[1].Length;
+            }
+            else
+            {
+                // more than 2 markers, just insert the entire thing as normal
+                RuleEdit.SelectedText = insertText;
+                RuleEdit.SelectionStart = currentCursorStart;
+                RuleEdit.SelectionLength = insertText.Length;
+            }
+        }
+
+        private void BuildInsertMenu()
+        {
+            if (RuleEdit.SelectedText.Length > 0)
+                MiInsert.Text = "Replace";
+            else
+                MiInsert.Text = "Insert";
+            MiInsert.Items.Clear();
+
+            Rule?.Parent?.Parent.BuildEditorPopupMenu(MiInsert, this);
+        }
+
+        private void MiInsert_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            
+        }
+
+        private void RulesEditorForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

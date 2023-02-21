@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Text;
 using System.Xml;
+using VieweD.Forms;
 using VieweD.Helpers.System;
 
 namespace VieweD.engine.common;
@@ -375,11 +376,10 @@ public class RulesActionReadArray : RulesAction
     {
         GotoStartPosition(packetData);
         var pos = packetData.Cursor;
-        var size = 0;
         var sizeAttribute = XmlHelper.GetAttributeString(Attributes, "arg");
         var varName = XmlHelper.GetAttributeString(Attributes, "name");
 
-        ParentRule.TryGetLocalInt(sizeAttribute, 0, out size);
+        ParentRule.TryGetLocalInt(sizeAttribute, 0, out var size);
 
         if (size <= 0)
         {
@@ -400,7 +400,7 @@ public class RulesActionReadArray : RulesAction
 /// </summary>
 public class RulesActionReadUnixTimeStamp : RulesAction
 {
-    private static DateTime _unixTime = DateTimeOffset.FromUnixTimeSeconds(0).DateTime;
+    private static readonly DateTime UnixTime = DateTimeOffset.FromUnixTimeSeconds(0).DateTime;
 
     public RulesActionReadUnixTimeStamp(PacketRule parent, RulesAction? parentAction, XmlNode thisNode, int thisStep, bool reversed) : base(parent, parentAction, thisNode, thisStep, reversed)
     {
@@ -415,7 +415,7 @@ public class RulesActionReadUnixTimeStamp : RulesAction
         string dataString;
         try 
         {
-            var d = _unixTime.AddSeconds(data);
+            var d = UnixTime.AddSeconds(data);
             dataString = d + " (0x" + data.ToHex() + ")";
         }
         catch
@@ -446,7 +446,7 @@ public class RulesActionReadString : RulesAction
     {
         GotoStartPosition(packetData);
         var pos = packetData.Cursor;
-        var size = 0;
+        int size;
         var sizeFieldSize = 0;
 
         if (_includesSize)
@@ -462,21 +462,34 @@ public class RulesActionReadString : RulesAction
 
         var varName = XmlHelper.GetAttributeString(Attributes, "name");
 
+        // var untilNullChar = (size == 0);
+        // when size arg is -1, keep reading everything until end of packet
+        if (size == -1)
+            size = packetData.ByteData.Count - pos - sizeFieldSize;
+
         var d = packetData.GetDataBytesAtPos(pos + sizeFieldSize, size);
         string stringVal;
         var hexVal = string.Empty;
         try
         {
-            if (size > 0)
+            var isNull = true;
+            foreach (var dChar in d)
+            {
+                if (dChar != 0)
+                    isNull = false;
+            }
+
+            if ((size > 0) && (!isNull))
             {
                 stringVal = _enc.GetString(d);
+
                 if (Properties.Settings.Default.ShowStringHexData)
                 {
-                    foreach (char c in d)
+                    foreach (var c in d)
                     {
                         if (hexVal != string.Empty)
                             hexVal += " ";
-                        hexVal += ((byte)c).ToString("X2");
+                        hexVal += (c).ToString("X2");
                     }
                     hexVal = " (" + hexVal + ")";
                 }
@@ -536,7 +549,6 @@ public class RulesActionCompareOperation : RulesAction
     {
         GotoStartPosition(packetData);
         InternalLoopActionResult = LoopActionResult.Normal;
-        long val1 = 0;
         var val1Attribute = XmlHelper.GetAttributeString(Attributes, _arg1Name);
 
         if (val1Attribute == string.Empty)
@@ -545,13 +557,13 @@ public class RulesActionCompareOperation : RulesAction
             return;
         }
 
-        if (!ParentRule.TryGetLocalLong(val1Attribute, 0, out val1))
+        if (!ParentRule.TryGetLocalLong(val1Attribute, 0, out var val1))
         {
             packetData.AddParsedError("A" + GetActionStepName(), Node.Name, "Invalid " + _arg1Name + ": " + val1Attribute, Depth);
             return;
         }
 
-        long val2 = 0;
+        long val2;
         var val2Attribute = "";
         
         if ((_arg2Name != string.Empty) && (_arg2Name != "0"))
@@ -602,9 +614,9 @@ public class RulesActionCompareOperation : RulesAction
                 break;
         }
 
-        if (Properties.Settings.Default.ShowDebugInfo)
+        if (MainForm.Instance?.ShowDebugInfo ?? false)
         {
-            packetData.AddParsedError("A" + GetActionStepName(), Node.Name, "(" + val1.ToString() + " " + _operatorName + " " + val2.ToString() + ") => " + res.ToString(), Depth, Color.DarkGray);
+            packetData.AddParsedError("A" + GetActionStepName(), Node.Name, $"{res} <= {val1Attribute}({val1}) {_operatorName} {val2Attribute}({val2})", Depth, Color.DarkGray);
             Debug.WriteLine($"{GetActionStepName()} {this.GetType().Name}: {val1Attribute}({val1}) {_operatorName} {val2Attribute}({val2}) => {res}");
         }
 
@@ -623,7 +635,7 @@ public class RulesActionCompareOperation : RulesAction
             }
             catch (Exception ex)
             {
-                packetData.AddParsedError("A" + child?.GetActionStepName(), "Error@ \"" + (child?.Node.Name ?? "<unnamed>") + "\"", "Exception: " + ex.Message + " => "+child?.Node.OuterXml, Depth);
+                packetData.AddParsedError("A" + child.GetActionStepName(), "Error@ \"" + child.Node.Name + "\"", "Exception: " + ex.Message + " => "+child.Node.OuterXml, Depth);
                 break;
             }
 
@@ -634,7 +646,7 @@ public class RulesActionCompareOperation : RulesAction
             LoopActionResult = LoopActionResult.Break;
             packetData.AddParsedError("A" + child.GetActionStepName(), Node.Name, "Reached past end of Packet Data", Depth);
 
-            if (Properties.Settings.Default.ShowDebugInfo)
+            if (MainForm.Instance?.ShowDebugInfo ?? false)
                 Debug.WriteLine($"{GetActionStepName()} {this.GetType().Name} - EOP");
 
             break;
@@ -663,7 +675,6 @@ public class RulesActionArithmeticOperation : RulesAction
     public override void RunAction(BasePacketData packetData)
     {
         GotoStartPosition(packetData);
-        long val1 = 0;
         var val1Attribute = XmlHelper.GetAttributeString(Attributes, _arg1Name);
 
         if (val1Attribute == string.Empty)
@@ -672,7 +683,7 @@ public class RulesActionArithmeticOperation : RulesAction
             return;
         }
 
-        if (!ParentRule.TryGetLocalLong(val1Attribute, 0, out val1))
+        if (!ParentRule.TryGetLocalLong(val1Attribute, 0, out var val1))
         {
             packetData.AddParsedError("A" + GetActionStepName(), Node.Name, "Invalid " + _arg1Name + ": " + val1Attribute, Depth);
             return;
@@ -751,7 +762,7 @@ public class RulesActionArithmeticOperation : RulesAction
         }
 
         ParentRule.SetLocalVar(destinationAttribute, res.ToString(CultureInfo.InvariantCulture));
-        if (Properties.Settings.Default.ShowDebugInfo)
+        if (MainForm.Instance?.ShowDebugInfo ?? false)
         {
             packetData.AddParsedError("A" + GetActionStepName(), Node.Name, "(" + val1.ToString() + " " + _operatorName + " " + val2.ToString() + ") => " + res.ToString() + " => " + destinationAttribute, Depth);
             Debug.WriteLine($"{GetActionStepName()} {this.GetType().Name}: {val1Attribute}({val1}) {_operatorName} {val2Attribute}({val2}) => {destinationAttribute}({res})");
@@ -780,7 +791,6 @@ public class RulesActionDoubleArithmeticOperation : RulesAction
     public override void RunAction(BasePacketData packetData)
     {
         GotoStartPosition(packetData);
-        double val1 = 0;
         var val1Attribute = XmlHelper.GetAttributeString(Attributes, _arg1Name);
 
         if (val1Attribute == string.Empty)
@@ -789,7 +799,7 @@ public class RulesActionDoubleArithmeticOperation : RulesAction
             return;
         }
 
-        if (!ParentRule.TryGetLocalDouble(val1Attribute, 0.0, out val1))
+        if (!ParentRule.TryGetLocalDouble(val1Attribute, 0.0, out var val1))
         {
             packetData.AddParsedError("A" + GetActionStepName(), Node.Name, "Invalid " + _arg1Name + ": " + val1Attribute, Depth);
             return;
@@ -846,7 +856,7 @@ public class RulesActionDoubleArithmeticOperation : RulesAction
         }
 
         ParentRule.SetLocalVar(destinationAttribute, res.ToString(CultureInfo.InvariantCulture));
-        if (Properties.Settings.Default.ShowDebugInfo)
+        if (MainForm.Instance?.ShowDebugInfo ?? false)
         {
             packetData.AddParsedError("A" + GetActionStepName(), Node.Name, "(" + val1.ToString(CultureInfo.InvariantCulture) + " " + _operatorName + " " + val2.ToString(CultureInfo.InvariantCulture) + ") => " + res.ToString(CultureInfo.InvariantCulture) + " => " + destinationAttribute, Depth);
             Debug.WriteLine($"{GetActionStepName()} {this.GetType().Name}: {val1Attribute}({val1}) {_operatorName} {val2Attribute}({val2}) => {destinationAttribute}({res})");
@@ -904,7 +914,7 @@ public class RulesActionLoop : RulesAction
             return;
         }
 
-        if (Properties.Settings.Default.ShowDebugInfo)
+        if (MainForm.Instance?.ShowDebugInfo ?? false)
         {
             packetData.AddParsedError("A" + GetActionStepName(), Node.Name, $"{this.GetType().Name} - Begin", Depth);
             Debug.WriteLine($"{GetActionStepName()} {this.GetType().Name} - Begin");
@@ -918,7 +928,7 @@ public class RulesActionLoop : RulesAction
             for (var i = 0; i < ChildActions.Count; i++)
             {
                 var child = ChildActions[i];
-                if (Properties.Settings.Default.ShowDebugInfo)
+                if (MainForm.Instance?.ShowDebugInfo ?? false)
                 {
                     Debug.WriteLine($"{GetActionStepName()} {this.GetType().Name} - Step {i} ({child.Node.Name})");
                 }
@@ -935,14 +945,14 @@ public class RulesActionLoop : RulesAction
                 
                 if (LoopActionResult == LoopActionResult.Continue)
                 {
-                    if (Properties.Settings.Default.ShowDebugInfo)
+                    if (MainForm.Instance?.ShowDebugInfo ?? false)
                         Debug.WriteLine($"{GetActionStepName()} {this.GetType().Name} - Continue");
 
                     continue;
                 }
                 if (LoopActionResult == LoopActionResult.Break)
                 {
-                    if (Properties.Settings.Default.ShowDebugInfo)
+                    if (MainForm.Instance?.ShowDebugInfo ?? false)
                         Debug.WriteLine($"{GetActionStepName()} {this.GetType().Name} - Break");
 
                     break;
@@ -954,7 +964,7 @@ public class RulesActionLoop : RulesAction
                     // Force break the loop if past end of packet
                     LoopActionResult = LoopActionResult.Break;
                     packetData.AddParsedError("A" + child.GetActionStepName(), Node.Name, "Reached past end of Packet Data", Depth);
-                    if (Properties.Settings.Default.ShowDebugInfo)
+                    if (MainForm.Instance?.ShowDebugInfo ?? false)
                         Debug.WriteLine($"{GetActionStepName()} {this.GetType().Name} - EOP");
 
                     break;
@@ -973,7 +983,7 @@ public class RulesActionLoop : RulesAction
         }
 
         LoopActionResult = LoopActionResult.Normal;
-        if (Properties.Settings.Default.ShowDebugInfo)
+        if (MainForm.Instance?.ShowDebugInfo ?? false)
             Debug.WriteLine($"{GetActionStepName()} {this.GetType().Name} - End");
     }
 }
@@ -993,7 +1003,7 @@ public class RulesActionBreak : RulesAction
         GotoStartPosition(packetData);
         if (ParentAction != null)
         {
-            if (Properties.Settings.Default.ShowDebugInfo)
+            if (MainForm.Instance?.ShowDebugInfo ?? false)
             {
                 packetData.AddParsedError("A" + GetActionStepName(), "Break", "", Depth);
             }
@@ -1021,7 +1031,7 @@ public class RulesActionContinue : RulesAction
         GotoStartPosition(packetData);
         if (ParentAction != null)
         {
-            if (Properties.Settings.Default.ShowDebugInfo)
+            if (MainForm.Instance?.ShowDebugInfo ?? false)
             {
                 packetData.AddParsedError("A" + GetActionStepName(), "Continue", "", Depth);
             }
@@ -1110,7 +1120,7 @@ public class RulesActionSaveLookup : RulesAction
         var destListName = XmlHelper.GetAttributeString(Attributes, _destName);
 
         packetData.ParentProject.DataLookup.RegisterCustomLookup(destListName, (ulong)sourceId, sourceValue);
-        if (Properties.Settings.Default.ShowDebugInfo)
+        if (MainForm.Instance?.ShowDebugInfo ?? false)
         {
             packetData.AddParsedError("A" + GetActionStepName(), Node.Name, "Save (" + sourceId + " => " + sourceValue + ") into " + destListName, Depth);
             Console.WriteLine($"{GetActionStepName()} {GetType().Name}: {sourceId}({idAttribute}) => {sourceValue}({valAttribute}) into {destListName}");
@@ -1198,7 +1208,7 @@ public class RulesActionTemplate : RulesAction
     public override void RunAction(BasePacketData packetData)
     {
         GotoStartPosition(packetData);
-        if (Properties.Settings.Default.ShowDebugInfo)
+        if (MainForm.Instance?.ShowDebugInfo ?? false)
         {
             packetData.AddParsedError("A" + GetActionStepName(), Node.Name, "Begin Template: " + TemplateName, Depth);
             Debug.WriteLine("{1} {0} - Begin Template", this.GetType().Name, GetActionStepName());
@@ -1208,7 +1218,7 @@ public class RulesActionTemplate : RulesAction
         for (var i = 0; i < ChildActions.Count; i++)
         {
             var child = ChildActions[i];
-            if (Properties.Settings.Default.ShowDebugInfo)
+            if (MainForm.Instance?.ShowDebugInfo ?? false)
             {
                 Debug.WriteLine("{1} {0} - Template Step {2} ({3})", this.GetType().Name, GetActionStepName(), i, child.Node.Name);
             }
@@ -1229,14 +1239,14 @@ public class RulesActionTemplate : RulesAction
             {
                 LoopActionResult = LoopActionResult.Break;
                 packetData.AddParsedError("A" + child.GetActionStepName(), Node.Name, "Reached past end of Packet Data", Depth);
-                if (Properties.Settings.Default.ShowDebugInfo)
+                if (MainForm.Instance?.ShowDebugInfo ?? false)
                     Debug.WriteLine("{1} {0} - EOP", this.GetType().Name, GetActionStepName());
 
                 break;
             }
         }
 
-        if (Properties.Settings.Default.ShowDebugInfo)
+        if (MainForm.Instance?.ShowDebugInfo ?? false)
             Debug.WriteLine($"{GetActionStepName()} {this.GetType().Name} - End Template");
     }
 }
@@ -1291,8 +1301,8 @@ public class RulesActionEcho : RulesAction
 /// </summary>
 public class RulesActionReadBits : RulesAction
 {
-    private string _bitCountName;
-    private string _styleName;
+    private readonly string _bitCountName;
+    private readonly string _styleName;
 
     public RulesActionReadBits(PacketRule parent, RulesAction? parentAction, XmlNode thisNode, int thisStep, string bitCountName, string styleName) : base(parent, parentAction, thisNode, thisStep, false)
     {

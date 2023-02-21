@@ -1,15 +1,14 @@
-<?xml version="1.0"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <!-- 
 This is the bare minimum for a rules file.
 For proper usage, you will need to create a plugin engine that does proper packet type/id parsing to be used here
-With the current PCapRaw example, it will always report PacketId (type) 0, and level 0, rules section get selected base on the server Port number
 -->
 <root>
 	<version client=""/>
 	<templates>
-	</templates>
+  </templates>
 	<tools>
-	</tools>
+  </tools>
 	<rule>
 		<server port="0"/>
 		<decryptor name=""/>
@@ -18,7 +17,7 @@ With the current PCapRaw example, it will always report PacketId (type) 0, and l
 				<!-- List of zones you have visited -->
 				<data type="uint" name="uint"/>
 			</packet>
-			<packet type="0x00E" desc="NPC Update" comment="Packet contains info about another PC (i.e. coordinates)" credits="Various flags updated by KnowOne">
+			<packet type="0x00E" desc="NPC Update" comment="Packet contains info about another PC (i.e. coordinates)" credits="Windower, ZeromusXYZ, KnowOne">
 				<data type="uint" name="NPC" lookup="@actors"/>
 				<data type="ushort" name="Index"/>
 				<data type="bits" name="Update Mask" bits="8" lookup="npcupdatemask" style="compact"/>
@@ -26,40 +25,27 @@ With the current PCapRaw example, it will always report PacketId (type) 0, and l
 				<data type="pos" name="Position"/>
 				<data type="ushort" name="Walk Count" desc="Steadily increases until rotation changes. Does not reset while the mob isn't walking. Only goes until 0xFF1F"/>
 				<data type="byte" name="Speed" pos="0x1C"/>
-				<!--
-byte;0x1C;Speed
-byte;0x1D;SubSpeed
-byte;0x1E;HP %
-byte;0x1F;Animation
-byte;0x20;Status
-uint32;0x21;EntityFlags
-uint16;0x23;_unknown_@0x23
-byte;0x25;??? Health.HP
-byte;0x24;_unknown_@0x24
-byte;0x27;Name_Prefix
-byte;0x28;_unknown_@0x28
-byte;0x29;Allegiance
-byte;0x2A;AnimationSub
-byte;0x2B;NameVis
-uint32;0x2C;Claimer
-uint16;0x30;_unknown5
-uint16;0x32;Model ID
-string;0x34;Name
-
-rem;Only save name if the bitflag for it is set
-enablecode;0
-switchblock;0x0A:3;savename;1
-[[savename]]
-save;@actors;NPC;Name
-[[]]
-enablecode;1
-        -->
+				<data type="byte" name="SubSpeed"/>
+				<data type="byte" name="HP %"/>
+				<data type="byte" name="Animation"/>
+				<data type="byte" name="Status"/>
+				<data type="byte" name="EntityFlags"/>
+				<data type="byte" name="??? Health.HP" pos="0x25"/>
+				<data type="byte" name="Name_Prefix" pos="0x27"/>
+				<data type="byte" name="Allegiance" pos="0x29"/>
+				<data type="byte" name="AnimationSub"/>
+				<data type="byte" name="NameVis"/>
+				<data type="uint" name="Claimer"/>
+				<data type="ushort" name="Model ID" pos="0x32"/>
+				<data type="t" arg="-1" name="Name"/>
+				<ifnz arg="#Update Mask-3">
+					<lookup save="actors" source="NPC" val="Name"/>
+				</ifnz>
 			</packet>
 		</s2c>
 		<c2s>
 			<packet type="0x00A" desc="Client Connect">
-        
-			</packet>
+      </packet>
 		</c2s>
 	</rule>
 </root>

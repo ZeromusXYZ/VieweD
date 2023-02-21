@@ -1,5 +1,7 @@
 ﻿using System.Xml;
+using Microsoft.CodeAnalysis.FlowAnalysis;
 using VieweD.engine.common;
+using VieweD.Forms;
 using VieweD.Helpers.System;
 
 namespace VieweD.data.ffxi.engine;
@@ -40,5 +42,11 @@ public class FfxiRulesReader : RulesReader
         packetData.AddParsedField(true, 0, 1, "0x00", "PacketID", packetData.PacketId.ToHex(3) + " - " + packetData.GetPacketName(), 0);
         packetData.AddParsedField(true, 1, 1, "0x01", "PacketSize", packetData.PacketDataSize.ToString(), 0);
         packetData.AddParsedField(true, 2, 3, "0x02", "SyncID", packetData.SyncId.ToHex(4), 0);
+    }
+
+    public override void BuildEditorPopupMenu(ContextMenuStrip miInsert, RulesEditorForm editor)
+    {
+        base.BuildEditorPopupMenu(miInsert, editor);
+        
     }
 }

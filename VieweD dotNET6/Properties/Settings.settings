@@ -176,9 +176,6 @@
     <Setting Name="ColorSelectedFontUnknown" Type="System.String" Scope="User">
       <Value Profile="(Default)">White</Value>
     </Setting>
-    <Setting Name="ShowDebugInfo" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
     <Setting Name="ShowStringHexData" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>

@@ -722,18 +722,6 @@ namespace VieweD.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool ShowDebugInfo {
-            get {
-                return ((bool)(this["ShowDebugInfo"]));
-            }
-            set {
-                this["ShowDebugInfo"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool ShowStringHexData {
             get {
                 return ((bool)(this["ShowStringHexData"]));

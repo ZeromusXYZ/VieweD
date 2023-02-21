@@ -10,6 +10,7 @@ namespace VieweD.Forms
     public partial class MainForm : Form
     {
         public static MainForm? Instance { get; private set; }
+        public bool ShowDebugInfo { get; set; } = false;
         private string AppTitle { get; set; } = string.Empty;
 
         private const string InfoGridHeader = "     |  0  1  2  3   4  5  6  7   8  9  A  B   C  D  E  F    | 0123456789ABCDEF\n" +
@@ -32,6 +33,7 @@ namespace VieweD.Forms
             // Load Settings
             PacketColors.UpdateColorsFromSettings();
             DgvParsed.Font = Settings.Default.GridViewFont;
+            MiFieldDebug.Checked = ShowDebugInfo;
 
             _ = EngineManager.Instance;
 
@@ -285,7 +287,6 @@ namespace VieweD.Forms
         /// <param name="pd"></param>
         public void ShowPacketData(BasePacketData? pd)
         {
-            #region FieldGridView
             if (pd == null)
             {
                 DgvParsed.Rows.Clear();
@@ -295,64 +296,129 @@ namespace VieweD.Forms
                 return;
             }
 
-            var oldFocus = DgvParsed.Focused;
-
-            DgvParsed.SuspendLayout();
-            DgvParsed.Tag = pd;
-            DgvParsed.Enabled = false;
-            DgvParsed.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(
-                (int)Math.Round(DgvParsed.DefaultCellStyle.BackColor.R * 0.95), 
-                (int)Math.Round(DgvParsed.DefaultCellStyle.BackColor.G * 0.95), 
-                (int)Math.Round(DgvParsed.DefaultCellStyle.BackColor.B * 0.95));
-
-            var y = 0;
-            for (var i = 0; i < pd.ParsedData.Count; i++)
+            #region FieldGridView
+            if (MiFieldFields.Checked)
             {
-                var parsedField = pd.ParsedData[i];
-                var previousField = ((i - 1) >= 0) ? pd.ParsedData[i - 1] : null;
-                var nextField = ((i + 1) < pd.ParsedData.Count) ? pd.ParsedData[i + 1] : null;
+                var oldFocus = DgvParsed.Focused;
 
-                var nestString = GetNestedString(parsedField, previousField, nextField);
+                DgvParsed.SuspendLayout();
+                DgvParsed.Tag = pd;
+                DgvParsed.Enabled = false;
+                DgvParsed.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(
+                    (int)Math.Round(DgvParsed.DefaultCellStyle.BackColor.R * 0.95),
+                    (int)Math.Round(DgvParsed.DefaultCellStyle.BackColor.G * 0.95),
+                    (int)Math.Round(DgvParsed.DefaultCellStyle.BackColor.B * 0.95));
 
-                DataGridViewRow? row;
-                if (y >= DgvParsed.RowCount)
+                var y = 0;
+                for (var i = 0; i < pd.ParsedData.Count; i++)
                 {
-                    #pragma warning disable IDE0017 // Simplify object initialization
-                    row = new DataGridViewRow();
-                    #pragma warning restore IDE0017 // Simplify object initialization
-                    row.Height = DgvParsed.Font.Height + 4;
-                    row.Cells.Add(new DataGridViewTextBoxCell() { Value = parsedField.DisplayedByteOffset });
-                    row.Cells.Add(new DataGridViewTextBoxCell() { Value = parsedField.FieldName });
-                    row.Cells.Add(new DataGridViewTextBoxCell() { Value = parsedField.FieldValue });
-                    DgvParsed.Rows.Add(row);
+                    var parsedField = pd.ParsedData[i];
+                    var previousField = ((i - 1) >= 0) ? pd.ParsedData[i - 1] : null;
+                    var nextField = ((i + 1) < pd.ParsedData.Count) ? pd.ParsedData[i + 1] : null;
+
+                    var nestString = GetNestedString(parsedField, previousField, nextField);
+
+                    DataGridViewRow? row;
+                    if (y >= DgvParsed.RowCount)
+                    {
+                        #pragma warning disable IDE0017 // Simplify object initialization
+                        row = new DataGridViewRow();
+                        #pragma warning restore IDE0017 // Simplify object initialization
+                        row.Height = DgvParsed.Font.Height + 4;
+                        row.Cells.Add(new DataGridViewTextBoxCell() { Value = parsedField.DisplayedByteOffset });
+                        row.Cells.Add(new DataGridViewTextBoxCell() { Value = parsedField.FieldName });
+                        row.Cells.Add(new DataGridViewTextBoxCell() { Value = parsedField.FieldValue });
+                        DgvParsed.Rows.Add(row);
+                    }
+                    else
+                    {
+                        row = DgvParsed.Rows[y];
+                    }
+
+                    row.Cells[0].Value = parsedField.DisplayedByteOffset;
+                    row.Cells[0].Style.ForeColor = parsedField.FieldColor;
+
+                    row.Cells[1].Value = nestString + parsedField.FieldName;
+                    row.Cells[1].Style.ForeColor = parsedField.FieldColor;
+
+                    row.Cells[2].Value = parsedField.FieldValue;
+                    // row.Cells[2].Style.ForeColor = parsedField.FieldColor;
+
+                    row.Selected = parsedField.IsSelected;
+
+                    y++;
                 }
-                else
-                {
-                    row = DgvParsed.Rows[y];
-                }
 
-                row.Cells[0].Value = parsedField.DisplayedByteOffset;
-                row.Cells[0].Style.ForeColor = parsedField.FieldColor;
+                while (DgvParsed.RowCount > y)
+                    DgvParsed.Rows.RemoveAt(DgvParsed.Rows.Count - 1);
 
-                row.Cells[1].Value = nestString + parsedField.FieldName;
-                row.Cells[1].Style.ForeColor = parsedField.FieldColor;
+                DgvParsed.Enabled = true;
+                DgvParsed.ResumeLayout();
 
-                row.Cells[2].Value = parsedField.FieldValue;
-                // row.Cells[2].Style.ForeColor = parsedField.FieldColor;
-
-                row.Selected = parsedField.IsSelected;
-
-                y++;
+                if (oldFocus)
+                    DgvParsed.Focus();
             }
+            #endregion
 
-            while (DgvParsed.RowCount > y)
-                DgvParsed.Rows.RemoveAt(DgvParsed.Rows.Count-1);
+            #region LocalVarView
+            if (MIFieldLocalVars.Checked)
+            {
+                var oldFocus = DgvParsed.Focused;
 
-            DgvParsed.Enabled = true;
-            DgvParsed.ResumeLayout();
+                DgvParsed.SuspendLayout();
+                DgvParsed.Rows.Clear();
+                DgvParsed.Tag = pd;
+                DgvParsed.Enabled = false;
+                DgvParsed.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(
+                    (int)Math.Round(DgvParsed.DefaultCellStyle.BackColor.R * 0.95),
+                    (int)Math.Round(DgvParsed.DefaultCellStyle.BackColor.G * 0.95),
+                    (int)Math.Round(DgvParsed.DefaultCellStyle.BackColor.B * 0.95));
 
-            if (oldFocus)
-                DgvParsed.Focus();
+                var rule = pd.ParentProject?.InputParser?.Rules?.GetPacketRule(pd.PacketDataDirection, 0, 0, (ushort)pd.PacketId);
+                if (rule != null)
+                {
+                    rule.Build();
+                    rule.RunRule(pd);
+                    foreach (var localVar in rule.LocalVars)
+                    {
+#pragma warning disable IDE0017 // Simplify object initialization
+                        var row = new DataGridViewRow();
+#pragma warning restore IDE0017 // Simplify object initialization
+                        row.Height = DgvParsed.Font.Height + 4;
+                        var baseCell = new DataGridViewTextBoxCell() { Value = "" };
+                        var cellColor = baseCell.Style.ForeColor;
+
+                        if ((localVar.Key == "p_type") || (localVar.Key == "p_size"))
+                            cellColor = Color.DarkOrange;
+                        else
+                        if (NumberHelper.TryFieldParse(localVar.Value, out int _))
+                            cellColor = Color.Blue;
+                        else
+                        if (NumberHelper.TryFieldParse(localVar.Value, out long _))
+                            cellColor = Color.DarkBlue;
+                        else
+                        if (NumberHelper.TryFieldParse(localVar.Value, out long _))
+                            cellColor = Color.Navy;
+                        else if (double.TryParse(localVar.Value, out _))
+                            cellColor = Color.Green;
+                        else if ((localVar.Value == "NULL") || (string.IsNullOrWhiteSpace(localVar.Value)))
+                            cellColor = Color.Red;
+                        else
+                            cellColor = Color.Fuchsia;
+
+                        row.Cells.Add(baseCell);
+                        row.Cells.Add(new DataGridViewTextBoxCell() { Value = localVar.Key, Style = new DataGridViewCellStyle(baseCell.Style) {ForeColor = cellColor } });
+                        row.Cells.Add(new DataGridViewTextBoxCell() { Value = localVar.Value, Style = new DataGridViewCellStyle(baseCell.Style) { ForeColor = cellColor } });
+                        DgvParsed.Rows.Add(row);
+                    }
+                }
+
+                DgvParsed.Enabled = true;
+                DgvParsed.ResumeLayout();
+
+                if (oldFocus)
+                    DgvParsed.Focus();
+            }
             #endregion
 
             #region RawData
@@ -826,6 +892,48 @@ namespace VieweD.Forms
                         MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
             }
+        }
+
+        private void MiFieldFields_Click(object sender, EventArgs e)
+        {
+            MiFieldFields.Checked = true;
+            MIFieldLocalVars.Checked = false;
+            DgvParsed.Rows.Clear();
+            TCProjects_SelectedIndexChanged(TCProjects.SelectedTab, e);
+        }
+
+        private void MIFieldLocalVars_Click(object sender, EventArgs e)
+        {
+            MiFieldFields.Checked = false;
+            MIFieldLocalVars.Checked = true;
+            DgvParsed.Rows.Clear();
+            TCProjects_SelectedIndexChanged(TCProjects.SelectedTab, e);
+        }
+
+        private void MiFieldView_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+
+        }
+
+        private void MiFieldDebug_Click(object sender, EventArgs e)
+        {
+            // Show debug view for this packet
+            ShowDebugInfo = true;
+            MiFieldFields.Checked = true;
+            MIFieldLocalVars.Checked = false;
+            DgvParsed.Rows.Clear();
+            if ((TCProjects?.SelectedTab is ViewedProjectTab project) && (project.PacketsListBox.SelectedItem is BasePacketData packetData))
+            {
+                var rule = project.InputParser?.Rules?.GetPacketRule(packetData.PacketDataDirection, project.GetExpectedStreamIdByPort(packetData.SourcePort, 0), 0, (ushort)packetData.PacketId);
+                if (rule != null)
+                {
+                    rule.Build();
+                    rule.RunRule(packetData);
+                    packetData.AddUnparsedFields();
+                }
+            }
+            TCProjects_SelectedIndexChanged(TCProjects.SelectedTab, e);
+            ShowDebugInfo = false;
         }
     }
 }
