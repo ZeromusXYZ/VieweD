@@ -7,6 +7,7 @@ public class FfxiParser : BaseParser
 {
     public override string Name => "Final Fantasy XI";
     public override string Description => "Parses Final Fantasy XI packet data";
+    public override string DefaultRulesFile => "ffxi.xml";
 
     public FfxiParser(ViewedProjectTab parentProject) : base(parentProject)
     {
@@ -55,7 +56,7 @@ public class FfxiParser : BaseParser
         data.Cursor = 4;
 
         // Do actual parsing, you can overwrite packetData values here if you want
-        var rule = Rules?.GetPacketRule(data.PacketDataDirection, ParentProject?.GetExpectedStreamIdByPort(data.SourcePort, 0) ?? 0, 0, (ushort)data.PacketId);
+        var rule = Rules?.GetPacketRule(data);
         rule?.Build();
         rule?.RunRule(data);
 

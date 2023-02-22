@@ -14,6 +14,8 @@ public class BaseInputReader : IComparable<BaseInputReader>
     /// Description for this input reader, if empty it will not show up in the selection list
     /// </summary>
     public virtual string Description => "";
+
+    public virtual string DataFolder => "base";
     
     /// <summary>
     /// Owning project

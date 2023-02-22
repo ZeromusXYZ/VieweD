@@ -101,6 +101,15 @@ namespace VieweD.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Apply changes.
+        /// </summary>
+        internal static string ApplyChanges {
+            get {
+                return ResourceManager.GetString("ApplyChanges", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to VieweD .NET 6.0.
         /// </summary>
         internal static string AppTitle {
@@ -207,6 +216,16 @@ namespace VieweD.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap document_decrypt_16 {
+            get {
+                object obj = ResourceManager.GetObject("document_decrypt_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap document_open_16 {
             get {
                 object obj = ResourceManager.GetObject("document-open-16", resourceCulture);
@@ -275,6 +294,17 @@ namespace VieweD.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error in rules file: 
+        ///
+        ///{0}.
+        /// </summary>
+        internal static string ErrorInRulesFile {
+            get {
+                return ResourceManager.GetString("ErrorInRulesFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed to open.
         /// </summary>
         internal static string FailedToOpen {
@@ -289,6 +319,15 @@ namespace VieweD.Properties {
         internal static string FailedToOpenUrl {
             get {
                 return ResourceManager.GetString("FailedToOpenUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to save rules file: {0}.
+        /// </summary>
+        internal static string FailedToSaveRulesFile {
+            get {
+                return ResourceManager.GetString("FailedToSaveRulesFile", resourceCulture);
             }
         }
         
@@ -419,6 +458,15 @@ namespace VieweD.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No rule data.
+        /// </summary>
+        internal static string NoRuleData {
+            get {
+                return ResourceManager.GetString("NoRuleData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Parsing packet data.
         /// </summary>
         internal static string ParsePackets {
@@ -446,6 +494,69 @@ namespace VieweD.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create {0}.
+        /// </summary>
+        internal static string PopupCreateRule {
+            get {
+                return ResourceManager.GetString("PopupCreateRule", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit {0} =&gt; {1}.
+        /// </summary>
+        internal static string PopupEditRule {
+            get {
+                return ResourceManager.GetString("PopupEditRule", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Insert.
+        /// </summary>
+        internal static string PopupInsert {
+            get {
+                return ResourceManager.GetString("PopupInsert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No rule assigned.
+        /// </summary>
+        internal static string PopupNoRuleAssigned {
+            get {
+                return ResourceManager.GetString("PopupNoRuleAssigned", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nothing to edit.
+        /// </summary>
+        internal static string PopupNothingToEdit {
+            get {
+                return ResourceManager.GetString("PopupNothingToEdit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Replace.
+        /// </summary>
+        internal static string PopupReplace {
+            get {
+                return ResourceManager.GetString("PopupReplace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unknown direction, unable to edit.
+        /// </summary>
+        internal static string PopupUnknownDirection {
+            get {
+                return ResourceManager.GetString("PopupUnknownDirection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap project_open_16 {
@@ -461,6 +572,15 @@ namespace VieweD.Properties {
         internal static string ProjectReadingError {
             get {
                 return ResourceManager.GetString("ProjectReadingError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rule Error.
+        /// </summary>
+        internal static string RuleError {
+            get {
+                return ResourceManager.GetString("RuleError", resourceCulture);
             }
         }
         
@@ -562,6 +682,26 @@ namespace VieweD.Properties {
         internal static System.Drawing.Bitmap view_close_16 {
             get {
                 object obj = ResourceManager.GetObject("view_close_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap view_hidden_16 {
+            get {
+                object obj = ResourceManager.GetObject("view_hidden_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap view_visible_16 {
+            get {
+                object obj = ResourceManager.GetObject("view_visible_16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

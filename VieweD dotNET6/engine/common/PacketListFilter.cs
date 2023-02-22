@@ -5,6 +5,8 @@ namespace VieweD.engine.common;
 
 public class PacketListFilter
 {
+    // NOTE: MarkAsDimmed is not affected by Clear() or CopyFrom()
+    public bool MarkAsDimmed { get; set; }
     public FilterType FilterOutType { get; set; }
     public List<PacketFilterListEntry> FilterOutList { get; set; }
     public FilterType FilterInType { get; set; }
@@ -12,6 +14,7 @@ public class PacketListFilter
 
     public PacketListFilter()
     {
+        MarkAsDimmed = false;
         FilterOutList = new List<PacketFilterListEntry>();
         FilterInList = new List<PacketFilterListEntry>();
         Clear();
@@ -27,6 +30,7 @@ public class PacketListFilter
 
     public void CopyFrom(PacketListFilter aFilter)
     {
+        MarkAsDimmed = aFilter.MarkAsDimmed;
         FilterOutType = aFilter.FilterOutType;
         FilterInType = aFilter.FilterInType;
         FilterOutList.Clear();

@@ -291,4 +291,55 @@
   <data name="FailedToOpen" xml:space="preserve">
     <value>Failed to open</value>
   </data>
+  <data name="PopupEditRule" xml:space="preserve">
+    <value>Edit {0} =&gt; {1}</value>
+    <comment>0: loolkup key  1: rule name</comment>
+  </data>
+  <data name="PopupUnknownDirection" xml:space="preserve">
+    <value>Unknown direction, unable to edit</value>
+  </data>
+  <data name="PopupNoRuleAssigned" xml:space="preserve">
+    <value>No rule assigned</value>
+  </data>
+  <data name="PopupCreateRule" xml:space="preserve">
+    <value>Create {0}</value>
+    <comment>0: packet name</comment>
+  </data>
+  <data name="PopupNothingToEdit" xml:space="preserve">
+    <value>Nothing to edit</value>
+  </data>
+  <data name="view_hidden_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\kde-icons\view-hidden-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="view_visible_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\kde-icons\view-visible-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="document_decrypt_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\kde-icons\document-decrypt-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="NoRuleData" xml:space="preserve">
+    <value>No rule data</value>
+  </data>
+  <data name="RuleError" xml:space="preserve">
+    <value>Rule Error</value>
+  </data>
+  <data name="FailedToSaveRulesFile" xml:space="preserve">
+    <value>Failed to save rules file: {0}</value>
+    <comment>0: filename</comment>
+  </data>
+  <data name="ApplyChanges" xml:space="preserve">
+    <value>Apply changes</value>
+  </data>
+  <data name="ErrorInRulesFile" xml:space="preserve">
+    <value>Error in rules file: 
+
+{0}</value>
+    <comment>0: filename</comment>
+  </data>
+  <data name="PopupReplace" xml:space="preserve">
+    <value>Replace</value>
+  </data>
+  <data name="PopupInsert" xml:space="preserve">
+    <value>Insert</value>
+  </data>
 </root>

@@ -4,6 +4,7 @@ public class BaseParser : IComparable<BaseParser>
 {
     public virtual string Name => "Base Parser";
     public virtual string Description => "";
+    public virtual string DefaultRulesFile => "rules.xml";
     public ViewedProjectTab? ParentProject { get; set; }
     public RulesReader? Rules { get; protected set; }
     protected List<string> SupportedReaders { get; set; } = new List<string>();
@@ -48,7 +49,7 @@ public class BaseParser : IComparable<BaseParser>
             return false;
 
         // Do actual parsing, you can overwrite packetData values here if you want
-        var rule = Rules?.GetPacketRule(data.PacketDataDirection, ParentProject?.GetExpectedStreamIdByPort(data.SourcePort, 0) ?? 0, 0, (ushort)data.PacketId);
+        var rule = Rules?.GetPacketRule(data);
         rule?.Build();
         rule?.RunRule(data);
 

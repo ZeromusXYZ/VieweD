@@ -1,8 +1,7 @@
-﻿using System.Data;
-using System.Xml;
-using System.Xml.Linq;
+﻿using System.Xml;
 using VieweD.engine.common;
 using VieweD.Helpers.System;
+using VieweD.Properties;
 
 namespace VieweD.Forms
 {
@@ -23,6 +22,7 @@ namespace VieweD.Forms
             editor.LoadFromRule(rule, packetData);
             // editor.FillTypes();
             editor.Show();
+            MainForm.Instance?.CenterMyForm(editor);
             editor.BringToFront();
             editor.RuleEdit.Focus();
             editor.BuildInsertMenu();
@@ -40,68 +40,27 @@ namespace VieweD.Forms
             OldValue = FormatRuleText(rule.RootNode.InnerXml);
             RuleEdit.Text = OldValue;
 
-            /*
-            var sList = OldValue.Replace("><", ">\n<").Split('\n').ToList();
-            var indentCount = 0;
-            string s = string.Empty;
-            var isInComments = false;
-            foreach (var line in sList)
-            {
-                var indentOffset = 0;
-                var l = line.Trim();
-                if (l.StartsWith("<") && l.EndsWith("/>"))
-                {
-                    // self-contained, nothing to indent
-                }
-                else
-                if (l.StartsWith("<!"))
-                {
-                    isInComments = true;
-                    // comment line, no indent
-                }
-                else
-                if (l.StartsWith("-->"))
-                {
-                    isInComments = false;
-                    // comment line, no indent
-                }
-                else
-                if (l.StartsWith("</") && !l.EndsWith("/>"))
-                {
-                    // Ending-tag
-                    indentOffset--;
-                }
-                else
-                {
-                    if (!isInComments)
-                        indentOffset++;
-                }
-
-                var thisindent = indentCount;
-                if (indentOffset < 0)
-                    thisindent += indentOffset;
-                for (var i = 0; i < thisindent; i++)
-                    s += "\t";
-                indentCount += indentOffset;
-                s += l + "\r\n";
-            }
-            RuleEdit.Text = s;
-            */
-            Text = PacketFilterListEntry.AsString(rule.PacketId, rule.Level, rule.StreamId) + " - " + rule.Name;
+            Text = PacketFilterListEntry.AsString(rule.PacketId, rule.Level, rule.StreamId) + @" - " + rule.Name;
             RuleEdit.SelectionLength = 0;
             RuleEdit.SelectionStart = RuleEdit.Text.Length;
+
+            var attributes = XmlHelper.ReadNodeAttributes(Rule.RootNode);
+            DescriptionBox.Text = XmlHelper.GetAttributeString(attributes, @"desc");
+            CommentBox.Text = XmlHelper.GetAttributeString(attributes, @"comment");
+            CreditsBox.Text = XmlHelper.GetAttributeString(attributes, @"credits");
         }
 
         private void BtnSave_Click(object sender, EventArgs e)
         {
             if (Rule == null)
             {
-                MessageBox.Show("No rule data", "Rule Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(Resources.NoRuleData, Resources.RuleError, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
             try
             {
+                MainForm.Instance!.ShowDebugInfo = false;
                 RuleEdit.Text = FormatRuleText(RuleEdit.Text);
                 Rule.RootNode.InnerXml = RuleEdit.Text;
                 Rule.Build();
@@ -109,8 +68,12 @@ namespace VieweD.Forms
                 {
                     Rule.RunRule(PacketData);
                     PacketData.AddUnparsedFields();
-                    MainForm.Instance?.ShowPacketData(PacketData);
+                    MainForm.Instance.ShowPacketData(PacketData);
                 }
+
+                XmlHelper.SetAttribute(Rule.RootNode, @"desc", DescriptionBox.Text);
+                XmlHelper.SetAttribute(Rule.RootNode, @"comment", CommentBox.Text);
+                XmlHelper.SetAttribute(Rule.RootNode, @"credits", CreditsBox.Text);
 
                 if (!string.IsNullOrWhiteSpace(Rule.Parent.Parent.LoadedRulesFileName))
                 {
@@ -118,16 +81,43 @@ namespace VieweD.Forms
                         Close();
                     else
                         MessageBox.Show(
-                            string.Format("Failed to save rules file: {0}", Rule.Parent.Parent.LoadedRulesFileName),
-                            "Rules Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            string.Format(Resources.FailedToSaveRulesFile, Rule.Parent.Parent.LoadedRulesFileName),
+                            Resources.RuleError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+                // Apply to the rest of the packets with the same rule, and re-parse them
+                if (PacketData != null)
+                {
+                    MainForm.Instance.ShowDebugInfo = false;
+                    MainForm.Instance.UpdateStatusBarProgress(
+                        0, PacketData.ParentProject.LoadedPacketList.Count,
+                        Resources.ApplyChanges, null);
+                    for (var i = 0; i < PacketData.ParentProject.LoadedPacketList.Count; i++)
+                    {
+                        var data = PacketData.ParentProject.LoadedPacketList[i];
+                        if ((data.PacketDataDirection != PacketData.PacketDataDirection) ||
+                            (data.PacketId != PacketData.PacketId) ||
+                            (data.CompressionLevel != PacketData.CompressionLevel) ||
+                            (data.StreamId != PacketData.StreamId))
+                            continue;
+                        Rule.RunRule(data);
+                        data.AddUnparsedFields();
+                        if ((i % 50) == 0)
+                        {
+                            MainForm.Instance.UpdateStatusBarProgress(
+                                i, PacketData.ParentProject.LoadedPacketList.Count,
+                                Resources.ApplyChanges, null);
+                        }
+                    }
+                    MainForm.Instance.UpdateStatusBarProgress(PacketData.ParentProject.LoadedPacketList.Count, PacketData.ParentProject.LoadedPacketList.Count, Resources.ApplyChanges, null);
                 }
             }
             catch (Exception exception)
             {
-                MessageBox.Show(string.Format("Error in rules file: \n\r{0}", exception.Message), "Rule Error",
+                MessageBox.Show(string.Format(Resources.ErrorInRulesFile, exception.Message), Resources.RuleError,
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
-                Rule.RootNode.InnerXml = OldValue ?? "<null />";
+                Rule.RootNode.InnerXml = OldValue ?? @"<null />";
             }
         }
 
@@ -154,7 +144,7 @@ namespace VieweD.Forms
             Close();
         }
 
-        private string FormatRuleText(string ruleText)
+        private static string FormatRuleText(string ruleText)
         {
             var lines = ruleText.Replace("\r", "").FormatXml(true, false, "\t", ConformanceLevel.Fragment).Split("\n").ToList();
             var resLines = new List<string>();
@@ -200,12 +190,13 @@ namespace VieweD.Forms
         {
             if (Rule == null)
             {
-                MessageBox.Show("No rule data", "Rule Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(Resources.NoRuleData, Resources.RuleError, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
             try
             {
+                MainForm.Instance!.ShowDebugInfo = true;
                 RuleEdit.Text = FormatRuleText(RuleEdit.Text);
                 Rule.RootNode.InnerXml = RuleEdit.Text;
                 Rule.Build();
@@ -213,12 +204,13 @@ namespace VieweD.Forms
                 {
                     Rule.RunRule(PacketData);
                     PacketData.AddUnparsedFields();
-                    MainForm.Instance?.ShowPacketData(PacketData);
+                    MainForm.Instance.ShowPacketData(PacketData);
                 }
+                MainForm.Instance.ShowDebugInfo = false;
             }
             catch (Exception exception)
             {
-                MessageBox.Show(string.Format("Error in rules file: \n\r{0}", exception.Message), "Rule Error", 
+                MessageBox.Show(string.Format(Resources.ErrorInRulesFile, exception.Message), Resources.RuleError, 
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
                 Rule.RootNode.InnerXml = OldValue ?? "<null />";
@@ -232,33 +224,34 @@ namespace VieweD.Forms
 
         public ToolStripMenuItem? AddMenuItem(ToolStripItemCollection toolStripItemCollection, string title, string command)
         {
-            var reader = Rule?.Parent?.Parent;
+            var reader = Rule?.Parent.Parent;
             if (reader == null)
                 return null;
 
-            if ((title == "-") || (title == ""))
+            if (title is "-" or "")
             {
                 var si = new ToolStripSeparator();
                 toolStripItemCollection.Add(si);
                 return null;
             }
 
+#pragma warning disable IDE0017 // Simplify object initialization
             var ni = new ToolStripMenuItem();
-
+#pragma warning restore IDE0017 // Simplify object initialization
             ni.Text = title;
             ni.Tag = command;
-            ni.Click += miCustomInsert_Click;
+            ni.Click += MiCustomInsert_Click;
             toolStripItemCollection.Add(ni);
             return ni;
         }
 
-        private void miCustomInsert_Click(object? sender, EventArgs? e)
+        private void MiCustomInsert_Click(object? sender, EventArgs? e)
         {
             if (sender is not ToolStripMenuItem { Tag: string insertText }) 
                 return;
 
             var currentCursorStart = RuleEdit.SelectionStart;
-            var hasCursorMarker = insertText.IndexOf('|') >= 0;
+            var hasCursorMarker = insertText.Contains('|');
             var lineCount = insertText.Split('\n').Length;
 
             if (lineCount > 1)
@@ -305,23 +298,18 @@ namespace VieweD.Forms
 
         private void BuildInsertMenu()
         {
-            if (RuleEdit.SelectedText.Length > 0)
-                MiInsert.Text = "Replace";
-            else
-                MiInsert.Text = "Insert";
+            MiInsert.Text = RuleEdit.SelectedText.Length > 0 ? Resources.PopupReplace : Resources.PopupInsert;
             MiInsert.Items.Clear();
 
-            Rule?.Parent?.Parent.BuildEditorPopupMenu(MiInsert, this);
+            Rule?.Parent.Parent.BuildEditorPopupMenu(MiInsert, this);
         }
 
-        private void MiInsert_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        private void BtnAllowEdit_Click(object sender, EventArgs e)
         {
-            
-        }
-
-        private void RulesEditorForm_Load(object sender, EventArgs e)
-        {
-
+            DescriptionBox.ReadOnly = false;
+            CommentBox.ReadOnly = false;
+            CreditsBox.ReadOnly = false;
+            BtnAllowEdit.Hide();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using VieweD.Helpers.System;
+﻿using System.Globalization;
+using VieweD.Helpers.System;
 using VieweD.Properties;
 
 namespace VieweD.engine.common;
@@ -12,6 +13,12 @@ public class BasePacketData
     public bool MarkedAsInvalid { get; set; }
     public uint PacketId { get; set; }
     public int SyncId { get; set; }
+    /// <summary>
+    /// Compression Level of the packet if applicable
+    /// </summary>
+    public byte CompressionLevel { get; set; }
+    public byte StreamId => ParentProject?.GetExpectedStreamIdByPort(SourcePort, 0) ?? 0;
+
     public string HeaderText { get; set; }
     public string OriginalHeaderText { get; set; }
     public PacketDataDirection PacketDataDirection { get; set; }
@@ -61,6 +68,7 @@ public class BasePacketData
         MarkedAsInvalid = false;
         PacketId = 0;
         SyncId = 0;
+        CompressionLevel = 0;
         HeaderText = "Header";
         OriginalHeaderText = HeaderText;
         PacketDataDirection = PacketDataDirection.Incoming;
@@ -471,5 +479,58 @@ public class BasePacketData
                 return true;
         }
         return false;
+    }
+
+    /// <summary>
+    /// Check if a individual packet can be shown with a given filter set
+    /// </summary>
+    /// <param name="packetKey"></param>
+    /// <param name="filterType"></param>
+    /// <param name="filterList"></param>
+    /// <returns></returns>
+    private static bool DoIShowThis(PacketFilterListEntry packetKey, FilterType filterType, ICollection<PacketFilterListEntry> filterList)
+    {
+        switch (filterType)
+        {
+            case FilterType.AllowNone:
+                return false;
+            case FilterType.ShowPackets:
+                return filterList.Any(x => (x.Id == packetKey.Id) && (x.Level == packetKey.Level) && (x.StreamId == packetKey.StreamId));
+            case FilterType.HidePackets:
+                return !filterList.Any(x => (x.Id == packetKey.Id) && (x.Level == packetKey.Level) && (x.StreamId == packetKey.StreamId));
+            case FilterType.Off:
+            default:
+                return true;
+        }
+    }
+
+    /// <summary>
+    /// Check if this packet can get shown using the given filter
+    /// </summary>
+    /// <param name="filter"></param>
+    /// <returns></returns>
+    private bool DoIShowThis(PacketListFilter filter)
+    {
+        var packetKey = new PacketFilterListEntry(PacketId, CompressionLevel, StreamId);
+
+        if ((PacketDataDirection == PacketDataDirection.Incoming) && (filter.FilterInType != FilterType.Off))
+            return DoIShowThis(packetKey, filter.FilterInType, filter.FilterInList);
+        if ((PacketDataDirection == PacketDataDirection.Outgoing) && (filter.FilterOutType != FilterType.Off))
+            return DoIShowThis(packetKey, filter.FilterOutType, filter.FilterOutList);
+        return true;
+    }
+
+    public void ApplyFilter(PacketListFilter filter)
+    {
+        if (filter.MarkAsDimmed)
+        {
+            IsVisible = true;
+            MarkedAsDimmed = !DoIShowThis(filter);
+        }
+        else
+        {
+            IsVisible = DoIShowThis(filter);
+            MarkedAsDimmed = false;
+        }
     }
 }

@@ -318,6 +318,10 @@ public class PacketRule
 
     public string GetLocalVar(string name)
     {
+        // If a var name starts with a exclamation point, then treat the name itself as the result
+        if (name.StartsWith("!"))
+            return name[1..];
+
         if (LocalVars.TryGetValue(name, out var res))
         {
             return res;

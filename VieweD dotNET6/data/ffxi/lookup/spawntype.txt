@@ -1,0 +1,4 @@
+id;name
+0;NPC
+3;Monster
+10;Self

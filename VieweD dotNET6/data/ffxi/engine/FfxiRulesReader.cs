@@ -23,7 +23,7 @@ public class FfxiRulesReader : RulesReader
     /// <param name="description"></param>
     /// <param name="node"></param>
     /// <returns></returns>
-    public override PacketRule? CreateNewPacketRule(RulesGroup ruleGroup, PacketDataDirection pdd, byte streamId, byte level, ushort packetId, string description, XmlNode node)
+    public override PacketRule CreateNewPacketRule(RulesGroup ruleGroup, PacketDataDirection pdd, byte streamId, byte level, ushort packetId, string description, XmlNode node)
     {
         //if (!RuleGroups.TryGetValue(streamId, out var ruleGroup))
         //    return null;
@@ -47,6 +47,10 @@ public class FfxiRulesReader : RulesReader
     public override void BuildEditorPopupMenu(ContextMenuStrip miInsert, RulesEditorForm editor)
     {
         base.BuildEditorPopupMenu(miInsert, editor);
-        
+
+        var ffxiMenu = editor.AddMenuItem(miInsert.Items, "FFXI Specific", "");
+
+        editor.AddMenuItem(ffxiMenu!.DropDownItems, "Position (12 byte)", "<data type=\"pos\" name=\"|Position|\" />");
+        editor.AddMenuItem(ffxiMenu!.DropDownItems, "Direction (1 byte)", "<data type=\"dir\" name=\"|Direction|\" />");
     }
 }

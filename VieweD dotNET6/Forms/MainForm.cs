@@ -10,7 +10,7 @@ namespace VieweD.Forms
     public partial class MainForm : Form
     {
         public static MainForm? Instance { get; private set; }
-        public bool ShowDebugInfo { get; set; } = false;
+        public bool ShowDebugInfo { get; set; }
         private string AppTitle { get; set; } = string.Empty;
 
         private const string InfoGridHeader = "     |  0  1  2  3   4  5  6  7   8  9  A  B   C  D  E  F    | 0123456789ABCDEF\n" +
@@ -160,7 +160,7 @@ namespace VieweD.Forms
                 if (projectSetting == null)
                 {
                     MessageBox.Show(string.Format(Resources.UnableToOpenProject, expectedProjectFileName), Resources.ProjectReadingError, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    project.Dispose();
+                    project.CloseProject();
                     return;
                 }
 
@@ -193,9 +193,12 @@ namespace VieweD.Forms
             if (project.InputReader == null)
             {
                 MessageBox.Show(Resources.UnableToFindInputReader, Resources.InputReaderError, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                project.Dispose();
+                project.CloseProject();
                 return;
             }
+
+            // Load the lookup data after we know our reader (so we can name packets before parsing)
+            _ = project.DataLookup.LoadLookups(project.InputReader.DataFolder, true);
 
             if (project.InputReader.OpenFile(logFileName))
             {
@@ -206,14 +209,14 @@ namespace VieweD.Forms
                 if (project.InputParser == null)
                 {
                     MessageBox.Show(Resources.UnableToFindParser, Resources.ParserError, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    project.Dispose();
+                    project.CloseProject();
                     return;
                 }
 
                 project.InputParser.ParentProject = project;
 
                 if ((rulesFileName == string.Empty) && (!File.Exists(rulesFileName)))
-                    rulesFileName = Path.Combine(Application.StartupPath, "data", "ffxi", "rules", "ffxi.xml");
+                    rulesFileName = Path.Combine(Application.StartupPath, "data", project.InputReader.DataFolder, "rules", project.InputParser.DefaultRulesFile);
 
                 project.InputParser.OpenRulesFile(rulesFileName);
                 project.InputParser.ParseAllData(true);
@@ -225,7 +228,7 @@ namespace VieweD.Forms
             else
             {
                 MessageBox.Show(string.Format(Resources.UnableToOpenFile, openProjectFileDialog.FileName));
-                project.Dispose();
+                project.CloseProject();
             }
         }
 
@@ -284,10 +287,10 @@ namespace VieweD.Forms
         /// <summary>
         /// Show packetData in the Field Grid and Raw Data View
         /// </summary>
-        /// <param name="pd"></param>
-        public void ShowPacketData(BasePacketData? pd)
+        /// <param name="packetData"></param>
+        public void ShowPacketData(BasePacketData? packetData)
         {
-            if (pd == null)
+            if (packetData == null)
             {
                 DgvParsed.Rows.Clear();
                 DgvParsed.Tag = null;
@@ -302,7 +305,7 @@ namespace VieweD.Forms
                 var oldFocus = DgvParsed.Focused;
 
                 DgvParsed.SuspendLayout();
-                DgvParsed.Tag = pd;
+                DgvParsed.Tag = packetData;
                 DgvParsed.Enabled = false;
                 DgvParsed.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(
                     (int)Math.Round(DgvParsed.DefaultCellStyle.BackColor.R * 0.95),
@@ -310,11 +313,11 @@ namespace VieweD.Forms
                     (int)Math.Round(DgvParsed.DefaultCellStyle.BackColor.B * 0.95));
 
                 var y = 0;
-                for (var i = 0; i < pd.ParsedData.Count; i++)
+                for (var i = 0; i < packetData.ParsedData.Count; i++)
                 {
-                    var parsedField = pd.ParsedData[i];
-                    var previousField = ((i - 1) >= 0) ? pd.ParsedData[i - 1] : null;
-                    var nextField = ((i + 1) < pd.ParsedData.Count) ? pd.ParsedData[i + 1] : null;
+                    var parsedField = packetData.ParsedData[i];
+                    var previousField = ((i - 1) >= 0) ? packetData.ParsedData[i - 1] : null;
+                    var nextField = ((i + 1) < packetData.ParsedData.Count) ? packetData.ParsedData[i + 1] : null;
 
                     var nestString = GetNestedString(parsedField, previousField, nextField);
 
@@ -367,18 +370,18 @@ namespace VieweD.Forms
 
                 DgvParsed.SuspendLayout();
                 DgvParsed.Rows.Clear();
-                DgvParsed.Tag = pd;
+                DgvParsed.Tag = packetData;
                 DgvParsed.Enabled = false;
                 DgvParsed.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(
                     (int)Math.Round(DgvParsed.DefaultCellStyle.BackColor.R * 0.95),
                     (int)Math.Round(DgvParsed.DefaultCellStyle.BackColor.G * 0.95),
                     (int)Math.Round(DgvParsed.DefaultCellStyle.BackColor.B * 0.95));
 
-                var rule = pd.ParentProject?.InputParser?.Rules?.GetPacketRule(pd.PacketDataDirection, 0, 0, (ushort)pd.PacketId);
+                var rule = packetData.ParentProject.InputParser?.Rules?.GetPacketRule(packetData);
                 if (rule != null)
                 {
                     rule.Build();
-                    rule.RunRule(pd);
+                    rule.RunRule(packetData);
                     foreach (var localVar in rule.LocalVars)
                     {
 #pragma warning disable IDE0017 // Simplify object initialization
@@ -422,7 +425,7 @@ namespace VieweD.Forms
             #endregion
 
             #region RawData
-            PacketDataToRichText(pd, RichTextData);
+            PacketDataToRichText(packetData, RichTextData);
             #endregion
         }
 
@@ -690,7 +693,7 @@ namespace VieweD.Forms
             UpdateStatusBar(TCProjects.SelectedTab as ViewedProjectTab);
             if (TCProjects.SelectedTab is ViewedProjectTab project)
             {
-                if ((project.PacketsListBox.SelectedIndex >= 0) && (project.PacketsListBox.SelectedItem is BasePacketData packetData))
+                if (project.PacketsListBox.SelectedItem is BasePacketData packetData)
                 {
                     ShowPacketData(packetData);
                 }
@@ -715,7 +718,12 @@ namespace VieweD.Forms
             if (TCProjects.SelectedTab is ViewedProjectTab project)
             {
                 //TCProjects.TabPages.Remove(project);
-                project.Dispose();
+                project.CloseProject();
+            }
+            else
+            {
+                if (TCProjects.SelectedTab != null)
+                    TCProjects.TabPages.Remove(TCProjects.SelectedTab);
             }
         }
 
@@ -861,11 +869,17 @@ namespace VieweD.Forms
                 if (imageRect.Contains(e.Location))
                 {
                     var tabText = tabControl.TabPages[i]?.Text ?? "Tab";
-                    if (MessageBox.Show(string.Format(Resources.CloseFile,tabText),
-                            Resources.ConfirmClose, 
+                    var thisTab = tabControl.TabPages[i];
+                    if (MessageBox.Show(string.Format(Resources.CloseFile, tabText),
+                            Resources.ConfirmClose,
                             MessageBoxButtons.YesNo,
                             MessageBoxIcon.Question) == DialogResult.Yes)
-                        tabControl.TabPages[i].Dispose();// .RemoveAt(i);
+                    {
+                        if (thisTab is ViewedProjectTab project)
+                            project.CloseProject();
+                        else
+                            thisTab.Dispose();
+                    }
                     return;
                 }
             }
@@ -924,7 +938,7 @@ namespace VieweD.Forms
             DgvParsed.Rows.Clear();
             if ((TCProjects?.SelectedTab is ViewedProjectTab project) && (project.PacketsListBox.SelectedItem is BasePacketData packetData))
             {
-                var rule = project.InputParser?.Rules?.GetPacketRule(packetData.PacketDataDirection, project.GetExpectedStreamIdByPort(packetData.SourcePort, 0), 0, (ushort)packetData.PacketId);
+                var rule = project.InputParser?.Rules?.GetPacketRule(packetData);
                 if (rule != null)
                 {
                     rule.Build();
@@ -932,8 +946,16 @@ namespace VieweD.Forms
                     packetData.AddUnparsedFields();
                 }
             }
-            TCProjects_SelectedIndexChanged(TCProjects.SelectedTab, e);
+            TCProjects_SelectedIndexChanged(TCProjects!.SelectedTab!, e);
             ShowDebugInfo = false;
+        }
+
+        public void CenterMyForm(Form form)
+        {
+            var centerX = Left + (Width / 2);
+            var centerY = Top + (Height / 2);
+            form.Left = centerX - (form.Width / 2);
+            form.Top = centerY - (form.Height / 2);
         }
     }
 }

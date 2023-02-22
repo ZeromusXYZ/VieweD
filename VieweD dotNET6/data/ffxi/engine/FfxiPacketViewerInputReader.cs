@@ -7,6 +7,7 @@ public class FfxiPacketViewerInputReader : BaseInputReader
 {
     public override string Name => "FFXI Packet Viewer";
     public override string Description => "Supports .log files containing Final Fantasy XI capture data made by the Packet Viewer plugin for Windower";
+    public override string DataFolder => "ffxi";
 
     private StreamReader? _reader { get; set; } = null;
 

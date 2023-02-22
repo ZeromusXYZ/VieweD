@@ -7,6 +7,7 @@ public class FfxiPacketeerInputReader : BaseInputReader
 {
     public override string Name => "FFXI Packeteer";
     public override string Description => "Supports .txt files containing Final Fantasy XI capture data made by Packeteer for Ashita";
+    public override string DataFolder => "ffxi";
 
     private StreamReader? _reader { get; set; } = null;
 

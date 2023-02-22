@@ -730,5 +730,17 @@ namespace VieweD.Properties {
                 this["ShowStringHexData"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string CreditsName {
+            get {
+                return ((string)(this["CreditsName"]));
+            }
+            set {
+                this["CreditsName"] = value;
+            }
+        }
     }
 }

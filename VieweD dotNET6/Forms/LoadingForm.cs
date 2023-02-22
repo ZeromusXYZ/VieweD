@@ -43,13 +43,7 @@ namespace VieweD.Forms
                 Instance.Show();
                 Instance.BringToFront();
 
-                if (MainForm.Instance != null)
-                {
-                    var centerX = MainForm.Instance.Left + (MainForm.Instance.Width / 2);
-                    var centerY = MainForm.Instance.Top + (MainForm.Instance.Height / 2);
-                    Instance.Left = centerX - (Instance.Width / 2);
-                    Instance.Top = centerY - (Instance.Height / 2);
-                }
+                MainForm.Instance?.CenterMyForm(Instance);
             }
 
             Instance.Bar.Maximum = maxValue;

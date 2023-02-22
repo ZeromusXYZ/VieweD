@@ -2,6 +2,7 @@
 using System.Xml;
 using VieweD.Forms;
 using VieweD.Helpers.System;
+using VieweD.Properties;
 
 namespace VieweD.engine.common;
 
@@ -100,7 +101,7 @@ public class RulesReader
         }
     }
 
-    public virtual PacketRule? GetPacketRule(PacketDataDirection pdd, byte streamId, byte level, ushort packetId)
+    public virtual PacketRule? GetPacketRule(PacketDataDirection pdd, byte streamId, byte level, uint packetId)
     {
         var key = (uint)((streamId * 0x01000000) + (level * 0x10000) + packetId);
         var level0Key = (uint)((streamId * 0x01000000) + packetId);
@@ -126,6 +127,8 @@ public class RulesReader
         return null;
     }
 
+    public PacketRule? GetPacketRule(BasePacketData data) => GetPacketRule(data.PacketDataDirection, data.StreamId, data.CompressionLevel, data.PacketId);
+
     /// <summary>
     /// Override this function to return your own PacketRule descendant if you want to add custom types
     /// </summary>
@@ -137,7 +140,7 @@ public class RulesReader
     /// <param name="description"></param>
     /// <param name="node"></param>
     /// <returns></returns>
-    public virtual PacketRule? CreateNewPacketRule(RulesGroup ruleGroup, PacketDataDirection pdd, byte streamId, byte level, ushort packetId, string description, XmlNode node)
+    public virtual PacketRule CreateNewPacketRule(RulesGroup ruleGroup, PacketDataDirection pdd, byte streamId, byte level, ushort packetId, string description, XmlNode node)
     {
         //if (!RuleGroups.TryGetValue(streamId, out var ruleGroup))
         //    return null;
@@ -267,6 +270,58 @@ public class RulesReader
         var others = editor.AddMenuItem(miInsert.Items, "Other", "");
         editor.AddMenuItem(others!.DropDownItems, "echo", "<echo arg=\"#a\" />");
         editor.AddMenuItem(others!.DropDownItems, "comment", "<!--- your comment here -->");
+
+    }
+
+    public PacketRule? CreateNewUserPacketRule(ViewedProjectTab project, PacketDataDirection packetDataDirection, PacketFilterListEntry key, string newName)
+    {
+        var verifyPacket = GetPacketRule(packetDataDirection, key.StreamId, key.Level, (uint)key.Id);
+
+        // Already exists, don't create a new one
+        if (verifyPacket != null)
+            return verifyPacket;
+
+        // Find the related rule group for the given StreamId
+        if (!RuleGroups.TryGetValue(key.StreamId, out var ruleGroup))
+            return null;
+
+        var packetGroupDirectionNode = packetDataDirection == PacketDataDirection.Incoming ? ruleGroup.S2C :
+            packetDataDirection == PacketDataDirection.Outgoing ? ruleGroup.C2S : null;
+
+        var directionSet = packetDataDirection == PacketDataDirection.Incoming ? S2C :
+            packetDataDirection == PacketDataDirection.Outgoing ? C2S : null;
+
+        if ((packetGroupDirectionNode == null) || (directionSet == null))
+            return null;
+
+        var doc = ruleGroup.RootNode?.OwnerDocument;
+        if (doc == null) 
+            return null;
+
+        var newXmlElement = doc.CreateElement("packet", packetGroupDirectionNode.NamespaceURI);
+        XmlHelper.AddAttribute(newXmlElement, "type", key.Id.ToHex(3));
+        if (key.Level > 0)
+            XmlHelper.AddAttribute(newXmlElement, "level", key.Level.ToHex());
+        XmlHelper.AddAttribute(newXmlElement, "desc", newName);
+        XmlHelper.AddAttribute(newXmlElement, "comment", "");
+
+        // var currentWindowsUser = System.Security.Principal.WindowsIdentity.GetCurrent().Name.Split('\\').Last();
+        var currentWindowsUser = string.IsNullOrWhiteSpace(Settings.Default.CreditsName) ? Environment.UserName : Settings.Default.CreditsName;
+        XmlHelper.AddAttribute(newXmlElement, "credits", currentWindowsUser);
+
+        XmlHelper.AddAttribute(newXmlElement, "app", "VieweD");
+
+        newXmlElement.InnerXml = "<!-- "+newName+" -->"; // GetDefaultNewPacketRuleNodeContents(packetId);
+
+        packetGroupDirectionNode.AppendChild(newXmlElement);
+
+        var newPacketRule = CreateNewPacketRule(ruleGroup, packetDataDirection, key.StreamId, key.Level, (ushort)key.Id, newName, newXmlElement);
+
+        directionSet.Add(newPacketRule.LookupKey, newPacketRule);
+
+        newPacketRule.Build();
+
+        return newPacketRule;
 
     }
 }
