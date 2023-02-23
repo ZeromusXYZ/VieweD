@@ -15,6 +15,7 @@ public class RulesGroup
     /// Only used if the capture has multiple connections inside one log file to identify which connection this is supposed to be for 
     /// </summary>
     public byte StreamId { get; protected set; }
+    public string StreamIdName { get; protected set; }
 
     /// <summary>
     /// Port of the associated port
@@ -27,6 +28,7 @@ public class RulesGroup
     {
         Parent = reader;
         StreamId = expectedStreamId;
+        StreamIdName = "S" + StreamId;
         RootNode = root;
         if (RootNode != null)
         {
@@ -41,8 +43,11 @@ public class RulesGroup
                 {
                     case "server":
                         Port = Convert.ToUInt16(XmlHelper.GetAttributeInt(attributes, "port"));
-                        Parent.ParentProject?.RegisterPort(Port);
-                        StreamId = Parent.ParentProject?.GetExpectedStreamIdByPort(Port, 0) ?? StreamId;
+                        var streamName = XmlHelper.GetAttributeString(attributes, "name");
+                        if (!string.IsNullOrWhiteSpace(streamName))
+                            StreamIdName = streamName;
+                        Parent.ParentProject?.RegisterPort(Port,StreamIdName);
+                        StreamId = Parent.ParentProject?.GetExpectedStreamIdByPort(Port, 0).Item1 ?? StreamId;
                         break;
                     case "decryptor":
                         Decryptor = XmlHelper.GetAttributeString(attributes, "name");
@@ -76,6 +81,8 @@ public class RulesGroup
                     var attributes = XmlHelper.ReadNodeAttributes(pNode);
                     var pType = Convert.ToUInt16(XmlHelper.GetAttributeInt(attributes, "type"));
                     var level = Convert.ToByte(XmlHelper.GetAttributeInt(attributes, "level"));
+                    if (level > 0)
+                        Parent.UsesCompressionLevels = true;
                     var description = XmlHelper.GetAttributeString(attributes, "desc");
                     var packetRule = Parent.CreateNewPacketRule(this, PacketDataDirection.Incoming, StreamId, level, pType, description, pNode);
                     if (packetRule == null)
@@ -123,6 +130,8 @@ public class RulesGroup
                     }
 
                     var level = Convert.ToByte(XmlHelper.GetAttributeInt(attributes, "level"));
+                    if (level > 0)
+                        Parent.UsesCompressionLevels = true;
                     var description = XmlHelper.GetAttributeString(attributes, "desc");
                     var packetRule = reader.CreateNewPacketRule(this, PacketDataDirection.Outgoing, StreamId, level, pType, description, pNode);
                     if (packetRule == null)

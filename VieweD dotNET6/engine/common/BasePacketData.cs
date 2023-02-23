@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using System.Net.NetworkInformation;
 using VieweD.Helpers.System;
 using VieweD.Properties;
 
@@ -14,10 +15,10 @@ public class BasePacketData
     public uint PacketId { get; set; }
     public int SyncId { get; set; }
     /// <summary>
-    /// Compression Level of the packet if applicable
+    /// Compression CompressionLevel of the packet if applicable
     /// </summary>
     public byte CompressionLevel { get; set; }
-    public byte StreamId => ParentProject?.GetExpectedStreamIdByPort(SourcePort, 0) ?? 0;
+    public byte StreamId => ParentProject?.GetExpectedStreamIdByPort(SourcePort, 0).Item1 ?? 0;
 
     public string HeaderText { get; set; }
     public string OriginalHeaderText { get; set; }
@@ -495,9 +496,9 @@ public class BasePacketData
             case FilterType.AllowNone:
                 return false;
             case FilterType.ShowPackets:
-                return filterList.Any(x => (x.Id == packetKey.Id) && (x.Level == packetKey.Level) && (x.StreamId == packetKey.StreamId));
+                return filterList.Any(x => (x.PacketId == packetKey.PacketId) && (x.CompressionLevel == packetKey.CompressionLevel) && (x.StreamId == packetKey.StreamId));
             case FilterType.HidePackets:
-                return !filterList.Any(x => (x.Id == packetKey.Id) && (x.Level == packetKey.Level) && (x.StreamId == packetKey.StreamId));
+                return !filterList.Any(x => (x.PacketId == packetKey.PacketId) && (x.CompressionLevel == packetKey.CompressionLevel) && (x.StreamId == packetKey.StreamId));
             case FilterType.Off:
             default:
                 return true;

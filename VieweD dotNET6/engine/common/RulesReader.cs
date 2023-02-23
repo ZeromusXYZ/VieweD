@@ -19,6 +19,8 @@ public class RulesReader
     public ViewedProjectTab ParentProject { get; private set; }
     // protected ZlibCodec DecompressionHandler { get; set; } = new ZlibCodec(Ionic.Zlib.CompressionMode.Decompress);
     public string ExpectedClientVersion { get; set; } = string.Empty;
+    public bool UsesCompressionLevels { get; internal set; } = false;
+    public bool UsesMultipleStreams { get; private set; } = false;
 
     public RulesReader(ViewedProjectTab parent)
     {
@@ -54,13 +56,21 @@ public class RulesReader
 
         // Locate rule sections
         AllRulesGroups = XmlDoc.SelectNodes("/root/rule");
-        RuleGroups.Clear();
         if (AllRulesGroups != null)
-            for (var i = 0; i < AllRulesGroups.Count; i++)
-            {
-                var ng = new RulesGroup(this, AllRulesGroups.Item(i), (byte)i);
-                RuleGroups.Add(ng.StreamId, ng);
-            }
+        {
+            UsesMultipleStreams = AllRulesGroups.Count > 1;
+            RuleGroups.Clear();
+            if (AllRulesGroups != null)
+                for (var i = 0; i < AllRulesGroups.Count; i++)
+                {
+                    var ng = new RulesGroup(this, AllRulesGroups.Item(i), (byte)i);
+                    RuleGroups.Add(ng.StreamId, ng);
+                }
+        }
+        else
+        {
+            UsesMultipleStreams = false;
+        }
 
         return true;
     }
@@ -275,7 +285,7 @@ public class RulesReader
 
     public PacketRule? CreateNewUserPacketRule(ViewedProjectTab project, PacketDataDirection packetDataDirection, PacketFilterListEntry key, string newName)
     {
-        var verifyPacket = GetPacketRule(packetDataDirection, key.StreamId, key.Level, (uint)key.Id);
+        var verifyPacket = GetPacketRule(packetDataDirection, key.StreamId, key.CompressionLevel, (uint)key.PacketId);
 
         // Already exists, don't create a new one
         if (verifyPacket != null)
@@ -299,9 +309,13 @@ public class RulesReader
             return null;
 
         var newXmlElement = doc.CreateElement("packet", packetGroupDirectionNode.NamespaceURI);
-        XmlHelper.AddAttribute(newXmlElement, "type", key.Id.ToHex(3));
-        if (key.Level > 0)
-            XmlHelper.AddAttribute(newXmlElement, "level", key.Level.ToHex());
+        XmlHelper.AddAttribute(newXmlElement, "type", key.PacketId.ToHex(3));
+        if (key.CompressionLevel > 0)
+        {
+            XmlHelper.AddAttribute(newXmlElement, "level", key.CompressionLevel.ToHex());
+            UsesCompressionLevels = true;
+        }
+
         XmlHelper.AddAttribute(newXmlElement, "desc", newName);
         XmlHelper.AddAttribute(newXmlElement, "comment", "");
 
@@ -315,7 +329,7 @@ public class RulesReader
 
         packetGroupDirectionNode.AppendChild(newXmlElement);
 
-        var newPacketRule = CreateNewPacketRule(ruleGroup, packetDataDirection, key.StreamId, key.Level, (ushort)key.Id, newName, newXmlElement);
+        var newPacketRule = CreateNewPacketRule(ruleGroup, packetDataDirection, key.StreamId, key.CompressionLevel, (ushort)key.PacketId, newName, newXmlElement);
 
         directionSet.Add(newPacketRule.LookupKey, newPacketRule);
 

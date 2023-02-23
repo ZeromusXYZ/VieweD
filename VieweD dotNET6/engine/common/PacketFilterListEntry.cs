@@ -5,87 +5,84 @@ namespace VieweD.engine.common;
 
 public class PacketFilterListEntry
 {
-    public ulong Id { get; set; }
-    public byte Level { get; set; }
+    public uint PacketId { get; set; }
+    public byte CompressionLevel { get; set; }
     public byte StreamId { get; set; }
 
-    public PacketFilterListEntry(ulong id, byte level, byte streamId)
+    // key = 0xssll 0000 pppp pppp
+    // ss = stream
+    // ll = compression level
+    // pp = packet id
+    private const int StreamBitOffset = 48 ;
+    private const int CompressionBitOffset = 56;
+    public ulong FilterKey => (PacketId + ((ulong)StreamId << StreamBitOffset) + ((ulong)CompressionLevel << CompressionBitOffset));
+
+    public PacketFilterListEntry(ulong packetId, byte compressionLevel, byte streamId)
     {
-        Id = id;
-        Level = level;
+        PacketId = (uint)packetId;
+        CompressionLevel = compressionLevel;
         StreamId = streamId;
 
         // Ensure compatibility with older versions
-        if ((id > 0xFFFF) && (level == 0) && (streamId == 0))
+        if ((packetId > uint.MaxValue) && (compressionLevel == 0) && (streamId == 0))
         {
-            StreamId = (byte)(id / 0x1000000);
-            Level = (byte)((id / 0x10000) & 0xFF);
-            Id = id & 0xFFFF;
+            StreamId = (byte)((packetId >> StreamBitOffset) & 0xFF);
+            CompressionLevel = (byte)((packetId >> CompressionBitOffset) & 0xFF);
+            PacketId = (uint)(packetId & uint.MaxValue);
         }
     }
 
     public PacketFilterListEntry(ulong fullKey)
     {
-        StreamId = (byte)(fullKey / 0x1000000);
-        Level = (byte)((fullKey / 0x10000) & 0xFF);
-        Id = fullKey & 0xFFFF;
+        StreamId = (byte)((fullKey >> StreamBitOffset) & 0xFF);
+        CompressionLevel = (byte)((fullKey >> CompressionBitOffset) & 0xFF);
+        PacketId = (uint)(fullKey & uint.MaxValue);
     }
 
     public PacketFilterListEntry(string value)
     {
         var dashPos = value.IndexOf('-');
         if (dashPos > 0)
-            value = value.Substring(0, dashPos);
+            value = value[..dashPos];
 
         var splitValue = value.ToUpper().Split(' ');
         foreach (var s in splitValue)
         {
             if (s.StartsWith("0X"))
             {
-                var i = s.Substring(2);
-                if (ulong.TryParse(i, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out var idVal))
-                    Id = idVal;
+                var i = s[2..];
+                if (uint.TryParse(i, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out var idVal))
+                    PacketId = idVal;
             }
+            else
             if (s.StartsWith("$") || s.StartsWith("H"))
             {
-                var i = s.Substring(1);
-                if (ulong.TryParse(i, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out var idVal))
-                    Id = idVal;
+                var i = s[1..];
+                if (uint.TryParse(i, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out var idVal))
+                    PacketId = idVal;
             }
             else if (s.StartsWith("L"))
             {
-                var i = s.Substring(1);
+                var i = s[1..];
                 if (byte.TryParse(i, out var lVal))
-                    Level = lVal;
+                    CompressionLevel = lVal;
             }
             else if (s.StartsWith("S"))
             {
-                var i = s.Substring(1);
+                var i = s[1..];
                 if (byte.TryParse(i, out var sVal))
                     StreamId = sVal;
             }
         }
     }
 
-
-    public ulong AsMergedId()
-    {
-        // ulong packetKey = (ulong)(pd.PacketId + (pd.PacketLevel * 0x010000) + (pd.StreamId * 0x01000000));
-        // var packetKey = new PacketFilterListEntry(pd.PacketId, pd.PacketLevel, pd.StreamId);
-        return (Id + (ulong)(Level * 0x010000) + (ulong)(StreamId * 0x01000000));
-    }
-
     public override string ToString()
     {
-        // ulong packetKey = (ulong)(pd.PacketId + (pd.PacketLevel * 0x010000) + (pd.StreamId * 0x01000000));
-        // var packetKey = new PacketFilterListEntry(pd.PacketId, pd.PacketLevel, pd.StreamId);
-        return Id.ToHex(3) + (Level > 0 ? " L" + Level : "") + (StreamId > 0 ? " S" + StreamId : "");
+        return PacketId.ToHex(3) + (CompressionLevel > 0 ? " L" + CompressionLevel : "") + (StreamId > 0 ? " S" + StreamId : "");
     }
 
-    public static string AsString(ulong id, byte level, byte streamId)
+    public static string AsString(uint id, byte level, byte streamId)
     {
-        // ulong packetKey = (ulong)(pd.PacketId + (pd.PacketLevel * 0x010000) + (pd.StreamId * 0x01000000));
-        // var packetKey = new PacketFilterListEntry(pd.PacketId, pd.PacketLevel, pd.StreamId);
         return id.ToHex(3) + (level > 0 ? " L" + level : "") + (streamId > 0 ? " S" + streamId : "");
     }
 }

@@ -112,43 +112,46 @@
     <value>Ctrl+S</value>
   </data>
   <data name="MMProjectSave.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>169, 22</value>
   </data>
   <data name="MMProjectSave.Text" xml:space="preserve">
     <value>&amp;Save</value>
   </data>
   <data name="toolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>177, 6</value>
+    <value>166, 6</value>
   </data>
   <data name="projectDataToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>169, 22</value>
   </data>
   <data name="projectDataToolStripMenuItem.Text" xml:space="preserve">
     <value>Game Data ...</value>
   </data>
   <data name="videoLinkToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>169, 22</value>
   </data>
   <data name="videoLinkToolStripMenuItem.Text" xml:space="preserve">
     <value>Video Link ...</value>
   </data>
   <data name="MMProjectN1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>177, 6</value>
+    <value>166, 6</value>
+  </data>
+  <data name="MMProjectSettings.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
+    <value>Ctrl+P</value>
   </data>
   <data name="MMProjectSettings.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>169, 22</value>
   </data>
   <data name="MMProjectSettings.Text" xml:space="preserve">
     <value>Se&amp;ttings ...</value>
   </data>
   <data name="MMProjectN2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>177, 6</value>
+    <value>166, 6</value>
   </data>
   <data name="MMProjectClose.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
     <value>Ctrl+W</value>
   </data>
   <data name="MMProjectClose.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>169, 22</value>
   </data>
   <data name="MMProjectClose.Text" xml:space="preserve">
     <value>&amp;Close</value>
@@ -158,6 +161,72 @@
   </data>
   <data name="MMProject.Text" xml:space="preserve">
     <value>&amp;Project</value>
+  </data>
+  <data name="MMSearchFind.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
+    <value>Ctrl+F</value>
+  </data>
+  <data name="MMSearchFind.Size" type="System.Drawing.Size, System.Drawing">
+    <value>207, 22</value>
+  </data>
+  <data name="MMSearchFind.Text" xml:space="preserve">
+    <value>Find ...</value>
+  </data>
+  <data name="MMSearchFindNext.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
+    <value>F3</value>
+  </data>
+  <data name="MMSearchFindNext.Size" type="System.Drawing.Size, System.Drawing">
+    <value>207, 22</value>
+  </data>
+  <data name="MMSearchFindNext.Text" xml:space="preserve">
+    <value>Find Next</value>
+  </data>
+  <data name="MMSearchN1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>204, 6</value>
+  </data>
+  <data name="MMSearchEditFilter.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
+    <value>Ctrl+Shift+F</value>
+  </data>
+  <data name="MMSearchEditFilter.Size" type="System.Drawing.Size, System.Drawing">
+    <value>207, 22</value>
+  </data>
+  <data name="MMSearchEditFilter.Text" xml:space="preserve">
+    <value>Edit Filter ...</value>
+  </data>
+  <data name="MMSearchApplyReset.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
+  </data>
+  <data name="MMSearchApplyReset.Text" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="MMSearchApplyMenuN1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>177, 6</value>
+  </data>
+  <data name="MMSearchApplyMenu.Size" type="System.Drawing.Size, System.Drawing">
+    <value>207, 22</value>
+  </data>
+  <data name="MMSearchApplyMenu.Text" xml:space="preserve">
+    <value>Apply Filter</value>
+  </data>
+  <data name="MMSearchHighlightReset.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
+  </data>
+  <data name="MMSearchHighlightReset.Text" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="MMSearchHighlightMenuN1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>177, 6</value>
+  </data>
+  <data name="MMSearchHighlightMenu.Size" type="System.Drawing.Size, System.Drawing">
+    <value>207, 22</value>
+  </data>
+  <data name="MMSearchHighlightMenu.Text" xml:space="preserve">
+    <value>Highlight Filter</value>
+  </data>
+  <data name="MMSearch.Size" type="System.Drawing.Size, System.Drawing">
+    <value>54, 20</value>
+  </data>
+  <data name="MMSearch.Text" xml:space="preserve">
+    <value>&amp;Search</value>
   </data>
   <data name="MMLinksGitHub.Size" type="System.Drawing.Size, System.Drawing">
     <value>199, 22</value>
@@ -441,7 +510,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAEZTeXN0ZW0uV2luZG93cy5Gb3JtcywgQ3VsdHVyZT1uZXV0cmFs
         LCBQdWJsaWNLZXlUb2tlbj1iNzdhNWM1NjE5MzRlMDg5BQEAAAAmU3lzdGVtLldpbmRvd3MuRm9ybXMu
         SW1hZ2VMaXN0U3RyZWFtZXIBAAAABERhdGEHAgIAAAAJAwAAAA8DAAAAUgsAAAJNU0Z0AUkBTAIBAQQB
-        AAGAAQABgAEAARABAAEQAQAE/wEJAQAI/wFCAU0BNgEEBgABNgEEAgABKAMAAUADAAEgAwABAQEAAQgG
+        AAHIAQAByAEAARABAAEQAQAE/wEJAQAI/wFCAU0BNgEEBgABNgEEAgABKAMAAUADAAEgAwABAQEAAQgG
         AAEIGAABgAIAAYADAAKAAQABgAMAAYABAAGAAQACgAIAA8ABAAHAAdwBwAEAAfABygGmAQABMwUAATMB
         AAEzAQABMwEAAjMCAAMWAQADHAEAAyIBAAMpAQADVQEAA00BAANCAQADOQEAAYABfAH/AQACUAH/AQAB
         kwEAAdYBAAH/AewBzAEAAcYB1gHvAQAB1gLnAQABkAGpAa0CAAH/ATMDAAFmAwABmQMAAcwCAAEzAwAC
@@ -983,6 +1052,72 @@
   </data>
   <data name="&gt;&gt;MMProjectClose.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MMSearch.Name" xml:space="preserve">
+    <value>MMSearch</value>
+  </data>
+  <data name="&gt;&gt;MMSearch.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MMSearchFind.Name" xml:space="preserve">
+    <value>MMSearchFind</value>
+  </data>
+  <data name="&gt;&gt;MMSearchFind.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MMSearchFindNext.Name" xml:space="preserve">
+    <value>MMSearchFindNext</value>
+  </data>
+  <data name="&gt;&gt;MMSearchFindNext.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MMSearchN1.Name" xml:space="preserve">
+    <value>MMSearchN1</value>
+  </data>
+  <data name="&gt;&gt;MMSearchN1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MMSearchEditFilter.Name" xml:space="preserve">
+    <value>MMSearchEditFilter</value>
+  </data>
+  <data name="&gt;&gt;MMSearchEditFilter.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MMSearchApplyMenu.Name" xml:space="preserve">
+    <value>MMSearchApplyMenu</value>
+  </data>
+  <data name="&gt;&gt;MMSearchApplyMenu.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MMSearchApplyReset.Name" xml:space="preserve">
+    <value>MMSearchApplyReset</value>
+  </data>
+  <data name="&gt;&gt;MMSearchApplyReset.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MMSearchApplyMenuN1.Name" xml:space="preserve">
+    <value>MMSearchApplyMenuN1</value>
+  </data>
+  <data name="&gt;&gt;MMSearchApplyMenuN1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MMSearchHighlightMenu.Name" xml:space="preserve">
+    <value>MMSearchHighlightMenu</value>
+  </data>
+  <data name="&gt;&gt;MMSearchHighlightMenu.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MMSearchHighlightReset.Name" xml:space="preserve">
+    <value>MMSearchHighlightReset</value>
+  </data>
+  <data name="&gt;&gt;MMSearchHighlightReset.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MMSearchHighlightMenuN1.Name" xml:space="preserve">
+    <value>MMSearchHighlightMenuN1</value>
+  </data>
+  <data name="&gt;&gt;MMSearchHighlightMenuN1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;MMLinks.Name" xml:space="preserve">
     <value>MMLinks</value>

@@ -51,6 +51,18 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="data\ffxi\filter\hide movement.pfl">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="data\ffxi\filter\npc interaction.pfl">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="data\ffxi\filter\show zoning.pfl">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="data\ffxi\filter\svrmsg.pfl">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="data\ffxi\lookup\ability.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

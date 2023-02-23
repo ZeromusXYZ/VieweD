@@ -389,7 +389,7 @@ namespace VieweD.Forms
 #pragma warning restore IDE0017 // Simplify object initialization
                         row.Height = DgvParsed.Font.Height + 4;
                         var baseCell = new DataGridViewTextBoxCell() { Value = "" };
-                        var cellColor = baseCell.Style.ForeColor;
+                        Color cellColor;
 
                         if ((localVar.Key == "p_type") || (localVar.Key == "p_size"))
                             cellColor = Color.DarkOrange;
@@ -956,6 +956,92 @@ namespace VieweD.Forms
             var centerY = Top + (Height / 2);
             form.Left = centerX - (form.Width / 2);
             form.Top = centerY - (form.Height / 2);
+        }
+
+        private void MMSearchEditFilter_Click(object sender, EventArgs e)
+        {
+            if (TCProjects.SelectedTab is ViewedProjectTab project)
+            {
+                using var filterForm = new FilterForm();
+                CenterMyForm(filterForm);
+
+                filterForm.ParentProject = project;
+                filterForm.Filter.CopyFrom(project.Filter);
+                filterForm.Filter.MarkAsDimmed = project.Filter.MarkAsDimmed;
+                filterForm.LoadLocalFromFilter();
+
+                var res = filterForm.ShowDialog();
+                if (res is not (DialogResult.OK or DialogResult.Yes)) 
+                    return;
+
+                filterForm.SaveLocalToFilter();
+                project.Filter.CopyFrom(filterForm.Filter);
+                project.Filter.MarkAsDimmed = (res == DialogResult.Yes);
+
+                project.PopulateListBox((project.PacketsListBox.SelectedItem as BasePacketData)?.ThisIndex ?? -1);
+                project.CenterListBox();
+            }
+        }
+
+        private void MMSearchFilterMenu_DropDownOpening(object sender, EventArgs e)
+        {
+            if (sender is not ToolStripMenuItem menu)
+                return;
+
+            // remove all but the first two items (reset + line)
+            while (menu.DropDownItems.Count > 2)
+                menu.DropDownItems.RemoveAt(menu.DropDownItems.Count-1);
+
+            // check if we got a project going
+            if (TCProjects.SelectedTab is not ViewedProjectTab project)
+                return;
+
+            // Get filter files
+            var filterFolder = Path.Combine(Application.StartupPath, "data", project.InputReader?.DataFolder ?? "base", "filter");
+            if (!Directory.Exists(filterFolder))
+                return;
+            var menuTag = (menu.Tag as string) ?? "";
+            var files = Directory.GetFiles(filterFolder, "*.pfl", SearchOption.AllDirectories);
+            foreach (var fileName in files)
+            {
+                var newItem = new ToolStripMenuItem(Path.GetFileNameWithoutExtension(fileName));
+                newItem.Tag = fileName;
+                if (menuTag == "ap")
+                    newItem.Click += MMSearchFilterApplyFile_Click;
+                if (menuTag == "hl")
+                    newItem.Click += MMSearchFilterHighlightApplyFile_Click;
+                menu.DropDownItems.Add(newItem);
+            }
+        }
+
+        private void DoMenuFilter(object? sender, bool doHighLight)
+        {
+            if (sender is not ToolStripMenuItem menuItem)
+                return;
+            if (TCProjects.SelectedTab is not ViewedProjectTab project)
+                return;
+
+            var fileName = menuItem.Tag as string;
+            if (string.IsNullOrWhiteSpace(fileName) || !File.Exists(fileName))
+                // Reset
+                project.Filter.Clear();
+            else
+                // Filter with file
+                project.Filter.LoadFromFile(fileName);
+
+            project.Filter.MarkAsDimmed = doHighLight;
+            project.PopulateListBox((project.PacketsListBox.SelectedItem as BasePacketData)?.ThisIndex ?? -1);
+            project.CenterListBox();
+        }
+
+        private void MMSearchFilterApplyFile_Click(object? sender, EventArgs e)
+        {
+            DoMenuFilter(sender, false);
+        }
+
+        private void MMSearchFilterHighlightApplyFile_Click(object? sender, EventArgs e)
+        {
+            DoMenuFilter(sender, true);
         }
     }
 }

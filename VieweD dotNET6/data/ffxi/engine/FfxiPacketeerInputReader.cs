@@ -255,7 +255,7 @@ public class FfxiPacketeerInputReader : BaseInputReader
         /* Example:
         //           1         2         3         4         5         6         7         8         9
         // 0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
-        // [C->S] Id: 001A | HeaderSize: 28
+        // [C->S] PacketId: 001A | HeaderSize: 28
         //     1A 0E ED 24 D5 10 10 01 D5 00 00 00 00 00 00 00  ..í$Õ...Õ.......
         */
 
@@ -292,7 +292,7 @@ public class FfxiPacketeerInputReader : BaseInputReader
     {
         if (packetData.ByteData.Count < 4)
         {
-            packetData.PacketId = 0xFFFF;
+            packetData.PacketId = uint.MaxValue;
             packetData.PacketDataSize = 0;
             packetData.HeaderText = "Invalid Packet Size < 4";
             return false;

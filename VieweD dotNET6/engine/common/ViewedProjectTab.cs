@@ -50,7 +50,7 @@ public class ViewedProjectTab : TabPage
     /// <summary>
     /// Mapping to use to convert a target port number to a StreamId used by the parsers
     /// </summary>
-    public Dictionary<ushort, byte> PortToStreamIdMapping { get; private set; } = new ();
+    public Dictionary<ushort, (byte, string)> PortToStreamIdMapping { get; private set; } = new ();
     public PacketListFilter Filter { get; set; }
 
     #region popup_menu_items
@@ -197,7 +197,7 @@ public class ViewedProjectTab : TabPage
         CenterListBox();
     }
 
-    private void CenterListBox()
+    internal void CenterListBox()
     {
         // Move to center
         var iHeight = PacketsListBox.ItemHeight;
@@ -791,24 +791,35 @@ public class ViewedProjectTab : TabPage
     }
 
     /// <summary>
-    /// Get the rules' stream id based on a port number
+    /// Get the rules' stream id and name based on a port number
     /// </summary>
     /// <param name="port"></param>
     /// <param name="defaultValue"></param>
     /// <returns></returns>
-    public byte GetExpectedStreamIdByPort(ushort port, byte defaultValue)
+    public (byte, string) GetExpectedStreamIdByPort(ushort port, byte defaultValue)
     {
-        return PortToStreamIdMapping.TryGetValue(port, out var id) ? id : defaultValue;
+        return PortToStreamIdMapping.TryGetValue(port, out var id) ? id : (defaultValue, "S"+defaultValue);
+    }
+
+    public string GetStreamIdName(byte id)
+    {
+        foreach (var valueTuple in PortToStreamIdMapping)
+        {
+            if (valueTuple.Value.Item1 == id)
+                return valueTuple.Value.Item2;
+        }
+        return "S" + id;
     }
 
     /// <summary>
     /// Makes sure that a port is a valid option, adds it at the end if not yet registered
     /// </summary>
     /// <param name="port"></param>
-    public void RegisterPort(ushort port)
+    /// <param name="streamName"></param>
+    public void RegisterPort(ushort port, string streamName)
     {
         if (!PortToStreamIdMapping.TryGetValue(port, out _))
-            PortToStreamIdMapping.Add(port, (byte)PortToStreamIdMapping.Count);
+            PortToStreamIdMapping.Add(port, ((byte)PortToStreamIdMapping.Count, streamName));
     }
 
     /// <summary>

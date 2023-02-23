@@ -1,0 +1,5 @@
+rem;original-file;svrmsg.pfl
+outtype;show
+out;0x04B;Request Server Message
+intype;show
+in;0x04D;Server Response

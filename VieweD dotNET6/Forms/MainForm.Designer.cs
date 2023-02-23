@@ -48,6 +48,17 @@
             this.MMProjectSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.MMProjectN2 = new System.Windows.Forms.ToolStripSeparator();
             this.MMProjectClose = new System.Windows.Forms.ToolStripMenuItem();
+            this.MMSearch = new System.Windows.Forms.ToolStripMenuItem();
+            this.MMSearchFind = new System.Windows.Forms.ToolStripMenuItem();
+            this.MMSearchFindNext = new System.Windows.Forms.ToolStripMenuItem();
+            this.MMSearchN1 = new System.Windows.Forms.ToolStripSeparator();
+            this.MMSearchEditFilter = new System.Windows.Forms.ToolStripMenuItem();
+            this.MMSearchApplyMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.MMSearchApplyReset = new System.Windows.Forms.ToolStripMenuItem();
+            this.MMSearchApplyMenuN1 = new System.Windows.Forms.ToolStripSeparator();
+            this.MMSearchHighlightMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.MMSearchHighlightReset = new System.Windows.Forms.ToolStripMenuItem();
+            this.MMSearchHighlightMenuN1 = new System.Windows.Forms.ToolStripSeparator();
             this.MMLinks = new System.Windows.Forms.ToolStripMenuItem();
             this.MMLinksGitHub = new System.Windows.Forms.ToolStripMenuItem();
             this.MMLinksDikscord = new System.Windows.Forms.ToolStripMenuItem();
@@ -107,6 +118,7 @@
             this.MMFile,
             this.MMVersion,
             this.MMProject,
+            this.MMSearch,
             this.MMLinks});
             resources.ApplyResources(this.MM, "MM");
             this.MM.Name = "MM";
@@ -216,6 +228,81 @@
             this.MMProjectClose.Name = "MMProjectClose";
             resources.ApplyResources(this.MMProjectClose, "MMProjectClose");
             this.MMProjectClose.Click += new System.EventHandler(this.MMProjectClose_Click);
+            // 
+            // MMSearch
+            // 
+            this.MMSearch.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MMSearchFind,
+            this.MMSearchFindNext,
+            this.MMSearchN1,
+            this.MMSearchEditFilter,
+            this.MMSearchApplyMenu,
+            this.MMSearchHighlightMenu});
+            this.MMSearch.Name = "MMSearch";
+            resources.ApplyResources(this.MMSearch, "MMSearch");
+            // 
+            // MMSearchFind
+            // 
+            this.MMSearchFind.Name = "MMSearchFind";
+            resources.ApplyResources(this.MMSearchFind, "MMSearchFind");
+            // 
+            // MMSearchFindNext
+            // 
+            this.MMSearchFindNext.Name = "MMSearchFindNext";
+            resources.ApplyResources(this.MMSearchFindNext, "MMSearchFindNext");
+            // 
+            // MMSearchN1
+            // 
+            this.MMSearchN1.Name = "MMSearchN1";
+            resources.ApplyResources(this.MMSearchN1, "MMSearchN1");
+            // 
+            // MMSearchEditFilter
+            // 
+            this.MMSearchEditFilter.Name = "MMSearchEditFilter";
+            resources.ApplyResources(this.MMSearchEditFilter, "MMSearchEditFilter");
+            this.MMSearchEditFilter.Click += new System.EventHandler(this.MMSearchEditFilter_Click);
+            // 
+            // MMSearchApplyMenu
+            // 
+            this.MMSearchApplyMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MMSearchApplyReset,
+            this.MMSearchApplyMenuN1});
+            this.MMSearchApplyMenu.Name = "MMSearchApplyMenu";
+            resources.ApplyResources(this.MMSearchApplyMenu, "MMSearchApplyMenu");
+            this.MMSearchApplyMenu.Tag = "ap";
+            this.MMSearchApplyMenu.DropDownOpening += new System.EventHandler(this.MMSearchFilterMenu_DropDownOpening);
+            // 
+            // MMSearchApplyReset
+            // 
+            this.MMSearchApplyReset.Name = "MMSearchApplyReset";
+            resources.ApplyResources(this.MMSearchApplyReset, "MMSearchApplyReset");
+            this.MMSearchApplyReset.Click += new System.EventHandler(this.MMSearchFilterApplyFile_Click);
+            // 
+            // MMSearchApplyMenuN1
+            // 
+            this.MMSearchApplyMenuN1.Name = "MMSearchApplyMenuN1";
+            resources.ApplyResources(this.MMSearchApplyMenuN1, "MMSearchApplyMenuN1");
+            // 
+            // MMSearchHighlightMenu
+            // 
+            this.MMSearchHighlightMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MMSearchHighlightReset,
+            this.MMSearchHighlightMenuN1});
+            this.MMSearchHighlightMenu.Name = "MMSearchHighlightMenu";
+            resources.ApplyResources(this.MMSearchHighlightMenu, "MMSearchHighlightMenu");
+            this.MMSearchHighlightMenu.Tag = "hl";
+            this.MMSearchHighlightMenu.DropDownOpening += new System.EventHandler(this.MMSearchFilterMenu_DropDownOpening);
+            // 
+            // MMSearchHighlightReset
+            // 
+            this.MMSearchHighlightReset.Name = "MMSearchHighlightReset";
+            resources.ApplyResources(this.MMSearchHighlightReset, "MMSearchHighlightReset");
+            this.MMSearchHighlightReset.Click += new System.EventHandler(this.MMSearchFilterHighlightApplyFile_Click);
+            // 
+            // MMSearchHighlightMenuN1
+            // 
+            this.MMSearchHighlightMenuN1.Name = "MMSearchHighlightMenuN1";
+            resources.ApplyResources(this.MMSearchHighlightMenuN1, "MMSearchHighlightMenuN1");
             // 
             // MMLinks
             // 
@@ -599,5 +686,16 @@
         private ToolStripMenuItem MIFieldLocalVars;
         private ToolStripSeparator MiFieldN1;
         private ToolStripMenuItem MiFieldDebug;
+        private ToolStripMenuItem MMSearch;
+        private ToolStripMenuItem MMSearchFind;
+        private ToolStripMenuItem MMSearchFindNext;
+        private ToolStripSeparator MMSearchN1;
+        private ToolStripMenuItem MMSearchEditFilter;
+        private ToolStripMenuItem MMSearchApplyMenu;
+        private ToolStripMenuItem MMSearchApplyReset;
+        private ToolStripMenuItem MMSearchHighlightMenu;
+        private ToolStripMenuItem MMSearchHighlightReset;
+        private ToolStripSeparator MMSearchApplyMenuN1;
+        private ToolStripSeparator MMSearchHighlightMenuN1;
     }
 }

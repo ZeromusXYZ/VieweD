@@ -39,21 +39,21 @@ public class PacketListFilter
         FilterInList.AddRange(aFilter.FilterInList);
     }
 
-    public void AddOutFilterValueToList(PacketFilterListEntry entry) => AddOutFilterValueToList(entry.Id, entry.Level, entry.StreamId);
+    public void AddOutFilterValueToList(PacketFilterListEntry entry) => AddOutFilterValueToList(entry.PacketId, entry.CompressionLevel, entry.StreamId);
 
     public void AddOutFilterValueToList(ulong packetId, byte level, byte streamId)
     {
         var filter = new PacketFilterListEntry(packetId, level, streamId);
-        if ((packetId > 0) && !FilterOutList.Any(x => x.Id == filter.Id && x.Level == filter.Level && x.StreamId == filter.StreamId))
+        if ((packetId > 0) && !FilterOutList.Any(x => x.PacketId == filter.PacketId && x.CompressionLevel == filter.CompressionLevel && x.StreamId == filter.StreamId))
             FilterOutList.Add(filter);
     }
 
-    public void AddInFilterValueToList(PacketFilterListEntry entry) => AddInFilterValueToList(entry.Id, entry.Level, entry.StreamId);
+    public void AddInFilterValueToList(PacketFilterListEntry entry) => AddInFilterValueToList(entry.PacketId, entry.CompressionLevel, entry.StreamId);
 
     public void AddInFilterValueToList(ulong packetId, byte level, byte streamId)
     {
         var filter = new PacketFilterListEntry(packetId, level, streamId);
-        if ((packetId > 0) && !FilterInList.Any(x => x.Id == filter.Id && x.Level == filter.Level && x.StreamId == filter.StreamId))
+        if ((packetId > 0) && !FilterInList.Any(x => x.PacketId == filter.PacketId && x.CompressionLevel == filter.CompressionLevel && x.StreamId == filter.StreamId))
             FilterInList.Add(filter);
     }
 
@@ -161,8 +161,7 @@ public class PacketListFilter
         return true;
     }
 
-    /*
-    public bool SaveToFile(string filename,EngineBase engine)
+    public bool SaveToFile(string filename,ViewedProjectTab project)
     {
         var sl = new List<string>();
         sl.Add("rem;original-file;" + Path.GetFileName(filename));
@@ -183,13 +182,13 @@ public class PacketListFilter
         }
         foreach(var i in FilterOutList)
         {
-            var fVal = i.Id.ToHex(3);
-            if ((i.Level > 0) || (i.StreamId > 0))
+            var fVal = i.PacketId.ToHex(3);
+            if ((i.CompressionLevel > 0) || (i.StreamId > 0))
             {
-                fVal += "-" + i.Level.ToHex(2);
+                fVal += "-" + i.CompressionLevel.ToHex(2);
                 fVal += "-" + i.StreamId.ToHex(2);
             }
-            sl.Add("out;"+ fVal + ";" + engine.DataLookups.NLU(DataLookups.LU_PacketOut).GetValue(i.AsMergedId()));
+            sl.Add("out;"+ fVal + ";" + project.DataLookup.NLU(DataLookups.LuPacketOut).GetValue(i.FilterKey));
         }
 
         switch (FilterInType)
@@ -209,13 +208,13 @@ public class PacketListFilter
         }
         foreach (var i in FilterInList)
         {
-            var fVal = i.Id.ToHex(3);
-            if ((i.Level > 0) || (i.StreamId > 0))
+            var fVal = i.PacketId.ToHex(3);
+            if ((i.CompressionLevel > 0) || (i.StreamId > 0))
             {
-                fVal += "-" + i.Level.ToHex(2);
+                fVal += "-" + i.CompressionLevel.ToHex(2);
                 fVal += "-" + i.StreamId.ToHex(2);
             }
-            sl.Add("in;" + fVal + ";" + engine.DataLookups.NLU(DataLookups.LU_PacketIn).GetValue(i.AsMergedId()));
+            sl.Add("in;" + fVal + ";" + project.DataLookup.NLU(DataLookups.LuPacketIn).GetValue(i.FilterKey));
         }
 
         try
@@ -229,6 +228,5 @@ public class PacketListFilter
         }
         return true;
     }
-    */
 
 }

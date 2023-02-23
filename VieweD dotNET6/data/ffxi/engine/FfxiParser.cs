@@ -39,7 +39,7 @@ public class FfxiParser : BaseParser
 
         if (data.ByteData.Count < 4)
         {
-            data.PacketId = 0xFFFF;
+            data.PacketId = 0x01FF; // FFXI's max theoretical packet ID
             data.PacketDataSize = 0;
             data.HeaderText = "Invalid Packet Size < 4";
             return false;

@@ -265,7 +265,7 @@ public class FfxiPacketViewerInputReader : BaseInputReader
     {
         if (packetData.ByteData.Count < 4)
         {
-            packetData.PacketId = 0xFFFF;
+            packetData.PacketId = uint.MaxValue;
             packetData.PacketDataSize = 0;
             packetData.HeaderText = "Invalid Packet Size < 4";
             return false;
