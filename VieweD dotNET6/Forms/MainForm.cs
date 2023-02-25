@@ -16,7 +16,7 @@ namespace VieweD.Forms
         private const string InfoGridHeader = "     |  0  1  2  3   4  5  6  7   8  9  A  B   C  D  E  F    | 0123456789ABCDEF\n" +
                                               "-----+----------------------------------------------------  -+------------------\n";
 
-        public List<string> AllTempFiles { get; set; } = new ();
+        public List<string> AllTempFiles { get; set; } = new();
 
         public MainForm()
         {
@@ -102,8 +102,8 @@ namespace VieweD.Forms
 
         private void MMFileOpen_Click(object sender, EventArgs e)
         {
-            if (openProjectFileDialog.ShowDialog() == DialogResult.OK)
-                OpenFile(openProjectFileDialog.FileName);
+            if (OpenProjectFileDialog.ShowDialog() == DialogResult.OK)
+                OpenFile(OpenProjectFileDialog.FileName);
         }
 
         /// <summary>
@@ -165,18 +165,19 @@ namespace VieweD.Forms
                 }
 
                 logFileName = projectSetting.LogFile;
-                project.InputReader = EngineManager.Instance.GetInputReaderByName(projectSetting.InputReaderName, project);
+                project.InputReader = EngineManager.Instance.GetInputReaderByName(projectSetting.InputReader, project);
 
-                project.InputParser = EngineManager.Instance.GetParserByName(projectSetting.ParserName, project);
+                project.InputParser = EngineManager.Instance.GetParserByName(projectSetting.Parser, project);
 
                 rulesFileName = projectSetting.RulesFile;
+                project.Tags = projectSetting.Tags;
             }
-            
+
             if (string.IsNullOrWhiteSpace(project.ProjectFile))
             {
-                project.ProjectFile = string.IsNullOrWhiteSpace(expectedProjectFileName) ? 
-                    Path.Combine(expectedProjectFolder, Path.GetFileNameWithoutExtension(expectedProjectFolder) + ".pvd") : 
-                    expectedProjectFileName ;
+                project.ProjectFile = string.IsNullOrWhiteSpace(expectedProjectFileName) ?
+                    Path.Combine(expectedProjectFolder, Path.GetFileNameWithoutExtension(expectedProjectFolder) + ".pvd") :
+                    expectedProjectFileName;
             }
 
             project.Text = Helper.MakeTabName(expectedProjectFileName);
@@ -227,7 +228,7 @@ namespace VieweD.Forms
             }
             else
             {
-                MessageBox.Show(string.Format(Resources.UnableToOpenFile, openProjectFileDialog.FileName));
+                MessageBox.Show(string.Format(Resources.UnableToOpenFile, OpenProjectFileDialog.FileName));
                 project.CloseProject();
             }
         }
@@ -324,9 +325,9 @@ namespace VieweD.Forms
                     DataGridViewRow? row;
                     if (y >= DgvParsed.RowCount)
                     {
-                        #pragma warning disable IDE0017 // Simplify object initialization
+#pragma warning disable IDE0017 // Simplify object initialization
                         row = new DataGridViewRow();
-                        #pragma warning restore IDE0017 // Simplify object initialization
+#pragma warning restore IDE0017 // Simplify object initialization
                         row.Height = DgvParsed.Font.Height + 4;
                         row.Cells.Add(new DataGridViewTextBoxCell() { Value = parsedField.DisplayedByteOffset });
                         row.Cells.Add(new DataGridViewTextBoxCell() { Value = parsedField.FieldName });
@@ -410,7 +411,7 @@ namespace VieweD.Forms
                             cellColor = Color.Fuchsia;
 
                         row.Cells.Add(baseCell);
-                        row.Cells.Add(new DataGridViewTextBoxCell() { Value = localVar.Key, Style = new DataGridViewCellStyle(baseCell.Style) {ForeColor = cellColor } });
+                        row.Cells.Add(new DataGridViewTextBoxCell() { Value = localVar.Key, Style = new DataGridViewCellStyle(baseCell.Style) { ForeColor = cellColor } });
                         row.Cells.Add(new DataGridViewTextBoxCell() { Value = localVar.Value, Style = new DataGridViewCellStyle(baseCell.Style) { ForeColor = cellColor } });
                         DgvParsed.Rows.Add(row);
                     }
@@ -437,7 +438,7 @@ namespace VieweD.Forms
             rt.Tag = packetData;
             var rtInfo = rt;
             var rtf = string.Empty;
-            List<Color> colorTable = new ();
+            List<Color> colorTable = new();
             var lastForegroundColorIndex = -1;
             var lastBackgroundColorIndex = -1;
             var hasSelectedFields = packetData.HasSelectedFields(); // cache this
@@ -478,10 +479,10 @@ namespace VieweD.Forms
 
                 foreach (var col in colorTable)
                     rtfHead += "\\red" + col.R.ToString() + "\\green" + col.G.ToString() + "\\blue" + col.B.ToString() + ";";
-                
+
                 rtfHead += "}";
                 rtfHead += "\\viewkind4\\uc1\\pard\\cf1\\highlight2\\f0\\fs18 ";
-                
+
                 return rtfHead;
             }
 
@@ -559,7 +560,7 @@ namespace VieweD.Forms
             var moveCursor = true;
             //var endCursor = -1;
             //ParsedField? lastParsedField;
-            
+
             for (var i = 0; i < packetData.ByteData.Count; i += 0x10) // note this is +16, not +1
             {
                 // Hex offset of the line
@@ -751,8 +752,41 @@ namespace VieweD.Forms
 
         private void MMProjectSave_Click(object sender, EventArgs e)
         {
-            if (TCProjects.SelectedTab is ViewedProjectTab project)
-                project.SaveProjectSettingsFile(project.ProjectFile, project.ProjectFolder);
+            if (TCProjects.SelectedTab is not ViewedProjectTab project)
+                return;
+
+            SaveProject(project, ModifierKeys.HasFlag(Keys.Shift));
+        }
+
+        public void SaveProject(ViewedProjectTab project, bool forceSaveAs)
+        {
+            if ((project.RequestUpdatedProjectFileName) || (!File.Exists(project.ProjectFile)) || (forceSaveAs))
+            {
+                if (project.RequestUpdatedProjectFileName)
+                {
+                    SaveProjectFileDialog.FileName = Path.ChangeExtension(project.ProjectFile, ".pvd");
+                    MessageBox.Show(
+                        "The current project was loaded in a older format, you will need to save it into the new format",
+                        Resources.SaveProject, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    SaveProjectFileDialog.FileName = project.ProjectFile;
+                }
+
+                if (SaveProjectFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    project.ProjectFile = SaveProjectFileDialog.FileName;
+                }
+                else
+                {
+                    MessageBox.Show(Resources.SaveCancelled, Resources.SaveProject, MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+                    return;
+                }
+            }
+
+            project.SaveProjectSettingsFile(project.ProjectFile, project.ProjectFolder);
         }
 
         private void TCProjects_DrawItem(object sender, DrawItemEventArgs e)
@@ -787,7 +821,7 @@ namespace VieweD.Forms
 
                     if (tabIcon != null)
                     {
-                        e.Graphics.DrawImage(tabIcon, tabRect.Left + (tabRect.Width / 2) - (tabIcon.Width / 2) , tabRect.Bottom - tabIcon.Height - 4);
+                        e.Graphics.DrawImage(tabIcon, tabRect.Left + (tabRect.Width / 2) - (tabIcon.Width / 2), tabRect.Bottom - tabIcon.Height - 4);
                         tabRect = new Rectangle(tabRect.Left, tabRect.Top, tabRect.Width, tabRect.Height - tabIcon.Height - 4);
                     }
 
@@ -887,7 +921,7 @@ namespace VieweD.Forms
 
         private void MMLinksOpen_Click(object sender, EventArgs e)
         {
-            if ((sender is ToolStripMenuItem menuItem) && 
+            if ((sender is ToolStripMenuItem menuItem) &&
                 (menuItem.Tag is string url) &&
                 (string.IsNullOrWhiteSpace(url) == false))
             {
@@ -902,7 +936,7 @@ namespace VieweD.Forms
                 }
                 catch (Exception exception)
                 {
-                    MessageBox.Show(string.Format(Resources.FailedToOpenUrl, url, exception.Message), Resources.FailedToOpen, 
+                    MessageBox.Show(string.Format(Resources.FailedToOpenUrl, url, exception.Message), Resources.FailedToOpen,
                         MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
             }
@@ -971,7 +1005,7 @@ namespace VieweD.Forms
                 filterForm.LoadLocalFromFilter();
 
                 var res = filterForm.ShowDialog();
-                if (res is not (DialogResult.OK or DialogResult.Yes)) 
+                if (res is not (DialogResult.OK or DialogResult.Yes))
                     return;
 
                 filterForm.SaveLocalToFilter();
@@ -990,7 +1024,7 @@ namespace VieweD.Forms
 
             // remove all but the first two items (reset + line)
             while (menu.DropDownItems.Count > 2)
-                menu.DropDownItems.RemoveAt(menu.DropDownItems.Count-1);
+                menu.DropDownItems.RemoveAt(menu.DropDownItems.Count - 1);
 
             // check if we got a project going
             if (TCProjects.SelectedTab is not ViewedProjectTab project)

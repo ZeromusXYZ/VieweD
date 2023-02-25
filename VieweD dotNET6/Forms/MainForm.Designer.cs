@@ -28,608 +28,561 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.MM = new System.Windows.Forms.MenuStrip();
-            this.MMFile = new System.Windows.Forms.ToolStripMenuItem();
-            this.MMFileOpen = new System.Windows.Forms.ToolStripMenuItem();
-            this.MMFileN1 = new System.Windows.Forms.ToolStripSeparator();
-            this.MMFileSettings = new System.Windows.Forms.ToolStripMenuItem();
-            this.MMFileN2 = new System.Windows.Forms.ToolStripSeparator();
-            this.MMFileExit = new System.Windows.Forms.ToolStripMenuItem();
-            this.MMVersion = new System.Windows.Forms.ToolStripMenuItem();
-            this.MMProject = new System.Windows.Forms.ToolStripMenuItem();
-            this.MMProjectSave = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
-            this.projectDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.videoLinkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.MMProjectN1 = new System.Windows.Forms.ToolStripSeparator();
-            this.MMProjectSettings = new System.Windows.Forms.ToolStripMenuItem();
-            this.MMProjectN2 = new System.Windows.Forms.ToolStripSeparator();
-            this.MMProjectClose = new System.Windows.Forms.ToolStripMenuItem();
-            this.MMSearch = new System.Windows.Forms.ToolStripMenuItem();
-            this.MMSearchFind = new System.Windows.Forms.ToolStripMenuItem();
-            this.MMSearchFindNext = new System.Windows.Forms.ToolStripMenuItem();
-            this.MMSearchN1 = new System.Windows.Forms.ToolStripSeparator();
-            this.MMSearchEditFilter = new System.Windows.Forms.ToolStripMenuItem();
-            this.MMSearchApplyMenu = new System.Windows.Forms.ToolStripMenuItem();
-            this.MMSearchApplyReset = new System.Windows.Forms.ToolStripMenuItem();
-            this.MMSearchApplyMenuN1 = new System.Windows.Forms.ToolStripSeparator();
-            this.MMSearchHighlightMenu = new System.Windows.Forms.ToolStripMenuItem();
-            this.MMSearchHighlightReset = new System.Windows.Forms.ToolStripMenuItem();
-            this.MMSearchHighlightMenuN1 = new System.Windows.Forms.ToolStripSeparator();
-            this.MMLinks = new System.Windows.Forms.ToolStripMenuItem();
-            this.MMLinksGitHub = new System.Windows.Forms.ToolStripMenuItem();
-            this.MMLinksDikscord = new System.Windows.Forms.ToolStripMenuItem();
-            this.MMLinksN1 = new System.Windows.Forms.ToolStripSeparator();
-            this.MMLinksKoFi = new System.Windows.Forms.ToolStripMenuItem();
-            this.MMLinksN2 = new System.Windows.Forms.ToolStripSeparator();
-            this.MMLinks7Zip = new System.Windows.Forms.ToolStripMenuItem();
-            this.MMLinks7ZipMain = new System.Windows.Forms.ToolStripMenuItem();
-            this.MMLinks7ZipDownload = new System.Windows.Forms.ToolStripMenuItem();
-            this.MMLinksVLC = new System.Windows.Forms.ToolStripMenuItem();
-            this.MMLinksWireshark = new System.Windows.Forms.ToolStripMenuItem();
-            this.StatusBar = new System.Windows.Forms.StatusStrip();
-            this.StatusBarProgressBar = new System.Windows.Forms.ToolStripProgressBar();
-            this.StatusBarEngineName = new System.Windows.Forms.ToolStripStatusLabel();
-            this.StatusBarProject = new System.Windows.Forms.ToolStripStatusLabel();
-            this.TCProjects = new System.Windows.Forms.TabControl();
-            this.TPWelcome = new System.Windows.Forms.TabPage();
-            this.TPWelcomeLayout = new System.Windows.Forms.TableLayoutPanel();
-            this.RichTextWelcome = new System.Windows.Forms.RichTextBox();
-            this.TPWelcomeBtnClose = new System.Windows.Forms.Button();
-            this.ILTabs = new System.Windows.Forms.ImageList(this.components);
-            this.DgvParsed = new System.Windows.Forms.DataGridView();
-            this.DgvPosition = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DgvName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DgvValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MiFieldView = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.MiFieldFields = new System.Windows.Forms.ToolStripMenuItem();
-            this.MIFieldLocalVars = new System.Windows.Forms.ToolStripMenuItem();
-            this.MiFieldN1 = new System.Windows.Forms.ToolStripSeparator();
-            this.MiFieldDebug = new System.Windows.Forms.ToolStripMenuItem();
-            this.openProjectFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.SplitContainerListAndFields = new System.Windows.Forms.SplitContainer();
-            this.SplitContainerFieldsAndRawData = new System.Windows.Forms.SplitContainer();
-            this.LayoutRawAndSuggested = new System.Windows.Forms.TableLayoutPanel();
-            this.RichTextData = new System.Windows.Forms.RichTextBox();
-            this.MM.SuspendLayout();
-            this.StatusBar.SuspendLayout();
-            this.TCProjects.SuspendLayout();
-            this.TPWelcome.SuspendLayout();
-            this.TPWelcomeLayout.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.DgvParsed)).BeginInit();
-            this.MiFieldView.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.SplitContainerListAndFields)).BeginInit();
-            this.SplitContainerListAndFields.Panel1.SuspendLayout();
-            this.SplitContainerListAndFields.Panel2.SuspendLayout();
-            this.SplitContainerListAndFields.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.SplitContainerFieldsAndRawData)).BeginInit();
-            this.SplitContainerFieldsAndRawData.Panel1.SuspendLayout();
-            this.SplitContainerFieldsAndRawData.Panel2.SuspendLayout();
-            this.SplitContainerFieldsAndRawData.SuspendLayout();
-            this.LayoutRawAndSuggested.SuspendLayout();
-            this.SuspendLayout();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            MM = new MenuStrip();
+            MMFile = new ToolStripMenuItem();
+            MMFileOpen = new ToolStripMenuItem();
+            MMFileN1 = new ToolStripSeparator();
+            MMFileSettings = new ToolStripMenuItem();
+            MMFileN2 = new ToolStripSeparator();
+            MMFileExit = new ToolStripMenuItem();
+            MMVersion = new ToolStripMenuItem();
+            MMProject = new ToolStripMenuItem();
+            MMProjectSave = new ToolStripMenuItem();
+            toolStripMenuItem1 = new ToolStripSeparator();
+            projectDataToolStripMenuItem = new ToolStripMenuItem();
+            videoLinkToolStripMenuItem = new ToolStripMenuItem();
+            MMProjectN1 = new ToolStripSeparator();
+            MMProjectSettings = new ToolStripMenuItem();
+            MMProjectN2 = new ToolStripSeparator();
+            MMProjectClose = new ToolStripMenuItem();
+            MMSearch = new ToolStripMenuItem();
+            MMSearchFind = new ToolStripMenuItem();
+            MMSearchFindNext = new ToolStripMenuItem();
+            MMSearchN1 = new ToolStripSeparator();
+            MMSearchEditFilter = new ToolStripMenuItem();
+            MMSearchApplyMenu = new ToolStripMenuItem();
+            MMSearchApplyReset = new ToolStripMenuItem();
+            MMSearchApplyMenuN1 = new ToolStripSeparator();
+            MMSearchHighlightMenu = new ToolStripMenuItem();
+            MMSearchHighlightReset = new ToolStripMenuItem();
+            MMSearchHighlightMenuN1 = new ToolStripSeparator();
+            MMLinks = new ToolStripMenuItem();
+            MMLinksGitHub = new ToolStripMenuItem();
+            MMLinksDikscord = new ToolStripMenuItem();
+            MMLinksN1 = new ToolStripSeparator();
+            MMLinksKoFi = new ToolStripMenuItem();
+            MMLinksN2 = new ToolStripSeparator();
+            MMLinks7Zip = new ToolStripMenuItem();
+            MMLinks7ZipMain = new ToolStripMenuItem();
+            MMLinks7ZipDownload = new ToolStripMenuItem();
+            MMLinksVLC = new ToolStripMenuItem();
+            MMLinksWireshark = new ToolStripMenuItem();
+            StatusBar = new StatusStrip();
+            StatusBarProgressBar = new ToolStripProgressBar();
+            StatusBarEngineName = new ToolStripStatusLabel();
+            StatusBarProject = new ToolStripStatusLabel();
+            TCProjects = new TabControl();
+            TPWelcome = new TabPage();
+            TPWelcomeLayout = new TableLayoutPanel();
+            RichTextWelcome = new RichTextBox();
+            TPWelcomeBtnClose = new Button();
+            ILTabs = new ImageList(components);
+            DgvParsed = new DataGridView();
+            DgvPosition = new DataGridViewTextBoxColumn();
+            DgvName = new DataGridViewTextBoxColumn();
+            DgvValue = new DataGridViewTextBoxColumn();
+            MiFieldView = new ContextMenuStrip(components);
+            MiFieldFields = new ToolStripMenuItem();
+            MIFieldLocalVars = new ToolStripMenuItem();
+            MiFieldN1 = new ToolStripSeparator();
+            MiFieldDebug = new ToolStripMenuItem();
+            OpenProjectFileDialog = new OpenFileDialog();
+            SplitContainerListAndFields = new SplitContainer();
+            SplitContainerFieldsAndRawData = new SplitContainer();
+            LayoutRawAndSuggested = new TableLayoutPanel();
+            RichTextData = new RichTextBox();
+            SaveProjectFileDialog = new SaveFileDialog();
+            MM.SuspendLayout();
+            StatusBar.SuspendLayout();
+            TCProjects.SuspendLayout();
+            TPWelcome.SuspendLayout();
+            TPWelcomeLayout.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)DgvParsed).BeginInit();
+            MiFieldView.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)SplitContainerListAndFields).BeginInit();
+            SplitContainerListAndFields.Panel1.SuspendLayout();
+            SplitContainerListAndFields.Panel2.SuspendLayout();
+            SplitContainerListAndFields.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)SplitContainerFieldsAndRawData).BeginInit();
+            SplitContainerFieldsAndRawData.Panel1.SuspendLayout();
+            SplitContainerFieldsAndRawData.Panel2.SuspendLayout();
+            SplitContainerFieldsAndRawData.SuspendLayout();
+            LayoutRawAndSuggested.SuspendLayout();
+            SuspendLayout();
             // 
             // MM
             // 
-            this.MM.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.MMFile,
-            this.MMVersion,
-            this.MMProject,
-            this.MMSearch,
-            this.MMLinks});
-            resources.ApplyResources(this.MM, "MM");
-            this.MM.Name = "MM";
+            MM.Items.AddRange(new ToolStripItem[] { MMFile, MMVersion, MMProject, MMSearch, MMLinks });
+            resources.ApplyResources(MM, "MM");
+            MM.Name = "MM";
             // 
             // MMFile
             // 
-            this.MMFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.MMFileOpen,
-            this.MMFileN1,
-            this.MMFileSettings,
-            this.MMFileN2,
-            this.MMFileExit});
-            this.MMFile.Name = "MMFile";
-            resources.ApplyResources(this.MMFile, "MMFile");
+            MMFile.DropDownItems.AddRange(new ToolStripItem[] { MMFileOpen, MMFileN1, MMFileSettings, MMFileN2, MMFileExit });
+            MMFile.Name = "MMFile";
+            resources.ApplyResources(MMFile, "MMFile");
             // 
             // MMFileOpen
             // 
-            this.MMFileOpen.Image = global::VieweD.Properties.Resources.document_open_16;
-            this.MMFileOpen.Name = "MMFileOpen";
-            resources.ApplyResources(this.MMFileOpen, "MMFileOpen");
-            this.MMFileOpen.Click += new System.EventHandler(this.MMFileOpen_Click);
+            MMFileOpen.Image = Properties.Resources.document_open_16;
+            MMFileOpen.Name = "MMFileOpen";
+            resources.ApplyResources(MMFileOpen, "MMFileOpen");
+            MMFileOpen.Click += MMFileOpen_Click;
             // 
             // MMFileN1
             // 
-            this.MMFileN1.Name = "MMFileN1";
-            resources.ApplyResources(this.MMFileN1, "MMFileN1");
+            MMFileN1.Name = "MMFileN1";
+            resources.ApplyResources(MMFileN1, "MMFileN1");
             // 
             // MMFileSettings
             // 
-            this.MMFileSettings.Name = "MMFileSettings";
-            resources.ApplyResources(this.MMFileSettings, "MMFileSettings");
+            MMFileSettings.Name = "MMFileSettings";
+            resources.ApplyResources(MMFileSettings, "MMFileSettings");
             // 
             // MMFileN2
             // 
-            this.MMFileN2.Name = "MMFileN2";
-            resources.ApplyResources(this.MMFileN2, "MMFileN2");
+            MMFileN2.Name = "MMFileN2";
+            resources.ApplyResources(MMFileN2, "MMFileN2");
             // 
             // MMFileExit
             // 
-            this.MMFileExit.Image = global::VieweD.Properties.Resources.application_exit_16;
-            this.MMFileExit.Name = "MMFileExit";
-            resources.ApplyResources(this.MMFileExit, "MMFileExit");
-            this.MMFileExit.Click += new System.EventHandler(this.MMFileExit_Click);
+            MMFileExit.Image = Properties.Resources.application_exit_16;
+            MMFileExit.Name = "MMFileExit";
+            resources.ApplyResources(MMFileExit, "MMFileExit");
+            MMFileExit.Click += MMFileExit_Click;
             // 
             // MMVersion
             // 
-            this.MMVersion.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            resources.ApplyResources(this.MMVersion, "MMVersion");
-            this.MMVersion.Name = "MMVersion";
+            MMVersion.Alignment = ToolStripItemAlignment.Right;
+            resources.ApplyResources(MMVersion, "MMVersion");
+            MMVersion.Name = "MMVersion";
             // 
             // MMProject
             // 
-            this.MMProject.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.MMProjectSave,
-            this.toolStripMenuItem1,
-            this.projectDataToolStripMenuItem,
-            this.videoLinkToolStripMenuItem,
-            this.MMProjectN1,
-            this.MMProjectSettings,
-            this.MMProjectN2,
-            this.MMProjectClose});
-            this.MMProject.Name = "MMProject";
-            resources.ApplyResources(this.MMProject, "MMProject");
+            MMProject.DropDownItems.AddRange(new ToolStripItem[] { MMProjectSave, toolStripMenuItem1, projectDataToolStripMenuItem, videoLinkToolStripMenuItem, MMProjectN1, MMProjectSettings, MMProjectN2, MMProjectClose });
+            MMProject.Name = "MMProject";
+            resources.ApplyResources(MMProject, "MMProject");
             // 
             // MMProjectSave
             // 
-            this.MMProjectSave.Image = global::VieweD.Properties.Resources.document_save_16;
-            this.MMProjectSave.Name = "MMProjectSave";
-            resources.ApplyResources(this.MMProjectSave, "MMProjectSave");
-            this.MMProjectSave.Click += new System.EventHandler(this.MMProjectSave_Click);
+            MMProjectSave.Image = Properties.Resources.document_save_16;
+            MMProjectSave.Name = "MMProjectSave";
+            resources.ApplyResources(MMProjectSave, "MMProjectSave");
+            MMProjectSave.Click += MMProjectSave_Click;
             // 
             // toolStripMenuItem1
             // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            resources.ApplyResources(this.toolStripMenuItem1, "toolStripMenuItem1");
+            toolStripMenuItem1.Name = "toolStripMenuItem1";
+            resources.ApplyResources(toolStripMenuItem1, "toolStripMenuItem1");
             // 
             // projectDataToolStripMenuItem
             // 
-            this.projectDataToolStripMenuItem.Name = "projectDataToolStripMenuItem";
-            resources.ApplyResources(this.projectDataToolStripMenuItem, "projectDataToolStripMenuItem");
+            projectDataToolStripMenuItem.Name = "projectDataToolStripMenuItem";
+            resources.ApplyResources(projectDataToolStripMenuItem, "projectDataToolStripMenuItem");
             // 
             // videoLinkToolStripMenuItem
             // 
-            this.videoLinkToolStripMenuItem.Name = "videoLinkToolStripMenuItem";
-            resources.ApplyResources(this.videoLinkToolStripMenuItem, "videoLinkToolStripMenuItem");
+            videoLinkToolStripMenuItem.Name = "videoLinkToolStripMenuItem";
+            resources.ApplyResources(videoLinkToolStripMenuItem, "videoLinkToolStripMenuItem");
             // 
             // MMProjectN1
             // 
-            this.MMProjectN1.Name = "MMProjectN1";
-            resources.ApplyResources(this.MMProjectN1, "MMProjectN1");
+            MMProjectN1.Name = "MMProjectN1";
+            resources.ApplyResources(MMProjectN1, "MMProjectN1");
             // 
             // MMProjectSettings
             // 
-            this.MMProjectSettings.Image = global::VieweD.Properties.Resources.document_properties_16;
-            this.MMProjectSettings.Name = "MMProjectSettings";
-            resources.ApplyResources(this.MMProjectSettings, "MMProjectSettings");
-            this.MMProjectSettings.Click += new System.EventHandler(this.MMProjectSettings_Click);
+            MMProjectSettings.Image = Properties.Resources.document_properties_16;
+            MMProjectSettings.Name = "MMProjectSettings";
+            resources.ApplyResources(MMProjectSettings, "MMProjectSettings");
+            MMProjectSettings.Click += MMProjectSettings_Click;
             // 
             // MMProjectN2
             // 
-            this.MMProjectN2.Name = "MMProjectN2";
-            resources.ApplyResources(this.MMProjectN2, "MMProjectN2");
+            MMProjectN2.Name = "MMProjectN2";
+            resources.ApplyResources(MMProjectN2, "MMProjectN2");
             // 
             // MMProjectClose
             // 
-            this.MMProjectClose.Image = global::VieweD.Properties.Resources.view_close_16;
-            this.MMProjectClose.Name = "MMProjectClose";
-            resources.ApplyResources(this.MMProjectClose, "MMProjectClose");
-            this.MMProjectClose.Click += new System.EventHandler(this.MMProjectClose_Click);
+            MMProjectClose.Image = Properties.Resources.view_close_16;
+            MMProjectClose.Name = "MMProjectClose";
+            resources.ApplyResources(MMProjectClose, "MMProjectClose");
+            MMProjectClose.Click += MMProjectClose_Click;
             // 
             // MMSearch
             // 
-            this.MMSearch.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.MMSearchFind,
-            this.MMSearchFindNext,
-            this.MMSearchN1,
-            this.MMSearchEditFilter,
-            this.MMSearchApplyMenu,
-            this.MMSearchHighlightMenu});
-            this.MMSearch.Name = "MMSearch";
-            resources.ApplyResources(this.MMSearch, "MMSearch");
+            MMSearch.DropDownItems.AddRange(new ToolStripItem[] { MMSearchFind, MMSearchFindNext, MMSearchN1, MMSearchEditFilter, MMSearchApplyMenu, MMSearchHighlightMenu });
+            MMSearch.Name = "MMSearch";
+            resources.ApplyResources(MMSearch, "MMSearch");
             // 
             // MMSearchFind
             // 
-            this.MMSearchFind.Name = "MMSearchFind";
-            resources.ApplyResources(this.MMSearchFind, "MMSearchFind");
+            MMSearchFind.Name = "MMSearchFind";
+            resources.ApplyResources(MMSearchFind, "MMSearchFind");
             // 
             // MMSearchFindNext
             // 
-            this.MMSearchFindNext.Name = "MMSearchFindNext";
-            resources.ApplyResources(this.MMSearchFindNext, "MMSearchFindNext");
+            MMSearchFindNext.Name = "MMSearchFindNext";
+            resources.ApplyResources(MMSearchFindNext, "MMSearchFindNext");
             // 
             // MMSearchN1
             // 
-            this.MMSearchN1.Name = "MMSearchN1";
-            resources.ApplyResources(this.MMSearchN1, "MMSearchN1");
+            MMSearchN1.Name = "MMSearchN1";
+            resources.ApplyResources(MMSearchN1, "MMSearchN1");
             // 
             // MMSearchEditFilter
             // 
-            this.MMSearchEditFilter.Name = "MMSearchEditFilter";
-            resources.ApplyResources(this.MMSearchEditFilter, "MMSearchEditFilter");
-            this.MMSearchEditFilter.Click += new System.EventHandler(this.MMSearchEditFilter_Click);
+            MMSearchEditFilter.Name = "MMSearchEditFilter";
+            resources.ApplyResources(MMSearchEditFilter, "MMSearchEditFilter");
+            MMSearchEditFilter.Click += MMSearchEditFilter_Click;
             // 
             // MMSearchApplyMenu
             // 
-            this.MMSearchApplyMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.MMSearchApplyReset,
-            this.MMSearchApplyMenuN1});
-            this.MMSearchApplyMenu.Name = "MMSearchApplyMenu";
-            resources.ApplyResources(this.MMSearchApplyMenu, "MMSearchApplyMenu");
-            this.MMSearchApplyMenu.Tag = "ap";
-            this.MMSearchApplyMenu.DropDownOpening += new System.EventHandler(this.MMSearchFilterMenu_DropDownOpening);
+            MMSearchApplyMenu.DropDownItems.AddRange(new ToolStripItem[] { MMSearchApplyReset, MMSearchApplyMenuN1 });
+            MMSearchApplyMenu.Name = "MMSearchApplyMenu";
+            resources.ApplyResources(MMSearchApplyMenu, "MMSearchApplyMenu");
+            MMSearchApplyMenu.Tag = "ap";
+            MMSearchApplyMenu.DropDownOpening += MMSearchFilterMenu_DropDownOpening;
             // 
             // MMSearchApplyReset
             // 
-            this.MMSearchApplyReset.Name = "MMSearchApplyReset";
-            resources.ApplyResources(this.MMSearchApplyReset, "MMSearchApplyReset");
-            this.MMSearchApplyReset.Click += new System.EventHandler(this.MMSearchFilterApplyFile_Click);
+            MMSearchApplyReset.Name = "MMSearchApplyReset";
+            resources.ApplyResources(MMSearchApplyReset, "MMSearchApplyReset");
+            MMSearchApplyReset.Click += MMSearchFilterApplyFile_Click;
             // 
             // MMSearchApplyMenuN1
             // 
-            this.MMSearchApplyMenuN1.Name = "MMSearchApplyMenuN1";
-            resources.ApplyResources(this.MMSearchApplyMenuN1, "MMSearchApplyMenuN1");
+            MMSearchApplyMenuN1.Name = "MMSearchApplyMenuN1";
+            resources.ApplyResources(MMSearchApplyMenuN1, "MMSearchApplyMenuN1");
             // 
             // MMSearchHighlightMenu
             // 
-            this.MMSearchHighlightMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.MMSearchHighlightReset,
-            this.MMSearchHighlightMenuN1});
-            this.MMSearchHighlightMenu.Name = "MMSearchHighlightMenu";
-            resources.ApplyResources(this.MMSearchHighlightMenu, "MMSearchHighlightMenu");
-            this.MMSearchHighlightMenu.Tag = "hl";
-            this.MMSearchHighlightMenu.DropDownOpening += new System.EventHandler(this.MMSearchFilterMenu_DropDownOpening);
+            MMSearchHighlightMenu.DropDownItems.AddRange(new ToolStripItem[] { MMSearchHighlightReset, MMSearchHighlightMenuN1 });
+            MMSearchHighlightMenu.Name = "MMSearchHighlightMenu";
+            resources.ApplyResources(MMSearchHighlightMenu, "MMSearchHighlightMenu");
+            MMSearchHighlightMenu.Tag = "hl";
+            MMSearchHighlightMenu.DropDownOpening += MMSearchFilterMenu_DropDownOpening;
             // 
             // MMSearchHighlightReset
             // 
-            this.MMSearchHighlightReset.Name = "MMSearchHighlightReset";
-            resources.ApplyResources(this.MMSearchHighlightReset, "MMSearchHighlightReset");
-            this.MMSearchHighlightReset.Click += new System.EventHandler(this.MMSearchFilterHighlightApplyFile_Click);
+            MMSearchHighlightReset.Name = "MMSearchHighlightReset";
+            resources.ApplyResources(MMSearchHighlightReset, "MMSearchHighlightReset");
+            MMSearchHighlightReset.Click += MMSearchFilterHighlightApplyFile_Click;
             // 
             // MMSearchHighlightMenuN1
             // 
-            this.MMSearchHighlightMenuN1.Name = "MMSearchHighlightMenuN1";
-            resources.ApplyResources(this.MMSearchHighlightMenuN1, "MMSearchHighlightMenuN1");
+            MMSearchHighlightMenuN1.Name = "MMSearchHighlightMenuN1";
+            resources.ApplyResources(MMSearchHighlightMenuN1, "MMSearchHighlightMenuN1");
             // 
             // MMLinks
             // 
-            this.MMLinks.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.MMLinksGitHub,
-            this.MMLinksDikscord,
-            this.MMLinksN1,
-            this.MMLinksKoFi,
-            this.MMLinksN2,
-            this.MMLinks7Zip,
-            this.MMLinksVLC,
-            this.MMLinksWireshark});
-            this.MMLinks.Name = "MMLinks";
-            resources.ApplyResources(this.MMLinks, "MMLinks");
+            MMLinks.DropDownItems.AddRange(new ToolStripItem[] { MMLinksGitHub, MMLinksDikscord, MMLinksN1, MMLinksKoFi, MMLinksN2, MMLinks7Zip, MMLinksVLC, MMLinksWireshark });
+            MMLinks.Name = "MMLinks";
+            resources.ApplyResources(MMLinks, "MMLinks");
             // 
             // MMLinksGitHub
             // 
-            this.MMLinksGitHub.Image = global::VieweD.Properties.Resources.github_mark;
-            this.MMLinksGitHub.Name = "MMLinksGitHub";
-            resources.ApplyResources(this.MMLinksGitHub, "MMLinksGitHub");
-            this.MMLinksGitHub.Tag = "https://github.com/ZeromusXYZ/VieweD";
-            this.MMLinksGitHub.Click += new System.EventHandler(this.MMLinksOpen_Click);
+            MMLinksGitHub.Image = Properties.Resources.github_mark;
+            MMLinksGitHub.Name = "MMLinksGitHub";
+            resources.ApplyResources(MMLinksGitHub, "MMLinksGitHub");
+            MMLinksGitHub.Tag = "https://github.com/ZeromusXYZ/VieweD";
+            MMLinksGitHub.Click += MMLinksOpen_Click;
             // 
             // MMLinksDikscord
             // 
-            this.MMLinksDikscord.Image = global::VieweD.Properties.Resources.discord_x32;
-            this.MMLinksDikscord.Name = "MMLinksDikscord";
-            resources.ApplyResources(this.MMLinksDikscord, "MMLinksDikscord");
-            this.MMLinksDikscord.Tag = "https://discord.gg/GhVfDtK";
-            this.MMLinksDikscord.Click += new System.EventHandler(this.MMLinksOpen_Click);
+            MMLinksDikscord.Image = Properties.Resources.discord_x32;
+            MMLinksDikscord.Name = "MMLinksDikscord";
+            resources.ApplyResources(MMLinksDikscord, "MMLinksDikscord");
+            MMLinksDikscord.Tag = "https://discord.gg/GhVfDtK";
+            MMLinksDikscord.Click += MMLinksOpen_Click;
             // 
             // MMLinksN1
             // 
-            this.MMLinksN1.Name = "MMLinksN1";
-            resources.ApplyResources(this.MMLinksN1, "MMLinksN1");
+            MMLinksN1.Name = "MMLinksN1";
+            resources.ApplyResources(MMLinksN1, "MMLinksN1");
             // 
             // MMLinksKoFi
             // 
-            this.MMLinksKoFi.Image = global::VieweD.Properties.Resources.kofi_p_logo_nolabel_x32;
-            this.MMLinksKoFi.Name = "MMLinksKoFi";
-            resources.ApplyResources(this.MMLinksKoFi, "MMLinksKoFi");
-            this.MMLinksKoFi.Tag = "https://ko-fi.com/zeromusxyz";
-            this.MMLinksKoFi.Click += new System.EventHandler(this.MMLinksOpen_Click);
+            MMLinksKoFi.Image = Properties.Resources.kofi_p_logo_nolabel_x32;
+            MMLinksKoFi.Name = "MMLinksKoFi";
+            resources.ApplyResources(MMLinksKoFi, "MMLinksKoFi");
+            MMLinksKoFi.Tag = "https://ko-fi.com/zeromusxyz";
+            MMLinksKoFi.Click += MMLinksOpen_Click;
             // 
             // MMLinksN2
             // 
-            this.MMLinksN2.Name = "MMLinksN2";
-            resources.ApplyResources(this.MMLinksN2, "MMLinksN2");
+            MMLinksN2.Name = "MMLinksN2";
+            resources.ApplyResources(MMLinksN2, "MMLinksN2");
             // 
             // MMLinks7Zip
             // 
-            this.MMLinks7Zip.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.MMLinks7ZipMain,
-            this.MMLinks7ZipDownload});
-            resources.ApplyResources(this.MMLinks7Zip, "MMLinks7Zip");
-            this.MMLinks7Zip.Image = global::VieweD.Properties.Resources._7zip_x64;
-            this.MMLinks7Zip.Name = "MMLinks7Zip";
+            MMLinks7Zip.DropDownItems.AddRange(new ToolStripItem[] { MMLinks7ZipMain, MMLinks7ZipDownload });
+            resources.ApplyResources(MMLinks7Zip, "MMLinks7Zip");
+            MMLinks7Zip.Image = Properties.Resources._7zip_x64;
+            MMLinks7Zip.Name = "MMLinks7Zip";
             // 
             // MMLinks7ZipMain
             // 
-            this.MMLinks7ZipMain.Name = "MMLinks7ZipMain";
-            resources.ApplyResources(this.MMLinks7ZipMain, "MMLinks7ZipMain");
-            this.MMLinks7ZipMain.Tag = "https://www.7-zip.org/";
-            this.MMLinks7ZipMain.Click += new System.EventHandler(this.MMLinksOpen_Click);
+            MMLinks7ZipMain.Name = "MMLinks7ZipMain";
+            resources.ApplyResources(MMLinks7ZipMain, "MMLinks7ZipMain");
+            MMLinks7ZipMain.Tag = "https://www.7-zip.org/";
+            MMLinks7ZipMain.Click += MMLinksOpen_Click;
             // 
             // MMLinks7ZipDownload
             // 
-            this.MMLinks7ZipDownload.Name = "MMLinks7ZipDownload";
-            resources.ApplyResources(this.MMLinks7ZipDownload, "MMLinks7ZipDownload");
-            this.MMLinks7ZipDownload.Tag = "https://sourceforge.net/p/sevenzip/discussion/45797/thread/adc65bfa/";
-            this.MMLinks7ZipDownload.Click += new System.EventHandler(this.MMLinksOpen_Click);
+            MMLinks7ZipDownload.Name = "MMLinks7ZipDownload";
+            resources.ApplyResources(MMLinks7ZipDownload, "MMLinks7ZipDownload");
+            MMLinks7ZipDownload.Tag = "https://sourceforge.net/p/sevenzip/discussion/45797/thread/adc65bfa/";
+            MMLinks7ZipDownload.Click += MMLinksOpen_Click;
             // 
             // MMLinksVLC
             // 
-            resources.ApplyResources(this.MMLinksVLC, "MMLinksVLC");
-            this.MMLinksVLC.Image = global::VieweD.Properties.Resources.cone_altglass_2_x48;
-            this.MMLinksVLC.Name = "MMLinksVLC";
-            this.MMLinksVLC.Tag = "https://www.videolan.org/";
-            this.MMLinksVLC.Click += new System.EventHandler(this.MMLinksOpen_Click);
+            resources.ApplyResources(MMLinksVLC, "MMLinksVLC");
+            MMLinksVLC.Image = Properties.Resources.cone_altglass_2_x48;
+            MMLinksVLC.Name = "MMLinksVLC";
+            MMLinksVLC.Tag = "https://www.videolan.org/";
+            MMLinksVLC.Click += MMLinksOpen_Click;
             // 
             // MMLinksWireshark
             // 
-            resources.ApplyResources(this.MMLinksWireshark, "MMLinksWireshark");
-            this.MMLinksWireshark.Image = global::VieweD.Properties.Resources.wireshark_x48;
-            this.MMLinksWireshark.Name = "MMLinksWireshark";
-            this.MMLinksWireshark.Tag = "https://www.wireshark.org/";
-            this.MMLinksWireshark.Click += new System.EventHandler(this.MMLinksOpen_Click);
+            resources.ApplyResources(MMLinksWireshark, "MMLinksWireshark");
+            MMLinksWireshark.Image = Properties.Resources.wireshark_x48;
+            MMLinksWireshark.Name = "MMLinksWireshark";
+            MMLinksWireshark.Tag = "https://www.wireshark.org/";
+            MMLinksWireshark.Click += MMLinksOpen_Click;
             // 
             // StatusBar
             // 
-            this.StatusBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.StatusBarProgressBar,
-            this.StatusBarEngineName,
-            this.StatusBarProject});
-            resources.ApplyResources(this.StatusBar, "StatusBar");
-            this.StatusBar.Name = "StatusBar";
+            StatusBar.Items.AddRange(new ToolStripItem[] { StatusBarProgressBar, StatusBarEngineName, StatusBarProject });
+            resources.ApplyResources(StatusBar, "StatusBar");
+            StatusBar.Name = "StatusBar";
             // 
             // StatusBarProgressBar
             // 
-            resources.ApplyResources(this.StatusBarProgressBar, "StatusBarProgressBar");
-            this.StatusBarProgressBar.Name = "StatusBarProgressBar";
+            resources.ApplyResources(StatusBarProgressBar, "StatusBarProgressBar");
+            StatusBarProgressBar.Name = "StatusBarProgressBar";
             // 
             // StatusBarEngineName
             // 
-            this.StatusBarEngineName.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
-            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
-            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
-            this.StatusBarEngineName.BorderStyle = System.Windows.Forms.Border3DStyle.SunkenInner;
-            resources.ApplyResources(this.StatusBarEngineName, "StatusBarEngineName");
-            this.StatusBarEngineName.Name = "StatusBarEngineName";
+            StatusBarEngineName.BorderSides = ToolStripStatusLabelBorderSides.Left | ToolStripStatusLabelBorderSides.Top | ToolStripStatusLabelBorderSides.Right | ToolStripStatusLabelBorderSides.Bottom;
+            StatusBarEngineName.BorderStyle = Border3DStyle.SunkenInner;
+            resources.ApplyResources(StatusBarEngineName, "StatusBarEngineName");
+            StatusBarEngineName.Name = "StatusBarEngineName";
             // 
             // StatusBarProject
             // 
-            this.StatusBarProject.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
-            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
-            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
-            this.StatusBarProject.BorderStyle = System.Windows.Forms.Border3DStyle.SunkenInner;
-            resources.ApplyResources(this.StatusBarProject, "StatusBarProject");
-            this.StatusBarProject.Name = "StatusBarProject";
-            this.StatusBarProject.Spring = true;
+            StatusBarProject.BorderSides = ToolStripStatusLabelBorderSides.Left | ToolStripStatusLabelBorderSides.Top | ToolStripStatusLabelBorderSides.Right | ToolStripStatusLabelBorderSides.Bottom;
+            StatusBarProject.BorderStyle = Border3DStyle.SunkenInner;
+            resources.ApplyResources(StatusBarProject, "StatusBarProject");
+            StatusBarProject.Name = "StatusBarProject";
+            StatusBarProject.Spring = true;
             // 
             // TCProjects
             // 
-            resources.ApplyResources(this.TCProjects, "TCProjects");
-            this.TCProjects.Controls.Add(this.TPWelcome);
-            this.TCProjects.ImageList = this.ILTabs;
-            this.TCProjects.Multiline = true;
-            this.TCProjects.Name = "TCProjects";
-            this.TCProjects.SelectedIndex = 0;
-            this.TCProjects.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.TCProjects_DrawItem);
-            this.TCProjects.SelectedIndexChanged += new System.EventHandler(this.TCProjects_SelectedIndexChanged);
-            this.TCProjects.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.TCProjects_MouseDoubleClick);
+            resources.ApplyResources(TCProjects, "TCProjects");
+            TCProjects.Controls.Add(TPWelcome);
+            TCProjects.ImageList = ILTabs;
+            TCProjects.Multiline = true;
+            TCProjects.Name = "TCProjects";
+            TCProjects.SelectedIndex = 0;
+            TCProjects.DrawItem += TCProjects_DrawItem;
+            TCProjects.SelectedIndexChanged += TCProjects_SelectedIndexChanged;
+            TCProjects.MouseDoubleClick += TCProjects_MouseDoubleClick;
             // 
             // TPWelcome
             // 
-            this.TPWelcome.Controls.Add(this.TPWelcomeLayout);
-            resources.ApplyResources(this.TPWelcome, "TPWelcome");
-            this.TPWelcome.Name = "TPWelcome";
-            this.TPWelcome.UseVisualStyleBackColor = true;
+            TPWelcome.Controls.Add(TPWelcomeLayout);
+            resources.ApplyResources(TPWelcome, "TPWelcome");
+            TPWelcome.Name = "TPWelcome";
+            TPWelcome.UseVisualStyleBackColor = true;
             // 
             // TPWelcomeLayout
             // 
-            resources.ApplyResources(this.TPWelcomeLayout, "TPWelcomeLayout");
-            this.TPWelcomeLayout.Controls.Add(this.RichTextWelcome, 0, 0);
-            this.TPWelcomeLayout.Controls.Add(this.TPWelcomeBtnClose, 0, 1);
-            this.TPWelcomeLayout.Name = "TPWelcomeLayout";
+            resources.ApplyResources(TPWelcomeLayout, "TPWelcomeLayout");
+            TPWelcomeLayout.Controls.Add(RichTextWelcome, 0, 0);
+            TPWelcomeLayout.Controls.Add(TPWelcomeBtnClose, 0, 1);
+            TPWelcomeLayout.Name = "TPWelcomeLayout";
             // 
             // RichTextWelcome
             // 
-            resources.ApplyResources(this.RichTextWelcome, "RichTextWelcome");
-            this.RichTextWelcome.Name = "RichTextWelcome";
-            this.RichTextWelcome.ReadOnly = true;
+            resources.ApplyResources(RichTextWelcome, "RichTextWelcome");
+            RichTextWelcome.Name = "RichTextWelcome";
+            RichTextWelcome.ReadOnly = true;
             // 
             // TPWelcomeBtnClose
             // 
-            resources.ApplyResources(this.TPWelcomeBtnClose, "TPWelcomeBtnClose");
-            this.TPWelcomeBtnClose.Name = "TPWelcomeBtnClose";
-            this.TPWelcomeBtnClose.UseVisualStyleBackColor = true;
-            this.TPWelcomeBtnClose.Click += new System.EventHandler(this.TPWelcomeBtnClose_Click);
+            resources.ApplyResources(TPWelcomeBtnClose, "TPWelcomeBtnClose");
+            TPWelcomeBtnClose.Name = "TPWelcomeBtnClose";
+            TPWelcomeBtnClose.UseVisualStyleBackColor = true;
+            TPWelcomeBtnClose.Click += TPWelcomeBtnClose_Click;
             // 
             // ILTabs
             // 
-            this.ILTabs.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
-            this.ILTabs.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("ILTabs.ImageStream")));
-            this.ILTabs.TransparentColor = System.Drawing.Color.Transparent;
-            this.ILTabs.Images.SetKeyName(0, "close.png");
-            this.ILTabs.Images.SetKeyName(1, "found_it!x44.png");
-            this.ILTabs.Images.SetKeyName(2, "add.png");
-            this.ILTabs.Images.SetKeyName(3, "mini_unk_icon.png");
+            ILTabs.ColorDepth = ColorDepth.Depth8Bit;
+            ILTabs.ImageStream = (ImageListStreamer)resources.GetObject("ILTabs.ImageStream");
+            ILTabs.TransparentColor = Color.Transparent;
+            ILTabs.Images.SetKeyName(0, "close.png");
+            ILTabs.Images.SetKeyName(1, "found_it!x44.png");
+            ILTabs.Images.SetKeyName(2, "add.png");
+            ILTabs.Images.SetKeyName(3, "mini_unk_icon.png");
             // 
             // DgvParsed
             // 
-            this.DgvParsed.AllowUserToAddRows = false;
-            this.DgvParsed.AllowUserToDeleteRows = false;
-            this.DgvParsed.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            this.DgvParsed.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            this.DgvParsed.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
-            this.DgvParsed.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DgvParsed.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.DgvPosition,
-            this.DgvName,
-            this.DgvValue});
-            this.DgvParsed.ContextMenuStrip = this.MiFieldView;
-            resources.ApplyResources(this.DgvParsed, "DgvParsed");
-            this.DgvParsed.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnF2;
-            this.DgvParsed.Name = "DgvParsed";
-            this.DgvParsed.RowHeadersVisible = false;
-            this.DgvParsed.RowTemplate.Height = 25;
-            this.DgvParsed.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.DgvParsed.SelectionChanged += new System.EventHandler(this.DgvParsed_SelectionChanged);
+            DgvParsed.AllowUserToAddRows = false;
+            DgvParsed.AllowUserToDeleteRows = false;
+            DgvParsed.AllowUserToResizeRows = false;
+            dataGridViewCellStyle1.BackColor = SystemColors.Control;
+            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            DgvParsed.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            DgvParsed.ClipboardCopyMode = DataGridViewClipboardCopyMode.Disable;
+            DgvParsed.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            DgvParsed.Columns.AddRange(new DataGridViewColumn[] { DgvPosition, DgvName, DgvValue });
+            DgvParsed.ContextMenuStrip = MiFieldView;
+            resources.ApplyResources(DgvParsed, "DgvParsed");
+            DgvParsed.EditMode = DataGridViewEditMode.EditOnF2;
+            DgvParsed.Name = "DgvParsed";
+            DgvParsed.RowHeadersVisible = false;
+            DgvParsed.RowTemplate.Height = 25;
+            DgvParsed.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            DgvParsed.SelectionChanged += DgvParsed_SelectionChanged;
             // 
             // DgvPosition
             // 
-            this.DgvPosition.FillWeight = 20F;
-            this.DgvPosition.Frozen = true;
-            resources.ApplyResources(this.DgvPosition, "DgvPosition");
-            this.DgvPosition.MaxInputLength = 64;
-            this.DgvPosition.Name = "DgvPosition";
+            DgvPosition.FillWeight = 20F;
+            DgvPosition.Frozen = true;
+            resources.ApplyResources(DgvPosition, "DgvPosition");
+            DgvPosition.MaxInputLength = 64;
+            DgvPosition.Name = "DgvPosition";
             // 
             // DgvName
             // 
-            this.DgvName.FillWeight = 30F;
-            resources.ApplyResources(this.DgvName, "DgvName");
-            this.DgvName.MaxInputLength = 128;
-            this.DgvName.Name = "DgvName";
+            DgvName.FillWeight = 30F;
+            resources.ApplyResources(DgvName, "DgvName");
+            DgvName.MaxInputLength = 128;
+            DgvName.Name = "DgvName";
             // 
             // DgvValue
             // 
-            this.DgvValue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            resources.ApplyResources(this.DgvValue, "DgvValue");
-            this.DgvValue.MaxInputLength = 4096;
-            this.DgvValue.Name = "DgvValue";
+            DgvValue.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            resources.ApplyResources(DgvValue, "DgvValue");
+            DgvValue.MaxInputLength = 4096;
+            DgvValue.Name = "DgvValue";
             // 
             // MiFieldView
             // 
-            this.MiFieldView.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.MiFieldFields,
-            this.MIFieldLocalVars,
-            this.MiFieldN1,
-            this.MiFieldDebug});
-            this.MiFieldView.Name = "MiFieldView";
-            resources.ApplyResources(this.MiFieldView, "MiFieldView");
-            this.MiFieldView.Opening += new System.ComponentModel.CancelEventHandler(this.MiFieldView_Opening);
+            MiFieldView.Items.AddRange(new ToolStripItem[] { MiFieldFields, MIFieldLocalVars, MiFieldN1, MiFieldDebug });
+            MiFieldView.Name = "MiFieldView";
+            resources.ApplyResources(MiFieldView, "MiFieldView");
+            MiFieldView.Opening += MiFieldView_Opening;
             // 
             // MiFieldFields
             // 
-            this.MiFieldFields.Checked = true;
-            this.MiFieldFields.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.MiFieldFields.Name = "MiFieldFields";
-            resources.ApplyResources(this.MiFieldFields, "MiFieldFields");
-            this.MiFieldFields.Click += new System.EventHandler(this.MiFieldFields_Click);
+            MiFieldFields.Checked = true;
+            MiFieldFields.CheckState = CheckState.Checked;
+            MiFieldFields.Name = "MiFieldFields";
+            resources.ApplyResources(MiFieldFields, "MiFieldFields");
+            MiFieldFields.Click += MiFieldFields_Click;
             // 
             // MIFieldLocalVars
             // 
-            this.MIFieldLocalVars.Name = "MIFieldLocalVars";
-            resources.ApplyResources(this.MIFieldLocalVars, "MIFieldLocalVars");
-            this.MIFieldLocalVars.Click += new System.EventHandler(this.MIFieldLocalVars_Click);
+            MIFieldLocalVars.Name = "MIFieldLocalVars";
+            resources.ApplyResources(MIFieldLocalVars, "MIFieldLocalVars");
+            MIFieldLocalVars.Click += MIFieldLocalVars_Click;
             // 
             // MiFieldN1
             // 
-            this.MiFieldN1.Name = "MiFieldN1";
-            resources.ApplyResources(this.MiFieldN1, "MiFieldN1");
+            MiFieldN1.Name = "MiFieldN1";
+            resources.ApplyResources(MiFieldN1, "MiFieldN1");
             // 
             // MiFieldDebug
             // 
-            this.MiFieldDebug.Name = "MiFieldDebug";
-            resources.ApplyResources(this.MiFieldDebug, "MiFieldDebug");
-            this.MiFieldDebug.Click += new System.EventHandler(this.MiFieldDebug_Click);
+            MiFieldDebug.Name = "MiFieldDebug";
+            resources.ApplyResources(MiFieldDebug, "MiFieldDebug");
+            MiFieldDebug.Click += MiFieldDebug_Click;
             // 
-            // openProjectFileDialog
+            // OpenProjectFileDialog
             // 
-            resources.ApplyResources(this.openProjectFileDialog, "openProjectFileDialog");
+            resources.ApplyResources(OpenProjectFileDialog, "OpenProjectFileDialog");
             // 
             // SplitContainerListAndFields
             // 
-            resources.ApplyResources(this.SplitContainerListAndFields, "SplitContainerListAndFields");
-            this.SplitContainerListAndFields.Name = "SplitContainerListAndFields";
+            resources.ApplyResources(SplitContainerListAndFields, "SplitContainerListAndFields");
+            SplitContainerListAndFields.Name = "SplitContainerListAndFields";
             // 
             // SplitContainerListAndFields.Panel1
             // 
-            this.SplitContainerListAndFields.Panel1.Controls.Add(this.TCProjects);
+            SplitContainerListAndFields.Panel1.Controls.Add(TCProjects);
             // 
             // SplitContainerListAndFields.Panel2
             // 
-            this.SplitContainerListAndFields.Panel2.Controls.Add(this.SplitContainerFieldsAndRawData);
+            SplitContainerListAndFields.Panel2.Controls.Add(SplitContainerFieldsAndRawData);
             // 
             // SplitContainerFieldsAndRawData
             // 
-            resources.ApplyResources(this.SplitContainerFieldsAndRawData, "SplitContainerFieldsAndRawData");
-            this.SplitContainerFieldsAndRawData.Name = "SplitContainerFieldsAndRawData";
+            resources.ApplyResources(SplitContainerFieldsAndRawData, "SplitContainerFieldsAndRawData");
+            SplitContainerFieldsAndRawData.Name = "SplitContainerFieldsAndRawData";
             // 
             // SplitContainerFieldsAndRawData.Panel1
             // 
-            this.SplitContainerFieldsAndRawData.Panel1.Controls.Add(this.DgvParsed);
+            SplitContainerFieldsAndRawData.Panel1.Controls.Add(DgvParsed);
             // 
             // SplitContainerFieldsAndRawData.Panel2
             // 
-            this.SplitContainerFieldsAndRawData.Panel2.Controls.Add(this.LayoutRawAndSuggested);
+            SplitContainerFieldsAndRawData.Panel2.Controls.Add(LayoutRawAndSuggested);
             // 
             // LayoutRawAndSuggested
             // 
-            resources.ApplyResources(this.LayoutRawAndSuggested, "LayoutRawAndSuggested");
-            this.LayoutRawAndSuggested.Controls.Add(this.RichTextData, 0, 0);
-            this.LayoutRawAndSuggested.Name = "LayoutRawAndSuggested";
+            resources.ApplyResources(LayoutRawAndSuggested, "LayoutRawAndSuggested");
+            LayoutRawAndSuggested.Controls.Add(RichTextData, 0, 0);
+            LayoutRawAndSuggested.Name = "LayoutRawAndSuggested";
             // 
             // RichTextData
             // 
-            resources.ApplyResources(this.RichTextData, "RichTextData");
-            this.RichTextData.Name = "RichTextData";
-            this.RichTextData.ReadOnly = true;
+            resources.ApplyResources(RichTextData, "RichTextData");
+            RichTextData.Name = "RichTextData";
+            RichTextData.ReadOnly = true;
+            // 
+            // SaveProjectFileDialog
+            // 
+            SaveProjectFileDialog.DefaultExt = "pvd";
+            resources.ApplyResources(SaveProjectFileDialog, "SaveProjectFileDialog");
             // 
             // MainForm
             // 
             resources.ApplyResources(this, "$this");
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.SplitContainerListAndFields);
-            this.Controls.Add(this.StatusBar);
-            this.Controls.Add(this.MM);
-            this.MainMenuStrip = this.MM;
-            this.Name = "MainForm";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
-            this.Load += new System.EventHandler(this.MainForm_Load);
-            this.MM.ResumeLayout(false);
-            this.MM.PerformLayout();
-            this.StatusBar.ResumeLayout(false);
-            this.StatusBar.PerformLayout();
-            this.TCProjects.ResumeLayout(false);
-            this.TPWelcome.ResumeLayout(false);
-            this.TPWelcomeLayout.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.DgvParsed)).EndInit();
-            this.MiFieldView.ResumeLayout(false);
-            this.SplitContainerListAndFields.Panel1.ResumeLayout(false);
-            this.SplitContainerListAndFields.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.SplitContainerListAndFields)).EndInit();
-            this.SplitContainerListAndFields.ResumeLayout(false);
-            this.SplitContainerFieldsAndRawData.Panel1.ResumeLayout(false);
-            this.SplitContainerFieldsAndRawData.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.SplitContainerFieldsAndRawData)).EndInit();
-            this.SplitContainerFieldsAndRawData.ResumeLayout(false);
-            this.LayoutRawAndSuggested.ResumeLayout(false);
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(SplitContainerListAndFields);
+            Controls.Add(StatusBar);
+            Controls.Add(MM);
+            MainMenuStrip = MM;
+            Name = "MainForm";
+            FormClosed += MainForm_FormClosed;
+            Load += MainForm_Load;
+            MM.ResumeLayout(false);
+            MM.PerformLayout();
+            StatusBar.ResumeLayout(false);
+            StatusBar.PerformLayout();
+            TCProjects.ResumeLayout(false);
+            TPWelcome.ResumeLayout(false);
+            TPWelcomeLayout.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)DgvParsed).EndInit();
+            MiFieldView.ResumeLayout(false);
+            SplitContainerListAndFields.Panel1.ResumeLayout(false);
+            SplitContainerListAndFields.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)SplitContainerListAndFields).EndInit();
+            SplitContainerListAndFields.ResumeLayout(false);
+            SplitContainerFieldsAndRawData.Panel1.ResumeLayout(false);
+            SplitContainerFieldsAndRawData.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)SplitContainerFieldsAndRawData).EndInit();
+            SplitContainerFieldsAndRawData.ResumeLayout(false);
+            LayoutRawAndSuggested.ResumeLayout(false);
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -647,7 +600,7 @@
         private ToolStripMenuItem MMVersion;
         private TabControl TCProjects;
         private TabPage TPWelcome;
-        private OpenFileDialog openProjectFileDialog;
+        private OpenFileDialog OpenProjectFileDialog;
         private ToolStripProgressBar StatusBarProgressBar;
         private DataGridView DgvParsed;
         private DataGridViewTextBoxColumn DgvPosition;
@@ -697,5 +650,6 @@
         private ToolStripMenuItem MMSearchHighlightReset;
         private ToolStripSeparator MMSearchApplyMenuN1;
         private ToolStripSeparator MMSearchHighlightMenuN1;
+        private SaveFileDialog SaveProjectFileDialog;
     }
 }

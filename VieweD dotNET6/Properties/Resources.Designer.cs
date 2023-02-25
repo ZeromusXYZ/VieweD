@@ -585,6 +585,24 @@ namespace VieweD.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Save cancelled.
+        /// </summary>
+        internal static string SaveCancelled {
+            get {
+                return ResourceManager.GetString("SaveCancelled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save project.
+        /// </summary>
+        internal static string SaveProject {
+            get {
+                return ResourceManager.GetString("SaveProject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &lt;none&gt;.
         /// </summary>
         internal static string StatusNoEngine {

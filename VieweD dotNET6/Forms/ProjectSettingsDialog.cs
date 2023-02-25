@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Linq;
 using VieweD.engine.common;
 
 namespace VieweD.Forms
@@ -49,12 +50,14 @@ namespace VieweD.Forms
             CBRules.Text = loadedRule;
             // CBRules.Enabled = CBRules.Text == string.Empty;
 
+            CreateVisualTags(ParentProject.Tags);
+
             RequiresReload = false;
         }
 
         private void ProjectSettingsDialog_Load(object sender, EventArgs e)
         {
-            
+
         }
 
         private void ClearForm()
@@ -76,6 +79,74 @@ namespace VieweD.Forms
                 CBParser.Items.Add(baseParser.Name);
 
             RequiresReload = false;
+        }
+
+        private void BtnAddTag_Click(object sender, EventArgs e)
+        {
+            AddTag(TagTextBox.Text);
+            TagTextBox.Text = string.Empty;
+            TagTextBox.Focus();
+        }
+
+        private void AddTag(string tag)
+        {
+            if (string.IsNullOrWhiteSpace(tag))
+                return;
+
+            var label = new Label();
+            label.BorderStyle = BorderStyle.Fixed3D;
+            label.BackColor = SystemColors.Highlight;
+            label.ForeColor = SystemColors.HighlightText;
+            TagLayout.Controls.Add(label);
+            label.Text = tag;
+            label.AutoSize = true;
+            label.Cursor = Cursors.No;
+            label.Click += TagLabel_Click;
+        }
+
+        private void TagLabel_Click(object? sender, EventArgs e)
+        {
+            if (sender is not Label label)
+                return;
+
+            var oldTag = label.Text;
+            TagLayout.Controls.Remove(label);
+            TagTextBox.Text = oldTag;
+        }
+
+        public static List<string> TagsToList(string tagString)
+        {
+            var res = new List<string>();
+            res.AddRange(tagString.Split(',').ToList());
+            return res;
+        }
+
+        private void CreateVisualTags(List<string> tags)
+        {
+            TagLayout.Controls.Clear();
+            foreach (var t in tags)
+            {
+                var s = t.Trim(' ');
+                if (!string.IsNullOrWhiteSpace(s))
+                    AddTag(s);
+            }
+        }
+
+        private string VisualTagsToString(string spacer = ",")
+        {
+            var res = string.Empty;
+
+            foreach (Control c in TagLayout.Controls)
+            {
+                if ((c is not Label label) || (string.IsNullOrWhiteSpace(label.Text)))
+                    continue;
+
+                if (res != string.Empty)
+                    res += spacer;
+                res += label.Text;
+            }
+
+            return res;
         }
     }
 }

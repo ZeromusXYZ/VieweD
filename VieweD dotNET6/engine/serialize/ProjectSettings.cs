@@ -13,8 +13,8 @@ public class ProjectSettings
     public string ProjectFile { get; set; } = "";
     public string ProjectUrl { get; set; } = "";
     public string LogFile { get; set; } = "";
-    public string InputReaderName { get; set; } = "";
-    public string ParserName { get; set; } = "";
+    public string InputReader { get; set; } = "";
+    public string Parser { get; set; } = "";
     public string RulesFile { get; set; } = "";
     public string DecryptionName { get; set; } = "";
 

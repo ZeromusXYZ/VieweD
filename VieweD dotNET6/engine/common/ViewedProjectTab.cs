@@ -45,7 +45,7 @@ public class ViewedProjectTab : TabPage
     public BaseInputReader? InputReader { get; set; }
     public BaseParser? InputParser { get; set; }
     public DataLookups DataLookup { get; set; }
-    public string TimeStampFormat { get; set; }
+    public string TimeStampFormat { internal get; set; }
 
     /// <summary>
     /// Mapping to use to convert a target port number to a StreamId used by the parsers
@@ -68,6 +68,12 @@ public class ViewedProjectTab : TabPage
     private ToolStripSeparator PmPls4 { get; }
     private ToolStripMenuItem PmPlEditParser { get; }
     private ToolStripMenuItem PmPlExportPacket { get; }
+    public List<string> Tags { get; set; }
+    /// <summary>
+    /// Set to true if a old format project file was loaded
+    /// </summary>
+    public bool RequestUpdatedProjectFileName { get; private set; }
+
     #endregion
 
     public ViewedProjectTab()
@@ -76,6 +82,9 @@ public class ViewedProjectTab : TabPage
 
         Filter = new PacketListFilter();
         Filter.Clear();
+
+        Tags = new List<string>();
+        Tags.Clear();
 
         #region CreatePacketListBox
 
@@ -871,13 +880,14 @@ public class ViewedProjectTab : TabPage
             {
                 ProjectFile = Helper.MakeRelative(projectFolder, ProjectFile),
                 LogFile = Helper.MakeRelative(projectFolder, OpenedLogFile),
-                InputReaderName = InputReader?.Name ?? "",
-                ParserName = InputParser?.Name ?? "",
+                InputReader = InputReader?.Name ?? "",
+                Parser = InputParser?.Name ?? "",
                 RulesFile = Helper.MakeRelative(projectFolder, InputParser?.Rules?.LoadedRulesFileName ?? ""),
                 VideoSettings =
                 {
                     VideoFile = Helper.MakeRelative(projectFolder, "")
-                }
+                },
+                Tags = Tags,
             };
 
             var writer = new System.Xml.Serialization.XmlSerializer(typeof(ProjectSettings));
@@ -886,6 +896,7 @@ public class ViewedProjectTab : TabPage
 
             writer.Serialize(fileStream, settings);
             fileStream.Close();
+            RequestUpdatedProjectFileName = false;
             return true;
         }
         catch
@@ -940,7 +951,7 @@ public class ViewedProjectTab : TabPage
                 else
                 if (fieldType == "tags")
                 {
-                    res.Tags = fieldVal.Split(",").ToList();
+                    res.Tags = ProjectSettingsDialog.TagsToList(fieldVal);
                 }
                 else
                 if (fieldType == "decrypt")
@@ -974,6 +985,7 @@ public class ViewedProjectTab : TabPage
 
     public ProjectSettings? LoadProjectSettingsFile(string fileName)
     {
+        RequestUpdatedProjectFileName = false;
         try
         {
             var testText = File.ReadAllText(fileName);
@@ -1003,10 +1015,13 @@ public class ViewedProjectTab : TabPage
                 var res = LoadLegacyProjectSettings(lines);
                 if (res != null)
                 {
+                    RequestUpdatedProjectFileName = true;
                     // We managed to load a old format, backup the file
                     try
                     {
-                        File.Copy(fileName, fileName + ".old");
+                        var oldName = fileName + ".old";
+                        if (!File.Exists(oldName))
+                            File.Copy(fileName, oldName);
                     }
                     catch
                     {

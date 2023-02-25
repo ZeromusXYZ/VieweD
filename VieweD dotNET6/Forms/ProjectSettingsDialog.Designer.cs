@@ -29,140 +29,174 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProjectSettingsDialog));
-            this.GbProjectFile = new System.Windows.Forms.GroupBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.TextVideoFile = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.TextProjectFile = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.TextLogFile = new System.Windows.Forms.TextBox();
-            this.GbInput = new System.Windows.Forms.GroupBox();
-            this.CBRules = new System.Windows.Forms.ComboBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.CBInputReader = new System.Windows.Forms.ComboBox();
-            this.CBParser = new System.Windows.Forms.ComboBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.BtnOK = new System.Windows.Forms.Button();
-            this.GbProjectFile.SuspendLayout();
-            this.GbInput.SuspendLayout();
-            this.SuspendLayout();
+            GbProjectFile = new GroupBox();
+            label2 = new Label();
+            TextVideoFile = new TextBox();
+            label6 = new Label();
+            TextProjectFile = new TextBox();
+            label1 = new Label();
+            TextLogFile = new TextBox();
+            GbInput = new GroupBox();
+            CBRules = new ComboBox();
+            label4 = new Label();
+            label8 = new Label();
+            CBInputReader = new ComboBox();
+            CBParser = new ComboBox();
+            label3 = new Label();
+            BtnOK = new Button();
+            GbTags = new GroupBox();
+            TagLayout = new FlowLayoutPanel();
+            TagTextBox = new TextBox();
+            BtnAddTag = new Button();
+            GbProjectFile.SuspendLayout();
+            GbInput.SuspendLayout();
+            GbTags.SuspendLayout();
+            SuspendLayout();
             // 
             // GbProjectFile
             // 
-            this.GbProjectFile.Controls.Add(this.label2);
-            this.GbProjectFile.Controls.Add(this.TextVideoFile);
-            this.GbProjectFile.Controls.Add(this.label6);
-            this.GbProjectFile.Controls.Add(this.TextProjectFile);
-            this.GbProjectFile.Controls.Add(this.label1);
-            this.GbProjectFile.Controls.Add(this.TextLogFile);
-            resources.ApplyResources(this.GbProjectFile, "GbProjectFile");
-            this.GbProjectFile.Name = "GbProjectFile";
-            this.GbProjectFile.TabStop = false;
+            GbProjectFile.Controls.Add(label2);
+            GbProjectFile.Controls.Add(TextVideoFile);
+            GbProjectFile.Controls.Add(label6);
+            GbProjectFile.Controls.Add(TextProjectFile);
+            GbProjectFile.Controls.Add(label1);
+            GbProjectFile.Controls.Add(TextLogFile);
+            resources.ApplyResources(GbProjectFile, "GbProjectFile");
+            GbProjectFile.Name = "GbProjectFile";
+            GbProjectFile.TabStop = false;
             // 
             // label2
             // 
-            resources.ApplyResources(this.label2, "label2");
-            this.label2.Name = "label2";
+            resources.ApplyResources(label2, "label2");
+            label2.Name = "label2";
             // 
             // TextVideoFile
             // 
-            resources.ApplyResources(this.TextVideoFile, "TextVideoFile");
-            this.TextVideoFile.Name = "TextVideoFile";
-            this.TextVideoFile.ReadOnly = true;
+            resources.ApplyResources(TextVideoFile, "TextVideoFile");
+            TextVideoFile.Name = "TextVideoFile";
+            TextVideoFile.ReadOnly = true;
             // 
             // label6
             // 
-            resources.ApplyResources(this.label6, "label6");
-            this.label6.Name = "label6";
+            resources.ApplyResources(label6, "label6");
+            label6.Name = "label6";
             // 
             // TextProjectFile
             // 
-            resources.ApplyResources(this.TextProjectFile, "TextProjectFile");
-            this.TextProjectFile.Name = "TextProjectFile";
-            this.TextProjectFile.ReadOnly = true;
+            resources.ApplyResources(TextProjectFile, "TextProjectFile");
+            TextProjectFile.Name = "TextProjectFile";
+            TextProjectFile.ReadOnly = true;
             // 
             // label1
             // 
-            resources.ApplyResources(this.label1, "label1");
-            this.label1.Name = "label1";
+            resources.ApplyResources(label1, "label1");
+            label1.Name = "label1";
             // 
             // TextLogFile
             // 
-            resources.ApplyResources(this.TextLogFile, "TextLogFile");
-            this.TextLogFile.Name = "TextLogFile";
-            this.TextLogFile.ReadOnly = true;
+            resources.ApplyResources(TextLogFile, "TextLogFile");
+            TextLogFile.Name = "TextLogFile";
+            TextLogFile.ReadOnly = true;
             // 
             // GbInput
             // 
-            this.GbInput.Controls.Add(this.CBRules);
-            this.GbInput.Controls.Add(this.label4);
-            this.GbInput.Controls.Add(this.label8);
-            this.GbInput.Controls.Add(this.CBInputReader);
-            this.GbInput.Controls.Add(this.CBParser);
-            this.GbInput.Controls.Add(this.label3);
-            resources.ApplyResources(this.GbInput, "GbInput");
-            this.GbInput.Name = "GbInput";
-            this.GbInput.TabStop = false;
+            GbInput.Controls.Add(CBRules);
+            GbInput.Controls.Add(label4);
+            GbInput.Controls.Add(label8);
+            GbInput.Controls.Add(CBInputReader);
+            GbInput.Controls.Add(CBParser);
+            GbInput.Controls.Add(label3);
+            resources.ApplyResources(GbInput, "GbInput");
+            GbInput.Name = "GbInput";
+            GbInput.TabStop = false;
             // 
             // CBRules
             // 
-            this.CBRules.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.CBRules.FormattingEnabled = true;
-            resources.ApplyResources(this.CBRules, "CBRules");
-            this.CBRules.Name = "CBRules";
+            CBRules.DropDownStyle = ComboBoxStyle.DropDownList;
+            CBRules.FormattingEnabled = true;
+            resources.ApplyResources(CBRules, "CBRules");
+            CBRules.Name = "CBRules";
             // 
             // label4
             // 
-            resources.ApplyResources(this.label4, "label4");
-            this.label4.Name = "label4";
+            resources.ApplyResources(label4, "label4");
+            label4.Name = "label4";
             // 
             // label8
             // 
-            resources.ApplyResources(this.label8, "label8");
-            this.label8.Name = "label8";
+            resources.ApplyResources(label8, "label8");
+            label8.Name = "label8";
             // 
             // CBInputReader
             // 
-            this.CBInputReader.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.CBInputReader.FormattingEnabled = true;
-            resources.ApplyResources(this.CBInputReader, "CBInputReader");
-            this.CBInputReader.Name = "CBInputReader";
+            CBInputReader.DropDownStyle = ComboBoxStyle.DropDownList;
+            CBInputReader.FormattingEnabled = true;
+            resources.ApplyResources(CBInputReader, "CBInputReader");
+            CBInputReader.Name = "CBInputReader";
             // 
             // CBParser
             // 
-            this.CBParser.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.CBParser.FormattingEnabled = true;
-            resources.ApplyResources(this.CBParser, "CBParser");
-            this.CBParser.Name = "CBParser";
+            CBParser.DropDownStyle = ComboBoxStyle.DropDownList;
+            CBParser.FormattingEnabled = true;
+            resources.ApplyResources(CBParser, "CBParser");
+            CBParser.Name = "CBParser";
             // 
             // label3
             // 
-            resources.ApplyResources(this.label3, "label3");
-            this.label3.Name = "label3";
+            resources.ApplyResources(label3, "label3");
+            label3.Name = "label3";
             // 
             // BtnOK
             // 
-            resources.ApplyResources(this.BtnOK, "BtnOK");
-            this.BtnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.BtnOK.Name = "BtnOK";
-            this.BtnOK.UseVisualStyleBackColor = true;
+            resources.ApplyResources(BtnOK, "BtnOK");
+            BtnOK.DialogResult = DialogResult.OK;
+            BtnOK.Name = "BtnOK";
+            BtnOK.UseVisualStyleBackColor = true;
+            // 
+            // GbTags
+            // 
+            resources.ApplyResources(GbTags, "GbTags");
+            GbTags.Controls.Add(BtnAddTag);
+            GbTags.Controls.Add(TagTextBox);
+            GbTags.Controls.Add(TagLayout);
+            GbTags.Name = "GbTags";
+            GbTags.TabStop = false;
+            // 
+            // TagLayout
+            // 
+            resources.ApplyResources(TagLayout, "TagLayout");
+            TagLayout.Name = "TagLayout";
+            // 
+            // TagTextBox
+            // 
+            resources.ApplyResources(TagTextBox, "TagTextBox");
+            TagTextBox.Name = "TagTextBox";
+            // 
+            // BtnAddTag
+            // 
+            BtnAddTag.Image = Properties.Resources.add;
+            resources.ApplyResources(BtnAddTag, "BtnAddTag");
+            BtnAddTag.Name = "BtnAddTag";
+            BtnAddTag.UseVisualStyleBackColor = true;
+            BtnAddTag.Click += BtnAddTag_Click;
             // 
             // ProjectSettingsDialog
             // 
             resources.ApplyResources(this, "$this");
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.BtnOK);
-            this.Controls.Add(this.GbInput);
-            this.Controls.Add(this.GbProjectFile);
-            this.Name = "ProjectSettingsDialog";
-            this.Load += new System.EventHandler(this.ProjectSettingsDialog_Load);
-            this.GbProjectFile.ResumeLayout(false);
-            this.GbProjectFile.PerformLayout();
-            this.GbInput.ResumeLayout(false);
-            this.GbInput.PerformLayout();
-            this.ResumeLayout(false);
-
+            AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(GbTags);
+            Controls.Add(BtnOK);
+            Controls.Add(GbInput);
+            Controls.Add(GbProjectFile);
+            Name = "ProjectSettingsDialog";
+            Load += ProjectSettingsDialog_Load;
+            GbProjectFile.ResumeLayout(false);
+            GbProjectFile.PerformLayout();
+            GbInput.ResumeLayout(false);
+            GbInput.PerformLayout();
+            GbTags.ResumeLayout(false);
+            GbTags.PerformLayout();
+            ResumeLayout(false);
         }
 
         #endregion
@@ -182,5 +216,9 @@
         private Label label4;
         private Label label8;
         private Button BtnOK;
+        private GroupBox GbTags;
+        private Button BtnAddTag;
+        private TextBox TagTextBox;
+        private FlowLayoutPanel TagLayout;
     }
 }

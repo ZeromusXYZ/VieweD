@@ -342,4 +342,10 @@
   <data name="PopupInsert" xml:space="preserve">
     <value>Insert</value>
   </data>
+  <data name="SaveProject" xml:space="preserve">
+    <value>Save project</value>
+  </data>
+  <data name="SaveCancelled" xml:space="preserve">
+    <value>Save cancelled</value>
+  </data>
 </root>
