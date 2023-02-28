@@ -93,10 +93,7 @@ public class ViewedProjectTab : TabPage
         PacketsListBox.Location = new Point(0, 0);
         PacketsListBox.Size = new Size(this.Width, this.Height);
         PacketsListBox.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-        PacketsListBox.Dock = DockStyle.Fill;
-        PacketsListBox.Font = Properties.Settings.Default.PacketListFont; // Add fixed sized font (to override the tab page itself)
-        PacketsListBox.ItemHeight = (int)Math.Ceiling(PacketsListBox.Font.GetHeight());
-        // lbPackets.Font = new Font("Consolas", 9); // Add fixed sized font (to override the tab page itself)
+        ReloadPacketListColorsFromSettings();
         PacketsListBox.DrawMode = DrawMode.OwnerDrawFixed;
 
         PacketsListBox.DrawItem += PacketsListBox_DrawItem;
@@ -1041,6 +1038,14 @@ public class ViewedProjectTab : TabPage
     public void CloseProject()
     {
         Dispose();
+    }
+
+    public void ReloadPacketListColorsFromSettings()
+    {
+        PacketsListBox.Font = Settings.Default.PacketListFont;
+        PacketsListBox.ItemHeight = (int)Math.Ceiling(PacketsListBox.Font.GetHeight());
+        PacketsListBox.Dock = DockStyle.Fill;
+        PacketsListBox.Refresh();
     }
 
 }

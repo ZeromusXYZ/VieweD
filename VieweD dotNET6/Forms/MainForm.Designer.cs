@@ -141,6 +141,7 @@
             // 
             MMFileSettings.Name = "MMFileSettings";
             resources.ApplyResources(MMFileSettings, "MMFileSettings");
+            MMFileSettings.Click += MMFileSettings_Click;
             // 
             // MMFileN2
             // 

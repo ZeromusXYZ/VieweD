@@ -379,6 +379,15 @@ namespace VieweD.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The current project was loaded in a older format, you will need to save it into the new format.
+        /// </summary>
+        internal static string LoadedOldProjectTypeAndNeedSave {
+            get {
+                return ResourceManager.GetString("LoadedOldProjectTypeAndNeedSave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Version {0}.
         /// </summary>
         internal static string MenuVersion {

@@ -328,7 +328,6 @@ namespace VieweD.Forms
 #pragma warning disable IDE0017 // Simplify object initialization
                         row = new DataGridViewRow();
 #pragma warning restore IDE0017 // Simplify object initialization
-                        row.Height = DgvParsed.Font.Height + 4;
                         row.Cells.Add(new DataGridViewTextBoxCell() { Value = parsedField.DisplayedByteOffset });
                         row.Cells.Add(new DataGridViewTextBoxCell() { Value = parsedField.FieldName });
                         row.Cells.Add(new DataGridViewTextBoxCell() { Value = parsedField.FieldValue });
@@ -338,6 +337,7 @@ namespace VieweD.Forms
                     {
                         row = DgvParsed.Rows[y];
                     }
+                    row.Height = (int)Math.Ceiling(DgvParsed.Font.GetHeight()) + 4;
 
                     row.Cells[0].Value = parsedField.DisplayedByteOffset;
                     row.Cells[0].Style.ForeColor = parsedField.FieldColor;
@@ -766,7 +766,7 @@ namespace VieweD.Forms
                 {
                     SaveProjectFileDialog.FileName = Path.ChangeExtension(project.ProjectFile, ".pvd");
                     MessageBox.Show(
-                        "The current project was loaded in a older format, you will need to save it into the new format",
+                        Resources.LoadedOldProjectTypeAndNeedSave,
                         Resources.SaveProject, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
@@ -1076,6 +1076,22 @@ namespace VieweD.Forms
         private void MMSearchFilterHighlightApplyFile_Click(object? sender, EventArgs e)
         {
             DoMenuFilter(sender, true);
+        }
+
+        private void MMFileSettings_Click(object sender, EventArgs e)
+        {
+            using var settings = new ProgramSettingsForm();
+            if (settings.ShowDialog() == DialogResult.OK)
+            {
+                Settings.Default.Save();
+                PacketColors.UpdateColorsFromSettings();
+                DgvParsed.Font = Settings.Default.GridViewFont;
+                
+                // Apply packet list font to open tabs
+                foreach (var page in TCProjects.TabPages)
+                    if (page is ViewedProjectTab tp)
+                        tp.ReloadPacketListColorsFromSettings();
+            }
         }
     }
 }
