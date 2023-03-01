@@ -24,4 +24,27 @@ public class ParsedField
         FieldColor = SystemColors.WindowText;
         IsSelected = false;
     }
+
+    public bool MatchSearch(SearchParameters search, BasePacketData data)
+    {
+        // nothing to search?
+        if ((search.SearchOutgoing == false) && (search.SearchIncoming == false))
+            return false;
+
+        // Check if field name is searched
+        var res = (search.SearchParsedFieldName == "") || FieldName.Contains(search.SearchParsedFieldName, StringComparison.InvariantCultureIgnoreCase);
+
+        // Only field value is searched
+        res = res && ((search.SearchParsedFieldValue == "") || FieldValue.Contains(search.SearchParsedFieldValue, StringComparison.InvariantCultureIgnoreCase));
+
+        /*
+        // check values
+        if (HasValue)
+        {
+            res = res && ((!search.SearchByByte) || (data.FindByte(search.SearchByte)));
+        }
+        */
+
+        return res;
+    }
 }

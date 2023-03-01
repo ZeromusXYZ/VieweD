@@ -351,4 +351,31 @@
   <data name="LoadedOldProjectTypeAndNeedSave" xml:space="preserve">
     <value>The current project was loaded in a older format, you will need to save it into the new format</value>
   </data>
+  <data name="Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="NothingToSearch" xml:space="preserve">
+    <value>Nothing to search in!</value>
+  </data>
+  <data name="NothingFound" xml:space="preserve">
+    <value>No matches found!</value>
+  </data>
+  <data name="SearchAsNewTab" xml:space="preserve">
+    <value>Search as New Tab</value>
+  </data>
+  <data name="NoRuleAttachedToThisPacketCreateNewRule" xml:space="preserve">
+    <value>No rule attached to this packet, create a new one?</value>
+  </data>
+  <data name="EditRulesFile" xml:space="preserve">
+    <value>Edit rules file</value>
+  </data>
+  <data name="NoRuleLinkedToThisPacket" xml:space="preserve">
+    <value>No rule linked to this packet</value>
+  </data>
+  <data name="NoRuleFound" xml:space="preserve">
+    <value>No rule found</value>
+  </data>
+  <data name="CannotSaveVirtualProject" xml:space="preserve">
+    <value>Can only save projects that originate directly from a log file.</value>
+  </data>
 </root>

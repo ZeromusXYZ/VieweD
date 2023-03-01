@@ -9,6 +9,10 @@ public class FfxiParser : BaseParser
     public override string Description => "Parses Final Fantasy XI packet data";
     public override string DefaultRulesFile => "ffxi.xml";
 
+    public override int PacketIdMinimum => 1;
+    public override int PacketIdMaximum => 0x1FF;
+    public override bool AllowSyncSearch => true;
+
     public FfxiParser(ViewedProjectTab parentProject) : base(parentProject)
     {
         // Supported Readers

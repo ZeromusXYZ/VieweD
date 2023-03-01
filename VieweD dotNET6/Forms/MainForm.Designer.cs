@@ -223,11 +223,13 @@
             // 
             MMSearchFind.Name = "MMSearchFind";
             resources.ApplyResources(MMSearchFind, "MMSearchFind");
+            MMSearchFind.Click += MMSearchFind_Click;
             // 
             // MMSearchFindNext
             // 
             MMSearchFindNext.Name = "MMSearchFindNext";
             resources.ApplyResources(MMSearchFindNext, "MMSearchFindNext");
+            MMSearchFindNext.Click += MMSearchFindNext_Click;
             // 
             // MMSearchN1
             // 
@@ -429,6 +431,7 @@
             ILTabs.Images.SetKeyName(1, "found_it!x44.png");
             ILTabs.Images.SetKeyName(2, "add.png");
             ILTabs.Images.SetKeyName(3, "mini_unk_icon.png");
+            ILTabs.Images.SetKeyName(4, "view-visible-16.png");
             // 
             // DgvParsed
             // 

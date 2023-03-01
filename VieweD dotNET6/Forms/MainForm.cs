@@ -322,6 +322,7 @@ namespace VieweD.Forms
 
                     var nestString = GetNestedString(parsedField, previousField, nextField);
 
+
                     DataGridViewRow? row;
                     if (y >= DgvParsed.RowCount)
                     {
@@ -338,14 +339,29 @@ namespace VieweD.Forms
                         row = DgvParsed.Rows[y];
                     }
                     row.Height = (int)Math.Ceiling(DgvParsed.Font.GetHeight()) + 4;
+                    var foreColor = parsedField.FieldColor;
+                    var defaultForeColor = (y % 2) == 0 ? DgvParsed.DefaultCellStyle.ForeColor : DgvParsed.AlternatingRowsDefaultCellStyle.ForeColor; ;
+                    var backColor = (y % 2) == 0 ? DgvParsed.DefaultCellStyle.BackColor : DgvParsed.AlternatingRowsDefaultCellStyle.BackColor;
+
+
+                    if (parsedField.MatchSearch(packetData.ParentProject.SearchParameters, packetData))
+                    {
+                        foreColor = Color.Black;
+                        defaultForeColor = foreColor;
+                        backColor = Color.Yellow;
+                    }
 
                     row.Cells[0].Value = parsedField.DisplayedByteOffset;
-                    row.Cells[0].Style.ForeColor = parsedField.FieldColor;
+                    row.Cells[0].Style.ForeColor = foreColor;
+                    row.Cells[0].Style.BackColor = backColor;
 
                     row.Cells[1].Value = nestString + parsedField.FieldName;
-                    row.Cells[1].Style.ForeColor = parsedField.FieldColor;
+                    row.Cells[1].Style.ForeColor = foreColor;
+                    row.Cells[1].Style.BackColor = backColor;
 
                     row.Cells[2].Value = parsedField.FieldValue;
+                    row.Cells[2].Style.ForeColor = defaultForeColor;
+                    row.Cells[2].Style.BackColor = backColor;
                     // row.Cells[2].Style.ForeColor = parsedField.FieldColor;
 
                     row.Selected = parsedField.IsSelected;
@@ -370,7 +386,7 @@ namespace VieweD.Forms
                 var oldFocus = DgvParsed.Focused;
 
                 DgvParsed.SuspendLayout();
-                DgvParsed.Rows.Clear();
+                //DgvParsed.Rows.Clear();
                 DgvParsed.Tag = packetData;
                 DgvParsed.Enabled = false;
                 DgvParsed.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(
@@ -378,6 +394,7 @@ namespace VieweD.Forms
                     (int)Math.Round(DgvParsed.DefaultCellStyle.BackColor.G * 0.95),
                     (int)Math.Round(DgvParsed.DefaultCellStyle.BackColor.B * 0.95));
 
+                var y = 0;
                 var rule = packetData.ParentProject.InputParser?.Rules?.GetPacketRule(packetData);
                 if (rule != null)
                 {
@@ -385,9 +402,21 @@ namespace VieweD.Forms
                     rule.RunRule(packetData);
                     foreach (var localVar in rule.LocalVars)
                     {
+                        DataGridViewRow? row;
+                        if (y >= DgvParsed.RowCount)
+                        {
 #pragma warning disable IDE0017 // Simplify object initialization
-                        var row = new DataGridViewRow();
+                            row = new DataGridViewRow();
 #pragma warning restore IDE0017 // Simplify object initialization
+                            row.Cells.Add(new DataGridViewTextBoxCell() { Value = "" });
+                            row.Cells.Add(new DataGridViewTextBoxCell() { Value = localVar.Key });
+                            row.Cells.Add(new DataGridViewTextBoxCell() { Value = localVar.Value });
+                            DgvParsed.Rows.Add(row);
+                        }
+                        else
+                        {
+                            row = DgvParsed.Rows[y];
+                        }
                         row.Height = DgvParsed.Font.Height + 4;
                         var baseCell = new DataGridViewTextBoxCell() { Value = "" };
                         Color cellColor;
@@ -410,12 +439,22 @@ namespace VieweD.Forms
                         else
                             cellColor = Color.Fuchsia;
 
-                        row.Cells.Add(baseCell);
-                        row.Cells.Add(new DataGridViewTextBoxCell() { Value = localVar.Key, Style = new DataGridViewCellStyle(baseCell.Style) { ForeColor = cellColor } });
-                        row.Cells.Add(new DataGridViewTextBoxCell() { Value = localVar.Value, Style = new DataGridViewCellStyle(baseCell.Style) { ForeColor = cellColor } });
-                        DgvParsed.Rows.Add(row);
+                        row.Cells[0] = baseCell;
+                        row.Cells[1].Value = localVar.Key;
+                        row.Cells[1].Style = new DataGridViewCellStyle(baseCell.Style) { ForeColor = cellColor };
+                        row.Cells[2].Value = localVar.Value;
+                        row.Cells[2].Style = new DataGridViewCellStyle(baseCell.Style) { ForeColor = cellColor };
+
+                        // row.Cells.Add(baseCell);
+                        // row.Cells.Add(new DataGridViewTextBoxCell() { Value = localVar.Key, Style = new DataGridViewCellStyle(baseCell.Style) { ForeColor = cellColor } });
+                        // row.Cells.Add(new DataGridViewTextBoxCell() { Value = localVar.Value, Style = new DataGridViewCellStyle(baseCell.Style) { ForeColor = cellColor } });
+                        // DgvParsed.Rows.Add(row);
+                        y++;
                     }
                 }
+
+                while (DgvParsed.RowCount > y)
+                    DgvParsed.Rows.RemoveAt(DgvParsed.Rows.Count - 1);
 
                 DgvParsed.Enabled = true;
                 DgvParsed.ResumeLayout();
@@ -760,6 +799,12 @@ namespace VieweD.Forms
 
         public void SaveProject(ViewedProjectTab project, bool forceSaveAs)
         {
+            if (string.IsNullOrWhiteSpace(project.ProjectFile))
+            {
+                MessageBox.Show(Resources.CannotSaveVirtualProject,
+                    Resources.SaveProject, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                return;
+            }
             if ((project.RequestUpdatedProjectFileName) || (!File.Exists(project.ProjectFile)) || (forceSaveAs))
             {
                 if (project.RequestUpdatedProjectFileName)
@@ -1086,12 +1131,123 @@ namespace VieweD.Forms
                 Settings.Default.Save();
                 PacketColors.UpdateColorsFromSettings();
                 DgvParsed.Font = Settings.Default.GridViewFont;
-                
+
                 // Apply packet list font to open tabs
                 foreach (var page in TCProjects.TabPages)
                     if (page is ViewedProjectTab tp)
                         tp.ReloadPacketListColorsFromSettings();
             }
+        }
+
+        private void MMSearchFind_Click(object sender, EventArgs e)
+        {
+            if (TCProjects.SelectedTab is not ViewedProjectTab project)
+                return;
+
+            using var search = new SearchForm();
+            search.ParentProject = project;
+            search.SearchParameters.CopyFrom(project.SearchParameters);
+            var res = search.ShowDialog();
+            if (res == DialogResult.OK)
+            {
+                project.SearchParameters.CopyFrom(search.SearchParameters);
+                FindNext(project);
+                // Find Next
+            }
+            else
+            if (res == DialogResult.Retry)
+            {
+                project.SearchParameters.CopyFrom(search.SearchParameters);
+                FindAsNewTab(project);
+                // New Tab
+            }
+
+        }
+
+        private void FindNext(ViewedProjectTab project)
+        {
+            if (project.PacketsListBox.Items.Count <= 0)
+            {
+                MessageBox.Show(Resources.NothingToSearch, Resources.Search, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            var startIndex = project.PacketsListBox.SelectedIndex;
+            if ((startIndex < 0) && (startIndex >= project.PacketsListBox.Items.Count))
+                startIndex = -1;
+
+            var i = startIndex + 1;
+            for (var c = 0; c < project.PacketsListBox.Items.Count - 1; c++)
+            {
+                if (i >= project.PacketsListBox.Items.Count)
+                    i = 0;
+                if ((project.PacketsListBox.Items[i] is BasePacketData packetData) && packetData.MatchesSearch(project.SearchParameters))
+                {
+                    // Select index
+                    project.PacketsListBox.SelectedIndex = i;
+                    // Move to center
+                    var iHeight = project.PacketsListBox.ItemHeight;
+                    if (iHeight <= 0)
+                        iHeight = 8;
+                    var iCount = project.PacketsListBox.Size.Height / iHeight;
+                    var tPos = i - (iCount / 2);
+                    if (tPos < 0)
+                        tPos = 0;
+                    project.PacketsListBox.TopIndex = tPos;
+                    project.PacketsListBox.Focus();
+                    // We're done
+                    return;
+                }
+                i++;
+            }
+            MessageBox.Show(Resources.NothingFound, Resources.Search, MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void FindAsNewTab(ViewedProjectTab project)
+        {
+            if ((project.PacketsListBox.Items.Count <= 0))
+            {
+                MessageBox.Show(Resources.NothingToSearch, Resources.SearchAsNewTab, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            ViewedProjectTab newProject = new ViewedProjectTab();
+            newProject.ImageIndex = 4;
+            newProject.ProjectFile = string.Empty;
+            newProject.Text = @"*" + project.Text;
+            newProject.OpenedLogFile = string.Empty;
+            newProject.InputReader = project.InputReader?.CreateNew(newProject);
+            newProject.InputParser = project.InputParser?.CreateNew(newProject);
+
+            var count = newProject.SearchFrom(project, project.SearchParameters);
+
+            if (count <= 0)
+            {
+                MessageBox.Show(Resources.NothingFound, Resources.SearchAsNewTab, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                newProject.ReIndexLoadedPackets();
+                newProject.PopulateListBox();
+                TCProjects.TabPages.Add(newProject);
+                TCProjects.SelectedTab = newProject;
+                UpdateStatusBar(newProject);
+            }
+        }
+
+        private void MMSearchFindNext_Click(object sender, EventArgs e)
+        {
+            if (TCProjects.SelectedTab is not ViewedProjectTab project)
+                return;
+
+            if ((project.SearchParameters.SearchIncoming == false) &&
+                (project.SearchParameters.SearchOutgoing == false))
+            {
+                MMSearchFind_Click(sender, e);
+                return;
+            }
+
+            FindNext(project);
         }
     }
 }

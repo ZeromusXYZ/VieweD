@@ -348,6 +348,10 @@ public class BasePacketData
         }
 
         ParsedData.Add(newParsed);
+
+        // Add to field dictionary
+        if (ParentProject.AllFieldNames.Contains(displayName.ToLower()) == false)
+            ParentProject.AllFieldNames.Add(displayName.ToLower());
     }
 
     public void AddParsedError(string errorPosition, string errorName, string errorDescription, int nestingDepth,
@@ -534,4 +538,93 @@ public class BasePacketData
             MarkedAsDimmed = false;
         }
     }
+
+    public bool MatchesSearch(SearchParameters p)
+    {
+        if ((PacketDataDirection == PacketDataDirection.Incoming) && (!p.SearchIncoming))
+            return false;
+        if ((PacketDataDirection == PacketDataDirection.Outgoing) && (!p.SearchOutgoing))
+            return false;
+
+        var res = true;
+
+        if (p.SearchByPacketId)
+            res = (PacketId == p.SearchPacketId);
+
+        if ((res) && (p.SearchByPacketLevel))
+            res = (CompressionLevel == p.SearchPacketLevel);
+
+        if ((res) && (p.SearchBySync))
+            res = (SyncId == p.SearchSync);
+
+        if ((res) && (p.SearchByByte))
+            res = (ByteData.IndexOf(p.SearchByte) >= 0);
+
+        if ((res) && (p.SearchByUInt16))
+        {
+            res = false;
+            for (var i = 0; i < ByteData.Count - 2; i++)
+            {
+                var n = GetUInt16AtPos(i);
+                if (n != p.SearchUInt16)
+                    continue;
+
+                res = true;
+                break;
+            }
+        }
+
+        if ((res) && (p.SearchByUInt24))
+        {
+            res = false;
+            for (var i = 0; i < ByteData.Count - 3; i++)
+            {
+                var rd = GetDataBytesAtPos(i, 3).ToList();
+                rd.Add(0);
+                var d = BitConverter.ToUInt32(rd.ToArray(), 0);
+                if (d != p.SearchUInt24)
+                    continue;
+
+                res = true;
+                break;
+            }
+        }
+
+        if ((res) && (p.SearchByUInt32))
+        {
+            res = false;
+            for (var i = 0; i < ByteData.Count - 4; i++)
+            {
+                var n = GetUInt32AtPos(i);
+                if (n != p.SearchUInt32)
+                    continue;
+
+                res = true;
+                break;
+            }
+        }
+
+        if (res && (p.SearchByParsedData) && (p.SearchParsedFieldValue != string.Empty))
+        {
+            res = false;
+            foreach (var data in ParsedData)
+            {
+                if (p.SearchParsedFieldName != string.Empty)
+                {
+                    // Field Name Specified
+                    res = (data.FieldName.ToLower().Contains(p.SearchParsedFieldName) && data.FieldValue.ToLower().Contains(p.SearchParsedFieldValue));
+                }
+                else
+                {
+                    // No field name defined
+                    res = data.FieldValue.ToLower().Contains(p.SearchParsedFieldValue);
+                }
+                if (res)
+                    break;
+            }
+        }
+
+        return res;
+    }
+
 }

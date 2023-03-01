@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel;
 using VieweD.Forms;
 using VieweD.Helpers.System;
-using System.Xml;
 using VieweD.engine.serialize;
 using VieweD.Properties;
 
@@ -68,13 +67,17 @@ public class ViewedProjectTab : TabPage
     private ToolStripSeparator PmPls4 { get; }
     private ToolStripMenuItem PmPlEditParser { get; }
     private ToolStripMenuItem PmPlExportPacket { get; }
+    #endregion
+
     public List<string> Tags { get; set; }
     /// <summary>
     /// Set to true if a old format project file was loaded
     /// </summary>
     public bool RequestUpdatedProjectFileName { get; private set; }
 
-    #endregion
+    public SearchParameters SearchParameters { get; set; }
+    public List<string> AllFieldNames { get; set; }
+
 
     public ViewedProjectTab()
     {
@@ -85,6 +88,9 @@ public class ViewedProjectTab : TabPage
 
         Tags = new List<string>();
         Tags.Clear();
+
+        AllFieldNames = new List<string>();
+        SearchParameters = new SearchParameters();
 
         #region CreatePacketListBox
 
@@ -390,7 +396,7 @@ public class ViewedProjectTab : TabPage
 
             if (rule == null)
             {
-                if (MessageBox.Show("No rule attached to this packet, create a new one?", "Edit rules file",
+                if (MessageBox.Show(Resources.NoRuleAttachedToThisPacketCreateNewRule, Resources.EditRulesFile,
                         MessageBoxButtons.YesNo,
                         MessageBoxIcon.Information) != DialogResult.Yes)
                     return;
@@ -418,7 +424,7 @@ public class ViewedProjectTab : TabPage
             }
             else
             {
-                MessageBox.Show("No rule linked to this packet", "No rule found", 
+                MessageBox.Show(Resources.NoRuleLinkedToThisPacket, Resources.NoRuleFound, 
                     MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
             }
         }
@@ -1048,4 +1054,22 @@ public class ViewedProjectTab : TabPage
         PacketsListBox.Refresh();
     }
 
+    public int SearchFrom(ViewedProjectTab project, SearchParameters search)
+    {
+        if ((project.InputParser == null) || (project.InputParser.Rules == null) || (File.Exists(project.InputParser.Rules.LoadedRulesFileName) == false))
+            return 0;
+
+        int c = 0;
+        LoadedPacketList.Clear();
+        AllFieldNames.Clear();
+        InputParser?.OpenRulesFile(project.InputParser.Rules.LoadedRulesFileName);
+        //XorKey = original.XorKey;
+        //AesKey = original.AesKey;
+        foreach (var pd in project.LoadedPacketList.Where(pd => pd.MatchesSearch(search)))
+        { 
+            LoadedPacketList.Add(pd);
+            c++;
+        }
+        return c;
+    }
 }

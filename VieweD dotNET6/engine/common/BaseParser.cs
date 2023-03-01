@@ -8,6 +8,10 @@ public class BaseParser : IComparable<BaseParser>
     public ViewedProjectTab? ParentProject { get; set; }
     public RulesReader? Rules { get; protected set; }
     protected List<string> SupportedReaders { get; set; } = new List<string>();
+    public virtual int PacketIdMinimum => 0;
+    public virtual int PacketIdMaximum => 0xFFFF;
+    public virtual int PacketCompressionLevelMaximum => 0;
+    public virtual bool AllowSyncSearch => false;
 
     public BaseParser(ViewedProjectTab parentProject)
     {

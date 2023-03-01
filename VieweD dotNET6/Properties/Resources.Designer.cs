@@ -129,6 +129,15 @@ namespace VieweD.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Can only save projects that originate directly from a log file..
+        /// </summary>
+        internal static string CannotSaveVirtualProject {
+            get {
+                return ResourceManager.GetString("CannotSaveVirtualProject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap close {
@@ -290,6 +299,15 @@ namespace VieweD.Properties {
             get {
                 object obj = ResourceManager.GetObject("document-save-as-16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit rules file.
+        /// </summary>
+        internal static string EditRulesFile {
+            get {
+                return ResourceManager.GetString("EditRulesFile", resourceCulture);
             }
         }
         
@@ -467,11 +485,56 @@ namespace VieweD.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No rule attached to this packet, create a new one?.
+        /// </summary>
+        internal static string NoRuleAttachedToThisPacketCreateNewRule {
+            get {
+                return ResourceManager.GetString("NoRuleAttachedToThisPacketCreateNewRule", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No rule data.
         /// </summary>
         internal static string NoRuleData {
             get {
                 return ResourceManager.GetString("NoRuleData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No rule found.
+        /// </summary>
+        internal static string NoRuleFound {
+            get {
+                return ResourceManager.GetString("NoRuleFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No rule linked to this packet.
+        /// </summary>
+        internal static string NoRuleLinkedToThisPacket {
+            get {
+                return ResourceManager.GetString("NoRuleLinkedToThisPacket", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No matches found!.
+        /// </summary>
+        internal static string NothingFound {
+            get {
+                return ResourceManager.GetString("NothingFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nothing to search in!.
+        /// </summary>
+        internal static string NothingToSearch {
+            get {
+                return ResourceManager.GetString("NothingToSearch", resourceCulture);
             }
         }
         
@@ -608,6 +671,24 @@ namespace VieweD.Properties {
         internal static string SaveProject {
             get {
                 return ResourceManager.GetString("SaveProject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search.
+        /// </summary>
+        internal static string Search {
+            get {
+                return ResourceManager.GetString("Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search as New Tab.
+        /// </summary>
+        internal static string SearchAsNewTab {
+            get {
+                return ResourceManager.GetString("SearchAsNewTab", resourceCulture);
             }
         }
         
