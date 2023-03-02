@@ -171,6 +171,9 @@ namespace VieweD.Forms
 
                 rulesFileName = projectSetting.RulesFile;
                 project.Tags = projectSetting.Tags;
+                project.VideoSettings.VideoFile = projectSetting.VideoSettings.VideoFile;
+                project.VideoSettings.VideoUrl = projectSetting.VideoSettings.VideoUrl;
+                project.VideoSettings.VideoOffset = projectSetting.VideoSettings.VideoOffset;
             }
 
             if (string.IsNullOrWhiteSpace(project.ProjectFile))
@@ -1248,6 +1251,20 @@ namespace VieweD.Forms
             }
 
             FindNext(project);
+        }
+
+        private void MMProjectVideo_Click(object sender, EventArgs e)
+        {
+            if (TCProjects.SelectedTab is not ViewedProjectTab project)
+                return;
+
+            if (project.Video == null)
+            {
+                project.Video = new VideoForm();
+                project.Video.ParentProject = project;
+            }
+            project.Video.Show();
+            project.Video.BringToFront();
         }
     }
 }

@@ -35,9 +35,10 @@ namespace VieweD.Forms
             if (ParentProject == null)
                 return;
 
-            Text = DefaultTitle + " - " + ParentProject.ProjectName;
+            Text = DefaultTitle + @" - " + ParentProject.ProjectName;
             TextProjectFile.Text = ParentProject.ProjectFile;
             TextLogFile.Text = ParentProject.OpenedLogFile;
+            TextVideoFile.Text = ParentProject.VideoSettings.VideoFile;
 
             CBInputReader.Text = ParentProject.InputReader?.Name ?? string.Empty;
             CBInputReader.Enabled = CBInputReader.Text == string.Empty;

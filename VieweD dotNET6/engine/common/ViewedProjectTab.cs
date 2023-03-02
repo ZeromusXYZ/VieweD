@@ -77,7 +77,8 @@ public class ViewedProjectTab : TabPage
 
     public SearchParameters SearchParameters { get; set; }
     public List<string> AllFieldNames { get; set; }
-
+    public ProjectVideoSettings VideoSettings { get; set; } = new();
+    public VideoForm? Video { get; set; }
 
     public ViewedProjectTab()
     {
@@ -436,15 +437,17 @@ public class ViewedProjectTab : TabPage
     }
 
     /// <summary>
-    /// Recalculates all ThisIndex values for all items in the LoadedPacketList
+    /// Recalculates all ThisIndex and TimeOffset values for all items in the LoadedPacketList
     /// </summary>
     public void ReIndexLoadedPackets()
     {
+        var startTime = LoadedPacketList.Count > 0 ? LoadedPacketList[0].TimeStamp : DateTime.MinValue;
         lock (LoadedPacketList)
         {
             for (var i = 0; i < LoadedPacketList.Count; i++)
             {
                 LoadedPacketList[i].ThisIndex = i;
+                LoadedPacketList[i].OffsetFromStart = LoadedPacketList[i].TimeStamp - startTime;
             }
         }
     }
@@ -888,7 +891,9 @@ public class ViewedProjectTab : TabPage
                 RulesFile = Helper.MakeRelative(projectFolder, InputParser?.Rules?.LoadedRulesFileName ?? ""),
                 VideoSettings =
                 {
-                    VideoFile = Helper.MakeRelative(projectFolder, "")
+                    VideoFile = Helper.MakeRelative(projectFolder, VideoSettings.VideoFile),
+                    VideoUrl = VideoSettings.VideoUrl,
+                    VideoOffset = VideoSettings.VideoOffset,
                 },
                 Tags = Tags,
             };
@@ -1043,6 +1048,7 @@ public class ViewedProjectTab : TabPage
 
     public void CloseProject()
     {
+        Video?.Close();
         Dispose();
     }
 

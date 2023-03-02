@@ -30,7 +30,7 @@
         {
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             MM = new MenuStrip();
             MMFile = new ToolStripMenuItem();
             MMFileOpen = new ToolStripMenuItem();
@@ -42,8 +42,8 @@
             MMProject = new ToolStripMenuItem();
             MMProjectSave = new ToolStripMenuItem();
             toolStripMenuItem1 = new ToolStripSeparator();
-            projectDataToolStripMenuItem = new ToolStripMenuItem();
-            videoLinkToolStripMenuItem = new ToolStripMenuItem();
+            MMProjectGameData = new ToolStripMenuItem();
+            MMProjectVideo = new ToolStripMenuItem();
             MMProjectN1 = new ToolStripSeparator();
             MMProjectSettings = new ToolStripMenuItem();
             MMProjectN2 = new ToolStripSeparator();
@@ -163,7 +163,7 @@
             // 
             // MMProject
             // 
-            MMProject.DropDownItems.AddRange(new ToolStripItem[] { MMProjectSave, toolStripMenuItem1, projectDataToolStripMenuItem, videoLinkToolStripMenuItem, MMProjectN1, MMProjectSettings, MMProjectN2, MMProjectClose });
+            MMProject.DropDownItems.AddRange(new ToolStripItem[] { MMProjectSave, toolStripMenuItem1, MMProjectGameData, MMProjectVideo, MMProjectN1, MMProjectSettings, MMProjectN2, MMProjectClose });
             MMProject.Name = "MMProject";
             resources.ApplyResources(MMProject, "MMProject");
             // 
@@ -179,15 +179,16 @@
             toolStripMenuItem1.Name = "toolStripMenuItem1";
             resources.ApplyResources(toolStripMenuItem1, "toolStripMenuItem1");
             // 
-            // projectDataToolStripMenuItem
+            // MMProjectGameData
             // 
-            projectDataToolStripMenuItem.Name = "projectDataToolStripMenuItem";
-            resources.ApplyResources(projectDataToolStripMenuItem, "projectDataToolStripMenuItem");
+            MMProjectGameData.Name = "MMProjectGameData";
+            resources.ApplyResources(MMProjectGameData, "MMProjectGameData");
             // 
-            // videoLinkToolStripMenuItem
+            // MMProjectVideo
             // 
-            videoLinkToolStripMenuItem.Name = "videoLinkToolStripMenuItem";
-            resources.ApplyResources(videoLinkToolStripMenuItem, "videoLinkToolStripMenuItem");
+            MMProjectVideo.Name = "MMProjectVideo";
+            resources.ApplyResources(MMProjectVideo, "MMProjectVideo");
+            MMProjectVideo.Click += MMProjectVideo_Click;
             // 
             // MMProjectN1
             // 
@@ -438,11 +439,11 @@
             DgvParsed.AllowUserToAddRows = false;
             DgvParsed.AllowUserToDeleteRows = false;
             DgvParsed.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.BackColor = SystemColors.Control;
-            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
-            DgvParsed.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.BackColor = SystemColors.Control;
+            dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            DgvParsed.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
             DgvParsed.ClipboardCopyMode = DataGridViewClipboardCopyMode.Disable;
             DgvParsed.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             DgvParsed.Columns.AddRange(new DataGridViewColumn[] { DgvPosition, DgvName, DgvValue });
@@ -624,8 +625,8 @@
         private ToolStripMenuItem MMProjectSave;
         private ToolStripSeparator MMProjectN1;
         private ImageList ILTabs;
-        private ToolStripMenuItem videoLinkToolStripMenuItem;
-        private ToolStripMenuItem projectDataToolStripMenuItem;
+        private ToolStripMenuItem MMProjectVideo;
+        private ToolStripMenuItem MMProjectGameData;
         private ToolStripSeparator toolStripMenuItem1;
         private ToolStripMenuItem MMLinks;
         private ToolStripMenuItem MMLinksGitHub;

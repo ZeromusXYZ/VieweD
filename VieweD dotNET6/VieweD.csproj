@@ -24,7 +24,9 @@
 
   <ItemGroup>
     <PackageReference Include="FastColoredTextBox.Net6" Version="1.0.0" />
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.4.0" />
+    <PackageReference Include="LibVLCSharp.WinForms" Version="3.6.7" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.5.0" />
+    <PackageReference Include="VideoLAN.LibVLC.Windows" Version="3.0.18" />
   </ItemGroup>
 
   <ItemGroup>
