@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using VieweD.engine.common;
 
 namespace VieweD.engine.serialize;
 
@@ -20,6 +21,9 @@ public class ProjectSettings
 
     public ProjectVideoSettings VideoSettings { get; set; } = new ();
     public List<string> Tags { get; set; } = new();
+    public PacketListFilter Filter { get; set; } = new();
+    public SearchParameters Search { get; set; } = new();
+    public TimeSpan LastTimeOffset { get; set; } = TimeSpan.Zero;
 }
 
 public class ProjectVideoSettings

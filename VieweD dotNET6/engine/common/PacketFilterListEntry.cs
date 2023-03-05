@@ -17,6 +17,13 @@ public class PacketFilterListEntry
     private const int CompressionBitOffset = 56;
     public ulong FilterKey => (PacketId + ((ulong)StreamId << StreamBitOffset) + ((ulong)CompressionLevel << CompressionBitOffset));
 
+    public PacketFilterListEntry()
+    {
+        PacketId = 0;
+        CompressionLevel = 0;
+        StreamId = 0;
+    }
+
     public PacketFilterListEntry(ulong packetId, byte compressionLevel, byte streamId)
     {
         PacketId = (uint)packetId;

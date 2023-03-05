@@ -7,6 +7,8 @@ using VieweD.Properties;
 namespace VieweD.engine.common;
 public class ViewedProjectTab : TabPage
 {
+    private string _projectFile;
+
     // Visual Components
     internal FlickerFreeListBox PacketsListBox { get; } = new();
 
@@ -19,7 +21,18 @@ public class ViewedProjectTab : TabPage
     /// Name of this project (derived from ProjectFile)
     /// </summary>
     public string ProjectName => string.IsNullOrWhiteSpace(ProjectFile) ? "VieweD Project.pvd" : Path.GetFileNameWithoutExtension(ProjectFile);
-    public string ProjectFile { get; set; }
+
+    public string ProjectFile
+    {
+        get => _projectFile;
+        set
+        {
+            if (value != _projectFile)
+                IsDirty = true;
+            _projectFile = value; 
+            
+        }
+    }
 
     /// <summary>
     /// Actual file that has been loaded
@@ -237,6 +250,7 @@ public class ViewedProjectTab : TabPage
         Filter.FilterOutType = FilterType.AllowNone;
 
         Filter.MarkAsDimmed = hasShift;
+        IsDirty = true;
         PopulateListBox(packetData.ThisIndex);
         CenterListBox();
     }
@@ -255,6 +269,7 @@ public class ViewedProjectTab : TabPage
         Filter.FilterInType = FilterType.AllowNone;
 
         Filter.MarkAsDimmed = hasShift;
+        IsDirty = true;
         PopulateListBox(packetData.ThisIndex);
         CenterListBox();
     }
@@ -291,6 +306,7 @@ public class ViewedProjectTab : TabPage
         }
 
         Filter.MarkAsDimmed = hasShift;
+        IsDirty = true;
         PopulateListBox(packetData.ThisIndex);
         CenterListBox();
     }
@@ -323,6 +339,7 @@ public class ViewedProjectTab : TabPage
         }
 
         Filter.MarkAsDimmed = hasShift;
+        IsDirty = true;
         PopulateListBox(packetData.ThisIndex);
         CenterListBox();
     }
@@ -442,12 +459,40 @@ public class ViewedProjectTab : TabPage
     public void ReIndexLoadedPackets()
     {
         var startTime = LoadedPacketList.Count > 0 ? LoadedPacketList[0].TimeStamp : DateTime.MinValue;
+        var lastSameOffset = TimeSpan.Zero;
+        var lastSameTimeIndex = 0;
+        var sameTimeCount = -1;
         lock (LoadedPacketList)
         {
             for (var i = 0; i < LoadedPacketList.Count; i++)
             {
                 LoadedPacketList[i].ThisIndex = i;
                 LoadedPacketList[i].OffsetFromStart = LoadedPacketList[i].TimeStamp - startTime;
+                LoadedPacketList[i].VirtualOffsetFromStart = LoadedPacketList[i].OffsetFromStart;
+
+                if ((LoadedPacketList[i].OffsetFromStart == lastSameOffset) && (i < LoadedPacketList.Count-1))
+                {
+                    sameTimeCount++;
+                }
+                else
+                {
+                    if ((sameTimeCount > 0) && (i > lastSameTimeIndex + 1))
+                    {
+                        var timeSpanDelta = (LoadedPacketList[i].OffsetFromStart - lastSameOffset) / (double)sameTimeCount;
+                        // Only update virtual times if there is a noticeable time difference
+                        if (timeSpanDelta.TotalMilliseconds > 1)
+                        {
+                            for (var n = 0; n <= sameTimeCount; n++)
+                            {
+                                LoadedPacketList[lastSameTimeIndex + n].VirtualOffsetFromStart =
+                                    lastSameOffset + (timeSpanDelta * (double)n);
+                            }
+                        }
+                    }
+                    lastSameOffset = LoadedPacketList[i].OffsetFromStart;
+                    lastSameTimeIndex = i;
+                    sameTimeCount = 0;
+                }
             }
         }
     }
@@ -502,6 +547,7 @@ public class ViewedProjectTab : TabPage
         {
             CurrentSyncId = pd.SyncId;
             MainForm.Instance?.ShowPacketData(pd);
+            Video?.UpdateVideoPositionFromProject(pd.VirtualOffsetFromStart + VideoSettings.VideoOffset);
         }
         else
         {
@@ -635,7 +681,7 @@ public class ViewedProjectTab : TabPage
         var icon2 = icon1 with { X = icon1.Left + icon1.Width, Y = icon1.Top };
 
         // Draw the video strip icon if this packet is within a video segment
-        if (IsInVideoTimeRange(DateTime.MaxValue))
+        if (IsInVideoTimeRange(pd.VirtualOffsetFromStart))
         {
             e.Graphics.DrawImage(Resources.mini_video_icon, icon2);
         }
@@ -726,11 +772,14 @@ public class ViewedProjectTab : TabPage
     /// </summary>
     /// <param name="timeOffset"></param>
     /// <returns></returns>
-    private bool IsInVideoTimeRange(DateTime timeOffset)
+    private bool IsInVideoTimeRange(TimeSpan timeOffset)
     {
         // TODO: Do actual calculations
-        return false;
-        //return timeOffset > DateTime.MinValue;
+        if ((Video == null) || (Video.MPlayer == null))
+            return false;
+
+        var videoPos = timeOffset - VideoSettings.VideoOffset;
+        return ((videoPos >= TimeSpan.Zero) && (videoPos.TotalMilliseconds < Video.MPlayer.Length));
     }
 
     /// <summary>
@@ -896,7 +945,10 @@ public class ViewedProjectTab : TabPage
                     VideoOffset = VideoSettings.VideoOffset,
                 },
                 Tags = Tags,
+                LastTimeOffset = (PacketsListBox.SelectedItem as BasePacketData)?.VirtualOffsetFromStart ?? TimeSpan.Zero,
             };
+            settings.Filter.CopyFrom(Filter);
+            settings.Search.CopyFrom(SearchParameters);
 
             var writer = new System.Xml.Serialization.XmlSerializer(typeof(ProjectSettings));
 
@@ -905,6 +957,7 @@ public class ViewedProjectTab : TabPage
             writer.Serialize(fileStream, settings);
             fileStream.Close();
             RequestUpdatedProjectFileName = false;
+            IsDirty = false;
             return true;
         }
         catch
@@ -1046,8 +1099,15 @@ public class ViewedProjectTab : TabPage
         return null;
     }
 
-    public void CloseProject()
+    public void CloseProject(bool skipSave)
     {
+        if (IsDirty && (skipSave == false))
+        {
+            if (MessageBox.Show("Save changes to project: " + Text + " ?", Resources.SaveProject,
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                MainForm.Instance?.SaveProject(this, ModifierKeys.HasFlag(Keys.Shift));
+        }
+
         Video?.Close();
         Dispose();
     }
@@ -1077,5 +1137,44 @@ public class ViewedProjectTab : TabPage
             c++;
         }
         return c;
+    }
+
+    public void GotoVideoOffset(int videoPosition)
+    {
+        var offset = TimeSpan.FromMilliseconds(videoPosition).Add(VideoSettings.VideoOffset);
+        if (PacketsListBox.Items.Count > 1)
+        {
+            if ((PacketsListBox.Items[0] is BasePacketData data0) && (offset < data0.OffsetFromStart))
+                offset = data0.OffsetFromStart;
+            if ((PacketsListBox.Items[^1] is BasePacketData dataLast) && (offset > dataLast.OffsetFromStart))
+                offset = dataLast.OffsetFromStart;
+        }
+
+        foreach (var lbItem in PacketsListBox.Items)
+        {
+            if (lbItem is not BasePacketData data)
+                continue;
+            if (data.OffsetFromStart >= offset)
+            {
+                PacketsListBox.SelectedItem = lbItem;
+                CenterListBox();
+                return;
+            }
+        }
+    }
+
+    public void GotoPacketTimeOffset(TimeSpan offset)
+    {
+        foreach (var lbItem in PacketsListBox.Items)
+        {
+            if (lbItem is not BasePacketData data)
+                continue;
+            if (data.VirtualOffsetFromStart >= offset)
+            {
+                PacketsListBox.SelectedItem = lbItem;
+                CenterListBox();
+                return;
+            }
+        }
     }
 }

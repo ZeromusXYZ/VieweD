@@ -121,6 +121,26 @@ namespace VieweD.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap audio_on_32 {
+            get {
+                object obj = ResourceManager.GetObject("audio_on_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap audio_volume_muted_32 {
+            get {
+                object obj = ResourceManager.GetObject("audio_volume_muted_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap auto_translate {
             get {
                 object obj = ResourceManager.GetObject("auto-translate", resourceCulture);
@@ -402,6 +422,116 @@ namespace VieweD.Properties {
         internal static string LoadedOldProjectTypeAndNeedSave {
             get {
                 return ResourceManager.GetString("LoadedOldProjectTypeAndNeedSave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap media_eject_32 {
+            get {
+                object obj = ResourceManager.GetObject("media_eject_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap media_playback_pause_32 {
+            get {
+                object obj = ResourceManager.GetObject("media_playback_pause_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap media_playback_start_32 {
+            get {
+                object obj = ResourceManager.GetObject("media_playback_start_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap media_playback_stop_32 {
+            get {
+                object obj = ResourceManager.GetObject("media_playback_stop_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap media_playlist_repeat_32 {
+            get {
+                object obj = ResourceManager.GetObject("media_playlist_repeat_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap media_playlist_shuffle_32 {
+            get {
+                object obj = ResourceManager.GetObject("media_playlist_shuffle_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap media_record_32 {
+            get {
+                object obj = ResourceManager.GetObject("media_record_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap media_seek_backward_32 {
+            get {
+                object obj = ResourceManager.GetObject("media_seek_backward_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap media_seek_forward_32 {
+            get {
+                object obj = ResourceManager.GetObject("media_seek_forward_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap media_skip_backward_32 {
+            get {
+                object obj = ResourceManager.GetObject("media_skip_backward_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap media_skip_forward_32 {
+            get {
+                object obj = ResourceManager.GetObject("media_skip_forward_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         

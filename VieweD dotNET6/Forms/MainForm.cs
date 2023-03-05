@@ -114,6 +114,7 @@ namespace VieweD.Forms
         {
             var logFileName = aFileName;
             var rulesFileName = string.Empty;
+            var lastTimeOffset = TimeSpan.Zero;
 
             var project = new ViewedProjectTab();
             TCProjects.TabPages.Add(project);
@@ -160,7 +161,7 @@ namespace VieweD.Forms
                 if (projectSetting == null)
                 {
                     MessageBox.Show(string.Format(Resources.UnableToOpenProject, expectedProjectFileName), Resources.ProjectReadingError, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    project.CloseProject();
+                    project.CloseProject(true);
                     return;
                 }
 
@@ -174,6 +175,10 @@ namespace VieweD.Forms
                 project.VideoSettings.VideoFile = projectSetting.VideoSettings.VideoFile;
                 project.VideoSettings.VideoUrl = projectSetting.VideoSettings.VideoUrl;
                 project.VideoSettings.VideoOffset = projectSetting.VideoSettings.VideoOffset;
+
+                project.Filter.CopyFrom(projectSetting.Filter);
+                project.SearchParameters.CopyFrom(projectSetting.Search);
+                lastTimeOffset = projectSetting.LastTimeOffset;
             }
 
             if (string.IsNullOrWhiteSpace(project.ProjectFile))
@@ -197,7 +202,7 @@ namespace VieweD.Forms
             if (project.InputReader == null)
             {
                 MessageBox.Show(Resources.UnableToFindInputReader, Resources.InputReaderError, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                project.CloseProject();
+                project.CloseProject(true);
                 return;
             }
 
@@ -213,7 +218,7 @@ namespace VieweD.Forms
                 if (project.InputParser == null)
                 {
                     MessageBox.Show(Resources.UnableToFindParser, Resources.ParserError, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    project.CloseProject();
+                    project.CloseProject(true);
                     return;
                 }
 
@@ -226,13 +231,14 @@ namespace VieweD.Forms
                 project.InputParser.ParseAllData(true);
                 project.ReIndexLoadedPackets();
                 project.PopulateListBox();
+                project.GotoPacketTimeOffset(lastTimeOffset);
                 project.IsDirty = false;
                 project.OnProjectDataChanged();
             }
             else
             {
                 MessageBox.Show(string.Format(Resources.UnableToOpenFile, OpenProjectFileDialog.FileName));
-                project.CloseProject();
+                project.CloseProject(true);
             }
         }
 
@@ -761,7 +767,7 @@ namespace VieweD.Forms
             if (TCProjects.SelectedTab is ViewedProjectTab project)
             {
                 //TCProjects.TabPages.Remove(project);
-                project.CloseProject();
+                project.CloseProject(false);
             }
             else
             {
@@ -958,7 +964,7 @@ namespace VieweD.Forms
                             MessageBoxIcon.Question) == DialogResult.Yes)
                     {
                         if (thisTab is ViewedProjectTab project)
-                            project.CloseProject();
+                            project.CloseProject(false);
                         else
                             thisTab.Dispose();
                     }
@@ -1059,6 +1065,7 @@ namespace VieweD.Forms
                 filterForm.SaveLocalToFilter();
                 project.Filter.CopyFrom(filterForm.Filter);
                 project.Filter.MarkAsDimmed = (res == DialogResult.Yes);
+                project.IsDirty = true;
 
                 project.PopulateListBox((project.PacketsListBox.SelectedItem as BasePacketData)?.ThisIndex ?? -1);
                 project.CenterListBox();
@@ -1154,6 +1161,7 @@ namespace VieweD.Forms
             if (res == DialogResult.OK)
             {
                 project.SearchParameters.CopyFrom(search.SearchParameters);
+                project.IsDirty = true;
                 FindNext(project);
                 // Find Next
             }
@@ -1161,10 +1169,10 @@ namespace VieweD.Forms
             if (res == DialogResult.Retry)
             {
                 project.SearchParameters.CopyFrom(search.SearchParameters);
+                project.IsDirty = true;
                 FindAsNewTab(project);
                 // New Tab
             }
-
         }
 
         private void FindNext(ViewedProjectTab project)
@@ -1256,13 +1264,20 @@ namespace VieweD.Forms
         private void MMProjectVideo_Click(object sender, EventArgs e)
         {
             if (TCProjects.SelectedTab is not ViewedProjectTab project)
+            {
+                var lonePlayer = new VideoForm();
+                lonePlayer.Show();
+                lonePlayer.BringToFront();
                 return;
+            }
 
             if (project.Video == null)
             {
                 project.Video = new VideoForm();
                 project.Video.ParentProject = project;
             }
+
+            _ = project.Video.OpenVideoFromProject();
             project.Video.Show();
             project.Video.BringToFront();
         }

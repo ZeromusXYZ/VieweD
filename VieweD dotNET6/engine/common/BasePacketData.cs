@@ -58,8 +58,8 @@ public class BasePacketData
     public string DestinationIp { get; set; }
     public ushort DestinationPort { get; set; }
     public DateTime TimeStamp { get; set; }
-    public DateTime VirtualTimeStamp { get; set; }
     public TimeSpan OffsetFromStart { get; set; }
+    public TimeSpan VirtualOffsetFromStart { get; set; }
 
     public BasePacketData(ViewedProjectTab parentProject)
     {
@@ -85,7 +85,7 @@ public class BasePacketData
         DestinationIp = string.Empty;
         DestinationPort = 0;
         TimeStamp = DateTime.MinValue;
-        VirtualTimeStamp = DateTime.MinValue;
+        VirtualOffsetFromStart = TimeSpan.Zero;
         OffsetFromStart = TimeSpan.Zero;
         Cursor = 0;
         BitCursor = 0;

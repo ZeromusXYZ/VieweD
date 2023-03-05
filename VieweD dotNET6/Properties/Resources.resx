@@ -378,4 +378,43 @@
   <data name="CannotSaveVirtualProject" xml:space="preserve">
     <value>Can only save projects that originate directly from a log file.</value>
   </data>
+  <data name="media_playback_pause_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\kde-icons\media-playback-pause-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="media_playback_start_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\kde-icons\media-playback-start-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="media_playback_stop_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\kde-icons\media-playback-stop-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="media_playlist_repeat_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\kde-icons\media-playlist-repeat-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="media_playlist_shuffle_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\kde-icons\media-playlist-shuffle-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="media_eject_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\kde-icons\media-eject-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="media_record_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\kde-icons\media-record-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="media_seek_backward_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\kde-icons\media-seek-backward-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="media_seek_forward_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\kde-icons\media-seek-forward-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="media_skip_backward_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\kde-icons\media-skip-backward-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="media_skip_forward_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\kde-icons\media-skip-forward-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="audio_on_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\kde-icons\audio-on-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="audio_volume_muted_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\kde-icons\audio-volume-muted-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

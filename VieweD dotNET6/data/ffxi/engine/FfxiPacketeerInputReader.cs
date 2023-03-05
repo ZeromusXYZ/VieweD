@@ -329,7 +329,12 @@ public class FfxiPacketeerInputReader : BaseInputReader
             }
         }
 
-        packetData.VirtualTimeStamp = packetData.TimeStamp;
+        if (packetData.ParentProject.LoadedPacketList.Count > 0)
+        {
+            var firstPacketTime = packetData.ParentProject.LoadedPacketList[0].TimeStamp;
+            packetData.OffsetFromStart = packetData.TimeStamp - firstPacketTime;
+            packetData.VirtualOffsetFromStart = packetData.OffsetFromStart;
+        }
 
         packetData.BuildHeaderText();
 
