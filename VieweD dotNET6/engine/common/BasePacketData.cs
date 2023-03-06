@@ -126,21 +126,21 @@ public class BasePacketData
 
     public byte GetByteAtPos(int pos)
     {
-        if (pos > (ByteData.Count - 1)) return 0;
+        if ((pos > (ByteData.Count - 1)) || (pos < 0)) return 0;
         Cursor = pos + 1;
         return ByteData[pos];
     }
 
     public sbyte GetSByteAtPos(int pos)
     {
-        if (pos > (ByteData.Count - 1)) return 0;
+        if ((pos > (ByteData.Count - 1)) || (pos < 0)) return 0;
         Cursor = pos + 1;
         return unchecked((sbyte)ByteData[pos]);
     }
 
     public bool GetBitAtPos(int pos, int bit)
     {
-        if ((pos > (ByteData.Count - 1)) || ((bit < 0) || (bit > 7))) return false;
+        if (((pos > (ByteData.Count - 1)) || ((bit < 0) || (bit > 7))) || (pos < 0)) return false;
         var b = ByteData[pos];
         var bitmask = (byte)(0x01 << bit);
         Cursor = pos;
@@ -150,7 +150,7 @@ public class BasePacketData
 
     public ushort GetUInt16AtPos(int pos, bool reversed = false)
     {
-        if (pos > (ByteData.Count - 2)) return 0;
+        if ((pos > (ByteData.Count - 2)) || (pos < 0)) return 0;
         Cursor = pos + 2;
         var bytes = ByteData.GetRange(pos, 2).ToArray();
         if (reversed) bytes = bytes.Reverse().ToArray();
@@ -159,16 +159,26 @@ public class BasePacketData
 
     public short GetInt16AtPos(int pos, bool reversed = false)
     {
-        if (pos > (ByteData.Count - 2)) return 0;
+        if ((pos > (ByteData.Count - 2)) || (pos < 0)) return 0;
         Cursor = pos + 2;
         var bytes = ByteData.GetRange(pos, 2).ToArray();
         if (reversed) bytes = bytes.Reverse().ToArray();
         return BitConverter.ToInt16(bytes, 0);
     }
 
+    public uint GetUInt24AtPos(int pos, bool reversed = false)
+    {
+        if ((pos > (ByteData.Count - 3)) || (pos < 0)) return 0;
+        Cursor = pos + 3;
+        var bytes = ByteData.GetRange(pos, 3);
+        if (reversed) bytes.Reverse();
+        bytes.Add(0);
+        return BitConverter.ToUInt32(bytes.ToArray(), 0);
+    }
+
     public uint GetUInt32AtPos(int pos, bool reversed = false)
     {
-        if (pos > (ByteData.Count - 4)) return 0;
+        if ((pos > (ByteData.Count - 4)) || (pos < 0)) return 0;
         Cursor = pos + 4;
         var bytes = ByteData.GetRange(pos, 4).ToArray();
         if (reversed) bytes = bytes.Reverse().ToArray();
@@ -177,7 +187,7 @@ public class BasePacketData
 
     public int GetInt32AtPos(int pos, bool reversed = false)
     {
-        if (pos > (ByteData.Count - 4)) return 0;
+        if ((pos > (ByteData.Count - 4)) || (pos < 0)) return 0;
         Cursor = pos + 4;
         var bytes = ByteData.GetRange(pos, 4).ToArray();
         if (reversed) bytes = bytes.Reverse().ToArray();
@@ -186,7 +196,7 @@ public class BasePacketData
 
     public ulong GetUInt64AtPos(int pos, bool reversed = false)
     {
-        if (pos > (ByteData.Count - 8)) return 0;
+        if ((pos > (ByteData.Count - 8)) || (pos < 0)) return 0;
         Cursor = pos + 8;
         var bytes = ByteData.GetRange(pos, 8).ToArray();
         if (reversed) bytes = bytes.Reverse().ToArray();
@@ -195,7 +205,7 @@ public class BasePacketData
 
     public long GetInt64AtPos(int pos, bool reversed = false)
     {
-        if (pos > (ByteData.Count - 8)) return 0;
+        if ((pos > (ByteData.Count - 8)) || (pos < 0)) return 0;
         Cursor = pos + 8;
         var bytes = ByteData.GetRange(pos, 8).ToArray();
         if (reversed) bytes = bytes.Reverse().ToArray();

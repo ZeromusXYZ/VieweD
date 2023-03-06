@@ -349,7 +349,7 @@ namespace VieweD.Forms
                     }
                     row.Height = (int)Math.Ceiling(DgvParsed.Font.GetHeight()) + 4;
                     var foreColor = parsedField.FieldColor;
-                    var defaultForeColor = (y % 2) == 0 ? DgvParsed.DefaultCellStyle.ForeColor : DgvParsed.AlternatingRowsDefaultCellStyle.ForeColor; ;
+                    var defaultForeColor = (y % 2) == 0 ? DgvParsed.DefaultCellStyle.ForeColor : DgvParsed.AlternatingRowsDefaultCellStyle.ForeColor;
                     var backColor = (y % 2) == 0 ? DgvParsed.DefaultCellStyle.BackColor : DgvParsed.AlternatingRowsDefaultCellStyle.BackColor;
 
 
@@ -549,6 +549,11 @@ namespace VieweD.Forms
                 SetRtfColor(Color.Yellow, Color.DarkBlue);
             }
 
+            void SetColorHighlight()
+            {
+                SetRtfColor(Color.SaddleBrown, Color.Yellow);
+            }
+
             void SetColorNotSelect(int fieldIndex, bool forChars)
             {
                 if ((hasSelectedFields) || forChars)
@@ -625,13 +630,66 @@ namespace VieweD.Forms
                     // Still in range?
                     if ((thisByteIndex) < packetData.ByteData.Count)
                     {
+                        var isSearchHighlighted = false;
+                        if (packetData.ParentProject.SearchParameters.HasSearchForData)
+                        {
+                            if (packetData.ParentProject.SearchParameters.SearchByByte &&
+                                packetData.GetByteAtPos(thisByteIndex) ==
+                                packetData.ParentProject.SearchParameters.SearchByte)
+                            {
+                                isSearchHighlighted = true;
+                            }
+                            else if (packetData.ParentProject.SearchParameters.SearchByUInt16 &&
+                                     (
+                                         (packetData.GetUInt16AtPos(thisByteIndex) ==
+                                          packetData.ParentProject.SearchParameters.SearchUInt16) ||
+                                         (packetData.GetUInt16AtPos(thisByteIndex - 1) ==
+                                          packetData.ParentProject.SearchParameters.SearchUInt16)
+                                     )
+                                    )
+                            {
+                                isSearchHighlighted = true;
+                            }
+                            else if (packetData.ParentProject.SearchParameters.SearchByUInt24 &&
+                                     (
+                                         (packetData.GetUInt24AtPos(thisByteIndex) ==
+                                          packetData.ParentProject.SearchParameters.SearchUInt24) ||
+                                         (packetData.GetUInt24AtPos(thisByteIndex - 1) ==
+                                          packetData.ParentProject.SearchParameters.SearchUInt24) ||
+                                         (packetData.GetUInt24AtPos(thisByteIndex - 2) ==
+                                          packetData.ParentProject.SearchParameters.SearchUInt24)
+                                     )
+                                    )
+                            {
+                                isSearchHighlighted = true;
+                            }
+                            else if (packetData.ParentProject.SearchParameters.SearchByUInt32 &&
+                                     (
+                                         (packetData.GetUInt32AtPos(thisByteIndex) ==
+                                          packetData.ParentProject.SearchParameters.SearchUInt32) ||
+                                         (packetData.GetUInt32AtPos(thisByteIndex - 1) ==
+                                          packetData.ParentProject.SearchParameters.SearchUInt32) ||
+                                         (packetData.GetUInt32AtPos(thisByteIndex - 2) ==
+                                          packetData.ParentProject.SearchParameters.SearchUInt32) ||
+                                         (packetData.GetUInt32AtPos(thisByteIndex - 3) ==
+                                          packetData.ParentProject.SearchParameters.SearchUInt32)
+                                     )
+                                    )
+                            {
+                                isSearchHighlighted = true;
+                            }
+                        }
+
                         if (hasSelectedFields)
                         {
                             // Change how things are displayed when there is at least one field selected
                             if (thisByteField?.IsSelected ?? false)
                             {
                                 // Is selected field
-                                SetColorSelect();
+                                if (isSearchHighlighted)
+                                    SetColorHighlight();
+                                else
+                                    SetColorSelect();
                                 if (moveCursor)
                                 {
                                     moveCursor = false;
@@ -641,15 +699,22 @@ namespace VieweD.Forms
                             else
                             {
                                 // we have non-selected field
-                                SetColorNotSelect(thisByteFieldIndex, false);
+                                if (isSearchHighlighted)
+                                    SetColorHighlight();
+                                else
+                                    SetColorNotSelect(thisByteFieldIndex, false);
                             }
                         }
                         else
                         {
                             // No fields selected
-                            SetColorNotSelect(thisByteFieldIndex, false);
+                            if (isSearchHighlighted)
+                                SetColorHighlight();
+                            else
+                                SetColorNotSelect(thisByteFieldIndex, false);
                         }
-                        rtf += packetData.GetByteAtPos(i + i2).ToString("X2");
+
+                        rtf += packetData.GetByteAtPos(thisByteIndex).ToString("X2");
                         addCharCount++;
                     }
                     else
@@ -1160,18 +1225,20 @@ namespace VieweD.Forms
             var res = search.ShowDialog();
             if (res == DialogResult.OK)
             {
+                // Find Next
                 project.SearchParameters.CopyFrom(search.SearchParameters);
                 project.IsDirty = true;
-                FindNext(project);
-                // Find Next
+                if (search.SearchParameters.SearchIncoming || search.SearchParameters.SearchOutgoing)
+                    FindNext(project);
             }
             else
             if (res == DialogResult.Retry)
             {
+                // New Tab
                 project.SearchParameters.CopyFrom(search.SearchParameters);
                 project.IsDirty = true;
-                FindAsNewTab(project);
-                // New Tab
+                if (search.SearchParameters.SearchIncoming || search.SearchParameters.SearchOutgoing)
+                    FindAsNewTab(project);
             }
         }
 

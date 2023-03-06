@@ -23,15 +23,9 @@ public class SearchParameters
     public string SearchParsedFieldName { get; set; } = string.Empty;
     public string SearchParsedFieldValue { get; set; } = string.Empty;
 
-    public bool HasSearchForData()
-    {
-        if (SearchByByte) return true;
-        if (SearchByUInt16) return true;
-        if (SearchByUInt24) return true;
-        if (SearchByUInt32) return true;
-        if (SearchByParsedData) return true;
-        return false;
-    }
+    public bool HasSearchForData => SearchByByte || SearchByUInt16 || SearchByUInt24 || SearchByUInt32 || SearchByParsedData;
+    public bool HasSearchForRaw => SearchByByte || SearchByUInt16 || SearchByUInt24 || SearchByUInt32;
+
 
     public void ClearValidSearchFlags()
     {

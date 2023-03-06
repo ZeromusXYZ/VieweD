@@ -294,6 +294,12 @@ namespace VieweD.Forms
         {
             ValidateFields();
         }
+
+        private void BtnClearSearch_Click(object sender, EventArgs e)
+        {
+            SearchParameters.ClearValidSearchFlags();
+            DialogResult = DialogResult.OK;
+        }
     }
 
 }

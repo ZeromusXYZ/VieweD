@@ -57,6 +57,7 @@ namespace VieweD.Forms
             lFieldValue = new Label();
             lFieldName = new Label();
             eFieldValue = new TextBox();
+            BtnClearSearch = new Button();
             gbPacketType.SuspendLayout();
             gbSearchPacket.SuspendLayout();
             gbRawValues.SuspendLayout();
@@ -386,6 +387,18 @@ namespace VieweD.Forms
             eFieldValue.TabIndex = 3;
             eFieldValue.TextChanged += SearchFieldsChanged;
             // 
+            // BtnClearSearch
+            // 
+            BtnClearSearch.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            BtnClearSearch.Location = new Point(472, 157);
+            BtnClearSearch.Margin = new Padding(4, 3, 4, 3);
+            BtnClearSearch.Name = "BtnClearSearch";
+            BtnClearSearch.Size = new Size(88, 27);
+            BtnClearSearch.TabIndex = 7;
+            BtnClearSearch.Text = "Clear";
+            BtnClearSearch.UseVisualStyleBackColor = true;
+            BtnClearSearch.Click += BtnClearSearch_Click;
+            // 
             // SearchForm
             // 
             AcceptButton = btnFindNext;
@@ -393,6 +406,7 @@ namespace VieweD.Forms
             AutoScaleMode = AutoScaleMode.Font;
             CancelButton = btnCancel;
             ClientSize = new Size(570, 387);
+            Controls.Add(BtnClearSearch);
             Controls.Add(gbSearchByField);
             Controls.Add(gbRawValues);
             Controls.Add(gbSearchPacket);
@@ -406,7 +420,7 @@ namespace VieweD.Forms
             MinimizeBox = false;
             Name = "SearchForm";
             StartPosition = FormStartPosition.CenterParent;
-            Text = Resources.Search;
+            Text = "Search";
             Load += SearchForm_Load;
             Shown += SearchForm_Shown;
             gbPacketType.ResumeLayout(false);
@@ -448,5 +462,6 @@ namespace VieweD.Forms
         private System.Windows.Forms.Label lPacketLevel;
         private System.Windows.Forms.TextBox ePacketLevel;
         private System.Windows.Forms.RadioButton rbUInt24;
+        private Button BtnClearSearch;
     }
 }
