@@ -335,8 +335,13 @@ public class BasePacketData
     {
         var newParsed = new ParsedField()
         {
-            HasValue = hasValue, StartingByte = startByte, EndingByte = endByte, DisplayedByteOffset = displayPosition,
-            FieldName = displayName, FieldValue = displayValue, NestingDepth = nestingDepth
+            HasValue = hasValue, 
+            StartingByte = startByte, 
+            EndingByte = endByte, 
+            DisplayedByteOffset = displayPosition,
+            FieldName = displayName, 
+            FieldValue = displayValue, 
+            NestingDepth = nestingDepth
         };
         if (colorOverride != null)
         {

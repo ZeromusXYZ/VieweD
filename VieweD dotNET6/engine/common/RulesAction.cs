@@ -1334,18 +1334,19 @@ public class RulesActionReadBits : RulesAction
         
         if (style == "normal")
         {
-            packetData.AddParsedField(false, pos, endPos, posFieldString, XmlHelper.GetAttributeString(Attributes, "name"), "", Depth);
+            packetData.AddParsedField(true, pos, endPos, posFieldString, XmlHelper.GetAttributeString(Attributes, "name"), "", Depth);
 
             // Normal style: Each set bit generates a line
             for (ulong i = 0; i < bitCount; i++)
             {
+                var byteCursor = packetData.Cursor;
                 var bitVal = packetData.GetBitAtPos(packetData.Cursor, packetData.BitCursor);
                 var varName = fieldName + "-" + i;
                 var lookupVal = GetLookup(i);
                 var dataString = "Bit " + i;
                 ParentRule.SetLocalVar(varName+"-"+i, bitVal ? "1" : "0");
                 if (bitVal)
-                    packetData.AddParsedField(true, packetData.Cursor, packetData.Cursor, pos.ToHex(2) + "-" + i, varName, lookupVal + dataString, Depth+1);
+                    packetData.AddParsedField(true, byteCursor, byteCursor, pos.ToHex(2) + "-" + i, varName, lookupVal + dataString, Depth+1);
             }
         }
         else
@@ -1356,12 +1357,13 @@ public class RulesActionReadBits : RulesAction
             // Full style: All bits generates a line
             for (ulong i = 0; i < bitCount; i++)
             {
+                var byteCursor = packetData.Cursor;
                 var bitVal = packetData.GetBitAtPos(packetData.Cursor, packetData.BitCursor);
                 var varName = fieldName + "-" + i;
                 var lookupVal = GetLookup(i);
                 var dataString = "Bit " + i + " - " + bitVal.ToString(CultureInfo.InvariantCulture);
                 ParentRule.SetLocalVar(varName + "-" + i, bitVal ? "1" : "0");
-                packetData.AddParsedField(true, packetData.Cursor, packetData.Cursor, pos.ToHex(2) + "-" + i, varName, lookupVal + dataString, Depth+1);
+                packetData.AddParsedField(true, byteCursor, byteCursor, pos.ToHex(2) + "-" + i, varName, lookupVal + dataString, Depth+1);
             }
         }
         else
@@ -1384,9 +1386,7 @@ public class RulesActionReadBits : RulesAction
                 ParentRule.SetLocalVar(fieldName + "-" + i, bitVal ? "1" : "0");
             }
 
-            packetData.AddParsedField(true, pos, endPos,
-                posFieldString, fieldName,
-                dataString, Depth);
+            packetData.AddParsedField(true, pos, endPos, posFieldString, fieldName, dataString, Depth);
         }
         else
         {

@@ -13,9 +13,9 @@ For proper usage, you will need to create a plugin engine that does proper packe
 		<server port="0"/>
 		<decryptor name=""/>
 		<s2c>
-			<packet type="0x008" desc="Zones Visited">
+			<packet type="0x008" desc="Zones Visited" comment="" credits="">
 				<!-- List of zones you have visited -->
-				<data type="uint" name="uint"/>
+				<data type="bits" bits="382" style="normal" name="Zones" lookup="zones"/>
 			</packet>
 			<packet type="0x00E" desc="NPC Update" comment="Packet contains info about another PC (i.e. coordinates)" credits="Windower, ZeromusXYZ, KnowOne">
 				<data type="uint" name="NPC" lookup="@actors"/>
@@ -47,7 +47,7 @@ For proper usage, you will need to create a plugin engine that does proper packe
 				<data type="uint" name="ID" lookup="@actors"/>
 				<data type="ushort" name="Index"/>
 				<data type="byte" name="Spawn Type" lookup="spawntype"/>
-				<lookup save="actors" source="ID" val="!SPAWN" comment="We don't have any actual value, but still want to log them, so calling it SPAWN instead" />
+				<lookup save="actors" source="ID" val="!SPAWN" comment="We don't have any actual value, but still want to log them, so calling it SPAWN instead"/>
 			</packet>
 		</s2c>
 		<c2s>

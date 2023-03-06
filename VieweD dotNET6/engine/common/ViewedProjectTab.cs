@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Windows.Forms.VisualStyles;
 using VieweD.Forms;
 using VieweD.Helpers.System;
 using VieweD.engine.serialize;
@@ -478,11 +479,12 @@ public class ViewedProjectTab : TabPage
                 {
                     if ((sameTimeCount > 0) && (i > lastSameTimeIndex + 1))
                     {
+                        sameTimeCount++;
                         var timeSpanDelta = (LoadedPacketList[i].OffsetFromStart - lastSameOffset) / (double)sameTimeCount;
                         // Only update virtual times if there is a noticeable time difference
                         if (timeSpanDelta.TotalMilliseconds > 1)
                         {
-                            for (var n = 0; n <= sameTimeCount; n++)
+                            for (var n = 1; n <= sameTimeCount-1; n++)
                             {
                                 LoadedPacketList[lastSameTimeIndex + n].VirtualOffsetFromStart =
                                     lastSameOffset + (timeSpanDelta * (double)n);
@@ -1165,11 +1167,12 @@ public class ViewedProjectTab : TabPage
 
     public void GotoPacketTimeOffset(TimeSpan offset)
     {
+        var o = offset.Add(TimeSpan.FromMilliseconds(-5));
         foreach (var lbItem in PacketsListBox.Items)
         {
             if (lbItem is not BasePacketData data)
                 continue;
-            if (data.VirtualOffsetFromStart >= offset)
+            if (data.VirtualOffsetFromStart >= o)
             {
                 PacketsListBox.SelectedItem = lbItem;
                 CenterListBox();
