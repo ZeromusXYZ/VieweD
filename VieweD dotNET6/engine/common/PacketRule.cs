@@ -76,18 +76,27 @@ public class PacketRule
                     case "byte":
                         res = new RulesActionReadByte(this, parentAction, actionNode, step);
                         break;
+                    case "sbyte":
+                        res = new RulesActionReadSByte(this, parentAction, actionNode, step);
+                        break;
+                    case "uint16":
+                    case "r-uint16":
                     case "word":
                     case "r-word":
                     case "ushort":
                     case "r-ushort":
                         res = new RulesActionReadUInt16(this, parentAction, actionNode, step, isReversed);
                         break;
+                    case "int16":
+                    case "r-int16":
                     case "h":
                     case "r-h":
                     case "short":
                     case "r-short":
                         res = new RulesActionReadInt16(this, parentAction, actionNode, step, isReversed);
                         break;
+                    case "uint32":
+                    case "r-uint32":
                     case "d":
                     case "r-d":
                     case "uint":
@@ -98,6 +107,8 @@ public class PacketRule
                     case "rms":
                         res = new RulesActionReadUInt32Ms(this, parentAction, actionNode, step, isReversed);
                         break;
+                    case "int32":
+                    case "r-int32":
                     case "i":
                     case "r-i":
                     case "int":

@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+This is the bare minimum for a rules file.
+For proper usage, you will need to create a plugin engine that does proper packet type/id parsing to be used here
+-->
+<root>
+	<version client=""/>
+	<templates>
+	</templates>
+	<tools>
+	</tools>
+	<rule>
+		<server port="0"/>
+		<decryptor name=""/>
+		<s2c>
+			<packet type="0x008" desc="Zones Visited" comment="" credits="">
+				<!-- List of zones you have visited -->
+				<data type="bits" bits="382" style="normal" name="Zones" lookup="zones"/>
+			</packet>
+			<packet type="0x00E" desc="NPC Update" comment="Packet contains info about another PC (i.e. coordinates)" credits="Windower, ZeromusXYZ, KnowOne">
+				<data type="uint" name="NPC" lookup="@actors"/>
+				<data type="ushort" name="Index"/>
+				<data type="bits" name="Update Mask" bits="8" lookup="npcupdatemask" style="compact"/>
+				<data type="dir" name="Direction"/>
+				<data type="pos" name="Position"/>
+				<data type="ushort" name="Walk Count" desc="Steadily increases until rotation changes. Does not reset while the mob isn't walking. Only goes until 0xFF1F"/>
+				<data type="byte" name="Speed" pos="0x1C"/>
+				<data type="byte" name="SubSpeed"/>
+				<data type="byte" name="HP %"/>
+				<data type="byte" name="Animation"/>
+				<data type="byte" name="Status"/>
+				<data type="byte" name="EntityFlags"/>
+				<data type="byte" name="??? Health.HP" pos="0x25"/>
+				<data type="byte" name="Name_Prefix" pos="0x27"/>
+				<data type="byte" name="Allegiance" pos="0x29"/>
+				<data type="byte" name="AnimationSub"/>
+				<data type="byte" name="NameVis"/>
+				<data type="uint" name="Claimer"/>
+				<data type="ushort" name="Model ID" pos="0x32"/>
+				<data type="t" arg="-1" name="Name"/>
+				<ifnz arg="#Update Mask-3">
+					<lookup save="actors" source="NPC" val="Name"/>
+				</ifnz>
+			</packet>
+			<packet type="0x05B" desc="Spawn" comment="Server packet sent when a new mob spawns in area" credits="ZeromusXYZ" app="VieweD">
+				<data type="pos" name="Position"/>
+				<data type="uint" name="ID" lookup="@actors"/>
+				<data type="ushort" name="Index"/>
+				<data type="byte" name="Spawn Type" lookup="spawntype"/>
+				<lookup save="actors" source="ID" val="!SPAWN" comment="We don't have any actual value, but still want to log them, so calling it SPAWN instead"/>
+			</packet>
+		</s2c>
+		<c2s>
+			<packet type="0x00A" desc="Client Connect">
+      </packet>
+			<packet type="0x015" desc="Standard Client" comment="" credits="ZeromusXYZ" app="VieweD">
+				<data type="pos" name="Position"/>
+				<data type="ushort" name="Run Count" pos="0x12"/>
+				<data type="dir" name="Direction"/>
+				<data type="bits" bits="8" style="compact" name="Flag?"/>
+				<data type="ushort" name="TargetID"/>
+				<data type="ms" name="TimeStamp"/>
+			</packet>
+		</c2s>
+	</rule>
+</root>

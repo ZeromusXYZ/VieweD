@@ -65,6 +65,8 @@ public class RulesAction
     {
         if (OverrideStartByte != null)
             packetData.Cursor = (int)OverrideStartByte;
+        if (OverrideStartBit != null)
+            packetData.BitCursor = (byte)OverrideStartBit;
     }
 
     /// <summary>
@@ -128,6 +130,30 @@ public class RulesActionReadByte : RulesAction
         var lookupVal = GetLookup(data);
         ParentRule.SetLocalVar(varName, data.ToString(CultureInfo.InvariantCulture));
         packetData.AddParsedField(true, pos, pos+0, pos.ToHex(2), varName, lookupVal + dataString, Depth);
+    }
+}
+
+/// <summary>
+/// Read sbyte
+/// </summary>
+public class RulesActionReadSByte : RulesAction
+{
+    public RulesActionReadSByte(PacketRule parent, RulesAction? parentAction, XmlNode thisNode, int thisStep) : base(parent, parentAction, thisNode, thisStep, false)
+    {
+        //
+    }
+
+    public override void RunAction(BasePacketData packetData)
+    {
+        GotoStartPosition(packetData);
+        var pos = packetData.Cursor;
+        var udata = packetData.GetByteAtPos(pos);
+        var data = packetData.GetSByteAtPos(pos);
+        var dataString = data + " - " + udata.ToHex() + " - " + NumberHelper.ByteToBits(udata) + " - '" + (char)udata + "'";
+        var varName = XmlHelper.GetAttributeString(Attributes, "name");
+        var lookupVal = GetLookup((byte)data);
+        ParentRule.SetLocalVar(varName, data.ToString(CultureInfo.InvariantCulture));
+        packetData.AddParsedField(true, pos, pos + 0, pos.ToHex(2), varName, lookupVal + dataString, Depth);
     }
 }
 
@@ -467,7 +493,15 @@ public class RulesActionReadString : RulesAction
         if (size == -1)
             size = packetData.ByteData.Count - pos - sizeFieldSize;
 
-        var d = packetData.GetDataBytesAtPos(pos + sizeFieldSize, size);
+        var dBytes = packetData.GetDataBytesAtPos(pos + sizeFieldSize, size);
+        var dl = new List<byte>();
+        foreach (var dByte in dBytes)
+        {
+            if (dByte == 0)
+                break;
+            dl.Add(dByte);
+        }
+        var d = dl.ToArray();
         string stringVal;
         var hexVal = string.Empty;
         try
@@ -1345,7 +1379,7 @@ public class RulesActionReadBits : RulesAction
                 var lookupVal = GetLookup(i);
                 var dataString = "Bit " + i;
                 ParentRule.SetLocalVar(varName+"-"+i, bitVal ? "1" : "0");
-                if (bitVal)
+                if (bitVal || (bitCount == 1))
                     packetData.AddParsedField(true, byteCursor, byteCursor, pos.ToHex(2) + "-" + i, varName, lookupVal + dataString, Depth+1);
             }
         }
@@ -1375,9 +1409,17 @@ public class RulesActionReadBits : RulesAction
             for (ulong i = 0; i < bitCount; i++)
             {
                 var bitVal = packetData.GetBitAtPos(packetData.Cursor, packetData.BitCursor);
+                var lookupVal = GetLookup(i, 0, false);
+                if (bitCount == 1)
+                {
+                    if (lookupVal != string.Empty)
+                        dataString += lookupVal + " = " + bitVal.ToString();
+                    else
+                        dataString += bitVal.ToString();
+                }
+                else
                 if (bitVal)
                 {
-                    var lookupVal = GetLookup(i, 0, false);
                     if (lookupVal != string.Empty)
                         dataString += lookupVal + " ";
                     else
