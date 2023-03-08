@@ -160,6 +160,10 @@ namespace VieweD.Forms
                 {
                     // No change
                 }
+                else if (line.Trim().EndsWith("-->") && (line.Trim().StartsWith("<!--")))
+                {
+                    // No change
+                }
                 else if (line.Trim().EndsWith(">") && (line.Trim().StartsWith("</")))
                 {
                     indentCount--;

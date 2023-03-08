@@ -23,6 +23,10 @@ public class FfxiPacketRule : PacketRule
                 return new RulesActionFfxiReadDirectionByte(this, parentAction, actionNode, step);
             case "pos":
                 return new RulesActionFfxiReadPosition(this, parentAction, actionNode, step);
+            case "combatskill":
+                return new RulesActionFfxiReadCombatSkill(this, parentAction, actionNode, step);
+            case "craftskill":
+                return new RulesActionFfxiReadCraftSkill(this, parentAction, actionNode, step);
             default:
                 return base.BuildFallbackDataAction(parentAction, actionNode, attributes, step, dataType, isReversed);
         }
@@ -88,6 +92,51 @@ public class RulesActionFfxiReadPosition : RulesAction
         ParentRule.SetLocalVar(varName + "-X", dataX.ToString(CultureInfo.InvariantCulture));
         ParentRule.SetLocalVar(varName + "-Y", dataY.ToString(CultureInfo.InvariantCulture));
         ParentRule.SetLocalVar(varName + "-Z", dataZ.ToString(CultureInfo.InvariantCulture));
+        packetData.AddParsedField(true, pos, packetData.Cursor - 1, pos.ToHex(2), varName, dataString, Depth);
+    }
+}
+
+public class RulesActionFfxiReadCombatSkill : RulesAction
+{
+    public RulesActionFfxiReadCombatSkill(PacketRule parent, RulesAction? parentAction, XmlNode thisNode, int thisStep) :
+        base(parent, parentAction, thisNode, thisStep, false)
+    {
+        //
+    }
+
+    public override void RunAction(BasePacketData packetData)
+    {
+        GotoStartPosition(packetData);
+        var pos = packetData.Cursor;
+        var val = packetData.GetUInt16AtPos(packetData.Cursor);
+        var cappedString = ((val & 0x8000) != 0) ? " (Capped)" : string.Empty;
+        var skilllevel = (val & 0x7FFF);
+
+        var dataString = skilllevel + cappedString + " - " + val.ToHex();
+        var varName = XmlHelper.GetAttributeString(Attributes, "name");
+        packetData.AddParsedField(true, pos, packetData.Cursor - 1, pos.ToHex(2), varName, dataString, Depth);
+    }
+}
+
+public class RulesActionFfxiReadCraftSkill : RulesAction
+{
+    public RulesActionFfxiReadCraftSkill(PacketRule parent, RulesAction? parentAction, XmlNode thisNode, int thisStep) :
+        base(parent, parentAction, thisNode, thisStep, false)
+    {
+        //
+    }
+
+    public override void RunAction(BasePacketData packetData)
+    {
+        GotoStartPosition(packetData);
+        var pos = packetData.Cursor;
+        var val = packetData.GetUInt16AtPos(packetData.Cursor);
+        var cappedString = ((val & 0x8000) != 0) ? " (Capped)" : string.Empty;
+        var craftLevel = ((val >> 5) & 0x03FF);
+        var craftRank = (val & 0x001F);
+
+        var dataString = "Level: " + craftLevel + cappedString + " Rank:" +  craftRank + " - " + val.ToHex();
+        var varName = XmlHelper.GetAttributeString(Attributes, "name");
         packetData.AddParsedField(true, pos, packetData.Cursor - 1, pos.ToHex(2), varName, dataString, Depth);
     }
 }

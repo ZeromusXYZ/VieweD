@@ -97,6 +97,7 @@ public class ViewedProjectTab : TabPage
     public ViewedProjectTab()
     {
         TimeStampFormat = "HH:mm:ss";
+        _projectFile = string.Empty;
 
         Filter = new PacketListFilter();
         Filter.Clear();

@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Drawing;
 using System.Globalization;
 using System.Text;
 using System.Xml;
@@ -1286,15 +1287,28 @@ public class RulesActionTemplate : RulesAction
 }
 
 /// <summary>
-/// Outputs a local var to the field view
+/// Outputs a local var to the field view, can be used as a opening and closing tag to form a block
 /// </summary>
 public class RulesActionEcho : RulesAction
 {
     public string FieldName;
+    private List<RulesAction> ChildActions;
 
     public RulesActionEcho(PacketRule parent, RulesAction? parentAction, XmlNode thisNode, int thisStep, string name) : base(parent, parentAction, thisNode, thisStep, false)
     {
         FieldName = XmlHelper.GetAttributeString(Attributes, name.ToLower());
+
+        ChildActions = new List<RulesAction>();
+        for (var i = 0; i < thisNode.ChildNodes.Count; i++)
+        {
+            var actionNode = thisNode.ChildNodes.Item(i);
+            if (actionNode == null)
+                continue;
+            var attributes = XmlHelper.ReadNodeAttributes(actionNode);
+            var newAction = parent.BuildRuleAction(this, actionNode, attributes, i);
+            if (newAction != null)
+                ChildActions.Add(newAction);
+        }
     }
 
     public override void RunAction(BasePacketData packetData)
@@ -1326,6 +1340,20 @@ public class RulesActionEcho : RulesAction
             lookupVal = GetLookup((ulong)valInt);
         }
         packetData.AddParsedError(pos.ToHex(2), FieldName, lookupVal + dataString + hexString, Depth);
+
+        // Do child actions
+        foreach (var child in ChildActions)
+        {
+            try
+            {
+                child.RunAction(packetData);
+            }
+            catch (Exception ex)
+            {
+                packetData.AddParsedError("A" + child.GetActionStepName(), "Error@ \"" + child.Node.Name + "\"", "Exception: " + ex.Message + " => " + child.Node.OuterXml, Depth);
+                break;
+            }
+        }
     }
 }
 
@@ -1436,5 +1464,42 @@ public class RulesActionReadBits : RulesAction
             packetData.AddParsedError("A" + GetActionStepName(), fieldName, "Unknown style: " + style+ " (allowed styles are normal, full, compact)", Depth);
         }
 
+    }
+}
+
+/// <summary>
+/// Read bits as a uint64 (long)
+/// </summary>
+public class RulesActionReadBitValue : RulesAction
+{
+    private readonly string _bitCountName;
+
+    public RulesActionReadBitValue(PacketRule parent, RulesAction? parentAction, XmlNode thisNode, int thisStep, string bitCountName) : base(parent, parentAction, thisNode, thisStep, false)
+    {
+        _bitCountName = bitCountName;
+    }
+
+    public override void RunAction(BasePacketData packetData)
+    {
+        GotoStartPosition(packetData);
+        int bitCount = 64;
+
+        if (XmlHelper.HasAttribute(Attributes, _bitCountName))
+        {
+            bitCount = (int)XmlHelper.GetAttributeInt(Attributes, _bitCountName);
+        }
+
+        var fieldName = XmlHelper.GetAttributeString(Attributes, "name");
+
+        var pos = packetData.Cursor;
+        var endBitPos = ((packetData.Cursor * 8) + packetData.BitCursor + (int)bitCount); // end bit
+        var endPos = ((endBitPos % 8) == 0) ? (endBitPos / 8) - 1 : (endBitPos / 8); // end byte
+        var posFieldString = pos.ToHex(2) + ":" + packetData.BitCursor + "~" + (packetData.BitCursor + bitCount - 1);
+
+        var data = packetData.GetBitsAtPos(packetData.Cursor, packetData.BitCursor, bitCount);
+        var lookupVal = GetLookup((ulong)data);
+
+        packetData.AddParsedField(true, pos, endPos, posFieldString, fieldName, lookupVal + data.ToString() + " - " + data.ToHex(1), Depth);
+        ParentRule.SetLocalVar(fieldName, data.ToString());
     }
 }

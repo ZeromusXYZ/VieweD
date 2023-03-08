@@ -172,6 +172,11 @@ public class PacketRule
                     case "bits":
                         res = new RulesActionReadBits(this, parentAction, actionNode, step, "bits", "style");
                         break;
+                    case "bitval":
+                    case "bitvalue":
+                    case "valuebits":
+                        res = new RulesActionReadBitValue(this, parentAction, actionNode, step, "bits");
+                        break;
                     default:
                         // Blank Command
                         res = BuildFallbackDataAction(parentAction, actionNode, attributes, step, dataType, isReversed);
