@@ -1,5 +1,4 @@
-﻿using System.Data;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Globalization;
 using System.Text;
 using System.Xml;
@@ -177,11 +176,24 @@ public class PacketRule
                     case "valuebits":
                         res = new RulesActionReadBitValue(this, parentAction, actionNode, step, "bits");
                         break;
+                    case "ip4":
+                    case "ipv4":
+                    case "r-ip4":
+                    case "r-ipv4":
+                        res = new RulesActionReadIp4(this, parentAction, actionNode, step, isReversed);
+                        break;
+                    case "ip6":
+                    case "ipv6":
+                        res = new RulesActionReadIp6(this, parentAction, actionNode, step);
+                        break;
                     default:
                         // Blank Command
                         res = BuildFallbackDataAction(parentAction, actionNode, attributes, step, dataType, isReversed);
                         break;
                 }
+                break;
+            case "else":
+                res = new RulesActionElse(this, parentAction, actionNode, step);
                 break;
             case "ifeq":
                 res = new RulesActionCompareOperation(this, parentAction, actionNode, step, "arg1", "==", "arg2");

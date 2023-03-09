@@ -20,7 +20,7 @@
 0x028;Action by NPC;Packet sent when an NPC is attacking.
 0x029;Action Message;Packet sent for simple battle-related messages.
 0x02A;Resting Message;Packet sent when you rest in Abyssea.
-0x02D;Kill Message;Packet sent when you gain XP/LP/CP/JP/MP, advance RoE objectives, etc. by defeating a mob.
+0x02D;Combat Message;Packet sent when you gain XP/LP/CP/JP/MP, advance RoE objectives, etc. by defeating a mob.
 0x02E;Mog House Menu;Sent when talking to moogle inside mog house.
 0x02F;Digging Animation;Generates the chocobo digging animation
 0x030;Synth Animation;Generates the synthesis animation

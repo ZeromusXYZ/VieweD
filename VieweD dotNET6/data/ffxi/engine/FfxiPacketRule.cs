@@ -27,6 +27,14 @@ public class FfxiPacketRule : PacketRule
                 return new RulesActionFfxiReadCombatSkill(this, parentAction, actionNode, step);
             case "craftskill":
                 return new RulesActionFfxiReadCraftSkill(this, parentAction, actionNode, step);
+            case "jobpoints":
+                return new RulesActionFfxiReadJobPoints(this, parentAction, actionNode, step);
+            case "buffs":
+                return new RulesActionFfxiReadBuffs(this, parentAction, actionNode, step, "arg");
+            case "vanatime":
+                return new RulesActionFfxiReadVanaTime(this, parentAction, actionNode, step);
+            case "roequest":
+                return new RulesActionFfxiReadRoEQuest(this, parentAction, actionNode, step);
             default:
                 return base.BuildFallbackDataAction(parentAction, actionNode, attributes, step, dataType, isReversed);
         }
@@ -138,5 +146,138 @@ public class RulesActionFfxiReadCraftSkill : RulesAction
         var dataString = "Level: " + craftLevel + cappedString + " Rank:" +  craftRank + " - " + val.ToHex();
         var varName = XmlHelper.GetAttributeString(Attributes, "name");
         packetData.AddParsedField(true, pos, packetData.Cursor - 1, pos.ToHex(2), varName, dataString, Depth);
+    }
+}
+
+public class RulesActionFfxiReadJobPoints : RulesAction
+{
+    public RulesActionFfxiReadJobPoints(PacketRule parent, RulesAction? parentAction, XmlNode thisNode, int thisStep) :
+        base(parent, parentAction, thisNode, thisStep, false)
+    {
+        //
+    }
+
+    public override void RunAction(BasePacketData packetData)
+    {
+        GotoStartPosition(packetData);
+        var pos = packetData.Cursor;
+        var cpVal = packetData.GetUInt16AtPos(packetData.Cursor);
+        var jpVal = packetData.GetUInt16AtPos(packetData.Cursor);
+        var spentVal = packetData.GetUInt16AtPos(packetData.Cursor);
+        var data = $"{cpVal} CP  {jpVal} JP  {spentVal} spent JP";
+
+        var varName = XmlHelper.GetAttributeString(Attributes, "name");
+        packetData.AddParsedField(true, pos, packetData.Cursor - 1, pos.ToHex(2), varName, data, Depth);
+    }
+}
+
+public class RulesActionFfxiReadBuffs : RulesAction
+{
+    private string _countName;
+
+    public RulesActionFfxiReadBuffs(PacketRule parent, RulesAction? parentAction, XmlNode thisNode, int thisStep, string countName) :
+        base(parent, parentAction, thisNode, thisStep, false)
+    {
+        _countName = countName;
+    }
+
+    public override void RunAction(BasePacketData packetData)
+    {
+        var varName = XmlHelper.GetAttributeString(Attributes, "name");
+        var lookupName = XmlHelper.GetAttributeString(Attributes, "lookup");
+        if (string.IsNullOrWhiteSpace(lookupName))
+            lookupName = "buffs";
+        var sizeAttribute = (int)XmlHelper.GetAttributeInt(Attributes, _countName);
+        if (sizeAttribute < 1)
+            sizeAttribute = 1;
+
+        GotoStartPosition(packetData);
+        var pos = packetData.Cursor;
+        for (int c = 0; c < sizeAttribute; c++)
+        {
+            var buffPos = pos + (c * 2);
+            var timerPos = pos + (sizeAttribute * 2) + (c * 4);
+            var iconVal = packetData.GetUInt16AtPos(buffPos);
+            var timerVal = packetData.GetInt32AtPos(timerPos);
+            var iconVarName = varName + "-" + c + "-icon";
+            var timerVarName = varName + "-" + c + "-time";
+
+
+            var iconStr = iconVal.ToHex() + " => " + packetData.ParentProject.DataLookup.NLU(lookupName).GetValue(iconVal);
+
+            string timerStr;
+            if (timerVal == 0)
+                timerStr = timerVal.ToHex() + " => Not defined";
+            else
+            if (timerVal == int.MaxValue)
+                timerStr = timerVal.ToHex() + " => Always";
+            else
+                timerStr = timerVal.ToHex() + " => " + ((uint)timerVal).AsMilliseconds();
+
+            if (iconVal == 0xFF)
+            {
+                iconStr = "None";
+                timerStr = string.Empty;
+            }
+            ParentRule.SetLocalVar(iconVarName, iconVal.ToString());
+            ParentRule.SetLocalVar(timerVarName, timerVal.ToString());
+            packetData.AddParsedField(true, buffPos, buffPos+1, buffPos.ToHex(2), iconVarName, iconStr, Depth);
+            packetData.AddParsedField(true, timerPos, timerPos + 3, timerPos.ToHex(2), timerVarName, timerStr, Depth);
+        }
+    }
+}
+
+public class RulesActionFfxiReadVanaTime : RulesAction
+{
+    public RulesActionFfxiReadVanaTime(PacketRule parent, RulesAction? parentAction, XmlNode thisNode, int thisStep) :
+        base(parent, parentAction, thisNode, thisStep, false)
+    {
+        //
+    }
+
+    public override void RunAction(BasePacketData packetData)
+    {
+        GotoStartPosition(packetData);
+        var varName = XmlHelper.GetAttributeString(Attributes, "name");
+        var pos = packetData.Cursor;
+        var vanaTime = packetData.GetUInt32AtPos(packetData.Cursor);
+        var vt = new VanadielTime();
+        vt.FromVanadielIntTime((int)vanaTime);
+
+        var data = vt.LocalEarthTime.ToString("yyyy-MM-dd HH:mm:ss") + " (" + vanaTime + ") => " + vt;
+        ParentRule.SetLocalVar(varName, vanaTime.ToString());
+        packetData.AddParsedField(true, pos, packetData.Cursor - 1, pos.ToHex(2), varName, data, Depth);
+    }
+}
+
+public class RulesActionFfxiReadRoEQuest : RulesAction
+{
+    public RulesActionFfxiReadRoEQuest(PacketRule parent, RulesAction? parentAction, XmlNode thisNode, int thisStep) :
+        base(parent, parentAction, thisNode, thisStep, false)
+    {
+        //
+    }
+
+    public override void RunAction(BasePacketData packetData)
+    {
+        GotoStartPosition(packetData);
+        var varName = XmlHelper.GetAttributeString(Attributes, "name");
+        var lookupName = XmlHelper.GetAttributeString(Attributes, "lookup");
+        var pos = packetData.Cursor;
+
+        var idVal = packetData.GetBitsAtPos(packetData.Cursor, packetData.BitCursor, 12);
+        var progressVal = packetData.GetBitsAtPos(packetData.Cursor, packetData.BitCursor, 20);
+        var lookupTable = packetData.ParentProject.DataLookup.NLU(lookupName);
+        var maxVal = lookupTable.GetExtra((ulong)idVal);
+        if (maxVal == "")
+            maxVal = "???";
+        var data = string.Empty;
+        data += "ID: " + idVal.ToHex(3) + " => " + lookupTable.GetValue((ulong)idVal) + " - ";
+        data += progressVal + " / " + maxVal;
+
+        ParentRule.SetLocalVar(varName + "-id", idVal.ToString());
+        ParentRule.SetLocalVar(varName + "-progress", progressVal.ToString());
+        ParentRule.SetLocalVar(varName + "-max", maxVal);
+        packetData.AddParsedField(true, pos, packetData.Cursor - 1, pos.ToHex(2), varName, data, Depth);
     }
 }

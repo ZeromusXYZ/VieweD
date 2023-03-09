@@ -556,6 +556,7 @@ public class RulesActionReadString : RulesAction
 public class RulesActionCompareOperation : RulesAction
 {
     public List<RulesAction> ChildActions;
+    public List<RulesAction> ElseChildActions;
     private readonly string _arg1Name;
     private readonly string _arg2Name;
     private readonly string _operatorName;
@@ -563,9 +564,12 @@ public class RulesActionCompareOperation : RulesAction
     public RulesActionCompareOperation(PacketRule parent, RulesAction? parentAction, XmlNode thisNode, int thisStep,string arg1Name, string operatorName, string arg2Name) : base(parent, parentAction, thisNode, thisStep, false)
     {
         ChildActions = new List<RulesAction>();
+        ElseChildActions = new List<RulesAction>();
         this._arg1Name = arg1Name;
         _operatorName = operatorName;
         this._arg2Name = arg2Name;
+
+        var startElseBlock = false;
 
         ChildActions.Clear();
         for (var i = 0; i < thisNode.ChildNodes.Count; i++)
@@ -575,8 +579,15 @@ public class RulesActionCompareOperation : RulesAction
                 continue;
             var attributes = XmlHelper.ReadNodeAttributes(actionNode);
             var newAction = parent.BuildRuleAction(this, actionNode, attributes, i);
+            if (newAction is RulesActionElse)
+                startElseBlock = true;
             if (newAction != null)
-                ChildActions.Add(newAction);
+            {
+                if (startElseBlock)
+                    ElseChildActions.Add(newAction);
+                else
+                    ChildActions.Add(newAction);
+            }
         }
     }
 
@@ -655,39 +666,95 @@ public class RulesActionCompareOperation : RulesAction
             Debug.WriteLine($"{GetActionStepName()} {this.GetType().Name}: {val1Attribute}({val1}) {_operatorName} {val2Attribute}({val2}) => {res}");
         }
 
-        if (!res) 
-            return;
-
         // Do child actions
-        foreach(var child in ChildActions)
+        if (res)
         {
-            if (LoopActionResult != LoopActionResult.Normal)
-                break;
-
-            try
+            foreach (var child in ChildActions)
             {
-                child.RunAction(packetData);
-            }
-            catch (Exception ex)
-            {
-                packetData.AddParsedError("A" + child.GetActionStepName(), "Error@ \"" + child.Node.Name + "\"", "Exception: " + ex.Message + " => "+child.Node.OuterXml, Depth);
+                if (LoopActionResult != LoopActionResult.Normal)
+                    break;
+
+                try
+                {
+                    child.RunAction(packetData);
+                }
+                catch (Exception ex)
+                {
+                    packetData.AddParsedError("A" + child.GetActionStepName(), "Error@ \"" + child.Node.Name + "\"",
+                        "Exception: " + ex.Message + " => " + child.Node.OuterXml, Depth);
+                    break;
+                }
+
+                // Check for End of Packet
+                if (packetData.Cursor <= packetData.ByteData.Count)
+                    continue;
+
+                LoopActionResult = LoopActionResult.Break;
+                packetData.AddParsedError("A" + child.GetActionStepName(), Node.Name, "Reached past end of Packet Data",
+                    Depth);
+
+                if (MainForm.Instance?.ShowDebugInfo ?? false)
+                    Debug.WriteLine($"{GetActionStepName()} {this.GetType().Name} - EOP");
+
                 break;
             }
+        }
+        else
+        {
+            foreach (var child in ElseChildActions)
+            {
+                if (LoopActionResult != LoopActionResult.Normal)
+                    break;
 
-            // Check for End of Packet
-            if (packetData.Cursor <= packetData.ByteData.Count) 
-                continue;
+                try
+                {
+                    child.RunAction(packetData);
+                }
+                catch (Exception ex)
+                {
+                    packetData.AddParsedError("A" + child.GetActionStepName(), "Error@ \"" + child.Node.Name + "\"",
+                        "Exception: " + ex.Message + " => " + child.Node.OuterXml, Depth);
+                    break;
+                }
 
-            LoopActionResult = LoopActionResult.Break;
-            packetData.AddParsedError("A" + child.GetActionStepName(), Node.Name, "Reached past end of Packet Data", Depth);
+                // Check for End of Packet
+                if (packetData.Cursor <= packetData.ByteData.Count)
+                    continue;
 
-            if (MainForm.Instance?.ShowDebugInfo ?? false)
-                Debug.WriteLine($"{GetActionStepName()} {this.GetType().Name} - EOP");
+                LoopActionResult = LoopActionResult.Break;
+                packetData.AddParsedError("A" + child.GetActionStepName(), Node.Name, "Reached past end of Packet Data",
+                    Depth);
 
-            break;
+                if (MainForm.Instance?.ShowDebugInfo ?? false)
+                    Debug.WriteLine($"{GetActionStepName()} {this.GetType().Name} - EOP");
+
+                break;
+            }
         }
     }
 }
+
+/// <summary>
+/// This does not do anything on it's own, but is used to mark the start of a else part in a if block
+/// </summary>
+public class RulesActionElse : RulesAction
+{
+
+    public RulesActionElse(PacketRule parent, RulesAction? parentAction, XmlNode thisNode, int thisStep) : base(parent, parentAction, thisNode, thisStep, false)
+    {
+        // Does not do anything on it's own, used by CompareOperation
+    }
+
+    public override void RunAction(BasePacketData packetData)
+    {
+        if (MainForm.Instance?.ShowDebugInfo ?? false)
+        {
+            packetData.AddParsedError("A" + GetActionStepName(), Node.Name, $"<else />", Depth, Color.DarkGray);
+            Debug.WriteLine($"{GetActionStepName()} {this.GetType().Name}: else");
+        }
+    }
+}
+
 
 /// <summary>
 /// Arithmetic functions
@@ -1314,7 +1381,6 @@ public class RulesActionEcho : RulesAction
     public override void RunAction(BasePacketData packetData)
     {
         GotoStartPosition(packetData);
-        var pos = packetData.Cursor;
         var dataString = ParentRule.GetLocalVar(FieldName);
         var hexString = string.Empty;
         var lookupVal = string.Empty;
@@ -1322,14 +1388,14 @@ public class RulesActionEcho : RulesAction
         // Handle output differently if float val
         if (double.TryParse(dataString, out var valDouble) && (Math.Abs(Math.Floor(valDouble) - valDouble) > double.Epsilon))
         {
-            packetData.AddParsedError(pos.ToHex(2), FieldName, valDouble.ToString(CultureInfo.InvariantCulture), Depth);
+            packetData.AddParsedError("A"+GetActionStepName(), FieldName, valDouble.ToString(CultureInfo.InvariantCulture), Depth);
             return;
         }
 
         // check if it's a natural number
         if (NumberHelper.TryFieldParse(dataString, out ulong valNumber))
         {
-            hexString = " - " + valNumber.ToHex();
+            hexString = " - " + valNumber.ToHex(1);
             lookupVal = GetLookup(valNumber);
         }
         else
@@ -1339,7 +1405,7 @@ public class RulesActionEcho : RulesAction
             hexString = " - " + valInt.ToHex();
             lookupVal = GetLookup((ulong)valInt);
         }
-        packetData.AddParsedError(pos.ToHex(2), FieldName, lookupVal + dataString + hexString, Depth);
+        packetData.AddParsedError("A" + GetActionStepName(), FieldName, lookupVal + dataString + hexString, Depth);
 
         // Do child actions
         foreach (var child in ChildActions)
@@ -1501,5 +1567,58 @@ public class RulesActionReadBitValue : RulesAction
 
         packetData.AddParsedField(true, pos, endPos, posFieldString, fieldName, lookupVal + data.ToString() + " - " + data.ToHex(1), Depth);
         ParentRule.SetLocalVar(fieldName, data.ToString());
+    }
+}
+
+/// <summary>
+/// Read IPv4
+/// </summary>
+public class RulesActionReadIp4 : RulesAction
+{
+    public RulesActionReadIp4(PacketRule parent, RulesAction? parentAction, XmlNode thisNode, int thisStep, bool reversed) : base(parent, parentAction, thisNode, thisStep, reversed)
+    {
+        //
+    }
+
+    public override void RunAction(BasePacketData packetData)
+    {
+        GotoStartPosition(packetData);
+        var varName = XmlHelper.GetAttributeString(Attributes, "name");
+        var pos = packetData.Cursor;
+        var data = packetData.GetDataBytesAtPos(pos, 4);
+        if (IsReversed)
+            data = data.Reverse().ToArray();
+        var dataString = string.Join('.', data);
+        ParentRule.SetLocalVar(varName, dataString);
+        packetData.AddParsedField(true, pos, packetData.Cursor - 1, pos.ToHex(2), varName, dataString, Depth);
+    }
+}
+
+/// <summary>
+/// Read IPv6
+/// </summary>
+public class RulesActionReadIp6 : RulesAction
+{
+    public RulesActionReadIp6(PacketRule parent, RulesAction? parentAction, XmlNode thisNode, int thisStep) : base(parent, parentAction, thisNode, thisStep, false)
+    {
+        //
+    }
+
+    public override void RunAction(BasePacketData packetData)
+    {
+        GotoStartPosition(packetData);
+        var varName = XmlHelper.GetAttributeString(Attributes, "name");
+        var pos = packetData.Cursor;
+        var dataString = string.Empty;
+        for (var i = 0; i < 8; i++)
+        {
+            var data = packetData.GetUInt16AtPos(packetData.Cursor);
+            if (i > 0)
+                dataString += ":";
+            if (data > 0)
+                dataString += data.ToHex(1);
+        }
+        ParentRule.SetLocalVar(varName, dataString);
+        packetData.AddParsedField(true, pos, packetData.Cursor - 1, pos.ToHex(2), varName, dataString, Depth);
     }
 }

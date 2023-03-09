@@ -51,6 +51,12 @@ public class FfxiRulesReader : RulesReader
         var ffxiMenu = editor.AddMenuItem(miInsert.Items, "FFXI Specific", "");
 
         editor.AddMenuItem(ffxiMenu!.DropDownItems, "Position (12 byte)", "<data type=\"pos\" name=\"|Position|\" />");
-        editor.AddMenuItem(ffxiMenu!.DropDownItems, "Direction (1 byte)", "<data type=\"dir\" name=\"|Direction|\" />");
+        editor.AddMenuItem(ffxiMenu.DropDownItems, "Direction (1 byte)", "<data type=\"dir\" name=\"|Direction|\" />");
+        editor.AddMenuItem(ffxiMenu.DropDownItems, "Vana'diel Time (4 byte)", "<data type=\"vanatime\" name=\"|Time|\" />");
+        editor.AddMenuItem(ffxiMenu.DropDownItems, "-", "");
+        editor.AddMenuItem(ffxiMenu.DropDownItems, "Combat Skill (2 byte)", "<data type=\"combatskill\" name=\"|SkillName|\" />");
+        editor.AddMenuItem(ffxiMenu.DropDownItems, "Job Points (3 byte)", "<data type=\"jobpoints\" name=\"|JobName|\" />");
+        editor.AddMenuItem(ffxiMenu.DropDownItems, "Buffs (32x6 byte)", "<data type=\"buffs\" name=\"|Buffs|\" arg=\"32\" />");
+        editor.AddMenuItem(ffxiMenu.DropDownItems, "RoE Quest (4 byte)", "<data type=\"roequest\" name=\"|Quest|\" />");
     }
 }

@@ -1,0 +1,8 @@
+0;Cover!
+1;Resist!
+2;Magic Burst!
+3;Immunobreak!
+4;Critical Hit!
+5;Water
+6;Light
+7;Darkness

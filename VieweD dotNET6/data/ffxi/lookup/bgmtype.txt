@@ -1,0 +1,8 @@
+0;Day time
+1;Night time
+2;Solo battle
+3;Party battle
+4;Mount
+5;Death
+6;Moghouse
+7;Fishing

@@ -201,7 +201,8 @@ public class RulesReader
         // Complex
         var complex = editor.AddMenuItem(miInsert.Items, "Complex Types", "");
 
-        editor.AddMenuItem(complex!.DropDownItems, "bits (multi-line)", "<data type=\"bits\" bits=\"8\" style=\"normal\" name=\"|bits|\" />");
+        editor.AddMenuItem(complex!.DropDownItems, "bits as value", "<data type=\"bitval\" bits=\"8\" style=\"normal\" name=\"|bit value|\" />");
+        editor.AddMenuItem(complex.DropDownItems, "bits (multi-line)", "<data type=\"bits\" bits=\"8\" style=\"normal\" name=\"|bits|\" />");
         editor.AddMenuItem(complex.DropDownItems, "bits (all bits)", "<data type=\"bits\" bits=\"8\" style=\"full\" name=\"|bits|\" />");
         editor.AddMenuItem(complex.DropDownItems, "bits (single-line)", "<data type=\"bits\" bits=\"8\" style=\"compact\" name=\"|bits|\" />");
         editor.AddMenuItem(complex.DropDownItems, "Byte Array", "<data type=\"a\" arg=\"16\" name=\"|array|\" />");
@@ -210,6 +211,9 @@ public class RulesReader
         editor.AddMenuItem(complex.DropDownItems, "-", "");
         editor.AddMenuItem(complex.DropDownItems, "int (24 bit)", "<data type=\"uint24\" name=\"|uint24|\" />");
         editor.AddMenuItem(complex.DropDownItems, "half-float (16 bit)", "<data type=\"half\" name=\"|half|\" />");
+        editor.AddMenuItem(complex.DropDownItems, "-", "");
+        editor.AddMenuItem(complex.DropDownItems, "IPv4 (4 byte)", "<data type=\"ip4\" name=\"|IP|\" />");
+        editor.AddMenuItem(complex.DropDownItems, "IPv6 (6 byte)", "<data type=\"ip6\" name=\"|IP|\" />");
 
         // Functions
         var functions = editor.AddMenuItem(miInsert.Items, "Functions", "");
@@ -221,6 +225,7 @@ public class RulesReader
         editor.AddMenuItem(ifs.DropDownItems, "if greater than (a > b)", "<ifgt arg1=\"#a\" arg2=\"#b\">\n\t<!-- your code -->\n</ifgt>");
         editor.AddMenuItem(ifs.DropDownItems, "if zero (a == 0)", "<ifz arg=\"#a\">\n\t<!-- your code -->\n</ifz>");
         editor.AddMenuItem(ifs.DropDownItems, "if not zero (a != 0)", "<ifnz arg=\"#a\">\n\t<!-- your code -->\n</ifnz>");
+        editor.AddMenuItem(ifs.DropDownItems, "else", "<else />");
 
         var maths = editor.AddMenuItem(functions.DropDownItems, "Math", "");
         editor.AddMenuItem(maths!.DropDownItems, "add (c = a + b)", "<add dst=\"c\" arg1=\"#a\" arg2=\"#b\" />");
@@ -247,7 +252,7 @@ public class RulesReader
         editor.AddMenuItem(loops.DropDownItems, "break", "<break />");
         editor.AddMenuItem(loops.DropDownItems, "continue", "<continue />");
         editor.AddMenuItem(loops.DropDownItems, "-", "");
-        editor.AddMenuItem(loops.DropDownItems, "loop with counter", "<!-- Loop to 10 -->\n" +
+        editor.AddMenuItem(loops.DropDownItems, "loop with counter", "<!-- Loop to 10 example-->\n" +
             "<mov dst=\"c\" val=\"0\" />\n" +
             "<loop>\n" +
             "\t<add dst=\"c\" arg1=\"#c\" arg2=\"1\" />\n" +
@@ -279,6 +284,9 @@ public class RulesReader
 
         var others = editor.AddMenuItem(miInsert.Items, "Other", "");
         editor.AddMenuItem(others!.DropDownItems, "echo", "<echo arg=\"#a\" />");
+        editor.AddMenuItem(others!.DropDownItems, "echo block", "<echo arg=\"#a\">\n" +
+                                                                "\t<!-- your code here -->\n" +
+                                                                "</echo>\n");
         editor.AddMenuItem(others!.DropDownItems, "comment", "<!--- your comment here -->");
 
     }

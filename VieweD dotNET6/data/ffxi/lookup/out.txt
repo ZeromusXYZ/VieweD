@@ -104,3 +104,4 @@
 0x116;Unity Menu;Sent when opening the Status/Unity menu.
 0x117;Unity Ranking Menu;Sent when opening the Status/Unity/Unity Ranking menu.
 0x118;Unity Chat Status;Sent when changing unity chat status.
+0x11B;Jobmaster Display;Notify the server if you have master level display enabled

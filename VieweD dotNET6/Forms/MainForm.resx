@@ -60,117 +60,11 @@
   <metadata name="MM.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="MMFile.Size" type="System.Drawing.Size, System.Drawing">
-    <value>37, 20</value>
-  </data>
-  <data name="MMFile.Text" xml:space="preserve">
-    <value>&amp;File</value>
-  </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="MMVersion.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="MMVersion.Size" type="System.Drawing.Size, System.Drawing">
-    <value>57, 20</value>
-  </data>
-  <data name="MMVersion.Text" xml:space="preserve">
-    <value>Version</value>
-  </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="MMProjectSave.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
-    <value>Ctrl+S</value>
-  </data>
-  <data name="MMProjectSave.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
-  </data>
-  <data name="MMProjectSave.Text" xml:space="preserve">
-    <value>&amp;Save</value>
-  </data>
-  <data name="toolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>177, 6</value>
-  </data>
-  <data name="MMProjectGameData.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
-  </data>
-  <data name="MMProjectGameData.Text" xml:space="preserve">
-    <value>Game Data ...</value>
-  </data>
-  <data name="MMProjectVideo.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
-  </data>
-  <data name="MMProjectVideo.Text" xml:space="preserve">
-    <value>Video Link ...</value>
-  </data>
-  <data name="MMProjectN1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>177, 6</value>
-  </data>
-  <data name="MMProjectSettings.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
-    <value>Ctrl+P</value>
-  </data>
-  <data name="MMProjectSettings.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
-  </data>
-  <data name="MMProjectSettings.Text" xml:space="preserve">
-    <value>Se&amp;ttings ...</value>
-  </data>
-  <data name="MMProjectN2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>177, 6</value>
-  </data>
-  <data name="MMProjectClose.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
-    <value>Ctrl+W</value>
-  </data>
-  <data name="MMProjectClose.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
-  </data>
-  <data name="MMProjectClose.Text" xml:space="preserve">
-    <value>&amp;Close</value>
-  </data>
-  <data name="MMProject.Size" type="System.Drawing.Size, System.Drawing">
-    <value>56, 20</value>
-  </data>
-  <data name="MMProject.Text" xml:space="preserve">
-    <value>&amp;Project</value>
-  </data>
-  <data name="MMSearch.Size" type="System.Drawing.Size, System.Drawing">
-    <value>54, 20</value>
-  </data>
-  <data name="MMSearch.Text" xml:space="preserve">
-    <value>&amp;Search</value>
-  </data>
-  <data name="MMLinks.Size" type="System.Drawing.Size, System.Drawing">
-    <value>46, 20</value>
-  </data>
-  <data name="MMLinks.Text" xml:space="preserve">
-    <value>Links</value>
-  </data>
-  <data name="MM.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="MM.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1008, 24</value>
-  </data>
-  <data name="MM.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="MM.Text" xml:space="preserve">
-    <value>mainmenu</value>
-  </data>
-  <data name="&gt;&gt;MM.Name" xml:space="preserve">
-    <value>MM</value>
-  </data>
-  <data name="&gt;&gt;MM.Type" xml:space="preserve">
-    <value>System.Windows.Forms.MenuStrip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;MM.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;MM.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
   <data name="MMFileOpen.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
     <value>Ctrl+O</value>
   </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="MMFileOpen.Size" type="System.Drawing.Size, System.Drawing">
     <value>164, 22</value>
   </data>
@@ -197,6 +91,76 @@
   </data>
   <data name="MMFileExit.Text" xml:space="preserve">
     <value>E&amp;xit</value>
+  </data>
+  <data name="MMFile.Size" type="System.Drawing.Size, System.Drawing">
+    <value>37, 20</value>
+  </data>
+  <data name="MMFile.Text" xml:space="preserve">
+    <value>&amp;File</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="MMVersion.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="MMVersion.Size" type="System.Drawing.Size, System.Drawing">
+    <value>57, 20</value>
+  </data>
+  <data name="MMVersion.Text" xml:space="preserve">
+    <value>Version</value>
+  </data>
+  <data name="MMProjectSave.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
+    <value>Ctrl+S</value>
+  </data>
+  <data name="MMProjectSave.Size" type="System.Drawing.Size, System.Drawing">
+    <value>169, 22</value>
+  </data>
+  <data name="MMProjectSave.Text" xml:space="preserve">
+    <value>&amp;Save</value>
+  </data>
+  <data name="toolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>166, 6</value>
+  </data>
+  <data name="MMProjectGameData.Size" type="System.Drawing.Size, System.Drawing">
+    <value>169, 22</value>
+  </data>
+  <data name="MMProjectGameData.Text" xml:space="preserve">
+    <value>Game Data ...</value>
+  </data>
+  <data name="MMProjectVideo.Size" type="System.Drawing.Size, System.Drawing">
+    <value>169, 22</value>
+  </data>
+  <data name="MMProjectVideo.Text" xml:space="preserve">
+    <value>Video Link ...</value>
+  </data>
+  <data name="MMProjectN1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>166, 6</value>
+  </data>
+  <data name="MMProjectSettings.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
+    <value>Ctrl+P</value>
+  </data>
+  <data name="MMProjectSettings.Size" type="System.Drawing.Size, System.Drawing">
+    <value>169, 22</value>
+  </data>
+  <data name="MMProjectSettings.Text" xml:space="preserve">
+    <value>Se&amp;ttings ...</value>
+  </data>
+  <data name="MMProjectN2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>166, 6</value>
+  </data>
+  <data name="MMProjectClose.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
+    <value>Ctrl+W</value>
+  </data>
+  <data name="MMProjectClose.Size" type="System.Drawing.Size, System.Drawing">
+    <value>169, 22</value>
+  </data>
+  <data name="MMProjectClose.Text" xml:space="preserve">
+    <value>&amp;Close</value>
+  </data>
+  <data name="MMProject.Size" type="System.Drawing.Size, System.Drawing">
+    <value>56, 20</value>
+  </data>
+  <data name="MMProject.Text" xml:space="preserve">
+    <value>&amp;Project</value>
   </data>
   <data name="MMSearchFind.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
     <value>Ctrl+F</value>
@@ -228,12 +192,6 @@
   <data name="MMSearchEditFilter.Text" xml:space="preserve">
     <value>Edit Filter ...</value>
   </data>
-  <data name="MMSearchApplyMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>207, 22</value>
-  </data>
-  <data name="MMSearchApplyMenu.Text" xml:space="preserve">
-    <value>Apply Filter</value>
-  </data>
   <data name="MMSearchApplyReset.Size" type="System.Drawing.Size, System.Drawing">
     <value>102, 22</value>
   </data>
@@ -243,11 +201,11 @@
   <data name="MMSearchApplyMenuN1.Size" type="System.Drawing.Size, System.Drawing">
     <value>99, 6</value>
   </data>
-  <data name="MMSearchHighlightMenu.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="MMSearchApplyMenu.Size" type="System.Drawing.Size, System.Drawing">
     <value>207, 22</value>
   </data>
-  <data name="MMSearchHighlightMenu.Text" xml:space="preserve">
-    <value>Highlight Filter</value>
+  <data name="MMSearchApplyMenu.Text" xml:space="preserve">
+    <value>Apply Filter</value>
   </data>
   <data name="MMSearchHighlightReset.Size" type="System.Drawing.Size, System.Drawing">
     <value>102, 22</value>
@@ -257,6 +215,18 @@
   </data>
   <data name="MMSearchHighlightMenuN1.Size" type="System.Drawing.Size, System.Drawing">
     <value>99, 6</value>
+  </data>
+  <data name="MMSearchHighlightMenu.Size" type="System.Drawing.Size, System.Drawing">
+    <value>207, 22</value>
+  </data>
+  <data name="MMSearchHighlightMenu.Text" xml:space="preserve">
+    <value>Highlight Filter</value>
+  </data>
+  <data name="MMSearch.Size" type="System.Drawing.Size, System.Drawing">
+    <value>54, 20</value>
+  </data>
+  <data name="MMSearch.Text" xml:space="preserve">
+    <value>&amp;Search</value>
   </data>
   <data name="MMLinksGitHub.Size" type="System.Drawing.Size, System.Drawing">
     <value>199, 22</value>
@@ -282,15 +252,6 @@
   <data name="MMLinksN2.Size" type="System.Drawing.Size, System.Drawing">
     <value>196, 6</value>
   </data>
-  <data name="MMLinks7Zip.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="MMLinks7Zip.Size" type="System.Drawing.Size, System.Drawing">
-    <value>199, 22</value>
-  </data>
-  <data name="MMLinks7Zip.Text" xml:space="preserve">
-    <value>7-zip</value>
-  </data>
   <data name="MMLinks7ZipMain.Size" type="System.Drawing.Size, System.Drawing">
     <value>216, 22</value>
   </data>
@@ -303,8 +264,14 @@
   <data name="MMLinks7ZipDownload.Text" xml:space="preserve">
     <value>Download required version</value>
   </data>
-  <data name="MMLinksVLC.Enabled" type="System.Boolean, mscorlib">
+  <data name="MMLinks7Zip.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
+  </data>
+  <data name="MMLinks7Zip.Size" type="System.Drawing.Size, System.Drawing">
+    <value>199, 22</value>
+  </data>
+  <data name="MMLinks7Zip.Text" xml:space="preserve">
+    <value>7-zip</value>
   </data>
   <data name="MMLinksVLC.Size" type="System.Drawing.Size, System.Drawing">
     <value>199, 22</value>
@@ -321,33 +288,39 @@
   <data name="MMLinksWireshark.Text" xml:space="preserve">
     <value>Visit Wireshark site</value>
   </data>
+  <data name="MMLinks.Size" type="System.Drawing.Size, System.Drawing">
+    <value>46, 20</value>
+  </data>
+  <data name="MMLinks.Text" xml:space="preserve">
+    <value>Links</value>
+  </data>
+  <data name="MM.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="MM.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1008, 24</value>
+  </data>
+  <data name="MM.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="MM.Text" xml:space="preserve">
+    <value>mainmenu</value>
+  </data>
+  <data name="&gt;&gt;MM.Name" xml:space="preserve">
+    <value>MM</value>
+  </data>
+  <data name="&gt;&gt;MM.Type" xml:space="preserve">
+    <value>System.Windows.Forms.MenuStrip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MM.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;MM.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
   <metadata name="StatusBar.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>91, 17</value>
   </metadata>
-  <data name="StatusBar.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 537</value>
-  </data>
-  <data name="StatusBar.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1008, 24</value>
-  </data>
-  <data name="StatusBar.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="StatusBar.Text" xml:space="preserve">
-    <value>Status</value>
-  </data>
-  <data name="&gt;&gt;StatusBar.Name" xml:space="preserve">
-    <value>StatusBar</value>
-  </data>
-  <data name="&gt;&gt;StatusBar.Type" xml:space="preserve">
-    <value>System.Windows.Forms.StatusStrip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;StatusBar.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;StatusBar.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
   <data name="StatusBarProgressBar.AutoSize" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
@@ -378,8 +351,104 @@
   <data name="StatusBarProject.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleLeft</value>
   </data>
+  <data name="StatusBar.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 537</value>
+  </data>
+  <data name="StatusBar.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1008, 24</value>
+  </data>
+  <data name="StatusBar.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="StatusBar.Text" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="&gt;&gt;StatusBar.Name" xml:space="preserve">
+    <value>StatusBar</value>
+  </data>
+  <data name="&gt;&gt;StatusBar.Type" xml:space="preserve">
+    <value>System.Windows.Forms.StatusStrip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;StatusBar.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;StatusBar.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
   <data name="TCProjects.Alignment" type="System.Windows.Forms.TabAlignment, System.Windows.Forms">
     <value>Left</value>
+  </data>
+  <data name="TPWelcomeLayout.ColumnCount" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="RichTextWelcome.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
+  </data>
+  <data name="RichTextWelcome.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="RichTextWelcome.Size" type="System.Drawing.Size, System.Drawing">
+    <value>293, 461</value>
+  </data>
+  <data name="RichTextWelcome.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="RichTextWelcome.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="&gt;&gt;RichTextWelcome.Name" xml:space="preserve">
+    <value>RichTextWelcome</value>
+  </data>
+  <data name="&gt;&gt;RichTextWelcome.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RichTextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RichTextWelcome.Parent" xml:space="preserve">
+    <value>TPWelcomeLayout</value>
+  </data>
+  <data name="&gt;&gt;RichTextWelcome.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="TPWelcomeBtnClose.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="TPWelcomeBtnClose.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 470</value>
+  </data>
+  <data name="TPWelcomeBtnClose.Size" type="System.Drawing.Size, System.Drawing">
+    <value>293, 26</value>
+  </data>
+  <data name="TPWelcomeBtnClose.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="TPWelcomeBtnClose.Text" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="&gt;&gt;TPWelcomeBtnClose.Name" xml:space="preserve">
+    <value>TPWelcomeBtnClose</value>
+  </data>
+  <data name="&gt;&gt;TPWelcomeBtnClose.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TPWelcomeBtnClose.Parent" xml:space="preserve">
+    <value>TPWelcomeLayout</value>
+  </data>
+  <data name="&gt;&gt;TPWelcomeBtnClose.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="TPWelcomeLayout.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="TPWelcomeLayout.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="TPWelcomeLayout.RowCount" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="TPWelcomeLayout.Size" type="System.Drawing.Size, System.Drawing">
+    <value>299, 499</value>
+  </data>
+  <data name="TPWelcomeLayout.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
   </data>
   <data name="&gt;&gt;TPWelcomeLayout.Name" xml:space="preserve">
     <value>TPWelcomeLayout</value>
@@ -437,60 +506,60 @@
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAEZTeXN0ZW0uV2luZG93cy5Gb3JtcywgQ3VsdHVyZT1uZXV0cmFs
         LCBQdWJsaWNLZXlUb2tlbj1iNzdhNWM1NjE5MzRlMDg5BQEAAAAmU3lzdGVtLldpbmRvd3MuRm9ybXMu
-        SW1hZ2VMaXN0U3RyZWFtZXIBAAAABERhdGEHAgIAAAAJAwAAAA8DAAAAbAwAAAJNU0Z0AUkBTAIBAQUB
-        AAH4AQAB+AEAARABAAEQAQAE/wEJAQAI/wFCAU0BNgEEBgABNgEEAgABKAMAAUADAAEgAwABAQEAAQgG
-        AAEIGAABgAIAAYADAAKAAQABgAMAAYABAAGAAQACgAIAA8ABAAHAAdwBwAEAAfABygGmAQABMwUAATMB
-        AAEzAQABMwEAAjMCAAMWAQADHAEAAyIBAAMpAQADVQEAA00BAANCAQADOQEAAYABfAH/AQACUAH/AQAB
-        kwEAAdYBAAH/AewBzAEAAcYB1gHvAQAB1gLnAQABkAGpAa0CAAH/ATMDAAFmAwABmQMAAcwCAAEzAwAC
-        MwIAATMBZgIAATMBmQIAATMBzAIAATMB/wIAAWYDAAFmATMCAAJmAgABZgGZAgABZgHMAgABZgH/AgAB
-        mQMAAZkBMwIAAZkBZgIAApkCAAGZAcwCAAGZAf8CAAHMAwABzAEzAgABzAFmAgABzAGZAgACzAIAAcwB
-        /wIAAf8BZgIAAf8BmQIAAf8BzAEAATMB/wIAAf8BAAEzAQABMwEAAWYBAAEzAQABmQEAATMBAAHMAQAB
-        MwEAAf8BAAH/ATMCAAMzAQACMwFmAQACMwGZAQACMwHMAQACMwH/AQABMwFmAgABMwFmATMBAAEzAmYB
-        AAEzAWYBmQEAATMBZgHMAQABMwFmAf8BAAEzAZkCAAEzAZkBMwEAATMBmQFmAQABMwKZAQABMwGZAcwB
-        AAEzAZkB/wEAATMBzAIAATMBzAEzAQABMwHMAWYBAAEzAcwBmQEAATMCzAEAATMBzAH/AQABMwH/ATMB
-        AAEzAf8BZgEAATMB/wGZAQABMwH/AcwBAAEzAv8BAAFmAwABZgEAATMBAAFmAQABZgEAAWYBAAGZAQAB
-        ZgEAAcwBAAFmAQAB/wEAAWYBMwIAAWYCMwEAAWYBMwFmAQABZgEzAZkBAAFmATMBzAEAAWYBMwH/AQAC
-        ZgIAAmYBMwEAA2YBAAJmAZkBAAJmAcwBAAFmAZkCAAFmAZkBMwEAAWYBmQFmAQABZgKZAQABZgGZAcwB
-        AAFmAZkB/wEAAWYBzAIAAWYBzAEzAQABZgHMAZkBAAFmAswBAAFmAcwB/wEAAWYB/wIAAWYB/wEzAQAB
-        ZgH/AZkBAAFmAf8BzAEAAcwBAAH/AQAB/wEAAcwBAAKZAgABmQEzAZkBAAGZAQABmQEAAZkBAAHMAQAB
-        mQMAAZkCMwEAAZkBAAFmAQABmQEzAcwBAAGZAQAB/wEAAZkBZgIAAZkBZgEzAQABmQEzAWYBAAGZAWYB
-        mQEAAZkBZgHMAQABmQEzAf8BAAKZATMBAAKZAWYBAAOZAQACmQHMAQACmQH/AQABmQHMAgABmQHMATMB
-        AAFmAcwBZgEAAZkBzAGZAQABmQLMAQABmQHMAf8BAAGZAf8CAAGZAf8BMwEAAZkBzAFmAQABmQH/AZkB
-        AAGZAf8BzAEAAZkC/wEAAcwDAAGZAQABMwEAAcwBAAFmAQABzAEAAZkBAAHMAQABzAEAAZkBMwIAAcwC
-        MwEAAcwBMwFmAQABzAEzAZkBAAHMATMBzAEAAcwBMwH/AQABzAFmAgABzAFmATMBAAGZAmYBAAHMAWYB
-        mQEAAcwBZgHMAQABmQFmAf8BAAHMAZkCAAHMAZkBMwEAAcwBmQFmAQABzAKZAQABzAGZAcwBAAHMAZkB
-        /wEAAswCAALMATMBAALMAWYBAALMAZkBAAPMAQACzAH/AQABzAH/AgABzAH/ATMBAAGZAf8BZgEAAcwB
-        /wGZAQABzAH/AcwBAAHMAv8BAAHMAQABMwEAAf8BAAFmAQAB/wEAAZkBAAHMATMCAAH/AjMBAAH/ATMB
-        ZgEAAf8BMwGZAQAB/wEzAcwBAAH/ATMB/wEAAf8BZgIAAf8BZgEzAQABzAJmAQAB/wFmAZkBAAH/AWYB
-        zAEAAcwBZgH/AQAB/wGZAgAB/wGZATMBAAH/AZkBZgEAAf8CmQEAAf8BmQHMAQAB/wGZAf8BAAH/AcwC
-        AAH/AcwBMwEAAf8BzAFmAQAB/wHMAZkBAAH/AswBAAH/AcwB/wEAAv8BMwEAAcwB/wFmAQAC/wGZAQAC
-        /wHMAQACZgH/AQABZgH/AWYBAAFmAv8BAAH/AmYBAAH/AWYB/wEAAv8BZgEAASEBAAGlAQADXwEAA3cB
-        AAOGAQADlgEAA8sBAAOyAQAD1wEAA90BAAPjAQAD6gEAA/EBAAP4AQAB8AH7Af8BAAGkAqABAAOAAwAB
-        /wIAAf8DAAL/AQAB/wMAAf8BAAH/AQAC/wIAA///AAcAAf8B7QIVAe0B/zkAAfQBEwEHAv8BBwETAf84
-        AAHtAQcB8gETARIB8gEHAe00AAHzAf8CAAEVAf8BEwIRARIB/wEVAgAB/wHzMAAB7QHwAgABFQH/ARMB
-        EQLzAf8BEwIAAQcB7DAAAfQBEwHzAQAB7QEHAfIBEwHzAQABBwGSAQAB8gEUAfQxAAHzARMB8AH0ARMB
-        BwL/AQcBEwH0AbwBFAHzMwAB9ALrAe8BbQERAUMBbQHvARIB6wH0NgAB8gH3AeoCQwHqAfcB8v8ABgAB
-        /wHyAfEJBwH/GAAB8ALrAfMXAAH0ARQBEwn/AfQXAAHwAewCRAGSAfIJAAHzAf8EAAH/AfMB/wUAAfAB
-        FQH3BvAC/wH0CAAE6wkAAf8B8gFtAeoCkwEVAZIB8wYAAf8BGgFNAXUB/wIAAf8BmQFNARoB/wUAAZIB
-        FAHtBbwC/wH0CAABcwJ6AesJAAHyAQAB6gGTArcBkwFEAesGAAHzAXQCTAF1Af8BAAGZAkwBTQHzBQAB
-        7QHvARUB7QEHA/AB9AH/AfQIAAFLAnoB6wgAAfABbQHqAY4BlAK3AZQB7QHqAesB8wQAAf8BGgFNAUwB
-        TQGZARoBTQFMAU0BmQH/BQAB7QH/AZIBQwH3AbwB7wEHAfMB8gHzCAABSwJ6AVAHAAHwAewB6gGTAZQE
-        twGUAe0BRAGSAfIEAAH/ARoBdQRNAXUBmQH/BgAB7QH/AfMB7wGSAQcB7wG7AZIB8gH0Af8DAAJSAlEB
-        UgGaAXoCSwFQAusCAAHyAW0B6gGOB7cBlAGTARUBkgHzBQABGgIWAXUBFgEaAf8HAAHtAf8C9AG8ARkB
-        4gL0AQAB8AH/AwABUgeaA3oBcwMAAeoBkwq3AZMBRAHrBAAB/wEaBOMBGgH/BwAB7QH/Ae8BtQEJAt0B
-        8AG9AbwBGQL/AgABMQmaAXoBSwMAAeoBkwq3AZMBRAHrAwAB/wEaBhYBmQH/BgAB7QH/AggBGQHiAcIB
-        8QG9AfABGQHyAwABWAIxAlICmgJRAVICSwIAAe8BbQFuAZMHtwGUAZMB6gHsAfACAAH/ARoDFgIaAxYB
-        twH/BQAB7QH/AfMB8gLiA/QB/wEZAfIHAAExApoBUgcAAfcBbQFuApQEtwGUAY4B6gFtAfADAAH0AXUB
-        FgF1ARoB/wEAARoBdQEWAXUB8wUAAe0D/wHdAvQB/wG8AfAB3QH/BwABMQKaAVIIAAHvARABbgGUBLcB
-        kwHqAQAB8gUAAfMBlAEaAf8CAAH/ARoBlAHzAf8FAAHtA/8B9AEZAQABCAHyAQkB8ggAAVgCmgExCAAB
-        9AEHARABbgGTArcBjgHqAW0B8gH/BgAB9AH/BAAB/wH0BwAB7QX/AfEB7wGSARYJAAE3A1gJAAH0Ae8B
-        bQFuApMB6gHsAfAXAAHtBvcBEgFpARcB/xcAAfcBbQLqAW0B8CAAAfIBbwH/GAAB7wIAAfIGAAFCAU0B
-        PgcAAT4DAAEoAwABQAMAASADAAEBAQABAQYAAQEWAAP/AQAC/wYAAv8GAAL/BgAC/wYAAfgBHwYAAfAB
-        DwYAAfABDwYAATABDAYAATABDAYAARABSAYAAYABAQYAAcABAwYAAfABDwYAAv8GAAL/BgAC/wYAAv8B
-        gAEDAv8B/AE/Av8BgAEDAv8B+AEfAfMBxwHAAQMB/AE/AeABDwHBAYMB4AEDAfwBPwHgAQ8BwAGDAeAB
-        AwH8AT8BwAEDAcABAwHgAQMB/AE/AYABAQHgAQcB4AEBAcABAwIAAfgBDwHgAQEBwAEDAgAB8AEPAeAB
-        AAHAAQMCAAHgAQcB4AEBAcABAwIAAcABAwHgAQEB/AE/AYABAQHAAYMB4AEBAfwBPwHAAQMB4QGDAeAB
-        AwH8AT8BwAEDAfMBzwHgAQcB/AE/AeABDwL/AeABAwL/AfgBHwP/AeMC/wH8AT8L
+        SW1hZ2VMaXN0U3RyZWFtZXIBAAAABERhdGEHAgIAAAAJAwAAAA8DAAAAagwAAAJNU0Z0AUkBTAIBAQUC
+        AAEBAQABAQEQAQABEAEABP8BCQEACP8BQgFNATYBBAYAATYBBAIAASgDAAFAAwABIAMAAQEBAAEIBgAB
+        CBgAAYACAAGAAwACgAEAAYADAAGAAQABgAEAAoACAAPAAQABwAHcAcABAAHwAcoBpgEAATMFAAEzAQAB
+        MwEAATMBAAIzAgADFgEAAxwBAAMiAQADKQEAA1UBAANNAQADQgEAAzkBAAGAAXwB/wEAAlAB/wEAAZMB
+        AAHWAQAB/wHsAcwBAAHGAdYB7wEAAdYC5wEAAZABqQGtAgAB/wEzAwABZgMAAZkDAAHMAgABMwMAAjMC
+        AAEzAWYCAAEzAZkCAAEzAcwCAAEzAf8CAAFmAwABZgEzAgACZgIAAWYBmQIAAWYBzAIAAWYB/wIAAZkD
+        AAGZATMCAAGZAWYCAAKZAgABmQHMAgABmQH/AgABzAMAAcwBMwIAAcwBZgIAAcwBmQIAAswCAAHMAf8C
+        AAH/AWYCAAH/AZkCAAH/AcwBAAEzAf8CAAH/AQABMwEAATMBAAFmAQABMwEAAZkBAAEzAQABzAEAATMB
+        AAH/AQAB/wEzAgADMwEAAjMBZgEAAjMBmQEAAjMBzAEAAjMB/wEAATMBZgIAATMBZgEzAQABMwJmAQAB
+        MwFmAZkBAAEzAWYBzAEAATMBZgH/AQABMwGZAgABMwGZATMBAAEzAZkBZgEAATMCmQEAATMBmQHMAQAB
+        MwGZAf8BAAEzAcwCAAEzAcwBMwEAATMBzAFmAQABMwHMAZkBAAEzAswBAAEzAcwB/wEAATMB/wEzAQAB
+        MwH/AWYBAAEzAf8BmQEAATMB/wHMAQABMwL/AQABZgMAAWYBAAEzAQABZgEAAWYBAAFmAQABmQEAAWYB
+        AAHMAQABZgEAAf8BAAFmATMCAAFmAjMBAAFmATMBZgEAAWYBMwGZAQABZgEzAcwBAAFmATMB/wEAAmYC
+        AAJmATMBAANmAQACZgGZAQACZgHMAQABZgGZAgABZgGZATMBAAFmAZkBZgEAAWYCmQEAAWYBmQHMAQAB
+        ZgGZAf8BAAFmAcwCAAFmAcwBMwEAAWYBzAGZAQABZgLMAQABZgHMAf8BAAFmAf8CAAFmAf8BMwEAAWYB
+        /wGZAQABZgH/AcwBAAHMAQAB/wEAAf8BAAHMAQACmQIAAZkBMwGZAQABmQEAAZkBAAGZAQABzAEAAZkD
+        AAGZAjMBAAGZAQABZgEAAZkBMwHMAQABmQEAAf8BAAGZAWYCAAGZAWYBMwEAAZkBMwFmAQABmQFmAZkB
+        AAGZAWYBzAEAAZkBMwH/AQACmQEzAQACmQFmAQADmQEAApkBzAEAApkB/wEAAZkBzAIAAZkBzAEzAQAB
+        ZgHMAWYBAAGZAcwBmQEAAZkCzAEAAZkBzAH/AQABmQH/AgABmQH/ATMBAAGZAcwBZgEAAZkB/wGZAQAB
+        mQH/AcwBAAGZAv8BAAHMAwABmQEAATMBAAHMAQABZgEAAcwBAAGZAQABzAEAAcwBAAGZATMCAAHMAjMB
+        AAHMATMBZgEAAcwBMwGZAQABzAEzAcwBAAHMATMB/wEAAcwBZgIAAcwBZgEzAQABmQJmAQABzAFmAZkB
+        AAHMAWYBzAEAAZkBZgH/AQABzAGZAgABzAGZATMBAAHMAZkBZgEAAcwCmQEAAcwBmQHMAQABzAGZAf8B
+        AALMAgACzAEzAQACzAFmAQACzAGZAQADzAEAAswB/wEAAcwB/wIAAcwB/wEzAQABmQH/AWYBAAHMAf8B
+        mQEAAcwB/wHMAQABzAL/AQABzAEAATMBAAH/AQABZgEAAf8BAAGZAQABzAEzAgAB/wIzAQAB/wEzAWYB
+        AAH/ATMBmQEAAf8BMwHMAQAB/wEzAf8BAAH/AWYCAAH/AWYBMwEAAcwCZgEAAf8BZgGZAQAB/wFmAcwB
+        AAHMAWYB/wEAAf8BmQIAAf8BmQEzAQAB/wGZAWYBAAH/ApkBAAH/AZkBzAEAAf8BmQH/AQAB/wHMAgAB
+        /wHMATMBAAH/AcwBZgEAAf8BzAGZAQAB/wLMAQAB/wHMAf8BAAL/ATMBAAHMAf8BZgEAAv8BmQEAAv8B
+        zAEAAmYB/wEAAWYB/wFmAQABZgL/AQAB/wJmAQAB/wFmAf8BAAL/AWYBAAEhAQABpQEAA18BAAN3AQAD
+        hgEAA5YBAAPLAQADsgEAA9cBAAPdAQAD4wEAA+oBAAPxAQAD+AEAAfAB+wH/AQABpAKgAQADgAMAAf8C
+        AAH/AwAC/wEAAf8DAAH/AQAB/wEAAv8CAAP//wAHAAH/Ae0CFQHtAf85AAH0ARMBBwL/AQcBEwH/OAAB
+        7QEHAfIBEwESAfIBBwHtNAAB8wH/AgABFQH/ARMCEQESAf8BFQIAAf8B8zAAAe0B8AIAARUB/wETAREC
+        8wH/ARMCAAEHAewwAAH0ARMB8wEAAe0BBwHyARMB8wEAAQcBkgEAAfIBFAH0MQAB8wETAfAB9AETAQcC
+        /wEHARMB9AG8ARQB8zMAAfQC6wHvAW0BEQFDAW0B7wESAesB9DYAAfIB9wHqAkMB6gH3AfL/AAYAAf8B
+        8gHxCQcB/xgAAfAC6wHzFwAB9AEUARMJ/wH0FwAB8AHsAkQBkgHyCQAB8wH/BAAB/wHzAf8FAAHwARUB
+        9wbwAv8B9AgABOsJAAH/AfIBbQHqApMBFQGSAfMGAAH/ARoBTQF1Af8CAAH/AZkBTQEaAf8FAAGSARQB
+        7QW8Av8B9AgAAXMCegHrCQAB8gEAAeoBkwK3AZMBRAHrBgAB8wF0AkwBdQH/AQABmQJMAU0B8wUAAe0B
+        7wEVAe0BBwPwAfQB/wH0CAABSwJ6AesIAAHwAW0B6gGOAZQCtwGUAe0B6gHrAfMEAAH/ARoBTQFMAU0B
+        mQEaAU0BTAFNAZkB/wUAAe0B/wGSAUMB9wG8Ae8BBwHzAfIB8wgAAUsCegFQBwAB8AHsAeoBkwGUBLcB
+        lAHtAUQBkgHyBAAB/wEaAXUETQF1AZkB/wYAAe0B/wHzAe8BkgEHAe8BuwGSAfIB9AH/AwACUgJRAVIB
+        mgF6AksBUALrAgAB8gFtAeoBjge3AZQBkwEVAZIB8wUAARoCFgF1ARYBGgH/BwAB7QH/AvQBvAEZAeIC
+        9AEAAfAB/wMAAVIHmgN6AXMDAAHqAZMKtwGTAUQB6wQAAf8BGgTjARoB/wcAAe0B/wHvAbUBCQLdAfAB
+        vQG8ARkC/wIAATEJmgF6AUsDAAHqAZMKtwGTAUQB6wMAAf8BGgYWAZkB/wYAAe0B/wIIARkB4gHCAfEB
+        vQHwARkB8gMAAVgCMQJSApoCUQFSAksCAAHvAW0BbgGTB7cBlAGTAeoB7AHwAgAB/wEaAxYCGgMWAbcB
+        /wUAAe0B/wHzAfIC4gP0Af8BGQHyBwABMQKaAVIHAAH3AW0BbgKUBLcBlAGOAeoBbQHwAwAB9AF1ARYB
+        dQEaAf8BAAEaAXUBFgF1AfMFAAHtA/8B3QL0Af8BvAHwAd0B/wcAATECmgFSCAAB7wEQAW4BlAS3AZMB
+        6gEAAfIFAAHzAZQBGgH/AgAB/wEaAZQB8wH/BQAB7QP/AfQBGQEAAQgB8gEJAfIIAAFYApoBMQgAAfQB
+        BwEQAW4BkwK3AY4B6gFtAfIB/wYAAfQB/wQAAf8B9AcAAe0F/wHxAe8BkgEWCQABNwNYCQAB9AHvAW0B
+        bgKTAeoB7AHwFwAB7Qb3ARIBaQEXAf8XAAH3AW0C6gFtAfAgAAHyAW8B/xgAAe8CAAHyBgABQgFNAT4H
+        AAE+AwABKAMAAUADAAEgAwABAQEAAQEGAAEBFgAD/wEAAv8GAAL/BgAC/wYAAv8GAAH4AR8GAAHwAQ8G
+        AAHwAQ8GAAEwAQwGAAEwAQwGAAEQAUgGAAGAAQEGAAHAAQMGAAHwAQ8GAAL/BgAC/wYAAv8GAAL/AYAB
+        AwL/AfwBPwL/AYABAwL/AfgBHwHzAccBwAEDAfwBPwHgAQ8BwQGDAeABAwH8AT8B4AEPAcABgwHgAQMB
+        /AE/AcABAwHAAQMB4AEDAfwBPwGAAQEB4AEHAeABAQHAAQMCAAH4AQ8B4AEBAcABAwIAAfABDwHgAQAB
+        wAEDAgAB4AEHAeABAQHAAQMCAAHAAQMB4AEBAfwBPwGAAQEBwAGDAeABAQH8AT8BwAEDAeEBgwHgAQMB
+        /AE/AcABAwHzAc8B4AEHAfwBPwHgAQ8C/wHgAQMC/wH4AR8D/wHjAv8B/AE/Cw==
 </value>
   </data>
   <data name="TCProjects.ItemSize" type="System.Drawing.Size, System.Drawing">
@@ -516,117 +585,6 @@
   </data>
   <data name="&gt;&gt;TCProjects.ZOrder" xml:space="preserve">
     <value>0</value>
-  </data>
-  <data name="TPWelcomeLayout.ColumnCount" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;RichTextWelcome.Name" xml:space="preserve">
-    <value>RichTextWelcome</value>
-  </data>
-  <data name="&gt;&gt;RichTextWelcome.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RichTextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;RichTextWelcome.Parent" xml:space="preserve">
-    <value>TPWelcomeLayout</value>
-  </data>
-  <data name="&gt;&gt;RichTextWelcome.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;TPWelcomeBtnClose.Name" xml:space="preserve">
-    <value>TPWelcomeBtnClose</value>
-  </data>
-  <data name="&gt;&gt;TPWelcomeBtnClose.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;TPWelcomeBtnClose.Parent" xml:space="preserve">
-    <value>TPWelcomeLayout</value>
-  </data>
-  <data name="&gt;&gt;TPWelcomeBtnClose.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="TPWelcomeLayout.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="TPWelcomeLayout.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
-  </data>
-  <data name="TPWelcomeLayout.RowCount" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="TPWelcomeLayout.Size" type="System.Drawing.Size, System.Drawing">
-    <value>299, 499</value>
-  </data>
-  <data name="TPWelcomeLayout.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;TPWelcomeLayout.Name" xml:space="preserve">
-    <value>TPWelcomeLayout</value>
-  </data>
-  <data name="&gt;&gt;TPWelcomeLayout.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;TPWelcomeLayout.Parent" xml:space="preserve">
-    <value>TPWelcome</value>
-  </data>
-  <data name="&gt;&gt;TPWelcomeLayout.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="TPWelcomeLayout.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="RichTextWelcome" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="TPWelcomeBtnClose" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="AutoSize,0" /&gt;&lt;Rows Styles="Percent,100,Absolute,32" /&gt;&lt;/TableLayoutSettings&gt;</value>
-  </data>
-  <data name="RichTextWelcome.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left, Right</value>
-  </data>
-  <data name="RichTextWelcome.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
-  </data>
-  <data name="RichTextWelcome.Size" type="System.Drawing.Size, System.Drawing">
-    <value>293, 461</value>
-  </data>
-  <data name="RichTextWelcome.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="RichTextWelcome.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;RichTextWelcome.Name" xml:space="preserve">
-    <value>RichTextWelcome</value>
-  </data>
-  <data name="&gt;&gt;RichTextWelcome.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RichTextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;RichTextWelcome.Parent" xml:space="preserve">
-    <value>TPWelcomeLayout</value>
-  </data>
-  <data name="&gt;&gt;RichTextWelcome.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="TPWelcomeBtnClose.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="TPWelcomeBtnClose.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 470</value>
-  </data>
-  <data name="TPWelcomeBtnClose.Size" type="System.Drawing.Size, System.Drawing">
-    <value>293, 26</value>
-  </data>
-  <data name="TPWelcomeBtnClose.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="TPWelcomeBtnClose.Text" xml:space="preserve">
-    <value>Close</value>
-  </data>
-  <data name="&gt;&gt;TPWelcomeBtnClose.Name" xml:space="preserve">
-    <value>TPWelcomeBtnClose</value>
-  </data>
-  <data name="&gt;&gt;TPWelcomeBtnClose.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;TPWelcomeBtnClose.Parent" xml:space="preserve">
-    <value>TPWelcomeLayout</value>
-  </data>
-  <data name="&gt;&gt;TPWelcomeBtnClose.ZOrder" xml:space="preserve">
-    <value>1</value>
   </data>
   <metadata name="DgvPosition.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -664,6 +622,27 @@
   <metadata name="MiFieldView.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>451, 17</value>
   </metadata>
+  <data name="MiFieldFields.Size" type="System.Drawing.Size, System.Drawing">
+    <value>175, 22</value>
+  </data>
+  <data name="MiFieldFields.Text" xml:space="preserve">
+    <value>Fields</value>
+  </data>
+  <data name="MIFieldLocalVars.Size" type="System.Drawing.Size, System.Drawing">
+    <value>175, 22</value>
+  </data>
+  <data name="MIFieldLocalVars.Text" xml:space="preserve">
+    <value>Local Vars</value>
+  </data>
+  <data name="MiFieldN1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>172, 6</value>
+  </data>
+  <data name="MiFieldDebug.Size" type="System.Drawing.Size, System.Drawing">
+    <value>175, 22</value>
+  </data>
+  <data name="MiFieldDebug.Text" xml:space="preserve">
+    <value>Debug information</value>
+  </data>
   <data name="MiFieldView.Size" type="System.Drawing.Size, System.Drawing">
     <value>176, 76</value>
   </data>
@@ -699,27 +678,6 @@
   </data>
   <data name="&gt;&gt;DgvParsed.ZOrder" xml:space="preserve">
     <value>0</value>
-  </data>
-  <data name="MiFieldFields.Size" type="System.Drawing.Size, System.Drawing">
-    <value>175, 22</value>
-  </data>
-  <data name="MiFieldFields.Text" xml:space="preserve">
-    <value>Fields</value>
-  </data>
-  <data name="MIFieldLocalVars.Size" type="System.Drawing.Size, System.Drawing">
-    <value>175, 22</value>
-  </data>
-  <data name="MIFieldLocalVars.Text" xml:space="preserve">
-    <value>Local Vars</value>
-  </data>
-  <data name="MiFieldN1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>172, 6</value>
-  </data>
-  <data name="MiFieldDebug.Size" type="System.Drawing.Size, System.Drawing">
-    <value>175, 22</value>
-  </data>
-  <data name="MiFieldDebug.Text" xml:space="preserve">
-    <value>Debug information</value>
   </data>
   <metadata name="OpenProjectFileDialog.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>194, 17</value>
@@ -777,6 +735,21 @@
   </data>
   <data name="LayoutRawAndSuggested.ColumnCount" type="System.Int32, mscorlib">
     <value>2</value>
+  </data>
+  <data name="RichTextData.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="RichTextData.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="RichTextData.Size" type="System.Drawing.Size, System.Drawing">
+    <value>594, 114</value>
+  </data>
+  <data name="RichTextData.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="RichTextData.Text" xml:space="preserve">
+    <value />
   </data>
   <data name="&gt;&gt;RichTextData.Name" xml:space="preserve">
     <value>RichTextData</value>
@@ -888,33 +861,6 @@
   </data>
   <data name="&gt;&gt;SplitContainerListAndFields.ZOrder" xml:space="preserve">
     <value>1</value>
-  </data>
-  <data name="RichTextData.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="RichTextData.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
-  </data>
-  <data name="RichTextData.Size" type="System.Drawing.Size, System.Drawing">
-    <value>594, 114</value>
-  </data>
-  <data name="RichTextData.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="RichTextData.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;RichTextData.Name" xml:space="preserve">
-    <value>RichTextData</value>
-  </data>
-  <data name="&gt;&gt;RichTextData.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RichTextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;RichTextData.Parent" xml:space="preserve">
-    <value>LayoutRawAndSuggested</value>
-  </data>
-  <data name="&gt;&gt;RichTextData.ZOrder" xml:space="preserve">
-    <value>0</value>
   </data>
   <metadata name="SaveProjectFileDialog.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>568, 17</value>
