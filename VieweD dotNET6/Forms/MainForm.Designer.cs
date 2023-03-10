@@ -94,6 +94,14 @@
             SplitContainerFieldsAndRawData = new SplitContainer();
             LayoutRawAndSuggested = new TableLayoutPanel();
             RichTextData = new RichTextBox();
+            SuggestionListBox = new ListBox();
+            PMSuggestion = new ContextMenuStrip(components);
+            PMSuggestIntergers = new ToolStripMenuItem();
+            PMSuggestFloats = new ToolStripMenuItem();
+            PMSuggestDateTime = new ToolStripMenuItem();
+            PMSuggestN1 = new ToolStripSeparator();
+            PMSuggestLookup = new ToolStripMenuItem();
+            PMSuggestCustomLookup = new ToolStripMenuItem();
             SaveProjectFileDialog = new SaveFileDialog();
             MM.SuspendLayout();
             StatusBar.SuspendLayout();
@@ -111,6 +119,7 @@
             SplitContainerFieldsAndRawData.Panel2.SuspendLayout();
             SplitContainerFieldsAndRawData.SuspendLayout();
             LayoutRawAndSuggested.SuspendLayout();
+            PMSuggestion.SuspendLayout();
             SuspendLayout();
             // 
             // MM
@@ -544,6 +553,7 @@
             // 
             resources.ApplyResources(LayoutRawAndSuggested, "LayoutRawAndSuggested");
             LayoutRawAndSuggested.Controls.Add(RichTextData, 0, 0);
+            LayoutRawAndSuggested.Controls.Add(SuggestionListBox, 1, 0);
             LayoutRawAndSuggested.Name = "LayoutRawAndSuggested";
             // 
             // RichTextData
@@ -551,6 +561,67 @@
             resources.ApplyResources(RichTextData, "RichTextData");
             RichTextData.Name = "RichTextData";
             RichTextData.ReadOnly = true;
+            RichTextData.SelectionChanged += RichTextData_SelectionChanged;
+            // 
+            // SuggestionListBox
+            // 
+            SuggestionListBox.BackColor = SystemColors.Control;
+            SuggestionListBox.ContextMenuStrip = PMSuggestion;
+            resources.ApplyResources(SuggestionListBox, "SuggestionListBox");
+            SuggestionListBox.ForeColor = SystemColors.ControlText;
+            SuggestionListBox.FormattingEnabled = true;
+            SuggestionListBox.Name = "SuggestionListBox";
+            // 
+            // PMSuggestion
+            // 
+            PMSuggestion.Items.AddRange(new ToolStripItem[] { PMSuggestIntergers, PMSuggestFloats, PMSuggestDateTime, PMSuggestN1, PMSuggestLookup, PMSuggestCustomLookup });
+            PMSuggestion.Name = "PMSuggestion";
+            resources.ApplyResources(PMSuggestion, "PMSuggestion");
+            // 
+            // PMSuggestIntergers
+            // 
+            PMSuggestIntergers.Checked = true;
+            PMSuggestIntergers.CheckOnClick = true;
+            PMSuggestIntergers.CheckState = CheckState.Checked;
+            PMSuggestIntergers.Name = "PMSuggestIntergers";
+            resources.ApplyResources(PMSuggestIntergers, "PMSuggestIntergers");
+            // 
+            // PMSuggestFloats
+            // 
+            PMSuggestFloats.Checked = true;
+            PMSuggestFloats.CheckOnClick = true;
+            PMSuggestFloats.CheckState = CheckState.Checked;
+            PMSuggestFloats.Name = "PMSuggestFloats";
+            resources.ApplyResources(PMSuggestFloats, "PMSuggestFloats");
+            // 
+            // PMSuggestDateTime
+            // 
+            PMSuggestDateTime.Checked = true;
+            PMSuggestDateTime.CheckOnClick = true;
+            PMSuggestDateTime.CheckState = CheckState.Checked;
+            PMSuggestDateTime.Name = "PMSuggestDateTime";
+            resources.ApplyResources(PMSuggestDateTime, "PMSuggestDateTime");
+            // 
+            // PMSuggestN1
+            // 
+            PMSuggestN1.Name = "PMSuggestN1";
+            resources.ApplyResources(PMSuggestN1, "PMSuggestN1");
+            // 
+            // PMSuggestLookup
+            // 
+            PMSuggestLookup.Checked = true;
+            PMSuggestLookup.CheckOnClick = true;
+            PMSuggestLookup.CheckState = CheckState.Checked;
+            PMSuggestLookup.Name = "PMSuggestLookup";
+            resources.ApplyResources(PMSuggestLookup, "PMSuggestLookup");
+            // 
+            // PMSuggestCustomLookup
+            // 
+            PMSuggestCustomLookup.Checked = true;
+            PMSuggestCustomLookup.CheckOnClick = true;
+            PMSuggestCustomLookup.CheckState = CheckState.Checked;
+            PMSuggestCustomLookup.Name = "PMSuggestCustomLookup";
+            resources.ApplyResources(PMSuggestCustomLookup, "PMSuggestCustomLookup");
             // 
             // SaveProjectFileDialog
             // 
@@ -586,6 +657,7 @@
             ((System.ComponentModel.ISupportInitialize)SplitContainerFieldsAndRawData).EndInit();
             SplitContainerFieldsAndRawData.ResumeLayout(false);
             LayoutRawAndSuggested.ResumeLayout(false);
+            PMSuggestion.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -656,5 +728,13 @@
         private ToolStripSeparator MMSearchApplyMenuN1;
         private ToolStripSeparator MMSearchHighlightMenuN1;
         private SaveFileDialog SaveProjectFileDialog;
+        private ListBox SuggestionListBox;
+        private ContextMenuStrip PMSuggestion;
+        private ToolStripMenuItem PMSuggestIntergers;
+        private ToolStripMenuItem PMSuggestFloats;
+        private ToolStripMenuItem PMSuggestDateTime;
+        private ToolStripSeparator PMSuggestN1;
+        private ToolStripMenuItem PMSuggestLookup;
+        private ToolStripMenuItem PMSuggestCustomLookup;
     }
 }

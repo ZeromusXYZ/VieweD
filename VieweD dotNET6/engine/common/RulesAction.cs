@@ -94,15 +94,24 @@ public class RulesAction
 
     public string GetLookup(ulong id,int lookupIndex = 0, bool showArrow = true)
     {
+        var lookupId = id;
         var lookupVal = string.Empty;
         var lookupAttribute = "lookup";
+        var lookupOffsetAttribute = "lookupoffset";
+
+        var lookupOffsetString = XmlHelper.GetAttributeString(Attributes, lookupOffsetAttribute);
+        if (lookupOffsetString != string.Empty)
+        {
+            if (ParentRule.TryGetLocalLong(lookupOffsetString, 0, out long l))
+                lookupId = (ulong)((long)lookupId + l);
+        }
 
         if (lookupIndex > 0)
             lookupAttribute += lookupIndex.ToString();
 
         var lookupListName = XmlHelper.GetAttributeString(Attributes, lookupAttribute);
         if (lookupListName != string.Empty)
-            lookupVal = ParentRule.Parent.Parent.ParentProject.DataLookup.NLU(lookupListName).GetValue(id);
+            lookupVal = ParentRule.Parent.Parent.ParentProject.DataLookup.NLU(lookupListName).GetValue(lookupId);
 
         if ((lookupListName != string.Empty) && (showArrow))
             lookupVal += " <= ";
@@ -1472,7 +1481,7 @@ public class RulesActionReadBits : RulesAction
                 var varName = fieldName + "-" + i;
                 var lookupVal = GetLookup(i);
                 var dataString = "Bit " + i;
-                ParentRule.SetLocalVar(varName+"-"+i, bitVal ? "1" : "0");
+                ParentRule.SetLocalVar(varName, bitVal ? "1" : "0");
                 if (bitVal || (bitCount == 1))
                     packetData.AddParsedField(true, byteCursor, byteCursor, pos.ToHex(2) + "-" + i, varName, lookupVal + dataString, Depth+1);
             }
@@ -1490,7 +1499,7 @@ public class RulesActionReadBits : RulesAction
                 var varName = fieldName + "-" + i;
                 var lookupVal = GetLookup(i);
                 var dataString = "Bit " + i + " - " + bitVal.ToString(CultureInfo.InvariantCulture);
-                ParentRule.SetLocalVar(varName + "-" + i, bitVal ? "1" : "0");
+                ParentRule.SetLocalVar(varName, bitVal ? "1" : "0");
                 packetData.AddParsedField(true, byteCursor, byteCursor, pos.ToHex(2) + "-" + i, varName, lookupVal + dataString, Depth+1);
             }
         }

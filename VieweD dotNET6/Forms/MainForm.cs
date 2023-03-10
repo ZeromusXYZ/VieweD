@@ -1,6 +1,8 @@
 ﻿using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Reflection;
+using System.Runtime;
 using VieweD.engine.common;
 using VieweD.Helpers.System;
 using VieweD.Properties; // This needs to be made dynamic
@@ -17,6 +19,8 @@ namespace VieweD.Forms
                                               "-----+----------------------------------------------------  -+------------------\n";
 
         public List<string> AllTempFiles { get; set; } = new();
+
+        public BasePacketData? CurrentPacketData;
 
         public MainForm()
         {
@@ -306,8 +310,11 @@ namespace VieweD.Forms
                 DgvParsed.Tag = null;
                 RichTextData.Clear();
                 RichTextData.Tag = null;
+                CurrentPacketData = null;
                 return;
             }
+
+            CurrentPacketData = packetData;
 
             #region FieldGridView
             if (MiFieldFields.Checked)
@@ -476,6 +483,8 @@ namespace VieweD.Forms
             #region RawData
             PacketDataToRichText(packetData, RichTextData);
             #endregion
+
+            SuggestionListBox.Items.Clear();
         }
 
 #pragma warning disable IDE0079 // Remove unnecessary suppression
@@ -575,9 +584,13 @@ namespace VieweD.Forms
                     var n = thisByteField != null ? packetData.ParsedData.IndexOf(thisByteField) : 0;
 
                     if (thisByteField?.IsSelected ?? false)
+                    {
                         SetColorSelect();
+                    }
                     else
+                    {
                         SetColorNotSelect(n, true);
+                    }
 
                     char ch = (char)packetData.GetByteAtPos(startIndex + c);
                     if (ch == 92)
@@ -687,9 +700,14 @@ namespace VieweD.Forms
                             {
                                 // Is selected field
                                 if (isSearchHighlighted)
+                                {
                                     SetColorHighlight();
+                                }
                                 else
+                                {
                                     SetColorSelect();
+                                }
+
                                 if (moveCursor)
                                 {
                                     moveCursor = false;
@@ -765,6 +783,7 @@ namespace VieweD.Forms
             rtInfo.Rtf = BuildHeaderWithColorTable() + rtf;
             rtInfo.Refresh();
             rtInfo.ResumeLayout();
+
 
             /*
             if ((endCursor >= 0) && (cbOriginalData.Checked == false))
@@ -1347,6 +1366,177 @@ namespace VieweD.Forms
             _ = project.Video.OpenVideoFromProject();
             project.Video.Show();
             project.Video.BringToFront();
+        }
+
+        private void RichTextData_SelectionChanged(object sender, EventArgs e)
+        {
+            var lookupResults = new List<string>();
+
+            void AddLabel(string val)
+            {
+                SuggestionListBox.Items.Add(val);
+            }
+
+            // Used for uint24 that doesn't support negative values
+            void AddLabelUnsigned(string typeName, int hexWidth, ulong val, bool showBase)
+            {
+                var sVal = typeName + ": " + val.ToHex(hexWidth) + " - " + val;
+                if (showBase)
+                    AddLabel(sVal);
+
+                foreach (var ll in CurrentPacketData.ParentProject.DataLookup.LookupLists)
+                {
+                    if (ll.Value.Data.TryGetValue(val, out var v))
+                        if (v.Id > 0)
+                        {
+                            var s = ll.Key + "(0x" + val.ToString("X") + ") => " + v.Val;
+                            if (!lookupResults.Contains(s))
+                                lookupResults.Add(s);
+                        }
+                }
+            }
+
+            // Displays both signed and it's unsigned equivalent if they are different
+            void AddLabelSigned(string typeName, int hexWidth, long val, bool showBase)
+            {
+                var h = val.ToString("X" + hexWidth);
+                if (h.Length >= hexWidth)
+                    h = h.Substring(h.Length - hexWidth, hexWidth);
+                else
+                    h = h.PadLeft(hexWidth, 'F');
+                if (!long.TryParse(h, System.Globalization.NumberStyles.HexNumber, System.Globalization.CultureInfo.InvariantCulture, out var positiveVal))
+                    positiveVal = val;
+
+                var sVal = string.Empty;
+                if (positiveVal != val)
+                    sVal = typeName + @": 0x" + h + @" - " + positiveVal + @" (" + val + @")";
+                else
+                    sVal = typeName + @": 0x" + h + @" - " + val;
+
+                if (showBase)
+                    AddLabel(sVal);
+
+                // Only lookups for negative values on signed
+                if (val < 0)
+                {
+                    foreach (var ll in CurrentPacketData.ParentProject.DataLookup.LookupLists)
+                    {
+                        if (ll.Value.Data.TryGetValue((ulong)val, out var v))
+                            if (v.Id > 0)
+                            {
+                                var s = ll.Key + "(" + val + ") => " + v.Val;
+                                if (!lookupResults.Contains(s))
+                                    lookupResults.Add(s);
+                            }
+                    }
+                }
+
+            }
+
+            if (CurrentPacketData == null)
+            {
+                SuggestionListBox.Items.Clear();
+                return;
+            }
+
+            var firstPos = RichTextData.SelectionStart;
+            var line = RichTextData.GetLineFromCharIndex(firstPos);
+            var lineFirst = RichTextData.GetFirstCharIndexFromLine(line);
+            var linePos = firstPos - lineFirst;
+
+            var rawPos = -1;
+            var maxPos = 0;
+
+            // Only calculate position if there is data
+            if (CurrentPacketData.ByteData.Count > 0)
+            {
+                maxPos = CurrentPacketData.ByteData.Count;
+
+
+                rawPos = ((line - 2) * 16);
+                if ((linePos >= 6) && (linePos < 58)) // normal hex view location
+                {
+                    var off = linePos - 6;
+                    var blockNumber = off / 12;
+                    off -= blockNumber;
+                    var p = off / 3;
+                    if (p < 0)
+                        p = 0;
+                    if (linePos == 57)
+                        p++;
+                    rawPos += p;
+                }
+                else if ((linePos >= 63) && (linePos < 80)) // string hex view
+                {
+                    var off = linePos - 63;
+                    rawPos += off;
+                }
+
+            }
+
+            SuggestionListBox.Items.Clear();
+            // var cursorPosText = "(" + line + "," + linePos + ")";
+            var cursorPosText = string.Empty;
+            if ((rawPos >= 0) && (rawPos < maxPos))
+            {
+                cursorPosText = "Cursor: " + rawPos.ToHex(2);// + " "+ cursorPosText;
+                var sizeLeft = CurrentPacketData.ByteData.Count - rawPos;
+
+                if (sizeLeft >= 2)
+                {
+                    //AddLabelUnsigned("uint16",4,CurrentPP.PD.GetUInt16AtPos(rawPos));
+                    var n = CurrentPacketData.GetInt16AtPos(rawPos);
+                    if (n != 0)
+                        AddLabelSigned("int16 ", 4, n, PMSuggestIntergers.Checked);
+                }
+                if (sizeLeft >= 3)
+                {
+                    var n = CurrentPacketData.GetUInt24AtPos(rawPos);
+                    if (n != 0)
+                        AddLabelUnsigned("uint24", 6, n, PMSuggestIntergers.Checked);
+                }
+                if (sizeLeft >= 4)
+                {
+                    //AddLabelUnsigned("uint32", 8, CurrentPP.PD.GetUInt32AtPos(rawPos));
+                    var i = CurrentPacketData.GetInt32AtPos(rawPos);
+                    if (i != 0)
+                        AddLabelSigned("int32 ", 8, i, PMSuggestIntergers.Checked);
+                    var f = CurrentPacketData.GetFloatAtPos(rawPos);
+                    if ((f != 0f) && PMSuggestFloats.Checked)
+                        AddLabel("float : " + f.ToString(CultureInfo.InvariantCulture));
+                    var dt = CurrentPacketData.GetTimeStampAtPos(rawPos);
+                    if ((i != 0) && PMSuggestDateTime.Checked)
+                        AddLabel("datetime: " + dt);
+                }
+                if (sizeLeft >= 8)
+                {
+                    //AddLabelUnsigned("uint64", 16, CurrentPP.PD.GetUInt64AtPos(rawPos));
+                    var i = CurrentPacketData.GetInt64AtPos(rawPos);
+                    if (i != 0)
+                        AddLabelSigned("int64 ", 16, i, PMSuggestIntergers.Checked);
+                    var d = CurrentPacketData.GetDoubleAtPos(rawPos);
+                    if ((d != 0.0) && PMSuggestFloats.Checked)
+                        AddLabel("double: " + d.ToString(CultureInfo.InvariantCulture));
+                }
+
+                foreach (var lr in lookupResults)
+                {
+                    if (lr.StartsWith("@"))
+                    {
+                        if (PMSuggestCustomLookup.Checked)
+                            AddLabel(lr);
+                    }
+                    else if (PMSuggestLookup.Checked)
+                        AddLabel(lr);
+                }
+            }
+            else
+            {
+                // cursorPosText = "Pos: " + cursorPosText;
+                cursorPosText = "N/A";
+            }
+
+            SuggestionListBox.Items.Insert(0, cursorPosText);
         }
     }
 }

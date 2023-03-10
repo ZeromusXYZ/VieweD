@@ -298,7 +298,7 @@
     <value>0, 0</value>
   </data>
   <data name="MM.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1008, 24</value>
+    <value>1084, 24</value>
   </data>
   <data name="MM.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -316,7 +316,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;MM.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <metadata name="StatusBar.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>91, 17</value>
@@ -343,7 +343,7 @@
     <value>MiddleLeft</value>
   </data>
   <data name="StatusBarProject.Size" type="System.Drawing.Size, System.Drawing">
-    <value>787, 19</value>
+    <value>863, 19</value>
   </data>
   <data name="StatusBarProject.Text" xml:space="preserve">
     <value>Project folder:</value>
@@ -352,10 +352,10 @@
     <value>MiddleLeft</value>
   </data>
   <data name="StatusBar.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 537</value>
+    <value>0, 577</value>
   </data>
   <data name="StatusBar.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1008, 24</value>
+    <value>1084, 24</value>
   </data>
   <data name="StatusBar.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -373,7 +373,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;StatusBar.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="TCProjects.Alignment" type="System.Windows.Forms.TabAlignment, System.Windows.Forms">
     <value>Left</value>
@@ -388,7 +388,7 @@
     <value>3, 3</value>
   </data>
   <data name="RichTextWelcome.Size" type="System.Drawing.Size, System.Drawing">
-    <value>293, 461</value>
+    <value>300, 501</value>
   </data>
   <data name="RichTextWelcome.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -408,14 +408,14 @@
   <data name="&gt;&gt;RichTextWelcome.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="TPWelcomeBtnClose.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
+  <data name="TPWelcomeBtnClose.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
   </data>
   <data name="TPWelcomeBtnClose.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 470</value>
+    <value>3, 510</value>
   </data>
   <data name="TPWelcomeBtnClose.Size" type="System.Drawing.Size, System.Drawing">
-    <value>293, 26</value>
+    <value>300, 26</value>
   </data>
   <data name="TPWelcomeBtnClose.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -445,7 +445,7 @@
     <value>2</value>
   </data>
   <data name="TPWelcomeLayout.Size" type="System.Drawing.Size, System.Drawing">
-    <value>299, 499</value>
+    <value>303, 539</value>
   </data>
   <data name="TPWelcomeLayout.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -476,7 +476,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="TPWelcome.Size" type="System.Drawing.Size, System.Drawing">
-    <value>305, 505</value>
+    <value>309, 545</value>
   </data>
   <data name="TPWelcome.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -506,60 +506,60 @@
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAEZTeXN0ZW0uV2luZG93cy5Gb3JtcywgQ3VsdHVyZT1uZXV0cmFs
         LCBQdWJsaWNLZXlUb2tlbj1iNzdhNWM1NjE5MzRlMDg5BQEAAAAmU3lzdGVtLldpbmRvd3MuRm9ybXMu
-        SW1hZ2VMaXN0U3RyZWFtZXIBAAAABERhdGEHAgIAAAAJAwAAAA8DAAAAagwAAAJNU0Z0AUkBTAIBAQUC
-        AAEBAQABAQEQAQABEAEABP8BCQEACP8BQgFNATYBBAYAATYBBAIAASgDAAFAAwABIAMAAQEBAAEIBgAB
-        CBgAAYACAAGAAwACgAEAAYADAAGAAQABgAEAAoACAAPAAQABwAHcAcABAAHwAcoBpgEAATMFAAEzAQAB
-        MwEAATMBAAIzAgADFgEAAxwBAAMiAQADKQEAA1UBAANNAQADQgEAAzkBAAGAAXwB/wEAAlAB/wEAAZMB
-        AAHWAQAB/wHsAcwBAAHGAdYB7wEAAdYC5wEAAZABqQGtAgAB/wEzAwABZgMAAZkDAAHMAgABMwMAAjMC
-        AAEzAWYCAAEzAZkCAAEzAcwCAAEzAf8CAAFmAwABZgEzAgACZgIAAWYBmQIAAWYBzAIAAWYB/wIAAZkD
-        AAGZATMCAAGZAWYCAAKZAgABmQHMAgABmQH/AgABzAMAAcwBMwIAAcwBZgIAAcwBmQIAAswCAAHMAf8C
-        AAH/AWYCAAH/AZkCAAH/AcwBAAEzAf8CAAH/AQABMwEAATMBAAFmAQABMwEAAZkBAAEzAQABzAEAATMB
-        AAH/AQAB/wEzAgADMwEAAjMBZgEAAjMBmQEAAjMBzAEAAjMB/wEAATMBZgIAATMBZgEzAQABMwJmAQAB
-        MwFmAZkBAAEzAWYBzAEAATMBZgH/AQABMwGZAgABMwGZATMBAAEzAZkBZgEAATMCmQEAATMBmQHMAQAB
-        MwGZAf8BAAEzAcwCAAEzAcwBMwEAATMBzAFmAQABMwHMAZkBAAEzAswBAAEzAcwB/wEAATMB/wEzAQAB
-        MwH/AWYBAAEzAf8BmQEAATMB/wHMAQABMwL/AQABZgMAAWYBAAEzAQABZgEAAWYBAAFmAQABmQEAAWYB
-        AAHMAQABZgEAAf8BAAFmATMCAAFmAjMBAAFmATMBZgEAAWYBMwGZAQABZgEzAcwBAAFmATMB/wEAAmYC
-        AAJmATMBAANmAQACZgGZAQACZgHMAQABZgGZAgABZgGZATMBAAFmAZkBZgEAAWYCmQEAAWYBmQHMAQAB
-        ZgGZAf8BAAFmAcwCAAFmAcwBMwEAAWYBzAGZAQABZgLMAQABZgHMAf8BAAFmAf8CAAFmAf8BMwEAAWYB
-        /wGZAQABZgH/AcwBAAHMAQAB/wEAAf8BAAHMAQACmQIAAZkBMwGZAQABmQEAAZkBAAGZAQABzAEAAZkD
-        AAGZAjMBAAGZAQABZgEAAZkBMwHMAQABmQEAAf8BAAGZAWYCAAGZAWYBMwEAAZkBMwFmAQABmQFmAZkB
-        AAGZAWYBzAEAAZkBMwH/AQACmQEzAQACmQFmAQADmQEAApkBzAEAApkB/wEAAZkBzAIAAZkBzAEzAQAB
-        ZgHMAWYBAAGZAcwBmQEAAZkCzAEAAZkBzAH/AQABmQH/AgABmQH/ATMBAAGZAcwBZgEAAZkB/wGZAQAB
-        mQH/AcwBAAGZAv8BAAHMAwABmQEAATMBAAHMAQABZgEAAcwBAAGZAQABzAEAAcwBAAGZATMCAAHMAjMB
-        AAHMATMBZgEAAcwBMwGZAQABzAEzAcwBAAHMATMB/wEAAcwBZgIAAcwBZgEzAQABmQJmAQABzAFmAZkB
-        AAHMAWYBzAEAAZkBZgH/AQABzAGZAgABzAGZATMBAAHMAZkBZgEAAcwCmQEAAcwBmQHMAQABzAGZAf8B
-        AALMAgACzAEzAQACzAFmAQACzAGZAQADzAEAAswB/wEAAcwB/wIAAcwB/wEzAQABmQH/AWYBAAHMAf8B
-        mQEAAcwB/wHMAQABzAL/AQABzAEAATMBAAH/AQABZgEAAf8BAAGZAQABzAEzAgAB/wIzAQAB/wEzAWYB
-        AAH/ATMBmQEAAf8BMwHMAQAB/wEzAf8BAAH/AWYCAAH/AWYBMwEAAcwCZgEAAf8BZgGZAQAB/wFmAcwB
-        AAHMAWYB/wEAAf8BmQIAAf8BmQEzAQAB/wGZAWYBAAH/ApkBAAH/AZkBzAEAAf8BmQH/AQAB/wHMAgAB
-        /wHMATMBAAH/AcwBZgEAAf8BzAGZAQAB/wLMAQAB/wHMAf8BAAL/ATMBAAHMAf8BZgEAAv8BmQEAAv8B
-        zAEAAmYB/wEAAWYB/wFmAQABZgL/AQAB/wJmAQAB/wFmAf8BAAL/AWYBAAEhAQABpQEAA18BAAN3AQAD
-        hgEAA5YBAAPLAQADsgEAA9cBAAPdAQAD4wEAA+oBAAPxAQAD+AEAAfAB+wH/AQABpAKgAQADgAMAAf8C
-        AAH/AwAC/wEAAf8DAAH/AQAB/wEAAv8CAAP//wAHAAH/Ae0CFQHtAf85AAH0ARMBBwL/AQcBEwH/OAAB
-        7QEHAfIBEwESAfIBBwHtNAAB8wH/AgABFQH/ARMCEQESAf8BFQIAAf8B8zAAAe0B8AIAARUB/wETAREC
-        8wH/ARMCAAEHAewwAAH0ARMB8wEAAe0BBwHyARMB8wEAAQcBkgEAAfIBFAH0MQAB8wETAfAB9AETAQcC
-        /wEHARMB9AG8ARQB8zMAAfQC6wHvAW0BEQFDAW0B7wESAesB9DYAAfIB9wHqAkMB6gH3AfL/AAYAAf8B
-        8gHxCQcB/xgAAfAC6wHzFwAB9AEUARMJ/wH0FwAB8AHsAkQBkgHyCQAB8wH/BAAB/wHzAf8FAAHwARUB
-        9wbwAv8B9AgABOsJAAH/AfIBbQHqApMBFQGSAfMGAAH/ARoBTQF1Af8CAAH/AZkBTQEaAf8FAAGSARQB
-        7QW8Av8B9AgAAXMCegHrCQAB8gEAAeoBkwK3AZMBRAHrBgAB8wF0AkwBdQH/AQABmQJMAU0B8wUAAe0B
-        7wEVAe0BBwPwAfQB/wH0CAABSwJ6AesIAAHwAW0B6gGOAZQCtwGUAe0B6gHrAfMEAAH/ARoBTQFMAU0B
-        mQEaAU0BTAFNAZkB/wUAAe0B/wGSAUMB9wG8Ae8BBwHzAfIB8wgAAUsCegFQBwAB8AHsAeoBkwGUBLcB
-        lAHtAUQBkgHyBAAB/wEaAXUETQF1AZkB/wYAAe0B/wHzAe8BkgEHAe8BuwGSAfIB9AH/AwACUgJRAVIB
-        mgF6AksBUALrAgAB8gFtAeoBjge3AZQBkwEVAZIB8wUAARoCFgF1ARYBGgH/BwAB7QH/AvQBvAEZAeIC
-        9AEAAfAB/wMAAVIHmgN6AXMDAAHqAZMKtwGTAUQB6wQAAf8BGgTjARoB/wcAAe0B/wHvAbUBCQLdAfAB
-        vQG8ARkC/wIAATEJmgF6AUsDAAHqAZMKtwGTAUQB6wMAAf8BGgYWAZkB/wYAAe0B/wIIARkB4gHCAfEB
-        vQHwARkB8gMAAVgCMQJSApoCUQFSAksCAAHvAW0BbgGTB7cBlAGTAeoB7AHwAgAB/wEaAxYCGgMWAbcB
-        /wUAAe0B/wHzAfIC4gP0Af8BGQHyBwABMQKaAVIHAAH3AW0BbgKUBLcBlAGOAeoBbQHwAwAB9AF1ARYB
-        dQEaAf8BAAEaAXUBFgF1AfMFAAHtA/8B3QL0Af8BvAHwAd0B/wcAATECmgFSCAAB7wEQAW4BlAS3AZMB
-        6gEAAfIFAAHzAZQBGgH/AgAB/wEaAZQB8wH/BQAB7QP/AfQBGQEAAQgB8gEJAfIIAAFYApoBMQgAAfQB
-        BwEQAW4BkwK3AY4B6gFtAfIB/wYAAfQB/wQAAf8B9AcAAe0F/wHxAe8BkgEWCQABNwNYCQAB9AHvAW0B
-        bgKTAeoB7AHwFwAB7Qb3ARIBaQEXAf8XAAH3AW0C6gFtAfAgAAHyAW8B/xgAAe8CAAHyBgABQgFNAT4H
-        AAE+AwABKAMAAUADAAEgAwABAQEAAQEGAAEBFgAD/wEAAv8GAAL/BgAC/wYAAv8GAAH4AR8GAAHwAQ8G
-        AAHwAQ8GAAEwAQwGAAEwAQwGAAEQAUgGAAGAAQEGAAHAAQMGAAHwAQ8GAAL/BgAC/wYAAv8GAAL/AYAB
-        AwL/AfwBPwL/AYABAwL/AfgBHwHzAccBwAEDAfwBPwHgAQ8BwQGDAeABAwH8AT8B4AEPAcABgwHgAQMB
-        /AE/AcABAwHAAQMB4AEDAfwBPwGAAQEB4AEHAeABAQHAAQMCAAH4AQ8B4AEBAcABAwIAAfABDwHgAQAB
-        wAEDAgAB4AEHAeABAQHAAQMCAAHAAQMB4AEBAfwBPwGAAQEBwAGDAeABAQH8AT8BwAEDAeEBgwHgAQMB
-        /AE/AcABAwHzAc8B4AEHAfwBPwHgAQ8C/wHgAQMC/wH4AR8D/wHjAv8B/AE/Cw==
+        SW1hZ2VMaXN0U3RyZWFtZXIBAAAABERhdGEHAgIAAAAJAwAAAA8DAAAAbAwAAAJNU0Z0AUkBTAIBAQUB
+        AAFoAQEBaAEBARABAAEQAQAE/wEJAQAI/wFCAU0BNgEEBgABNgEEAgABKAMAAUADAAEgAwABAQEAAQgG
+        AAEIGAABgAIAAYADAAKAAQABgAMAAYABAAGAAQACgAIAA8ABAAHAAdwBwAEAAfABygGmAQABMwUAATMB
+        AAEzAQABMwEAAjMCAAMWAQADHAEAAyIBAAMpAQADVQEAA00BAANCAQADOQEAAYABfAH/AQACUAH/AQAB
+        kwEAAdYBAAH/AewBzAEAAcYB1gHvAQAB1gLnAQABkAGpAa0CAAH/ATMDAAFmAwABmQMAAcwCAAEzAwAC
+        MwIAATMBZgIAATMBmQIAATMBzAIAATMB/wIAAWYDAAFmATMCAAJmAgABZgGZAgABZgHMAgABZgH/AgAB
+        mQMAAZkBMwIAAZkBZgIAApkCAAGZAcwCAAGZAf8CAAHMAwABzAEzAgABzAFmAgABzAGZAgACzAIAAcwB
+        /wIAAf8BZgIAAf8BmQIAAf8BzAEAATMB/wIAAf8BAAEzAQABMwEAAWYBAAEzAQABmQEAATMBAAHMAQAB
+        MwEAAf8BAAH/ATMCAAMzAQACMwFmAQACMwGZAQACMwHMAQACMwH/AQABMwFmAgABMwFmATMBAAEzAmYB
+        AAEzAWYBmQEAATMBZgHMAQABMwFmAf8BAAEzAZkCAAEzAZkBMwEAATMBmQFmAQABMwKZAQABMwGZAcwB
+        AAEzAZkB/wEAATMBzAIAATMBzAEzAQABMwHMAWYBAAEzAcwBmQEAATMCzAEAATMBzAH/AQABMwH/ATMB
+        AAEzAf8BZgEAATMB/wGZAQABMwH/AcwBAAEzAv8BAAFmAwABZgEAATMBAAFmAQABZgEAAWYBAAGZAQAB
+        ZgEAAcwBAAFmAQAB/wEAAWYBMwIAAWYCMwEAAWYBMwFmAQABZgEzAZkBAAFmATMBzAEAAWYBMwH/AQAC
+        ZgIAAmYBMwEAA2YBAAJmAZkBAAJmAcwBAAFmAZkCAAFmAZkBMwEAAWYBmQFmAQABZgKZAQABZgGZAcwB
+        AAFmAZkB/wEAAWYBzAIAAWYBzAEzAQABZgHMAZkBAAFmAswBAAFmAcwB/wEAAWYB/wIAAWYB/wEzAQAB
+        ZgH/AZkBAAFmAf8BzAEAAcwBAAH/AQAB/wEAAcwBAAKZAgABmQEzAZkBAAGZAQABmQEAAZkBAAHMAQAB
+        mQMAAZkCMwEAAZkBAAFmAQABmQEzAcwBAAGZAQAB/wEAAZkBZgIAAZkBZgEzAQABmQEzAWYBAAGZAWYB
+        mQEAAZkBZgHMAQABmQEzAf8BAAKZATMBAAKZAWYBAAOZAQACmQHMAQACmQH/AQABmQHMAgABmQHMATMB
+        AAFmAcwBZgEAAZkBzAGZAQABmQLMAQABmQHMAf8BAAGZAf8CAAGZAf8BMwEAAZkBzAFmAQABmQH/AZkB
+        AAGZAf8BzAEAAZkC/wEAAcwDAAGZAQABMwEAAcwBAAFmAQABzAEAAZkBAAHMAQABzAEAAZkBMwIAAcwC
+        MwEAAcwBMwFmAQABzAEzAZkBAAHMATMBzAEAAcwBMwH/AQABzAFmAgABzAFmATMBAAGZAmYBAAHMAWYB
+        mQEAAcwBZgHMAQABmQFmAf8BAAHMAZkCAAHMAZkBMwEAAcwBmQFmAQABzAKZAQABzAGZAcwBAAHMAZkB
+        /wEAAswCAALMATMBAALMAWYBAALMAZkBAAPMAQACzAH/AQABzAH/AgABzAH/ATMBAAGZAf8BZgEAAcwB
+        /wGZAQABzAH/AcwBAAHMAv8BAAHMAQABMwEAAf8BAAFmAQAB/wEAAZkBAAHMATMCAAH/AjMBAAH/ATMB
+        ZgEAAf8BMwGZAQAB/wEzAcwBAAH/ATMB/wEAAf8BZgIAAf8BZgEzAQABzAJmAQAB/wFmAZkBAAH/AWYB
+        zAEAAcwBZgH/AQAB/wGZAgAB/wGZATMBAAH/AZkBZgEAAf8CmQEAAf8BmQHMAQAB/wGZAf8BAAH/AcwC
+        AAH/AcwBMwEAAf8BzAFmAQAB/wHMAZkBAAH/AswBAAH/AcwB/wEAAv8BMwEAAcwB/wFmAQAC/wGZAQAC
+        /wHMAQACZgH/AQABZgH/AWYBAAFmAv8BAAH/AmYBAAH/AWYB/wEAAv8BZgEAASEBAAGlAQADXwEAA3cB
+        AAOGAQADlgEAA8sBAAOyAQAD1wEAA90BAAPjAQAD6gEAA/EBAAP4AQAB8AH7Af8BAAGkAqABAAOAAwAB
+        /wIAAf8DAAL/AQAB/wMAAf8BAAH/AQAC/wIAA///AAcAAf8B7QIVAe0B/zkAAfQBEwEHAv8BBwETAf84
+        AAHtAQcB8gETARIB8gEHAe00AAHzAf8CAAEVAf8BEwIRARIB/wEVAgAB/wHzMAAB7QHwAgABFQH/ARMB
+        EQLzAf8BEwIAAQcB7DAAAfQBEwHzAQAB7QEHAfIBEwHzAQABBwGSAQAB8gEUAfQxAAHzARMB8AH0ARMB
+        BwL/AQcBEwH0AbwBFAHzMwAB9ALrAe8BbQERAUMBbQHvARIB6wH0NgAB8gH3AeoCQwHqAfcB8v8ABgAB
+        /wHyAfEJBwH/GAAB8ALrAfMXAAH0ARQBEwn/AfQXAAHwAewCRAGSAfIJAAHzAf8EAAH/AfMB/wUAAfAB
+        FQH3BvAC/wH0CAAE6wkAAf8B8gFtAeoCkwEVAZIB8wYAAf8BGgFNAXUB/wIAAf8BmQFNARoB/wUAAZIB
+        FAHtBbwC/wH0CAABcwJ6AesJAAHyAQAB6gGTArcBkwFEAesGAAHzAXQCTAF1Af8BAAGZAkwBTQHzBQAB
+        7QHvARUB7QEHA/AB9AH/AfQIAAFLAnoB6wgAAfABbQHqAY4BlAK3AZQB7QHqAesB8wQAAf8BGgFNAUwB
+        TQGZARoBTQFMAU0BmQH/BQAB7QH/AZIBQwH3AbwB7wEHAfMB8gHzCAABSwJ6AVAHAAHwAewB6gGTAZQE
+        twGUAe0BRAGSAfIEAAH/ARoBdQRNAXUBmQH/BgAB7QH/AfMB7wGSAQcB7wG7AZIB8gH0Af8DAAJSAlEB
+        UgGaAXoCSwFQAusCAAHyAW0B6gGOB7cBlAGTARUBkgHzBQABGgIWAXUBFgEaAf8HAAHtAf8C9AG8ARkB
+        4gL0AQAB8AH/AwABUgeaA3oBcwMAAeoBkwq3AZMBRAHrBAAB/wEaBOMBGgH/BwAB7QH/Ae8BtQEJAt0B
+        8AG9AbwBGQL/AgABMQmaAXoBSwMAAeoBkwq3AZMBRAHrAwAB/wEaBhYBmQH/BgAB7QH/AggBGQHiAcIB
+        8QG9AfABGQHyAwABWAIxAlICmgJRAVICSwIAAe8BbQFuAZMHtwGUAZMB6gHsAfACAAH/ARoDFgIaAxYB
+        twH/BQAB7QH/AfMB8gLiA/QB/wEZAfIHAAExApoBUgcAAfcBbQFuApQEtwGUAY4B6gFtAfADAAH0AXUB
+        FgF1ARoB/wEAARoBdQEWAXUB8wUAAe0D/wHdAvQB/wG8AfAB3QH/BwABMQKaAVIIAAHvARABbgGUBLcB
+        kwHqAQAB8gUAAfMBlAEaAf8CAAH/ARoBlAHzAf8FAAHtA/8B9AEZAQABCAHyAQkB8ggAAVgCmgExCAAB
+        9AEHARABbgGTArcBjgHqAW0B8gH/BgAB9AH/BAAB/wH0BwAB7QX/AfEB7wGSARYJAAE3A1gJAAH0Ae8B
+        bQFuApMB6gHsAfAXAAHtBvcBEgFpARcB/xcAAfcBbQLqAW0B8CAAAfIBbwH/GAAB7wIAAfIGAAFCAU0B
+        PgcAAT4DAAEoAwABQAMAASADAAEBAQABAQYAAQEWAAP/AQAC/wYAAv8GAAL/BgAC/wYAAfgBHwYAAfAB
+        DwYAAfABDwYAATABDAYAATABDAYAARABSAYAAYABAQYAAcABAwYAAfABDwYAAv8GAAL/BgAC/wYAAv8B
+        gAEDAv8B/AE/Av8BgAEDAv8B+AEfAfMBxwHAAQMB/AE/AeABDwHBAYMB4AEDAfwBPwHgAQ8BwAGDAeAB
+        AwH8AT8BwAEDAcABAwHgAQMB/AE/AYABAQHgAQcB4AEBAcABAwIAAfgBDwHgAQEBwAEDAgAB8AEPAeAB
+        AAHAAQMCAAHgAQcB4AEBAcABAwIAAcABAwHgAQEB/AE/AYABAQHAAYMB4AEBAfwBPwHAAQMB4QGDAeAB
+        AwH8AT8BwAEDAfMBzwHgAQcB/AE/AeABDwL/AeABAwL/AfgBHwP/AeMC/wH8AT8L
 </value>
   </data>
   <data name="TCProjects.ItemSize" type="System.Drawing.Size, System.Drawing">
@@ -569,7 +569,7 @@
     <value>0, 0</value>
   </data>
   <data name="TCProjects.Size" type="System.Drawing.Size, System.Drawing">
-    <value>336, 513</value>
+    <value>340, 553</value>
   </data>
   <data name="TCProjects.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -662,7 +662,7 @@
     <value>8</value>
   </data>
   <data name="DgvParsed.Size" type="System.Drawing.Size, System.Drawing">
-    <value>668, 389</value>
+    <value>740, 417</value>
   </data>
   <data name="DgvParsed.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -743,7 +743,7 @@
     <value>3, 3</value>
   </data>
   <data name="RichTextData.Size" type="System.Drawing.Size, System.Drawing">
-    <value>594, 114</value>
+    <value>584, 126</value>
   </data>
   <data name="RichTextData.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -763,6 +763,84 @@
   <data name="&gt;&gt;RichTextData.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
+  <metadata name="PMSuggestion.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>736, 17</value>
+  </metadata>
+  <data name="PMSuggestIntergers.Size" type="System.Drawing.Size, System.Drawing">
+    <value>161, 22</value>
+  </data>
+  <data name="PMSuggestIntergers.Text" xml:space="preserve">
+    <value>Integers</value>
+  </data>
+  <data name="PMSuggestFloats.Size" type="System.Drawing.Size, System.Drawing">
+    <value>161, 22</value>
+  </data>
+  <data name="PMSuggestFloats.Text" xml:space="preserve">
+    <value>Floating points</value>
+  </data>
+  <data name="PMSuggestDateTime.Size" type="System.Drawing.Size, System.Drawing">
+    <value>161, 22</value>
+  </data>
+  <data name="PMSuggestDateTime.Text" xml:space="preserve">
+    <value>DateTime</value>
+  </data>
+  <data name="PMSuggestN1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>158, 6</value>
+  </data>
+  <data name="PMSuggestLookup.Size" type="System.Drawing.Size, System.Drawing">
+    <value>161, 22</value>
+  </data>
+  <data name="PMSuggestLookup.Text" xml:space="preserve">
+    <value>Lookup lists</value>
+  </data>
+  <data name="PMSuggestCustomLookup.Size" type="System.Drawing.Size, System.Drawing">
+    <value>161, 22</value>
+  </data>
+  <data name="PMSuggestCustomLookup.Text" xml:space="preserve">
+    <value>Custom lookups</value>
+  </data>
+  <data name="PMSuggestion.Size" type="System.Drawing.Size, System.Drawing">
+    <value>162, 120</value>
+  </data>
+  <data name="PMSuggestion.Text" xml:space="preserve">
+    <value>Suggestion Settings</value>
+  </data>
+  <data name="&gt;&gt;PMSuggestion.Name" xml:space="preserve">
+    <value>PMSuggestion</value>
+  </data>
+  <data name="&gt;&gt;PMSuggestion.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="SuggestionListBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="SuggestionListBox.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 7pt</value>
+  </data>
+  <data name="SuggestionListBox.ItemHeight" type="System.Int32, mscorlib">
+    <value>12</value>
+  </data>
+  <data name="SuggestionListBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>593, 3</value>
+  </data>
+  <data name="SuggestionListBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>144, 126</value>
+  </data>
+  <data name="SuggestionListBox.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;SuggestionListBox.Name" xml:space="preserve">
+    <value>SuggestionListBox</value>
+  </data>
+  <data name="&gt;&gt;SuggestionListBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ListBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SuggestionListBox.Parent" xml:space="preserve">
+    <value>LayoutRawAndSuggested</value>
+  </data>
+  <data name="&gt;&gt;SuggestionListBox.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
   <data name="LayoutRawAndSuggested.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
@@ -773,7 +851,7 @@
     <value>1</value>
   </data>
   <data name="LayoutRawAndSuggested.Size" type="System.Drawing.Size, System.Drawing">
-    <value>668, 120</value>
+    <value>740, 132</value>
   </data>
   <data name="LayoutRawAndSuggested.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -791,7 +869,7 @@
     <value>0</value>
   </data>
   <data name="LayoutRawAndSuggested.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="RichTextData" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,600,AutoSize,0" /&gt;&lt;Rows Styles="Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="RichTextData" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="SuggestionListBox" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,590,Percent,100" /&gt;&lt;Rows Styles="Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="&gt;&gt;SplitContainerFieldsAndRawData.Panel2.Name" xml:space="preserve">
     <value>SplitContainerFieldsAndRawData.Panel2</value>
@@ -809,10 +887,10 @@
     <value>120</value>
   </data>
   <data name="SplitContainerFieldsAndRawData.Size" type="System.Drawing.Size, System.Drawing">
-    <value>668, 513</value>
+    <value>740, 553</value>
   </data>
   <data name="SplitContainerFieldsAndRawData.SplitterDistance" type="System.Int32, mscorlib">
-    <value>389</value>
+    <value>417</value>
   </data>
   <data name="SplitContainerFieldsAndRawData.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -842,10 +920,10 @@
     <value>1</value>
   </data>
   <data name="SplitContainerListAndFields.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1008, 513</value>
+    <value>1084, 553</value>
   </data>
   <data name="SplitContainerListAndFields.SplitterDistance" type="System.Int32, mscorlib">
-    <value>336</value>
+    <value>340</value>
   </data>
   <data name="SplitContainerListAndFields.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -860,7 +938,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;SplitContainerListAndFields.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <metadata name="SaveProjectFileDialog.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>568, 17</value>
@@ -875,7 +953,7 @@
     <value>7, 15</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>1008, 561</value>
+    <value>1084, 601</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -1263,6 +1341,42 @@
   </data>
   <data name="&gt;&gt;OpenProjectFileDialog.Type" xml:space="preserve">
     <value>System.Windows.Forms.OpenFileDialog, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PMSuggestIntergers.Name" xml:space="preserve">
+    <value>PMSuggestIntergers</value>
+  </data>
+  <data name="&gt;&gt;PMSuggestIntergers.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PMSuggestFloats.Name" xml:space="preserve">
+    <value>PMSuggestFloats</value>
+  </data>
+  <data name="&gt;&gt;PMSuggestFloats.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PMSuggestDateTime.Name" xml:space="preserve">
+    <value>PMSuggestDateTime</value>
+  </data>
+  <data name="&gt;&gt;PMSuggestDateTime.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PMSuggestN1.Name" xml:space="preserve">
+    <value>PMSuggestN1</value>
+  </data>
+  <data name="&gt;&gt;PMSuggestN1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PMSuggestLookup.Name" xml:space="preserve">
+    <value>PMSuggestLookup</value>
+  </data>
+  <data name="&gt;&gt;PMSuggestLookup.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PMSuggestCustomLookup.Name" xml:space="preserve">
+    <value>PMSuggestCustomLookup</value>
+  </data>
+  <data name="&gt;&gt;PMSuggestCustomLookup.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;SaveProjectFileDialog.Name" xml:space="preserve">
     <value>SaveProjectFileDialog</value>
