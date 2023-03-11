@@ -35,6 +35,10 @@ public class FfxiPacketRule : PacketRule
                 return new RulesActionFfxiReadVanaTime(this, parentAction, actionNode, step);
             case "roequest":
                 return new RulesActionFfxiReadRoEQuest(this, parentAction, actionNode, step);
+            case "linkshell":
+                return new RulesActionFfxiReadLinkShellName(this, parentAction, actionNode, step);
+            case "inscription":
+                return new RulesActionFfxiReadItemInscription(this, parentAction, actionNode, step);
             default:
                 return base.BuildFallbackDataAction(parentAction, actionNode, attributes, step, dataType, isReversed);
         }
@@ -278,6 +282,52 @@ public class RulesActionFfxiReadRoEQuest : RulesAction
         ParentRule.SetLocalVar(varName + "-id", idVal.ToString());
         ParentRule.SetLocalVar(varName + "-progress", progressVal.ToString());
         ParentRule.SetLocalVar(varName + "-max", maxVal);
+        packetData.AddParsedField(true, pos, packetData.Cursor - 1, pos.ToHex(2), varName, data, Depth);
+    }
+}
+
+public class RulesActionFfxiReadLinkShellName : RulesAction
+{
+    public RulesActionFfxiReadLinkShellName(PacketRule parent, RulesAction? parentAction, XmlNode thisNode, int thisStep) :
+        base(parent, parentAction, thisNode, thisStep, false)
+    {
+        //
+    }
+
+    public override void RunAction(BasePacketData packetData)
+    {
+        GotoStartPosition(packetData);
+        var varName = XmlHelper.GetAttributeString(Attributes, "name");
+        var pos = packetData.Cursor;
+
+        var data = FfxiStrings.GetPackedString16AtPos(packetData, pos, FfxiStrings.LinkShellEncoding);
+        var dataRaw = packetData.GetDataBytesAtPos(pos, 16);
+
+        ParentRule.SetLocalVar(varName+"-raw", NumberHelper.BytesToHexString(dataRaw));
+        ParentRule.SetLocalVar(varName + "-decode", data);
+        packetData.AddParsedField(true, pos, packetData.Cursor - 1, pos.ToHex(2), varName, data, Depth);
+    }
+}
+
+public class RulesActionFfxiReadItemInscription : RulesAction
+{
+    public RulesActionFfxiReadItemInscription(PacketRule parent, RulesAction? parentAction, XmlNode thisNode, int thisStep) :
+        base(parent, parentAction, thisNode, thisStep, false)
+    {
+        //
+    }
+
+    public override void RunAction(BasePacketData packetData)
+    {
+        GotoStartPosition(packetData);
+        var varName = XmlHelper.GetAttributeString(Attributes, "name");
+        var pos = packetData.Cursor;
+
+        var data = FfxiStrings.GetPackedString16AtPos(packetData, pos, FfxiStrings.ItemEncoding);
+        var dataRaw = packetData.GetDataBytesAtPos(pos, 16);
+
+        ParentRule.SetLocalVar(varName + "-raw", NumberHelper.BytesToHexString(dataRaw));
+        ParentRule.SetLocalVar(varName + "-decode", data);
         packetData.AddParsedField(true, pos, packetData.Cursor - 1, pos.ToHex(2), varName, data, Depth);
     }
 }

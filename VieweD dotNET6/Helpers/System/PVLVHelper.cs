@@ -186,17 +186,17 @@ namespace VieweD.Helpers.System
                 pathSplit.RemoveAt(pathSplit.Count - 1);
                 var hDir = pathSplit[^1];
 
-                if ((pathSplit.Count > 2) && (ExpectedLogFolderRootsWithCharacterNames.IndexOf(pathSplit[pathSplit.Count - 2]) >= 0))
+                if ((pathSplit.Count > 2) && (ExpectedLogFolderRootsWithCharacterNames.IndexOf(pathSplit[pathSplit.Count - 2].ToLower()) >= 0))
                 {
                     // This is the first dir inside packetviewer, add support for character names
                     // Add "this character name" to expected dirs when downdir is packetviewer and currect dir isn't in expected
-                    if ((elfr.IndexOf(hDir) < 0) && (Directory.Exists(Path.Combine(pathSplit.ToArray()))))
+                    if ((elfr.IndexOf(hDir.ToLower()) < 0) && (Directory.Exists(Path.Combine(pathSplit.ToArray()))))
                     {
                         elfr.Add(hDir);
                     }
                 }
 
-                if ((elfr.IndexOf(hDir) < 0) && (Directory.Exists(Path.Combine(pathSplit.ToArray()))))
+                if ((elfr.IndexOf(hDir.ToLower()) < 0) && (Directory.Exists(Path.Combine(pathSplit.ToArray()))))
                 {
                     break;
                 }

@@ -349,7 +349,7 @@
     <value>Save cancelled</value>
   </data>
   <data name="LoadedOldProjectTypeAndNeedSave" xml:space="preserve">
-    <value>The current project was loaded in a older format, you will need to save it into the new format</value>
+    <value>The current project was loaded from a lmog file or a older project format, you will need to save it into the new project format</value>
   </data>
   <data name="Search" xml:space="preserve">
     <value>Search</value>
@@ -416,5 +416,8 @@
   </data>
   <data name="audio_volume_muted_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\kde-icons\audio-volume-muted-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="NothingSelected" xml:space="preserve">
+    <value>Nothing selected</value>
   </data>
 </root>

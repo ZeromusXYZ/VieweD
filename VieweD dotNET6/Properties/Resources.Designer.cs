@@ -417,7 +417,7 @@ namespace VieweD.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The current project was loaded in a older format, you will need to save it into the new format.
+        ///   Looks up a localized string similar to The current project was loaded from a lmog file or a older project format, you will need to save it into the new project format.
         /// </summary>
         internal static string LoadedOldProjectTypeAndNeedSave {
             get {
@@ -656,6 +656,15 @@ namespace VieweD.Properties {
         internal static string NothingFound {
             get {
                 return ResourceManager.GetString("NothingFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nothing selected.
+        /// </summary>
+        internal static string NothingSelected {
+            get {
+                return ResourceManager.GetString("NothingSelected", resourceCulture);
             }
         }
         

@@ -201,22 +201,22 @@ public class DataLookups
         customListName = customListName.ToLower();
 
         // Handle §playerid special case
+        /*
         if (customListName.StartsWith("§"))
         {
-            /*
-             // TODO: Implement Game Data Viewer
+            // TODO: Implement Game Data Viewer
 
             if ((customListName == @"§playerid") && (GameViewForm.GV != null))
             {
                 GameViewForm.GV.gbPlayer.Text = @"Player 0x" + customId.ToHex();
                 GameViewForm.GV.lPlayerName.Text = customValue;
             }
-            */
             return;
         }
+        */
 
         // Prefix @ if it wasn't already
-        if (!customListName.StartsWith("@"))
+        if (!customListName.StartsWith("@") && !customListName.StartsWith("§"))
             customListName = "@" + customListName;
 
         var list = NLUOrCreate(customListName);

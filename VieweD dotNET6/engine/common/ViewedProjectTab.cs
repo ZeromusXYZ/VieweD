@@ -87,12 +87,13 @@ public class ViewedProjectTab : TabPage
     /// <summary>
     /// Set to true if a old format project file was loaded
     /// </summary>
-    public bool RequestUpdatedProjectFileName { get; private set; }
+    public bool RequestUpdatedProjectFileName { get; set; }
 
     public SearchParameters SearchParameters { get; set; }
     public List<string> AllFieldNames { get; set; }
     public ProjectVideoSettings VideoSettings { get; set; } = new();
     public VideoForm? Video { get; set; }
+    public GameViewForm? GameView { get; set; }
 
     public ViewedProjectTab()
     {
@@ -185,16 +186,14 @@ public class ViewedProjectTab : TabPage
         #endregion
 
         // Initialize Empty Project
-        ProjectFile = Path.Combine(Directory.GetCurrentDirectory(), "project.pvd");
+        ProjectFile = "project.pvd"; // Path.Combine(Directory.GetCurrentDirectory(), "project.pvd");
         OpenedLogFile = string.Empty;
         CurrentSyncId = -1;
         LoadedPacketList = new List<BasePacketData>();
 
         // Load Static Lookups
         DataLookup = new DataLookups();
-        // TODO: Move this to somewhere in the open file functions
-        // _ = DataLookup.LoadLookups("ffxi", true);
-
+        
         ReIndexLoadedPackets();
         PopulateListBox();
         IsDirty = false;
@@ -214,14 +213,12 @@ public class ViewedProjectTab : TabPage
     private void PmPLResetFilter_Click(object? sender, EventArgs e)
     {
         var packetData = GetSelectedPacket();
-        if (packetData == null)
-            return;
 
         // Clear filter
         Filter.MarkAsDimmed = false;
         Filter.Clear();
 
-        PopulateListBox(packetData.ThisIndex);
+        PopulateListBox(packetData?.ThisIndex ?? -1);
         CenterListBox();
     }
 
@@ -349,50 +346,67 @@ public class ViewedProjectTab : TabPage
     private void PmPL_Opening(object? sender, CancelEventArgs e)
     {
         var packetData = GetSelectedPacket();
+        PmPlShowPacketName.Enabled = packetData != null;
+        PmPls1.Enabled = packetData != null;
+        PmPlShowOnly.Enabled = packetData != null;
+        PmPlHideThis.Enabled = packetData != null;
+        PmPls2.Enabled = packetData != null;
+        PmPlShowOutOnly.Enabled = packetData != null;
+        PmPlShowInOnly.Enabled = packetData != null;
+        PmPls3.Enabled = packetData != null;
+        PmPlResetFilters.Enabled = (Filter.FilterInType != FilterType.Off) || (Filter.FilterOutType != FilterType.Off);
+        PmPls4.Enabled = packetData != null;
+        PmPlEditParser.Enabled = packetData != null;
+        PmPlExportPacket.Enabled = false;// packetData != null;
+        
         if (packetData == null)
         {
-            e.Cancel = true;
-            return;
+            PmPlShowPacketName.Text = Resources.NothingSelected;
+            //e.Cancel = true;
+            //return;
         }
 
-        var thisRule = packetData.ParentProject.InputParser?.Rules?.GetPacketRule(packetData);
-        if (thisRule != null)
+        if (packetData != null)
         {
-            var lookupName = PacketFilterListEntry.AsString(thisRule.PacketId, thisRule.Level, thisRule.StreamId);
-            PmPlShowPacketName.Text = lookupName + @" - " + thisRule.Name; // lookupKey.ToString("X8");
-            PmPlEditParser.Tag = thisRule;
-            if (packetData.PacketDataDirection != PacketDataDirection.Unknown)
+            var thisRule = packetData.ParentProject.InputParser?.Rules?.GetPacketRule(packetData);
+            if (thisRule != null)
             {
-                PmPlEditParser.Text = string.Format(Resources.PopupEditRule, lookupName, thisRule.Name);
-                PmPlEditParser.Visible = true;
+                var lookupName = PacketFilterListEntry.AsString(thisRule.PacketId, thisRule.Level, thisRule.StreamId);
+                PmPlShowPacketName.Text = lookupName + @" - " + thisRule.Name; // lookupKey.ToString("X8");
+                PmPlEditParser.Tag = thisRule;
+                if (packetData.PacketDataDirection != PacketDataDirection.Unknown)
+                {
+                    PmPlEditParser.Text = string.Format(Resources.PopupEditRule, lookupName, thisRule.Name);
+                    PmPlEditParser.Visible = true;
+                }
+                else
+                {
+                    PmPlEditParser.Text = Resources.PopupUnknownDirection;
+                    PmPlEditParser.Visible = false;
+                }
             }
             else
             {
-                PmPlEditParser.Text = Resources.PopupUnknownDirection;
-                PmPlEditParser.Visible = false;
-            }
-        }
-        else
-        {
-            PmPlShowPacketName.Text = Resources.PopupNoRuleAssigned;
+                PmPlShowPacketName.Text = Resources.PopupNoRuleAssigned;
 
-            var packetFilterEntry = new PacketFilterListEntry(packetData.PacketId, 0, 0);
-            if (packetData.PacketDataDirection != PacketDataDirection.Unknown)
-            {
-                PmPlEditParser.Text = string.Format(Resources.PopupCreateRule, packetFilterEntry);
-                PmPlEditParser.Visible = true;
-                PmPlEditParser.Tag = packetFilterEntry;
+                var packetFilterEntry = new PacketFilterListEntry(packetData.PacketId, 0, 0);
+                if (packetData.PacketDataDirection != PacketDataDirection.Unknown)
+                {
+                    PmPlEditParser.Text = string.Format(Resources.PopupCreateRule, packetFilterEntry);
+                    PmPlEditParser.Visible = true;
+                    PmPlEditParser.Tag = packetFilterEntry;
+                }
+                else
+                {
+                    PmPlEditParser.Tag = null;
+                    PmPlEditParser.Text = Resources.PopupNothingToEdit;
+                    PmPlEditParser.Visible = false;
+                }
             }
-            else
-            {
-                PmPlEditParser.Tag = null;
-                PmPlEditParser.Text = Resources.PopupNothingToEdit;
-                PmPlEditParser.Visible = false;
-            }
-        }
 
-        PmPlShowOnly.Enabled = (packetData.PacketDataDirection != PacketDataDirection.Unknown);
-        PmPlHideThis.Enabled = (packetData.PacketDataDirection != PacketDataDirection.Unknown);
+            PmPlShowOnly.Enabled = (packetData.PacketDataDirection != PacketDataDirection.Unknown);
+            PmPlHideThis.Enabled = (packetData.PacketDataDirection != PacketDataDirection.Unknown);
+        }
     }
 
     private BasePacketData? GetSelectedPacket()

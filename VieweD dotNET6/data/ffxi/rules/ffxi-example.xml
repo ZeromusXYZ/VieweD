@@ -52,7 +52,8 @@ For proper usage, you will need to create a plugin engine that does proper packe
 		</s2c>
 		<c2s>
 			<packet type="0x00A" desc="Client Connect">
-      </packet>
+				<!-- Client Connect -->
+			</packet>
 			<packet type="0x015" desc="Standard Client" comment="" credits="ZeromusXYZ" app="VieweD">
 				<data type="pos" name="Position"/>
 				<data type="ushort" name="Run Count" pos="0x12"/>

@@ -154,7 +154,7 @@ namespace VieweD.Forms
             }
             else
             {
-                expectedProjectFileName = string.Empty;
+                project.RequestUpdatedProjectFileName = true;
             }
 
             if ((expectedProjectFileName != string.Empty) && File.Exists(expectedProjectFileName))
@@ -183,6 +183,10 @@ namespace VieweD.Forms
                 project.Filter.CopyFrom(projectSetting.Filter);
                 project.SearchParameters.CopyFrom(projectSetting.Search);
                 lastTimeOffset = projectSetting.LastTimeOffset;
+            }
+            else
+            {
+                project.RequestUpdatedProjectFileName = true;
             }
 
             if (string.IsNullOrWhiteSpace(project.ProjectFile))
@@ -236,7 +240,7 @@ namespace VieweD.Forms
                 project.ReIndexLoadedPackets();
                 project.PopulateListBox();
                 project.GotoPacketTimeOffset(lastTimeOffset);
-                project.IsDirty = false;
+                project.IsDirty = project.RequestUpdatedProjectFileName;
                 project.OnProjectDataChanged();
             }
             else
@@ -898,10 +902,13 @@ namespace VieweD.Forms
                     Resources.SaveProject, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
                 return;
             }
-            if ((project.RequestUpdatedProjectFileName) || (!File.Exists(project.ProjectFile)) || (forceSaveAs))
+
+            if ((project.RequestUpdatedProjectFileName) || (!File.Exists(project.ProjectFile)) || forceSaveAs)
             {
                 if (project.RequestUpdatedProjectFileName)
                 {
+                    var dir = Helper.MakeProjectDirectoryFromLogFileName(project.OpenedLogFile);
+                    project.ProjectFile = Path.Combine(dir, Path.GetFileName(dir.TrimEnd(Path.DirectorySeparatorChar)) + ".pvd");
                     SaveProjectFileDialog.FileName = Path.ChangeExtension(project.ProjectFile, ".pvd");
                     MessageBox.Show(
                         Resources.LoadedOldProjectTypeAndNeedSave,
@@ -911,6 +918,7 @@ namespace VieweD.Forms
                 {
                     SaveProjectFileDialog.FileName = project.ProjectFile;
                 }
+                SaveProjectFileDialog.InitialDirectory = Path.GetDirectoryName(SaveProjectFileDialog.FileName);
 
                 if (SaveProjectFileDialog.ShowDialog() == DialogResult.OK)
                 {
@@ -925,6 +933,7 @@ namespace VieweD.Forms
             }
 
             project.SaveProjectSettingsFile(project.ProjectFile, project.ProjectFolder);
+            UpdateStatusBar(project);
         }
 
         private void TCProjects_DrawItem(object sender, DrawItemEventArgs e)
@@ -1537,6 +1546,16 @@ namespace VieweD.Forms
             }
 
             SuggestionListBox.Items.Insert(0, cursorPosText);
+        }
+
+        private void MMProjectGameData_Click(object sender, EventArgs e)
+        {
+            if (TCProjects.SelectedTab is ViewedProjectTab project)
+            {
+                project.GameView ??= new GameViewForm(project);
+                project.GameView.Show();
+                project.GameView.BringToFront();
+            }
         }
     }
 }

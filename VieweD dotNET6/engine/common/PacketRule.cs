@@ -207,6 +207,14 @@ public class PacketRule
             case "ifgt":
                 res = new RulesActionCompareOperation(this, parentAction, actionNode, step, "arg1", ">", "arg2");
                 break;
+            case "iflte":
+            case "ifle":
+                res = new RulesActionCompareOperation(this, parentAction, actionNode, step, "arg1", "<=", "arg2");
+                break;
+            case "ifgte":
+            case "ifge":
+                res = new RulesActionCompareOperation(this, parentAction, actionNode, step, "arg1", ">=", "arg2");
+                break;
             case "ifz":
                 res = new RulesActionCompareOperation(this, parentAction, actionNode, step, "arg", "==", "0");
                 break;

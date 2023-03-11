@@ -192,6 +192,7 @@
             // 
             MMProjectGameData.Name = "MMProjectGameData";
             resources.ApplyResources(MMProjectGameData, "MMProjectGameData");
+            MMProjectGameData.Click += MMProjectGameData_Click;
             // 
             // MMProjectVideo
             // 

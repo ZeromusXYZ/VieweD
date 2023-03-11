@@ -112,46 +112,46 @@
     <value>Ctrl+S</value>
   </data>
   <data name="MMProjectSave.Size" type="System.Drawing.Size, System.Drawing">
-    <value>169, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="MMProjectSave.Text" xml:space="preserve">
     <value>&amp;Save</value>
   </data>
   <data name="toolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>166, 6</value>
+    <value>177, 6</value>
   </data>
   <data name="MMProjectGameData.Size" type="System.Drawing.Size, System.Drawing">
-    <value>169, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="MMProjectGameData.Text" xml:space="preserve">
     <value>Game Data ...</value>
   </data>
   <data name="MMProjectVideo.Size" type="System.Drawing.Size, System.Drawing">
-    <value>169, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="MMProjectVideo.Text" xml:space="preserve">
     <value>Video Link ...</value>
   </data>
   <data name="MMProjectN1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>166, 6</value>
+    <value>177, 6</value>
   </data>
   <data name="MMProjectSettings.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
     <value>Ctrl+P</value>
   </data>
   <data name="MMProjectSettings.Size" type="System.Drawing.Size, System.Drawing">
-    <value>169, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="MMProjectSettings.Text" xml:space="preserve">
     <value>Se&amp;ttings ...</value>
   </data>
   <data name="MMProjectN2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>166, 6</value>
+    <value>177, 6</value>
   </data>
   <data name="MMProjectClose.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
     <value>Ctrl+W</value>
   </data>
   <data name="MMProjectClose.Size" type="System.Drawing.Size, System.Drawing">
-    <value>169, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="MMProjectClose.Text" xml:space="preserve">
     <value>&amp;Close</value>
@@ -507,7 +507,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAEZTeXN0ZW0uV2luZG93cy5Gb3JtcywgQ3VsdHVyZT1uZXV0cmFs
         LCBQdWJsaWNLZXlUb2tlbj1iNzdhNWM1NjE5MzRlMDg5BQEAAAAmU3lzdGVtLldpbmRvd3MuRm9ybXMu
         SW1hZ2VMaXN0U3RyZWFtZXIBAAAABERhdGEHAgIAAAAJAwAAAA8DAAAAbAwAAAJNU0Z0AUkBTAIBAQUB
-        AAFoAQEBaAEBARABAAEQAQAE/wEJAQAI/wFCAU0BNgEEBgABNgEEAgABKAMAAUADAAEgAwABAQEAAQgG
+        AAFwAQEBcAEBARABAAEQAQAE/wEJAQAI/wFCAU0BNgEEBgABNgEEAgABKAMAAUADAAEgAwABAQEAAQgG
         AAEIGAABgAIAAYADAAKAAQABgAMAAYABAAGAAQACgAIAA8ABAAHAAdwBwAEAAfABygGmAQABMwUAATMB
         AAEzAQABMwEAAjMCAAMWAQADHAEAAyIBAAMpAQADVQEAA00BAANCAQADOQEAAYABfAH/AQACUAH/AQAB
         kwEAAdYBAAH/AewBzAEAAcYB1gHvAQAB1gLnAQABkAGpAa0CAAH/ATMDAAFmAwABmQMAAcwCAAEzAwAC
