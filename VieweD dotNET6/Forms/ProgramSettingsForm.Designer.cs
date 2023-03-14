@@ -624,6 +624,7 @@
             // RbAutoLoadVideoYoutube
             // 
             RbAutoLoadVideoYoutube.AutoSize = true;
+            RbAutoLoadVideoYoutube.Enabled = false;
             RbAutoLoadVideoYoutube.Location = new Point(224, 37);
             RbAutoLoadVideoYoutube.Margin = new Padding(4, 3, 4, 3);
             RbAutoLoadVideoYoutube.Name = "RbAutoLoadVideoYoutube";
@@ -1301,7 +1302,7 @@
             FontDlg.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
             FontDlg.FontMustExist = true;
             // 
-            // SettingsForm
+            // ProgramSettingsForm
             // 
             AcceptButton = BtnOK;
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1317,7 +1318,7 @@
             Margin = new Padding(4, 3, 4, 3);
             MaximizeBox = false;
             MinimizeBox = false;
-            Name = "SettingsForm";
+            Name = "ProgramSettingsForm";
             SizeGripStyle = SizeGripStyle.Hide;
             StartPosition = FormStartPosition.CenterParent;
             Text = "VieweD Settings";

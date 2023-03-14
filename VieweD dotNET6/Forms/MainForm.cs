@@ -242,6 +242,12 @@ namespace VieweD.Forms
                 project.GotoPacketTimeOffset(lastTimeOffset);
                 project.IsDirty = project.RequestUpdatedProjectFileName;
                 project.OnProjectDataChanged();
+
+                if ((Settings.Default.AutoLoadVideo > 0) && !string.IsNullOrWhiteSpace(project.VideoSettings.VideoFile) &&
+                    (File.Exists(project.VideoSettings.VideoFile)))
+                {
+                    project.OpenVideoForm();
+                }
             }
             else
             {
@@ -1366,15 +1372,7 @@ namespace VieweD.Forms
                 return;
             }
 
-            if (project.Video == null)
-            {
-                project.Video = new VideoForm();
-                project.Video.ParentProject = project;
-            }
-
-            _ = project.Video.OpenVideoFromProject();
-            project.Video.Show();
-            project.Video.BringToFront();
+            project.OpenVideoForm();
         }
 
         private void RichTextData_SelectionChanged(object sender, EventArgs e)

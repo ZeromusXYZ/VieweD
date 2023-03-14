@@ -283,6 +283,10 @@ public class PacketRule
             case "echo":
                 res = new RulesActionEcho(this, parentAction, actionNode, step, "arg");
                 break;
+            case "cur":
+            case "cursor":
+                res = new RulesActionCursor(this, parentAction, actionNode, step);
+                break;
             case "#comment":
                 res = new RulesActionComment(this, parentAction, actionNode, step);
                 break;

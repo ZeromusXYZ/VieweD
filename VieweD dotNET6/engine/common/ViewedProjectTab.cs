@@ -4,6 +4,7 @@ using VieweD.Forms;
 using VieweD.Helpers.System;
 using VieweD.engine.serialize;
 using VieweD.Properties;
+using System.Media;
 
 namespace VieweD.engine.common;
 public class ViewedProjectTab : TabPage
@@ -93,6 +94,7 @@ public class ViewedProjectTab : TabPage
     public List<string> AllFieldNames { get; set; }
     public ProjectVideoSettings VideoSettings { get; set; } = new();
     public VideoForm? Video { get; set; }
+    public RulesEditorForm? CurrentEditor { get; set; }
     public GameViewForm? GameView { get; set; }
 
     public ViewedProjectTab()
@@ -423,6 +425,14 @@ public class ViewedProjectTab : TabPage
 
     private void EditCurrentPacketRule()
     {
+        if (CurrentEditor != null)
+        {
+            CurrentEditor.BringToFront();
+            CurrentEditor.Focus();
+            SystemSounds.Exclamation.Play();
+            return;
+        }
+
         var packetData = GetSelectedPacket();
         if (packetData != null)
         {
@@ -454,7 +464,8 @@ public class ViewedProjectTab : TabPage
             //rule?.RunRule(data);
             if (rule != null)
             {
-                RulesEditorForm.OpenRuleEditor(rule, packetData);
+                CurrentEditor = RulesEditorForm.OpenRuleEditor(rule, packetData);
+                CurrentEditor.ParentProject = this;
             }
             else
             {
@@ -1194,5 +1205,18 @@ public class ViewedProjectTab : TabPage
                 return;
             }
         }
+    }
+
+    public void OpenVideoForm()
+    {
+        if (Video == null)
+        {
+            Video = new VideoForm();
+            Video.ParentProject = this;
+        }
+
+        _ = Video.OpenVideoFromProject();
+        Video.Show();
+        Video.BringToFront();
     }
 }

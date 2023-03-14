@@ -37,8 +37,8 @@ namespace VieweD.Forms
                 var media = new Media(LibVlc, filePath);
                 //var media = new Media(LibVlc, new Uri("http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"));
                 MPlayer.Play(media);
-                //MPlayer.Pause();
-                //MPlayer.Position = 0.0f;
+                MPlayer.SetPause(true);
+                MPlayer.Position = 0.0f;
                 //MPlayer.NextFrame();
                 media.Dispose();
                 PMFollowPackets.Enabled = (ParentProject != null);

@@ -55,8 +55,11 @@ public class FfxiRulesReader : RulesReader
         editor.AddMenuItem(ffxiMenu.DropDownItems, "Vana'diel Time (4 byte)", "<data type=\"vanatime\" name=\"|Time|\" />");
         editor.AddMenuItem(ffxiMenu.DropDownItems, "-", "");
         editor.AddMenuItem(ffxiMenu.DropDownItems, "Combat Skill (2 byte)", "<data type=\"combatskill\" name=\"|SkillName|\" />");
+        editor.AddMenuItem(ffxiMenu.DropDownItems, "Craft Skill (2 byte)", "<data type=\"craftskill\" name=\"|CraftName|\" />");
         editor.AddMenuItem(ffxiMenu.DropDownItems, "Job Points (3 byte)", "<data type=\"jobpoints\" name=\"|JobName|\" />");
         editor.AddMenuItem(ffxiMenu.DropDownItems, "Buffs (32x6 byte)", "<data type=\"buffs\" name=\"|Buffs|\" arg=\"32\" />");
         editor.AddMenuItem(ffxiMenu.DropDownItems, "RoE Quest (4 byte)", "<data type=\"roequest\" name=\"|Quest|\" />");
+        editor.AddMenuItem(ffxiMenu.DropDownItems, "Linkshell Name (16 byte)", "<data type=\"linkshell\" name=\"|Linkshell Name|\" />");
+        editor.AddMenuItem(ffxiMenu.DropDownItems, "Item Inscription (16 byte)", "<data type=\"inscription\" name=\"|Item Inscription|\" />");
     }
 }

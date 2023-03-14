@@ -283,12 +283,14 @@ public class RulesReader
         templates!.Enabled = templates.DropDownItems.Count > 0;
 
         var others = editor.AddMenuItem(miInsert.Items, "Other", "");
-        editor.AddMenuItem(others!.DropDownItems, "echo", "<echo arg=\"#a\" />");
-        editor.AddMenuItem(others!.DropDownItems, "echo block", "<echo arg=\"#a\">\n" +
+        editor.AddMenuItem(others!.DropDownItems, "cursor", "<cursor pos=\"4\" bit=\"0\" />");
+        editor.AddMenuItem(others.DropDownItems, "-", "");
+        editor.AddMenuItem(others.DropDownItems, "echo", "<echo arg=\"a\" name=\"Info\" />");
+        editor.AddMenuItem(others.DropDownItems, "echo block", "<echo arg=\"a\" name=\"Info\" >\n" +
                                                                 "\t<!-- your code here -->\n" +
                                                                 "</echo>\n");
-        editor.AddMenuItem(others!.DropDownItems, "comment", "<!--- your comment here -->");
-
+        editor.AddMenuItem(others.DropDownItems, "-", "");
+        editor.AddMenuItem(others.DropDownItems, "comment", "<!--- your comment here -->");
     }
 
     public PacketRule? CreateNewUserPacketRule(ViewedProjectTab project, PacketDataDirection packetDataDirection, PacketFilterListEntry key, string newName)

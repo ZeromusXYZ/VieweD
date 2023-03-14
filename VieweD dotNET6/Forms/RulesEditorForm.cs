@@ -7,6 +7,7 @@ namespace VieweD.Forms
 {
     public partial class RulesEditorForm : Form
     {
+        public ViewedProjectTab? ParentProject { get; set; }
         public PacketRule? Rule { get; set; }
         public BasePacketData? PacketData { get; set; }
         public string? OldValue { get; set; }
@@ -16,7 +17,7 @@ namespace VieweD.Forms
             InitializeComponent();
         }
 
-        public static void OpenRuleEditor(PacketRule rule, BasePacketData packetData)
+        public static RulesEditorForm OpenRuleEditor(PacketRule rule, BasePacketData packetData)
         {
             var editor = new RulesEditorForm();
             editor.LoadFromRule(rule, packetData);
@@ -26,10 +27,13 @@ namespace VieweD.Forms
             editor.BringToFront();
             editor.RuleEdit.Focus();
             editor.BuildInsertMenu();
+            return editor;
         }
 
         private void RulesEditorForm_FormClosed(object sender, FormClosedEventArgs e)
         {
+            if (ParentProject != null)
+                ParentProject.CurrentEditor = null;
             Dispose();
         }
 

@@ -1390,14 +1390,17 @@ public class RulesActionEcho : RulesAction
     public override void RunAction(BasePacketData packetData)
     {
         GotoStartPosition(packetData);
+        var echoName = XmlHelper.GetAttributeString(Attributes, "name");
         var dataString = ParentRule.GetLocalVar(FieldName);
         var hexString = string.Empty;
         var lookupVal = string.Empty;
+        if (string.IsNullOrWhiteSpace(echoName))
+            echoName = FieldName;
 
         // Handle output differently if float val
         if (double.TryParse(dataString, out var valDouble) && (Math.Abs(Math.Floor(valDouble) - valDouble) > double.Epsilon))
         {
-            packetData.AddParsedError("A"+GetActionStepName(), FieldName, valDouble.ToString(CultureInfo.InvariantCulture), Depth);
+            packetData.AddParsedError("A"+GetActionStepName(), echoName, valDouble.ToString(CultureInfo.InvariantCulture), Depth);
             return;
         }
 
@@ -1414,7 +1417,7 @@ public class RulesActionEcho : RulesAction
             hexString = " - " + valInt.ToHex();
             lookupVal = GetLookup((ulong)valInt);
         }
-        packetData.AddParsedError("A" + GetActionStepName(), FieldName, lookupVal + dataString + hexString, Depth);
+        packetData.AddParsedError("A" + GetActionStepName(), echoName, lookupVal + dataString + hexString, Depth);
 
         // Do child actions
         foreach (var child in ChildActions)
@@ -1629,5 +1632,22 @@ public class RulesActionReadIp6 : RulesAction
         }
         ParentRule.SetLocalVar(varName, dataString);
         packetData.AddParsedField(true, pos, packetData.Cursor - 1, pos.ToHex(2), varName, dataString, Depth);
+    }
+}
+
+/// <summary>
+/// Moves the cursor
+/// </summary>
+public class RulesActionCursor : RulesAction
+{
+    public RulesActionCursor(PacketRule parent, RulesAction? parentAction, XmlNode thisNode, int thisStep) : base(parent, parentAction, thisNode, thisStep, false)
+    {
+        // Nothing to do
+    }
+
+    public override void RunAction(BasePacketData packetData)
+    {
+        // This only needs to update the cursor
+        GotoStartPosition(packetData);
     }
 }
