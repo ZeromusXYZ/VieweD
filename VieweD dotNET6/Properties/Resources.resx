@@ -420,4 +420,7 @@
   <data name="NothingSelected" xml:space="preserve">
     <value>Nothing selected</value>
   </data>
+  <data name="MissingRulesFileForProject" xml:space="preserve">
+    <value>Missing rules file for project {0}</value>
+  </data>
 </root>

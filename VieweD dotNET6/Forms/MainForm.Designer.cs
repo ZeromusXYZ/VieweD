@@ -640,6 +640,7 @@
             Name = "MainForm";
             FormClosed += MainForm_FormClosed;
             Load += MainForm_Load;
+            Shown += MainForm_Shown;
             MM.ResumeLayout(false);
             MM.PerformLayout();
             StatusBar.ResumeLayout(false);

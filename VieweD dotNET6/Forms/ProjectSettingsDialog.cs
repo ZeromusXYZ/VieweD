@@ -17,6 +17,7 @@ namespace VieweD.Forms
         public ViewedProjectTab? ParentProject { get; set; }
         public bool RequiresReload { get; set; }
         private string DefaultTitle { get; set; } = string.Empty;
+        private List<RuleComboBoxEntry> RulesSelectionList { get; set; } = new();
 
         public ProjectSettingsDialog()
         {
@@ -28,6 +29,35 @@ namespace VieweD.Forms
             ClearForm();
             ParentProject = project;
             FillFieldsFromProject();
+        }
+
+        private void FillRulesListFromParser()
+        {
+            RulesSelectionList.Clear();
+            var currentRuleFile = ParentProject?.InputParser?.Rules?.LoadedRulesFileName ?? string.Empty;
+
+            RulesSelectionList.Add(new RuleComboBoxEntry(">> " + Path.GetFileNameWithoutExtension(currentRuleFile) + " (current)", currentRuleFile));
+
+            if ((ParentProject == null) || (ParentProject.InputReader == null))
+                return;
+
+            var rulesFolder = Path.Combine(Application.StartupPath, "data", ParentProject.InputReader.DataFolder, "rules");
+            if (Directory.Exists(rulesFolder))
+            {
+                var rulesFiles = Directory.GetFiles(rulesFolder, "*.xml", SearchOption.AllDirectories);
+                foreach (var rulesFile in rulesFiles)
+                    RulesSelectionList.Add(
+                        new RuleComboBoxEntry(Path.GetFileNameWithoutExtension(rulesFile), rulesFile));
+            }
+
+            if ((ParentProject.ProjectFolder != "") && Directory.Exists(ParentProject.ProjectFolder))
+            {
+                var localRulesFiles =
+                    Directory.GetFiles(ParentProject.ProjectFolder, "*.xml", SearchOption.AllDirectories);
+                foreach (var rulesFile in localRulesFiles)
+                    RulesSelectionList.Add(
+                        new RuleComboBoxEntry(Path.GetFileNameWithoutExtension(rulesFile) + " (local)", rulesFile));
+            }
         }
 
         private void FillFieldsFromProject()
@@ -46,10 +76,11 @@ namespace VieweD.Forms
             CBParser.Enabled = CBParser.Text == string.Empty;
 
             // TODO: Fill in all rules files
-            var loadedRule = Path.GetFileNameWithoutExtension(ParentProject.InputParser?.Rules?.LoadedRulesFileName ?? string.Empty);
-            CBRules.Items.Add(loadedRule);
-            CBRules.Text = loadedRule;
-            // CBRules.Enabled = CBRules.Text == string.Empty;
+            FillRulesListFromParser();
+            CBRules.Items.Clear();
+            CBRules.DataSource = RulesSelectionList;
+            CBRules.DisplayMember = "Display";
+            CBRules.ValueMember = "Value";
 
             CreateVisualTags(ParentProject.Tags);
 

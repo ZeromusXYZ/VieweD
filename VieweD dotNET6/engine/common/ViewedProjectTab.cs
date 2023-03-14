@@ -922,7 +922,23 @@ public class ViewedProjectTab : TabPage
     {
         using var settings = new ProjectSettingsDialog();
         settings.AssignProject(this);
-        return (settings.ShowDialog() == DialogResult.OK);
+        var oldRulesFile = InputParser?.Rules?.LoadedRulesFileName ?? "";
+        var dialogOk = (settings.ShowDialog() == DialogResult.OK);
+        if (dialogOk)
+        {
+            var newRulesFile = (settings.CBRules.SelectedValue as string);
+            if ((oldRulesFile != newRulesFile) && (newRulesFile != null) && File.Exists(newRulesFile) && (InputParser != null))
+            {
+                MessageBox.Show("Rules file changed, re-parsing the project", Resources.SaveProject,
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                InputParser.OpenRulesFile(newRulesFile);
+                InputParser.ParseAllData(true);
+                ReIndexLoadedPackets();
+                PopulateListBox();
+                IsDirty = true;
+            }
+        }
+        return dialogOk;
     }
 
     public bool PacketDataDirectionDialog(BasePacketData packetData, out PacketDataDirection selectedDirection)

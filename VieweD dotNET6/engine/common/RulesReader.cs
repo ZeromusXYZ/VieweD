@@ -56,6 +56,9 @@ public class RulesReader
 
         // Locate rule sections
         AllRulesGroups = XmlDoc.SelectNodes("/root/rule");
+        S2C.Clear();
+        C2S.Clear();
+
         if (AllRulesGroups != null)
         {
             UsesMultipleStreams = AllRulesGroups.Count > 1;

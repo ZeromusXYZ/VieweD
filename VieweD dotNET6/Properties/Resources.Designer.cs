@@ -615,6 +615,15 @@ namespace VieweD.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Missing rules file for project {0}.
+        /// </summary>
+        internal static string MissingRulesFileForProject {
+            get {
+                return ResourceManager.GetString("MissingRulesFileForProject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No rule attached to this packet, create a new one?.
         /// </summary>
         internal static string NoRuleAttachedToThisPacketCreateNewRule {

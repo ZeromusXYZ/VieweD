@@ -36,6 +36,8 @@ namespace VieweD.Forms
             Settings.Default.GridViewFont = BtnGridViewFont.Font;
             Settings.Default.RawViewFont = BtnRawViewFont.Font;
 
+            Settings.Default.CreditsName = DefaultCreditsTextBox.Text;
+
             /*
             foreach (var tab in TcSettings.TabPages)
             {
@@ -120,6 +122,8 @@ namespace VieweD.Forms
             RbListStyleTransparent.Checked = (Settings.Default.PacketListStyle == 2);
             CbShowHexStringData.Checked = Settings.Default.ShowStringHexData;
             CbAskNewProject.Checked = Settings.Default.AskCreateNewProjectFile;
+
+            DefaultCreditsTextBox.Text = Settings.Default.CreditsName;
 
             // Add Engine-specific Tab Pages
             if (pressedDefaultButton)

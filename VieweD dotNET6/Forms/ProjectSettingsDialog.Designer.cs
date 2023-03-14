@@ -45,9 +45,9 @@
             label3 = new Label();
             BtnOK = new Button();
             GbTags = new GroupBox();
-            TagLayout = new FlowLayoutPanel();
-            TagTextBox = new TextBox();
             BtnAddTag = new Button();
+            TagTextBox = new TextBox();
+            TagLayout = new FlowLayoutPanel();
             GbProjectFile.SuspendLayout();
             GbInput.SuspendLayout();
             GbTags.SuspendLayout();
@@ -162,16 +162,6 @@
             GbTags.Name = "GbTags";
             GbTags.TabStop = false;
             // 
-            // TagLayout
-            // 
-            resources.ApplyResources(TagLayout, "TagLayout");
-            TagLayout.Name = "TagLayout";
-            // 
-            // TagTextBox
-            // 
-            resources.ApplyResources(TagTextBox, "TagTextBox");
-            TagTextBox.Name = "TagTextBox";
-            // 
             // BtnAddTag
             // 
             BtnAddTag.Image = Properties.Resources.add;
@@ -179,6 +169,16 @@
             BtnAddTag.Name = "BtnAddTag";
             BtnAddTag.UseVisualStyleBackColor = true;
             BtnAddTag.Click += BtnAddTag_Click;
+            // 
+            // TagTextBox
+            // 
+            resources.ApplyResources(TagTextBox, "TagTextBox");
+            TagTextBox.Name = "TagTextBox";
+            // 
+            // TagLayout
+            // 
+            resources.ApplyResources(TagLayout, "TagLayout");
+            TagLayout.Name = "TagLayout";
             // 
             // ProjectSettingsDialog
             // 
@@ -212,7 +212,6 @@
         private Label label6;
         private ComboBox CBInputReader;
         private ComboBox CBParser;
-        private ComboBox CBRules;
         private Label label4;
         private Label label8;
         private Button BtnOK;
@@ -220,5 +219,6 @@
         private Button BtnAddTag;
         private TextBox TagTextBox;
         private FlowLayoutPanel TagLayout;
+        public ComboBox CBRules;
     }
 }

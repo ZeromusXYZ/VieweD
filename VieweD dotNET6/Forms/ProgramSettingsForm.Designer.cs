@@ -101,6 +101,8 @@
             LFieldColCount = new Label();
             TbFieldColorCount = new TrackBar();
             GbOtherSettings = new GroupBox();
+            DefaultCreditsTextBox = new TextBox();
+            label15 = new Label();
             CbShowHexStringData = new CheckBox();
             CbAskNewProject = new CheckBox();
             TcSettings = new TabControl();
@@ -111,6 +113,7 @@
             GroupBox3 = new GroupBox();
             BtnRawViewFont = new Button();
             FontDlg = new FontDialog();
+            label14 = new Label();
             TableLayoutPanel1.SuspendLayout();
             GbVideoSettings.SuspendLayout();
             GbListStyle.SuspendLayout();
@@ -615,7 +618,7 @@
             // Label11
             // 
             Label11.AutoSize = true;
-            Label11.Location = new Point(16, 19);
+            Label11.Location = new Point(7, 19);
             Label11.Name = "Label11";
             Label11.Size = new Size(243, 15);
             Label11.TabIndex = 3;
@@ -1173,15 +1176,34 @@
             // GbOtherSettings
             // 
             GbOtherSettings.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            GbOtherSettings.Controls.Add(label14);
+            GbOtherSettings.Controls.Add(DefaultCreditsTextBox);
+            GbOtherSettings.Controls.Add(label15);
             GbOtherSettings.Controls.Add(CbShowHexStringData);
             GbOtherSettings.Location = new Point(7, 132);
             GbOtherSettings.Margin = new Padding(4, 3, 4, 3);
             GbOtherSettings.Name = "GbOtherSettings";
             GbOtherSettings.Padding = new Padding(4, 3, 4, 3);
-            GbOtherSettings.Size = new Size(656, 48);
+            GbOtherSettings.Size = new Size(656, 119);
             GbOtherSettings.TabIndex = 18;
             GbOtherSettings.TabStop = false;
             GbOtherSettings.Text = "Miscellaneous Settings";
+            // 
+            // DefaultCreditsTextBox
+            // 
+            DefaultCreditsTextBox.Location = new Point(17, 82);
+            DefaultCreditsTextBox.Name = "DefaultCreditsTextBox";
+            DefaultCreditsTextBox.Size = new Size(182, 23);
+            DefaultCreditsTextBox.TabIndex = 19;
+            // 
+            // label15
+            // 
+            label15.AutoSize = true;
+            label15.Location = new Point(7, 59);
+            label15.Name = "label15";
+            label15.Size = new Size(120, 15);
+            label15.TabIndex = 18;
+            label15.Text = "Default Credits Name";
             // 
             // CbShowHexStringData
             // 
@@ -1301,6 +1323,16 @@
             // 
             FontDlg.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
             FontDlg.FontMustExist = true;
+            // 
+            // label14
+            // 
+            label14.AutoSize = true;
+            label14.Enabled = false;
+            label14.Location = new Point(207, 87);
+            label14.Name = "label14";
+            label14.Size = new Size(260, 15);
+            label14.TabIndex = 20;
+            label14.Text = "If blank, your current login name is used instead";
             // 
             // ProgramSettingsForm
             // 
@@ -1435,5 +1467,8 @@
         private System.Windows.Forms.GroupBox GroupBox3;
         private System.Windows.Forms.Button BtnRawViewFont;
         private Label Label11;
+        private TextBox DefaultCreditsTextBox;
+        private Label label15;
+        private Label label14;
     }
 }

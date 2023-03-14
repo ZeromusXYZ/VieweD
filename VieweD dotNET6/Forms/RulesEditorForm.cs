@@ -81,9 +81,7 @@ namespace VieweD.Forms
 
                 if (!string.IsNullOrWhiteSpace(Rule.Parent.Parent.LoadedRulesFileName))
                 {
-                    if (Rule.Parent.Parent.SaveRulesFile(Rule.Parent.Parent.LoadedRulesFileName))
-                        Close();
-                    else
+                    if (!Rule.Parent.Parent.SaveRulesFile(Rule.Parent.Parent.LoadedRulesFileName))
                         MessageBox.Show(
                             string.Format(Resources.FailedToSaveRulesFile, Rule.Parent.Parent.LoadedRulesFileName),
                             Resources.RuleError, MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -115,6 +113,7 @@ namespace VieweD.Forms
                     }
                     MainForm.Instance.UpdateStatusBarProgress(PacketData.ParentProject.LoadedPacketList.Count, PacketData.ParentProject.LoadedPacketList.Count, Resources.ApplyChanges, null);
                 }
+                Close();
             }
             catch (Exception exception)
             {

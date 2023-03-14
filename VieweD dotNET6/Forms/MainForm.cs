@@ -2,7 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Reflection;
-using System.Runtime;
+using Microsoft.CodeAnalysis;
 using VieweD.engine.common;
 using VieweD.Helpers.System;
 using VieweD.Properties; // This needs to be made dynamic
@@ -45,7 +45,10 @@ namespace VieweD.Forms
             try
             {
                 var rtfFile = Path.Combine(Application.StartupPath, "data", "welcome.rtf");
-                RichTextWelcome.LoadFile(rtfFile);
+                if (File.Exists(rtfFile))
+                    RichTextWelcome.LoadFile(rtfFile);
+                else
+                    RichTextWelcome.Text = "Welcome file not found!";
             }
             catch
             {
@@ -232,10 +235,19 @@ namespace VieweD.Forms
 
                 project.InputParser.ParentProject = project;
 
-                if ((rulesFileName == string.Empty) && (!File.Exists(rulesFileName)))
-                    rulesFileName = Path.Combine(Application.StartupPath, "data", project.InputReader.DataFolder, "rules", project.InputParser.DefaultRulesFile);
+                if ((rulesFileName == string.Empty) || (!File.Exists(rulesFileName)))
+                {
+                    rulesFileName = RulesSelectDialog.SelectRulesFile(rulesFileName, project);
+                    // rulesFileName = Path.Combine(Application.StartupPath, "data", project.InputReader.DataFolder, "rules", project.InputParser.DefaultRulesFile);
+                }
 
-                project.InputParser.OpenRulesFile(rulesFileName);
+                if (!project.InputParser.OpenRulesFile(rulesFileName))
+                {
+                    MessageBox.Show(string.Format(Resources.MissingRulesFileForProject, OpenProjectFileDialog.FileName));
+                    project.CloseProject(true);
+                    return;
+                }
+
                 project.InputParser.ParseAllData(true);
                 project.ReIndexLoadedPackets();
                 project.PopulateListBox();
@@ -1554,6 +1566,25 @@ namespace VieweD.Forms
                 project.GameView.Show();
                 project.GameView.BringToFront();
             }
+        }
+
+        private void HandleCommandLine()
+        {
+            var cmdLine = CommandLineParser.SplitCommandLineIntoArguments(Environment.CommandLine, true);
+            var c = 0;
+            foreach (var arg in cmdLine)
+            {
+                c++;
+                if (c == 1)
+                    continue;
+                if (File.Exists(arg))
+                    OpenFile(arg);
+            }
+        }
+
+        private void MainForm_Shown(object sender, EventArgs e)
+        {
+            HandleCommandLine();
         }
     }
 }

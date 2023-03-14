@@ -57,107 +57,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="label2.Name" xml:space="preserve">
-    <value>label2</value>
-  </data>
-  <data name="label2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="label2.Parent" xml:space="preserve">
-    <value>GbProjectFile</value>
-  </data>
-  <data name="label2.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="TextVideoFile.Name" xml:space="preserve">
-    <value>TextVideoFile</value>
-  </data>
-  <data name="TextVideoFile.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="TextVideoFile.Parent" xml:space="preserve">
-    <value>GbProjectFile</value>
-  </data>
-  <data name="TextVideoFile.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="label6.Name" xml:space="preserve">
-    <value>label6</value>
-  </data>
-  <data name="label6.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="label6.Parent" xml:space="preserve">
-    <value>GbProjectFile</value>
-  </data>
-  <data name="label6.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="TextProjectFile.Name" xml:space="preserve">
-    <value>TextProjectFile</value>
-  </data>
-  <data name="TextProjectFile.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="TextProjectFile.Parent" xml:space="preserve">
-    <value>GbProjectFile</value>
-  </data>
-  <data name="TextProjectFile.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="label1.Name" xml:space="preserve">
-    <value>label1</value>
-  </data>
-  <data name="label1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="label1.Parent" xml:space="preserve">
-    <value>GbProjectFile</value>
-  </data>
-  <data name="label1.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="TextLogFile.Name" xml:space="preserve">
-    <value>TextLogFile</value>
-  </data>
-  <data name="TextLogFile.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="TextLogFile.Parent" xml:space="preserve">
-    <value>GbProjectFile</value>
-  </data>
-  <data name="TextLogFile.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="GbProjectFile.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 12</value>
-  </data>
-  <data name="GbProjectFile.Size" type="System.Drawing.Size, System.Drawing">
-    <value>710, 165</value>
-  </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="GbProjectFile.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="GbProjectFile.Text" xml:space="preserve">
-    <value>Files</value>
-  </data>
-  <data name="GbProjectFile.Name" xml:space="preserve">
-    <value>GbProjectFile</value>
-  </data>
-  <data name="GbProjectFile.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="GbProjectFile.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="GbProjectFile.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
   <data name="label2.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
     <value>6, 107</value>
   </data>
@@ -170,16 +74,16 @@
   <data name="label2.Text" xml:space="preserve">
     <value>Video file</value>
   </data>
-  <data name="label2.Name" xml:space="preserve">
+  <data name="&gt;&gt;label2.Name" xml:space="preserve">
     <value>label2</value>
   </data>
-  <data name="label2.Type" xml:space="preserve">
+  <data name="&gt;&gt;label2.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="label2.Parent" xml:space="preserve">
+  <data name="&gt;&gt;label2.Parent" xml:space="preserve">
     <value>GbProjectFile</value>
   </data>
-  <data name="label2.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
@@ -195,16 +99,16 @@
   <data name="TextVideoFile.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
   </data>
-  <data name="TextVideoFile.Name" xml:space="preserve">
+  <data name="&gt;&gt;TextVideoFile.Name" xml:space="preserve">
     <value>TextVideoFile</value>
   </data>
-  <data name="TextVideoFile.Type" xml:space="preserve">
+  <data name="&gt;&gt;TextVideoFile.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="TextVideoFile.Parent" xml:space="preserve">
+  <data name="&gt;&gt;TextVideoFile.Parent" xml:space="preserve">
     <value>GbProjectFile</value>
   </data>
-  <data name="TextVideoFile.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;TextVideoFile.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
   <data name="label6.AutoSize" type="System.Boolean, mscorlib">
@@ -222,16 +126,16 @@
   <data name="label6.Text" xml:space="preserve">
     <value>Project file</value>
   </data>
-  <data name="label6.Name" xml:space="preserve">
+  <data name="&gt;&gt;label6.Name" xml:space="preserve">
     <value>label6</value>
   </data>
-  <data name="label6.Type" xml:space="preserve">
+  <data name="&gt;&gt;label6.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="label6.Parent" xml:space="preserve">
+  <data name="&gt;&gt;label6.Parent" xml:space="preserve">
     <value>GbProjectFile</value>
   </data>
-  <data name="label6.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;label6.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
   <data name="TextProjectFile.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
@@ -246,16 +150,16 @@
   <data name="TextProjectFile.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="TextProjectFile.Name" xml:space="preserve">
+  <data name="&gt;&gt;TextProjectFile.Name" xml:space="preserve">
     <value>TextProjectFile</value>
   </data>
-  <data name="TextProjectFile.Type" xml:space="preserve">
+  <data name="&gt;&gt;TextProjectFile.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="TextProjectFile.Parent" xml:space="preserve">
+  <data name="&gt;&gt;TextProjectFile.Parent" xml:space="preserve">
     <value>GbProjectFile</value>
   </data>
-  <data name="TextProjectFile.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;TextProjectFile.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
   <data name="label1.AutoSize" type="System.Boolean, mscorlib">
@@ -273,16 +177,16 @@
   <data name="label1.Text" xml:space="preserve">
     <value>Log file</value>
   </data>
-  <data name="label1.Name" xml:space="preserve">
+  <data name="&gt;&gt;label1.Name" xml:space="preserve">
     <value>label1</value>
   </data>
-  <data name="label1.Type" xml:space="preserve">
+  <data name="&gt;&gt;label1.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="label1.Parent" xml:space="preserve">
+  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
     <value>GbProjectFile</value>
   </data>
-  <data name="label1.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
     <value>4</value>
   </data>
   <data name="TextLogFile.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
@@ -297,113 +201,41 @@
   <data name="TextLogFile.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
-  <data name="TextLogFile.Name" xml:space="preserve">
+  <data name="&gt;&gt;TextLogFile.Name" xml:space="preserve">
     <value>TextLogFile</value>
   </data>
-  <data name="TextLogFile.Type" xml:space="preserve">
+  <data name="&gt;&gt;TextLogFile.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="TextLogFile.Parent" xml:space="preserve">
+  <data name="&gt;&gt;TextLogFile.Parent" xml:space="preserve">
     <value>GbProjectFile</value>
   </data>
-  <data name="TextLogFile.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;TextLogFile.ZOrder" xml:space="preserve">
     <value>5</value>
   </data>
-  <data name="CBRules.Name" xml:space="preserve">
-    <value>CBRules</value>
+  <data name="GbProjectFile.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 12</value>
   </data>
-  <data name="CBRules.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="GbProjectFile.Size" type="System.Drawing.Size, System.Drawing">
+    <value>710, 165</value>
   </data>
-  <data name="CBRules.Parent" xml:space="preserve">
-    <value>GbInput</value>
-  </data>
-  <data name="CBRules.ZOrder" xml:space="preserve">
+  <data name="GbProjectFile.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="label4.Name" xml:space="preserve">
-    <value>label4</value>
+  <data name="GbProjectFile.Text" xml:space="preserve">
+    <value>Files</value>
   </data>
-  <data name="label4.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;GbProjectFile.Name" xml:space="preserve">
+    <value>GbProjectFile</value>
   </data>
-  <data name="label4.Parent" xml:space="preserve">
-    <value>GbInput</value>
-  </data>
-  <data name="label4.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="label8.Name" xml:space="preserve">
-    <value>label8</value>
-  </data>
-  <data name="label8.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="label8.Parent" xml:space="preserve">
-    <value>GbInput</value>
-  </data>
-  <data name="label8.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="CBInputReader.Name" xml:space="preserve">
-    <value>CBInputReader</value>
-  </data>
-  <data name="CBInputReader.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="CBInputReader.Parent" xml:space="preserve">
-    <value>GbInput</value>
-  </data>
-  <data name="CBInputReader.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="CBParser.Name" xml:space="preserve">
-    <value>CBParser</value>
-  </data>
-  <data name="CBParser.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="CBParser.Parent" xml:space="preserve">
-    <value>GbInput</value>
-  </data>
-  <data name="CBParser.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="label3.Name" xml:space="preserve">
-    <value>label3</value>
-  </data>
-  <data name="label3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="label3.Parent" xml:space="preserve">
-    <value>GbInput</value>
-  </data>
-  <data name="label3.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="GbInput.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 183</value>
-  </data>
-  <data name="GbInput.Size" type="System.Drawing.Size, System.Drawing">
-    <value>710, 96</value>
-  </data>
-  <data name="GbInput.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="GbInput.Text" xml:space="preserve">
-    <value>Input settings</value>
-  </data>
-  <data name="GbInput.Name" xml:space="preserve">
-    <value>GbInput</value>
-  </data>
-  <data name="GbInput.Type" xml:space="preserve">
+  <data name="&gt;&gt;GbProjectFile.Type" xml:space="preserve">
     <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="GbInput.Parent" xml:space="preserve">
+  <data name="&gt;&gt;GbProjectFile.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="GbInput.ZOrder" xml:space="preserve">
-    <value>2</value>
+  <data name="&gt;&gt;GbProjectFile.ZOrder" xml:space="preserve">
+    <value>3</value>
   </data>
   <data name="CBRules.Location" type="System.Drawing.Point, System.Drawing">
     <value>487, 52</value>
@@ -414,16 +246,16 @@
   <data name="CBRules.TabIndex" type="System.Int32, mscorlib">
     <value>16</value>
   </data>
-  <data name="CBRules.Name" xml:space="preserve">
+  <data name="&gt;&gt;CBRules.Name" xml:space="preserve">
     <value>CBRules</value>
   </data>
-  <data name="CBRules.Type" xml:space="preserve">
+  <data name="&gt;&gt;CBRules.Type" xml:space="preserve">
     <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="CBRules.Parent" xml:space="preserve">
+  <data name="&gt;&gt;CBRules.Parent" xml:space="preserve">
     <value>GbInput</value>
   </data>
-  <data name="CBRules.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;CBRules.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <data name="label4.AutoSize" type="System.Boolean, mscorlib">
@@ -441,16 +273,16 @@
   <data name="label4.Text" xml:space="preserve">
     <value>Rules</value>
   </data>
-  <data name="label4.Name" xml:space="preserve">
+  <data name="&gt;&gt;label4.Name" xml:space="preserve">
     <value>label4</value>
   </data>
-  <data name="label4.Type" xml:space="preserve">
+  <data name="&gt;&gt;label4.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="label4.Parent" xml:space="preserve">
+  <data name="&gt;&gt;label4.Parent" xml:space="preserve">
     <value>GbInput</value>
   </data>
-  <data name="label4.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;label4.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
   <data name="label8.AutoSize" type="System.Boolean, mscorlib">
@@ -468,16 +300,16 @@
   <data name="label8.Text" xml:space="preserve">
     <value>Input reader format</value>
   </data>
-  <data name="label8.Name" xml:space="preserve">
+  <data name="&gt;&gt;label8.Name" xml:space="preserve">
     <value>label8</value>
   </data>
-  <data name="label8.Type" xml:space="preserve">
+  <data name="&gt;&gt;label8.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="label8.Parent" xml:space="preserve">
+  <data name="&gt;&gt;label8.Parent" xml:space="preserve">
     <value>GbInput</value>
   </data>
-  <data name="label8.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;label8.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
   <data name="CBInputReader.Location" type="System.Drawing.Point, System.Drawing">
@@ -489,16 +321,16 @@
   <data name="CBInputReader.TabIndex" type="System.Int32, mscorlib">
     <value>13</value>
   </data>
-  <data name="CBInputReader.Name" xml:space="preserve">
+  <data name="&gt;&gt;CBInputReader.Name" xml:space="preserve">
     <value>CBInputReader</value>
   </data>
-  <data name="CBInputReader.Type" xml:space="preserve">
+  <data name="&gt;&gt;CBInputReader.Type" xml:space="preserve">
     <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="CBInputReader.Parent" xml:space="preserve">
+  <data name="&gt;&gt;CBInputReader.Parent" xml:space="preserve">
     <value>GbInput</value>
   </data>
-  <data name="CBInputReader.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;CBInputReader.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
   <data name="CBParser.Location" type="System.Drawing.Point, System.Drawing">
@@ -510,16 +342,16 @@
   <data name="CBParser.TabIndex" type="System.Int32, mscorlib">
     <value>11</value>
   </data>
-  <data name="CBParser.Name" xml:space="preserve">
+  <data name="&gt;&gt;CBParser.Name" xml:space="preserve">
     <value>CBParser</value>
   </data>
-  <data name="CBParser.Type" xml:space="preserve">
+  <data name="&gt;&gt;CBParser.Type" xml:space="preserve">
     <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="CBParser.Parent" xml:space="preserve">
+  <data name="&gt;&gt;CBParser.Parent" xml:space="preserve">
     <value>GbInput</value>
   </data>
-  <data name="CBParser.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;CBParser.ZOrder" xml:space="preserve">
     <value>4</value>
   </data>
   <data name="label3.AutoSize" type="System.Boolean, mscorlib">
@@ -537,17 +369,41 @@
   <data name="label3.Text" xml:space="preserve">
     <value>Parsing engine</value>
   </data>
-  <data name="label3.Name" xml:space="preserve">
+  <data name="&gt;&gt;label3.Name" xml:space="preserve">
     <value>label3</value>
   </data>
-  <data name="label3.Type" xml:space="preserve">
+  <data name="&gt;&gt;label3.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="label3.Parent" xml:space="preserve">
+  <data name="&gt;&gt;label3.Parent" xml:space="preserve">
     <value>GbInput</value>
   </data>
-  <data name="label3.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
     <value>5</value>
+  </data>
+  <data name="GbInput.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 183</value>
+  </data>
+  <data name="GbInput.Size" type="System.Drawing.Size, System.Drawing">
+    <value>710, 96</value>
+  </data>
+  <data name="GbInput.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="GbInput.Text" xml:space="preserve">
+    <value>Input settings</value>
+  </data>
+  <data name="&gt;&gt;GbInput.Name" xml:space="preserve">
+    <value>GbInput</value>
+  </data>
+  <data name="&gt;&gt;GbInput.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;GbInput.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;GbInput.ZOrder" xml:space="preserve">
+    <value>2</value>
   </data>
   <data name="BtnOK.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left</value>
@@ -564,16 +420,16 @@
   <data name="BtnOK.Text" xml:space="preserve">
     <value>OK</value>
   </data>
-  <data name="BtnOK.Name" xml:space="preserve">
+  <data name="&gt;&gt;BtnOK.Name" xml:space="preserve">
     <value>BtnOK</value>
   </data>
-  <data name="BtnOK.Type" xml:space="preserve">
+  <data name="&gt;&gt;BtnOK.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="BtnOK.Parent" xml:space="preserve">
+  <data name="&gt;&gt;BtnOK.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="BtnOK.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;BtnOK.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
   <data name="GbTags.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
@@ -594,16 +450,16 @@
   <data name="BtnAddTag.Text" xml:space="preserve">
     <value>Add Tag</value>
   </data>
-  <data name="BtnAddTag.Name" xml:space="preserve">
+  <data name="&gt;&gt;BtnAddTag.Name" xml:space="preserve">
     <value>BtnAddTag</value>
   </data>
-  <data name="BtnAddTag.Type" xml:space="preserve">
+  <data name="&gt;&gt;BtnAddTag.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="BtnAddTag.Parent" xml:space="preserve">
+  <data name="&gt;&gt;BtnAddTag.Parent" xml:space="preserve">
     <value>GbTags</value>
   </data>
-  <data name="BtnAddTag.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;BtnAddTag.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <data name="TagTextBox.Location" type="System.Drawing.Point, System.Drawing">
@@ -615,16 +471,16 @@
   <data name="TagTextBox.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
-  <data name="TagTextBox.Name" xml:space="preserve">
+  <data name="&gt;&gt;TagTextBox.Name" xml:space="preserve">
     <value>TagTextBox</value>
   </data>
-  <data name="TagTextBox.Type" xml:space="preserve">
+  <data name="&gt;&gt;TagTextBox.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="TagTextBox.Parent" xml:space="preserve">
+  <data name="&gt;&gt;TagTextBox.Parent" xml:space="preserve">
     <value>GbTags</value>
   </data>
-  <data name="TagTextBox.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;TagTextBox.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
   <data name="TagLayout.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
@@ -639,16 +495,16 @@
   <data name="TagLayout.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="TagLayout.Name" xml:space="preserve">
+  <data name="&gt;&gt;TagLayout.Name" xml:space="preserve">
     <value>TagLayout</value>
   </data>
-  <data name="TagLayout.Type" xml:space="preserve">
+  <data name="&gt;&gt;TagLayout.Type" xml:space="preserve">
     <value>System.Windows.Forms.FlowLayoutPanel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="TagLayout.Parent" xml:space="preserve">
+  <data name="&gt;&gt;TagLayout.Parent" xml:space="preserve">
     <value>GbTags</value>
   </data>
-  <data name="TagLayout.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;TagLayout.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
   <data name="GbTags.Location" type="System.Drawing.Point, System.Drawing">
@@ -663,16 +519,16 @@
   <data name="GbTags.Text" xml:space="preserve">
     <value>Tags</value>
   </data>
-  <data name="GbTags.Name" xml:space="preserve">
+  <data name="&gt;&gt;GbTags.Name" xml:space="preserve">
     <value>GbTags</value>
   </data>
-  <data name="GbTags.Type" xml:space="preserve">
+  <data name="&gt;&gt;GbTags.Type" xml:space="preserve">
     <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="GbTags.Parent" xml:space="preserve">
+  <data name="&gt;&gt;GbTags.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="GbTags.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;GbTags.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
@@ -693,10 +549,10 @@
   <data name="$this.Text" xml:space="preserve">
     <value>Project settings</value>
   </data>
-  <data name="$this.Name" xml:space="preserve">
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>ProjectSettingsDialog</value>
   </data>
-  <data name="$this.Type" xml:space="preserve">
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
     <value>System.Windows.Forms.Form, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>
