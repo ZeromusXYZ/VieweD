@@ -9,17 +9,17 @@ public class FfxiPacketeerInputReader : BaseInputReader
     public override string Description => "Supports .txt files containing Final Fantasy XI capture data made by Packeteer for Ashita";
     public override string DataFolder => "ffxi";
 
-    private StreamReader? _reader { get; set; } = null;
+    private StreamReader? Reader { get; set; } = null;
 
     // Source: https://docs.microsoft.com/en-us/dotnet/api/system.datetime.parse?view=netframework-4.7.2#System_DateTime_Parse_System_String_System_IFormatProvider_System_Globalization_DateTimeStyles_
     // Assume a date and time string formatted for the fr-FR culture is the local 
     // time and convert it to UTC.
     // dateString = "2008-03-01 10:00";
-    public static CultureInfo
+    public static readonly CultureInfo
         CultureForDateTimeParse =
             CultureInfo.CreateSpecificCulture("fr-FR"); // French seems to best match for what we need here
 
-    public static DateTimeStyles StylesForDateTimeParse = DateTimeStyles.AssumeLocal;
+    public static readonly DateTimeStyles StylesForDateTimeParse = DateTimeStyles.AssumeLocal;
 
     public FfxiPacketeerInputReader(ViewedProjectTab parentProject) : base(parentProject)
     {
@@ -41,7 +41,7 @@ public class FfxiPacketeerInputReader : BaseInputReader
     {
         try
         {
-            _reader = new StreamReader(source);
+            Reader = new StreamReader(source);
             // NOTE: PacketViewer uses a text based log that doesn't have any real file header, only packet headers
             return true;
         }
@@ -54,15 +54,15 @@ public class FfxiPacketeerInputReader : BaseInputReader
 
     public override int ReadAllData()
     {
-        if (_reader == null)
+        if (Reader == null)
             return -1;
 
         var packetCounter = 0;
         try
         {
-            var allText = _reader.ReadToEnd().Replace("\r", "").Split('\n').ToList();
+            var allText = Reader.ReadToEnd().Replace("\r", "").Split('\n').ToList();
 
-            ParentProject?.OnInputProgressUpdate(this, 0, allText.Count);
+            ViewedProjectTab.OnInputProgressUpdate(this, 0, allText.Count);
 
             #region read_file_data_lines
 
@@ -76,7 +76,7 @@ public class FfxiPacketeerInputReader : BaseInputReader
             foreach (var s in allText)
             {
                 progressCounter++;
-                ParentProject?.OnInputProgressUpdate(this, progressCounter, allText.Count);
+                ViewedProjectTab.OnInputProgressUpdate(this, progressCounter, allText.Count);
 
                 string sLower = s.ToLower().Trim(' ').Replace("\r", "");
                 if (sLower != string.Empty && packetData == null)
@@ -87,21 +87,23 @@ public class FfxiPacketeerInputReader : BaseInputReader
                         return -1;
 
                     // Begin building a new packet
-                    packetData = new BasePacketData(ParentProject);
-                    packetData.HeaderText = s;
-                    packetData.OriginalHeaderText = s;
+                    packetData = new BasePacketData(ParentProject)
+                    {
+                        HeaderText = s,
+                        OriginalHeaderText = s
+                    };
 
-                    if (sLower.IndexOf("[s->c]", StringComparison.InvariantCulture) >= 0)
+                    if (sLower.Contains("[s->c]", StringComparison.InvariantCulture))
                     {
                         packetData.PacketDataDirection = PacketDataDirection.Incoming;
                         isUndefinedPacketDirection = false;
                     }
-                    else if (sLower.IndexOf("[c->s]", StringComparison.InvariantCulture) >= 0)
+                    else if (sLower.Contains("[c->s]", StringComparison.InvariantCulture))
                     {
                         packetData.PacketDataDirection = PacketDataDirection.Outgoing;
                         isUndefinedPacketDirection = false;
                     }
-                    else if (sLower.IndexOf("npc id:", StringComparison.InvariantCulture) >= 0)
+                    else if (sLower.Contains("npc id:", StringComparison.InvariantCulture))
                     {
                         // This is likely a npc logger log file, assume it's a incoming packet
                         packetData.PacketDataDirection = PacketDataDirection.Incoming;
@@ -126,7 +128,7 @@ public class FfxiPacketeerInputReader : BaseInputReader
                         isUndefinedPacketDirection = false;
                         packetData.PacketDataDirection = preferredDirection;
 
-                        if (ParentProject.PacketDataDirectionDialog(packetData, out var newDirection))
+                        if (ViewedProjectTab.PacketDataDirectionDialog(packetData, out var newDirection))
                         {
                             packetData.PacketDataDirection = newDirection;
                             isUndefinedPacketDirection = false;
@@ -148,7 +150,7 @@ public class FfxiPacketeerInputReader : BaseInputReader
                     else
                     {
                         // a reasonable amount of dashes line (32 chars) to mark the start of the data
-                        if (sLower.IndexOf("--------------------------------", StringComparison.InvariantCulture) >= 0)
+                        if (sLower.Contains("--------------------------------", StringComparison.InvariantCulture))
                         {
                         }
                     }
@@ -184,7 +186,7 @@ public class FfxiPacketeerInputReader : BaseInputReader
 
             } // end foreach datafile line
 
-            ParentProject?.OnInputProgressUpdate(this, allText.Count, allText.Count);
+            ViewedProjectTab.OnInputProgressUpdate(this, allText.Count, allText.Count);
 
             #endregion
         }
@@ -250,7 +252,7 @@ public class FfxiPacketeerInputReader : BaseInputReader
     /// </summary>
     /// <param name="s"></param>
     /// <returns></returns>
-    public int AddRawPacketeerLineAsBytes(string s, BasePacketData packetData)
+    public static int AddRawPacketeerLineAsBytes(string s, BasePacketData packetData)
     {
         /* Example:
         //           1         2         3         4         5         6         7         8         9

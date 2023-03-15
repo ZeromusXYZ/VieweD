@@ -70,7 +70,7 @@ public class BaseParser : IComparable<BaseParser>
     public virtual bool ParseAllData(bool initialLoading)
     {
         var res = true;
-        ParentProject?.OnParseProgressUpdate(this, 0, ParentProject.LoadedPacketList.Count);
+        ViewedProjectTab.OnParseProgressUpdate(this, 0, ParentProject?.LoadedPacketList.Count ?? 1);
         for (var i = 0; i < ParentProject?.LoadedPacketList.Count; i++)
         {
             var basePacketData = ParentProject.LoadedPacketList[i];
@@ -82,9 +82,9 @@ public class BaseParser : IComparable<BaseParser>
             res &= packetRes;
 
             if (i % 50 == 0)
-                ParentProject.OnParseProgressUpdate(this, i, ParentProject.LoadedPacketList.Count);
+                ViewedProjectTab.OnParseProgressUpdate(this, i, ParentProject.LoadedPacketList.Count);
         }
-        ParentProject?.OnParseProgressUpdate(this, 1, 1);
+        ViewedProjectTab.OnParseProgressUpdate(this, 1, 1);
         return res;
     }
 

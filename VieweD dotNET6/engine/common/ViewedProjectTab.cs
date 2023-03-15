@@ -455,9 +455,7 @@ public class ViewedProjectTab : TabPage
                 if (expectedName != string.Empty)
                     newName = expectedName;
 
-                rule = InputParser?.Rules?.CreateNewUserPacketRule(this, packetData.PacketDataDirection,
-                    new PacketFilterListEntry(packetData.PacketId, packetData.CompressionLevel, packetData.StreamId),
-                    newName) ?? null;
+                rule = InputParser?.Rules?.CreateNewUserPacketRule(packetData.PacketDataDirection, new PacketFilterListEntry(packetData.PacketId, packetData.CompressionLevel, packetData.StreamId), newName) ?? null;
             }
 
             //rule?.Build();
@@ -506,14 +504,14 @@ public class ViewedProjectTab : TabPage
                     if ((sameTimeCount > 0) && (i > lastSameTimeIndex + 1))
                     {
                         sameTimeCount++;
-                        var timeSpanDelta = (LoadedPacketList[i].OffsetFromStart - lastSameOffset) / (double)sameTimeCount;
+                        var timeSpanDelta = (LoadedPacketList[i].OffsetFromStart - lastSameOffset) / sameTimeCount;
                         // Only update virtual times if there is a noticeable time difference
                         if (timeSpanDelta.TotalMilliseconds > 1)
                         {
                             for (var n = 1; n <= sameTimeCount-1; n++)
                             {
                                 LoadedPacketList[lastSameTimeIndex + n].VirtualOffsetFromStart =
-                                    lastSameOffset + (timeSpanDelta * (double)n);
+                                    lastSameOffset + (timeSpanDelta * n);
                             }
                         }
                     }
@@ -817,7 +815,7 @@ public class ViewedProjectTab : TabPage
     private bool HasVideoAttached()
     {
         // TODO: Do actual check
-        return true;
+        return (Video?.MPlayer?.Length ?? 0) > 0;
     }
 
     /// <summary>
@@ -865,21 +863,21 @@ public class ViewedProjectTab : TabPage
         }
     }
 
-    public void OnInputProgressUpdate(BaseInputReader inputReader, int position, int maxValue)
+    public static void OnInputProgressUpdate(BaseInputReader inputReader, int position, int maxValue)
     {
         // NOTE: it's possible to manipulate the value based on the reader
-        MainForm.Instance?.UpdateStatusBarProgress(position, maxValue,null,null);
+        MainForm.Instance?.UpdateStatusBarProgress(position, maxValue,"Reading with " + inputReader.Name,null);
     }
-    public void OnPopulateProgressUpdate(int position, int maxValue)
+    public static void OnPopulateProgressUpdate(int position, int maxValue)
     {
         // NOTE: it's possible to manipulate the value based on the reader
         MainForm.Instance?.UpdateStatusBarProgress(position, maxValue, Resources.PopulateListBox, null);
     }
 
-    public void OnParseProgressUpdate(BaseParser parser, int position, int maxValue)
+    public static void OnParseProgressUpdate(BaseParser parser, int position, int maxValue)
     {
         // NOTE: it's possible to manipulate the value based on the reader
-        MainForm.Instance?.UpdateStatusBarProgress(position, maxValue, Resources.ParsePackets, null);
+        MainForm.Instance?.UpdateStatusBarProgress(position, maxValue, string.Format(Resources.ParsePackets,parser.Name), null);
     }
 
     /// <summary>
@@ -929,7 +927,7 @@ public class ViewedProjectTab : TabPage
             var newRulesFile = (settings.CBRules.SelectedValue as string);
             if ((oldRulesFile != newRulesFile) && (newRulesFile != null) && File.Exists(newRulesFile) && (InputParser != null))
             {
-                MessageBox.Show("Rules file changed, re-parsing the project", Resources.SaveProject,
+                MessageBox.Show(Resources.RulesChangedReparsingProject, Resources.SaveProject,
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
                 InputParser.OpenRulesFile(newRulesFile);
                 InputParser.ParseAllData(true);
@@ -941,34 +939,36 @@ public class ViewedProjectTab : TabPage
         return dialogOk;
     }
 
-    public bool PacketDataDirectionDialog(BasePacketData packetData, out PacketDataDirection selectedDirection)
+    public static bool PacketDataDirectionDialog(BasePacketData packetData, out PacketDataDirection selectedDirection)
     {
-        // TODO: Make new Dialog Form
         selectedDirection = packetData.PacketDataDirection;
-        return false;
+        var isUndefinedPacketDirection = true;
+        //return false;
         // Ask for type
-        /*
-        var askDlgRes = DialogResult.Cancel;
-        using (PacketTypeSelectForm askDlg = new PacketTypeSelectForm())
-        {
-            askDlg.lHeaderData.Text = s;
-            askDlgRes = askDlg.ShowDialog();
-        }
+
+        using var askDlg = new PacketTypeSelectForm();
+        askDlg.HeaderDataLabel.Text = packetData.HeaderText;
+        var askDlgRes = askDlg.ShowDialog();
 
         if (askDlgRes == DialogResult.Yes)
         {
-            preferredDirection = PacketDataDirection.Incoming;
+            selectedDirection = PacketDataDirection.Incoming;
             isUndefinedPacketDirection = false;
-            packetData.PacketDataDirection = preferredDirection;
+            //packetData.PacketDataDirection = selectedDirection;
         }
         else
         if (askDlgRes == DialogResult.No)
         {
-            preferredDirection = PacketDataDirection.Outgoing;
+            selectedDirection = PacketDataDirection.Outgoing;
             isUndefinedPacketDirection = false;
-            packetData.PacketDataDirection = preferredDirection;
+            //packetData.PacketDataDirection = selectedDirection;
         }
-        */
+        else
+        {
+            selectedDirection = PacketDataDirection.Unknown;
+        }
+
+        return !isUndefinedPacketDirection;
     }
 
     public bool SaveProjectSettingsFile(string fileName, string projectFolder)
@@ -1225,11 +1225,10 @@ public class ViewedProjectTab : TabPage
 
     public void OpenVideoForm()
     {
-        if (Video == null)
+        Video ??= new VideoForm
         {
-            Video = new VideoForm();
-            Video.ParentProject = this;
-        }
+            ParentProject = this,
+        };
 
         _ = Video.OpenVideoFromProject();
         Video.Show();

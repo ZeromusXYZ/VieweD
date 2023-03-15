@@ -9,17 +9,17 @@ public class FfxiPacketViewerInputReader : BaseInputReader
     public override string Description => "Supports .log files containing Final Fantasy XI capture data made by the Packet Viewer plugin for Windower";
     public override string DataFolder => "ffxi";
 
-    private StreamReader? _reader { get; set; } = null;
+    private StreamReader? Reader { get; set; } = null;
 
     // Source: https://docs.microsoft.com/en-us/dotnet/api/system.datetime.parse?view=netframework-4.7.2#System_DateTime_Parse_System_String_System_IFormatProvider_System_Globalization_DateTimeStyles_
     // Assume a date and time string formatted for the fr-FR culture is the local 
     // time and convert it to UTC.
     // dateString = "2008-03-01 10:00";
-    public static CultureInfo
+    public static readonly CultureInfo
         CultureForDateTimeParse =
             CultureInfo.CreateSpecificCulture("fr-FR"); // French seems to best match for what we need here
 
-    public static DateTimeStyles StylesForDateTimeParse = DateTimeStyles.AssumeLocal;
+    public static readonly DateTimeStyles StylesForDateTimeParse = DateTimeStyles.AssumeLocal;
 
     public FfxiPacketViewerInputReader(ViewedProjectTab parentProject) : base(parentProject)
     {
@@ -40,7 +40,7 @@ public class FfxiPacketViewerInputReader : BaseInputReader
     {
         try
         {
-            _reader = new StreamReader(source);
+            Reader = new StreamReader(source);
             // NOTE: PacketViewer uses a text based log that doesn't have any real file header, only packet headers
             return true;
         }
@@ -53,15 +53,15 @@ public class FfxiPacketViewerInputReader : BaseInputReader
 
     public override int ReadAllData()
     {
-        if (_reader == null)
+        if (Reader == null)
             return -1;
 
         var packetCounter = 0;
         try
         {
-            var allText = _reader.ReadToEnd().Replace("\r", "").Split('\n').ToList();
+            var allText = Reader.ReadToEnd().Replace("\r", "").Split('\n').ToList();
 
-            ParentProject?.OnInputProgressUpdate(this, 0, allText.Count);
+            ViewedProjectTab.OnInputProgressUpdate(this, 0, allText.Count);
 
             #region read_file_data_lines
 
@@ -76,7 +76,7 @@ public class FfxiPacketViewerInputReader : BaseInputReader
             foreach (var s in allText)
             {
                 progressCounter++;
-                ParentProject?.OnInputProgressUpdate(this, progressCounter, allText.Count);
+                ViewedProjectTab.OnInputProgressUpdate(this, progressCounter, allText.Count);
 
                 string sLower = s.ToLower().Trim(' ').Replace("\r", "");
                 if (sLower != string.Empty && packetData == null)
@@ -88,21 +88,23 @@ public class FfxiPacketViewerInputReader : BaseInputReader
                         return -1;
 
                     // Begin building a new packet
-                    packetData = new BasePacketData(ParentProject);
-                    packetData.HeaderText = s;
-                    packetData.OriginalHeaderText = s;
+                    packetData = new BasePacketData(ParentProject)
+                    {
+                        HeaderText = s,
+                        OriginalHeaderText = s
+                    };
 
-                    if (sLower.IndexOf("incoming", StringComparison.InvariantCulture) >= 0)
+                    if (sLower.Contains("incoming", StringComparison.InvariantCulture))
                     {
                         packetData.PacketDataDirection = PacketDataDirection.Incoming;
                         isUndefinedPacketDirection = false;
                     }
-                    else if (sLower.IndexOf("outgoing", StringComparison.InvariantCulture) >= 0)
+                    else if (sLower.Contains("outgoing", StringComparison.InvariantCulture))
                     {
                         packetData.PacketDataDirection = PacketDataDirection.Outgoing;
                         isUndefinedPacketDirection = false;
                     }
-                    else if (sLower.IndexOf("npc id:", StringComparison.InvariantCulture) >= 0)
+                    else if (sLower.Contains("npc id:", StringComparison.InvariantCulture))
                     {
                         // This is likely a npc logger log file, assume it's a incoming packet
                         packetData.PacketDataDirection = PacketDataDirection.Incoming;
@@ -111,6 +113,7 @@ public class FfxiPacketViewerInputReader : BaseInputReader
                     else
                     {
                         packetData.PacketDataDirection = preferredDirection;
+                        isUndefinedPacketDirection = true;
                     }
 
 
@@ -123,15 +126,19 @@ public class FfxiPacketViewerInputReader : BaseInputReader
                     )
                     {
                         askForPacketType = false;
-                        preferredDirection = PacketDataDirection.Incoming;
+                        // preferredDirection = PacketDataDirection.Incoming;
                         isUndefinedPacketDirection = false;
                         packetData.PacketDataDirection = preferredDirection;
 
-                        if (ParentProject.PacketDataDirectionDialog(packetData, out var newDirection))
+                        if (ViewedProjectTab.PacketDataDirectionDialog(packetData, out var newDirection))
                         {
                             packetData.PacketDataDirection = newDirection;
-                            isUndefinedPacketDirection = false;
                         }
+                        else
+                        {
+                            isUndefinedPacketDirection = true;
+                        }
+                        
                     }
 
                     packetData.SourceText.Add(s);
@@ -149,7 +156,7 @@ public class FfxiPacketViewerInputReader : BaseInputReader
                     else
                     {
                         // a reasonable amount of dashes line (32 chars) to mark the start of the data
-                        if (sLower.IndexOf("--------------------------------", StringComparison.InvariantCulture) >= 0)
+                        if (sLower.Contains("--------------------------------", StringComparison.InvariantCulture))
                             pastStartOfDataMarker = true;
                     }
                 }
@@ -200,7 +207,7 @@ public class FfxiPacketViewerInputReader : BaseInputReader
 
             } // end foreach datafile line
 
-            ParentProject?.OnInputProgressUpdate(this, allText.Count, allText.Count);
+            ViewedProjectTab.OnInputProgressUpdate(this, allText.Count, allText.Count);
 
             #endregion
         }

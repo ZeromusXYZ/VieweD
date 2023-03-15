@@ -192,7 +192,7 @@
     <value>..\resources\packetlist\mini_video_icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ParsePackets" xml:space="preserve">
-    <value>Parsing packet data</value>
+    <value>Parsing packet data using {0}</value>
   </data>
   <data name="PopulateListBox" xml:space="preserve">
     <value>Updating packet list, please wait ...</value>
@@ -422,5 +422,13 @@
   </data>
   <data name="MissingRulesFileForProject" xml:space="preserve">
     <value>Missing rules file for project {0}</value>
+  </data>
+  <data name="SaveRulesFileFailed" xml:space="preserve">
+    <value>Failed to save rules: {0}
+{1}</value>
+    <comment>0: file  1: exception</comment>
+  </data>
+  <data name="RulesChangedReparsingProject" xml:space="preserve">
+    <value>Rules file changed, re-parsing the project</value>
   </data>
 </root>

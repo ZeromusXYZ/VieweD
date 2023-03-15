@@ -19,8 +19,8 @@ public class RulesReader
     public ViewedProjectTab ParentProject { get; private set; }
     // protected ZlibCodec DecompressionHandler { get; set; } = new ZlibCodec(Ionic.Zlib.CompressionMode.Decompress);
     public string ExpectedClientVersion { get; set; } = string.Empty;
-    public bool UsesCompressionLevels { get; internal set; } = false;
-    public bool UsesMultipleStreams { get; private set; } = false;
+    public bool UsesCompressionLevels { get; internal set; }
+    public bool UsesMultipleStreams { get; private set; }
 
     public RulesReader(ViewedProjectTab parent)
     {
@@ -109,7 +109,7 @@ public class RulesReader
         }
         catch (Exception ex)
         {
-            MessageBox.Show($"Failed to save rules: {fileName}\r\n{ex.Message}");
+            MessageBox.Show(string.Format(Resources.SaveRulesFileFailed, fileName, ex.Message));
             return false;
         }
     }
@@ -296,9 +296,9 @@ public class RulesReader
         editor.AddMenuItem(others.DropDownItems, "comment", "<!--- your comment here -->");
     }
 
-    public PacketRule? CreateNewUserPacketRule(ViewedProjectTab project, PacketDataDirection packetDataDirection, PacketFilterListEntry key, string newName)
+    public PacketRule? CreateNewUserPacketRule(PacketDataDirection packetDataDirection, PacketFilterListEntry key, string newName)
     {
-        var verifyPacket = GetPacketRule(packetDataDirection, key.StreamId, key.CompressionLevel, (uint)key.PacketId);
+        var verifyPacket = GetPacketRule(packetDataDirection, key.StreamId, key.CompressionLevel, key.PacketId);
 
         // Already exists, don't create a new one
         if (verifyPacket != null)

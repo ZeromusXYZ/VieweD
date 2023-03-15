@@ -687,7 +687,7 @@ namespace VieweD.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Parsing packet data.
+        ///   Looks up a localized string similar to Parsing packet data using {0}.
         /// </summary>
         internal static string ParsePackets {
             get {
@@ -805,6 +805,15 @@ namespace VieweD.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rules file changed, re-parsing the project.
+        /// </summary>
+        internal static string RulesChangedReparsingProject {
+            get {
+                return ResourceManager.GetString("RulesChangedReparsingProject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save cancelled.
         /// </summary>
         internal static string SaveCancelled {
@@ -819,6 +828,16 @@ namespace VieweD.Properties {
         internal static string SaveProject {
             get {
                 return ResourceManager.GetString("SaveProject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to save rules: {0}
+        ///{1}.
+        /// </summary>
+        internal static string SaveRulesFileFailed {
+            get {
+                return ResourceManager.GetString("SaveRulesFileFailed", resourceCulture);
             }
         }
         
