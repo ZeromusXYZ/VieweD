@@ -143,7 +143,7 @@
             BtnOK.TabIndex = 0;
             BtnOK.Text = "OK";
             BtnOK.UseVisualStyleBackColor = true;
-            BtnOK.Click += btnOK_Click;
+            BtnOK.Click += BtnOK_Click;
             // 
             // BtnCancel
             // 
@@ -156,7 +156,7 @@
             BtnCancel.TabIndex = 1;
             BtnCancel.Text = "Cancel";
             BtnCancel.UseVisualStyleBackColor = true;
-            BtnCancel.Click += btnCancel_Click;
+            BtnCancel.Click += BtnCancel_Click;
             // 
             // ColorDlg
             // 
@@ -335,7 +335,7 @@
             BtnFontIN.TabIndex = 10;
             BtnFontIN.Tag = "1";
             BtnFontIN.UseVisualStyleBackColor = false;
-            BtnFontIN.Click += btnColorButton_Click;
+            BtnFontIN.Click += BtnColorButton_Click;
             // 
             // BtnBackIN
             // 
@@ -349,7 +349,7 @@
             BtnBackIN.TabIndex = 11;
             BtnBackIN.Tag = "1";
             BtnBackIN.UseVisualStyleBackColor = false;
-            BtnBackIN.Click += btnColorButton_Click;
+            BtnBackIN.Click += BtnColorButton_Click;
             // 
             // BtnSyncIN
             // 
@@ -363,7 +363,7 @@
             BtnSyncIN.TabIndex = 12;
             BtnSyncIN.Tag = "1";
             BtnSyncIN.UseVisualStyleBackColor = false;
-            BtnSyncIN.Click += btnColorButton_Click;
+            BtnSyncIN.Click += BtnColorButton_Click;
             // 
             // BtnSelectIN
             // 
@@ -377,7 +377,7 @@
             BtnSelectIN.TabIndex = 13;
             BtnSelectIN.Tag = "1";
             BtnSelectIN.UseVisualStyleBackColor = false;
-            BtnSelectIN.Click += btnColorButton_Click;
+            BtnSelectIN.Click += BtnColorButton_Click;
             // 
             // BtnFontOUT
             // 
@@ -391,7 +391,7 @@
             BtnFontOUT.TabIndex = 15;
             BtnFontOUT.Tag = "1";
             BtnFontOUT.UseVisualStyleBackColor = false;
-            BtnFontOUT.Click += btnColorButton_Click;
+            BtnFontOUT.Click += BtnColorButton_Click;
             // 
             // BtnBackOUT
             // 
@@ -405,7 +405,7 @@
             BtnBackOUT.TabIndex = 16;
             BtnBackOUT.Tag = "1";
             BtnBackOUT.UseVisualStyleBackColor = false;
-            BtnBackOUT.Click += btnColorButton_Click;
+            BtnBackOUT.Click += BtnColorButton_Click;
             // 
             // BtnSyncOUT
             // 
@@ -419,7 +419,7 @@
             BtnSyncOUT.TabIndex = 17;
             BtnSyncOUT.Tag = "1";
             BtnSyncOUT.UseVisualStyleBackColor = false;
-            BtnSyncOUT.Click += btnColorButton_Click;
+            BtnSyncOUT.Click += BtnColorButton_Click;
             // 
             // BtnSelectOUT
             // 
@@ -433,7 +433,7 @@
             BtnSelectOUT.TabIndex = 18;
             BtnSelectOUT.Tag = "1";
             BtnSelectOUT.UseVisualStyleBackColor = false;
-            BtnSelectOUT.Click += btnColorButton_Click;
+            BtnSelectOUT.Click += BtnColorButton_Click;
             // 
             // BtnBackUNK
             // 
@@ -447,7 +447,7 @@
             BtnBackUNK.TabIndex = 21;
             BtnBackUNK.Tag = "1";
             BtnBackUNK.UseVisualStyleBackColor = false;
-            BtnBackUNK.Click += btnColorButton_Click;
+            BtnBackUNK.Click += BtnColorButton_Click;
             // 
             // BtnSyncUNK
             // 
@@ -461,7 +461,7 @@
             BtnSyncUNK.TabIndex = 22;
             BtnSyncUNK.Tag = "1";
             BtnSyncUNK.UseVisualStyleBackColor = false;
-            BtnSyncUNK.Click += btnColorButton_Click;
+            BtnSyncUNK.Click += BtnColorButton_Click;
             // 
             // BtnSelectUNK
             // 
@@ -475,7 +475,7 @@
             BtnSelectUNK.TabIndex = 23;
             BtnSelectUNK.Tag = "1";
             BtnSelectUNK.UseVisualStyleBackColor = false;
-            BtnSelectUNK.Click += btnColorButton_Click;
+            BtnSelectUNK.Click += BtnColorButton_Click;
             // 
             // BtnBarIN
             // 
@@ -489,7 +489,7 @@
             BtnBarIN.TabIndex = 14;
             BtnBarIN.Tag = "1";
             BtnBarIN.UseVisualStyleBackColor = false;
-            BtnBarIN.Click += btnColorButton_Click;
+            BtnBarIN.Click += BtnColorButton_Click;
             // 
             // BtnBarOUT
             // 
@@ -503,7 +503,7 @@
             BtnBarOUT.TabIndex = 19;
             BtnBarOUT.Tag = "1";
             BtnBarOUT.UseVisualStyleBackColor = false;
-            BtnBarOUT.Click += btnColorButton_Click;
+            BtnBarOUT.Click += BtnColorButton_Click;
             // 
             // BtnBarUNK
             // 
@@ -517,7 +517,7 @@
             BtnBarUNK.TabIndex = 24;
             BtnBarUNK.Tag = "1";
             BtnBarUNK.UseVisualStyleBackColor = false;
-            BtnBarUNK.Click += btnColorButton_Click;
+            BtnBarUNK.Click += BtnColorButton_Click;
             // 
             // Label9
             // 
@@ -543,7 +543,7 @@
             BtnSelectedFontIN.TabIndex = 26;
             BtnSelectedFontIN.Tag = "1";
             BtnSelectedFontIN.UseVisualStyleBackColor = false;
-            BtnSelectedFontIN.Click += btnColorButton_Click;
+            BtnSelectedFontIN.Click += BtnColorButton_Click;
             // 
             // BtnSelectedFontOUT
             // 
@@ -557,7 +557,7 @@
             BtnSelectedFontOUT.TabIndex = 27;
             BtnSelectedFontOUT.Tag = "1";
             BtnSelectedFontOUT.UseVisualStyleBackColor = false;
-            BtnSelectedFontOUT.Click += btnColorButton_Click;
+            BtnSelectedFontOUT.Click += BtnColorButton_Click;
             // 
             // BtnSelectedFontUNK
             // 
@@ -571,7 +571,7 @@
             BtnSelectedFontUNK.TabIndex = 28;
             BtnSelectedFontUNK.Tag = "1";
             BtnSelectedFontUNK.UseVisualStyleBackColor = false;
-            BtnSelectedFontUNK.Click += btnColorButton_Click;
+            BtnSelectedFontUNK.Click += BtnColorButton_Click;
             // 
             // BtnFontUNK
             // 
@@ -585,7 +585,7 @@
             BtnFontUNK.TabIndex = 20;
             BtnFontUNK.Tag = "1";
             BtnFontUNK.UseVisualStyleBackColor = false;
-            BtnFontUNK.Click += btnColorButton_Click;
+            BtnFontUNK.Click += BtnColorButton_Click;
             // 
             // BtnDefault
             // 
@@ -597,7 +597,7 @@
             BtnDefault.TabIndex = 11;
             BtnDefault.Text = "Default";
             BtnDefault.UseVisualStyleBackColor = true;
-            BtnDefault.Click += btnDefault_Click;
+            BtnDefault.Click += BtnDefault_Click;
             // 
             // GbVideoSettings
             // 
@@ -694,7 +694,7 @@
             BtnPacketListFont.TabIndex = 18;
             BtnPacketListFont.Text = "Select Font";
             BtnPacketListFont.UseVisualStyleBackColor = true;
-            BtnPacketListFont.Click += btnPacketListFont_Click;
+            BtnPacketListFont.Click += BtnPacketListFont_Click;
             // 
             // LabelPacketListArrows
             // 
@@ -1134,7 +1134,7 @@
             BtnGridViewFont.TabIndex = 19;
             BtnGridViewFont.Text = "Select Font";
             BtnGridViewFont.UseVisualStyleBackColor = true;
-            BtnGridViewFont.Click += btnGridViewFont_Click;
+            BtnGridViewFont.Click += BtnGridViewFont_Click;
             // 
             // Label13
             // 
@@ -1317,7 +1317,7 @@
             BtnRawViewFont.TabIndex = 20;
             BtnRawViewFont.Text = "Select Font";
             BtnRawViewFont.UseVisualStyleBackColor = true;
-            BtnRawViewFont.Click += btnRawViewFont_Click;
+            BtnRawViewFont.Click += BtnRawViewFont_Click;
             // 
             // FontDlg
             // 

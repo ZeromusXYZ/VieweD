@@ -932,6 +932,24 @@ namespace VieweD.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unparsed data below.
+        /// </summary>
+        internal static string UnParsedFieldDescription {
+            get {
+                return ResourceManager.GetString("UnParsedFieldDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unparsed.
+        /// </summary>
+        internal static string UnParsedFieldName {
+            get {
+                return ResourceManager.GetString("UnParsedFieldName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap usgaiji_10 {

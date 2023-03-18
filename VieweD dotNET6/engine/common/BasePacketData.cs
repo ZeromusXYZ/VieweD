@@ -119,6 +119,17 @@ public class BasePacketData
         return null;
     }
 
+    public ParsedField? GetFirstParsedFieldByName(string fieldName)
+    {
+        if (string.IsNullOrWhiteSpace(fieldName))
+            return null;
+        foreach (var parsed in ParsedData)
+            if (parsed.FieldName.Equals(fieldName, StringComparison.InvariantCultureIgnoreCase))
+                return parsed;
+
+        return null;
+    }
+
     public override string ToString()
     {
         return HeaderText;
@@ -386,7 +397,7 @@ public class BasePacketData
         {
             if (firstAdded) return;
             firstAdded = true;
-            AddParsedError("", "Unparsed", "Unparsed data below", 0);
+            AddParsedError("", Resources.UnParsedFieldName, Resources.UnParsedFieldDescription, 0);
         }
 
         for (int i = 0; i < ByteData.Count; i++)
@@ -447,42 +458,30 @@ public class BasePacketData
 
     public virtual string GetPacketName(PacketDataDirection direction, uint id)
     {
-        switch (direction)
+        return direction switch
         {
-            case PacketDataDirection.Unknown: return Resources.TypeUnknown;
-            case PacketDataDirection.Outgoing:
-                return ParentProject.DataLookup.NLU(DataLookups.LuPacketOut)
-                    .GetValue(id, Resources.TypeUnknown);
-            case PacketDataDirection.Incoming:
-                return ParentProject.DataLookup.NLU(DataLookups.LuPacketIn)
-                    .GetValue(id, Resources.TypeUnknown);
-        }
-
-        return "<error>";
+            PacketDataDirection.Unknown => Resources.TypeUnknown,
+            PacketDataDirection.Outgoing => ParentProject.DataLookup.NLU(DataLookups.LuPacketOut).GetValue(id, Resources.TypeUnknown),
+            PacketDataDirection.Incoming => ParentProject.DataLookup.NLU(DataLookups.LuPacketIn).GetValue(id, Resources.TypeUnknown),
+            _ => "<error>"
+        };
     }
 
     public virtual void BuildHeaderText()
     {
         var timeString = string.Empty;
         if (TimeStamp.Ticks > 0) timeString = TimeStamp.ToString(ParentProject.TimeStampFormat);
-        string directionString;
-        switch (PacketDataDirection)
+        string directionString = PacketDataDirection switch
         {
-            case PacketDataDirection.Outgoing:
-                directionString = Resources.DirectionOut;
-                break;
-            case PacketDataDirection.Incoming:
-                directionString = Resources.DirectionIn;
-                break;
-            default:
-                directionString = Resources.DirectionUnknown;
-                break;
-        }
+            PacketDataDirection.Outgoing => Resources.DirectionOut,
+            PacketDataDirection.Incoming => Resources.DirectionIn,
+            _ => Resources.DirectionUnknown
+        };
 
         HeaderText = timeString + " " + directionString + " " + PacketId.ToHex(3) + " - " + GetPacketName();
     }
 
-    public Color GetDataColor(int fieldIndex)
+    public static Color GetDataColor(int fieldIndex)
     {
         if (fieldIndex < 0)
             fieldIndex = int.MaxValue + fieldIndex;
@@ -512,18 +511,18 @@ public class BasePacketData
     /// <returns></returns>
     private static bool DoIShowThis(PacketFilterListEntry packetKey, FilterType filterType, ICollection<PacketFilterListEntry> filterList)
     {
-        switch (filterType)
+        return filterType switch
         {
-            case FilterType.AllowNone:
-                return false;
-            case FilterType.ShowPackets:
-                return filterList.Any(x => (x.PacketId == packetKey.PacketId) && (x.CompressionLevel == packetKey.CompressionLevel) && (x.StreamId == packetKey.StreamId));
-            case FilterType.HidePackets:
-                return !filterList.Any(x => (x.PacketId == packetKey.PacketId) && (x.CompressionLevel == packetKey.CompressionLevel) && (x.StreamId == packetKey.StreamId));
-            case FilterType.Off:
-            default:
-                return true;
-        }
+            FilterType.AllowNone => false,
+            FilterType.ShowPackets => filterList.Any(x =>
+                (x.PacketId == packetKey.PacketId) && (x.CompressionLevel == packetKey.CompressionLevel) &&
+                (x.StreamId == packetKey.StreamId)),
+            FilterType.HidePackets => !filterList.Any(x =>
+                (x.PacketId == packetKey.PacketId) && (x.CompressionLevel == packetKey.CompressionLevel) &&
+                (x.StreamId == packetKey.StreamId)),
+            FilterType.Off => true,
+            _ => true
+        };
     }
 
     /// <summary>

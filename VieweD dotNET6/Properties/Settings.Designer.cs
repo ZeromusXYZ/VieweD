@@ -769,6 +769,18 @@ namespace VieweD.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute(";")]
+        public string CSVExportDelimiter {
+            get {
+                return ((string)(this["CSVExportDelimiter"]));
+            }
+            set {
+                this["CSVExportDelimiter"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool AskCreateNewProjectFile {
             get {

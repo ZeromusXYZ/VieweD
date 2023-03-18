@@ -37,11 +37,11 @@
             label1 = new Label();
             TextLogFile = new TextBox();
             GbInput = new GroupBox();
-            CBRules = new ComboBox();
+            CbRules = new ComboBox();
             label4 = new Label();
             label8 = new Label();
-            CBInputReader = new ComboBox();
-            CBParser = new ComboBox();
+            CbInputReader = new ComboBox();
+            CbParser = new ComboBox();
             label3 = new Label();
             BtnOK = new Button();
             GbTags = new GroupBox();
@@ -100,22 +100,22 @@
             // 
             // GbInput
             // 
-            GbInput.Controls.Add(CBRules);
+            GbInput.Controls.Add(CbRules);
             GbInput.Controls.Add(label4);
             GbInput.Controls.Add(label8);
-            GbInput.Controls.Add(CBInputReader);
-            GbInput.Controls.Add(CBParser);
+            GbInput.Controls.Add(CbInputReader);
+            GbInput.Controls.Add(CbParser);
             GbInput.Controls.Add(label3);
             resources.ApplyResources(GbInput, "GbInput");
             GbInput.Name = "GbInput";
             GbInput.TabStop = false;
             // 
-            // CBRules
+            // CbRules
             // 
-            CBRules.DropDownStyle = ComboBoxStyle.DropDownList;
-            CBRules.FormattingEnabled = true;
-            resources.ApplyResources(CBRules, "CBRules");
-            CBRules.Name = "CBRules";
+            CbRules.DropDownStyle = ComboBoxStyle.DropDownList;
+            CbRules.FormattingEnabled = true;
+            resources.ApplyResources(CbRules, "CbRules");
+            CbRules.Name = "CbRules";
             // 
             // label4
             // 
@@ -127,19 +127,19 @@
             resources.ApplyResources(label8, "label8");
             label8.Name = "label8";
             // 
-            // CBInputReader
+            // CbInputReader
             // 
-            CBInputReader.DropDownStyle = ComboBoxStyle.DropDownList;
-            CBInputReader.FormattingEnabled = true;
-            resources.ApplyResources(CBInputReader, "CBInputReader");
-            CBInputReader.Name = "CBInputReader";
+            CbInputReader.DropDownStyle = ComboBoxStyle.DropDownList;
+            CbInputReader.FormattingEnabled = true;
+            resources.ApplyResources(CbInputReader, "CbInputReader");
+            CbInputReader.Name = "CbInputReader";
             // 
-            // CBParser
+            // CbParser
             // 
-            CBParser.DropDownStyle = ComboBoxStyle.DropDownList;
-            CBParser.FormattingEnabled = true;
-            resources.ApplyResources(CBParser, "CBParser");
-            CBParser.Name = "CBParser";
+            CbParser.DropDownStyle = ComboBoxStyle.DropDownList;
+            CbParser.FormattingEnabled = true;
+            resources.ApplyResources(CbParser, "CbParser");
+            CbParser.Name = "CbParser";
             // 
             // label3
             // 
@@ -210,8 +210,8 @@
         private TextBox TextLogFile;
         private Label label3;
         private Label label6;
-        private ComboBox CBInputReader;
-        private ComboBox CBParser;
+        private ComboBox CbInputReader;
+        private ComboBox CbParser;
         private Label label4;
         private Label label8;
         private Button BtnOK;
@@ -219,6 +219,6 @@
         private Button BtnAddTag;
         private TextBox TagTextBox;
         private FlowLayoutPanel TagLayout;
-        public ComboBox CBRules;
+        public ComboBox CbRules;
     }
 }

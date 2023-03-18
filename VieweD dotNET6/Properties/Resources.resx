@@ -431,4 +431,10 @@
   <data name="RulesChangedReparsingProject" xml:space="preserve">
     <value>Rules file changed, re-parsing the project</value>
   </data>
+  <data name="UnParsedFieldName" xml:space="preserve">
+    <value>Unparsed</value>
+  </data>
+  <data name="UnParsedFieldDescription" xml:space="preserve">
+    <value>Unparsed data below</value>
+  </data>
 </root>

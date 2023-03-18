@@ -364,9 +364,7 @@ namespace VieweD.Forms
                     DataGridViewRow? row;
                     if (y >= DgvParsed.RowCount)
                     {
-#pragma warning disable IDE0017 // Simplify object initialization
                         row = new DataGridViewRow();
-#pragma warning restore IDE0017 // Simplify object initialization
                         row.Cells.Add(new DataGridViewTextBoxCell() { Value = parsedField.DisplayedByteOffset });
                         row.Cells.Add(new DataGridViewTextBoxCell() { Value = parsedField.FieldName });
                         row.Cells.Add(new DataGridViewTextBoxCell() { Value = parsedField.FieldValue });
@@ -443,9 +441,7 @@ namespace VieweD.Forms
                         DataGridViewRow? row;
                         if (y >= DgvParsed.RowCount)
                         {
-#pragma warning disable IDE0017 // Simplify object initialization
                             row = new DataGridViewRow();
-#pragma warning restore IDE0017 // Simplify object initialization
                             row.Cells.Add(new DataGridViewTextBoxCell() { Value = "" });
                             row.Cells.Add(new DataGridViewTextBoxCell() { Value = localVar.Key });
                             row.Cells.Add(new DataGridViewTextBoxCell() { Value = localVar.Value });
@@ -588,9 +584,9 @@ namespace VieweD.Forms
             void SetColorNotSelect(int fieldIndex, bool forChars)
             {
                 if ((hasSelectedFields) || forChars)
-                    SetRtfColor(packetData.GetDataColor(fieldIndex), rtInfo.BackColor);
+                    SetRtfColor(BasePacketData.GetDataColor(fieldIndex), rtInfo.BackColor);
                 else
-                    SetRtfColor(rtInfo.BackColor, packetData.GetDataColor(fieldIndex));
+                    SetRtfColor(rtInfo.BackColor, BasePacketData.GetDataColor(fieldIndex));
             }
 
             void AddCharsOnTheRight(int startIndex)
@@ -1204,8 +1200,11 @@ namespace VieweD.Forms
             var files = Directory.GetFiles(filterFolder, "*.pfl", SearchOption.AllDirectories);
             foreach (var fileName in files)
             {
-                var newItem = new ToolStripMenuItem(Path.GetFileNameWithoutExtension(fileName));
-                newItem.Tag = fileName;
+                var newItem = new ToolStripMenuItem(Path.GetFileNameWithoutExtension(fileName))
+                {
+                    Tag = fileName,
+                };
+                
                 if (menuTag == "ap")
                     newItem.Click += MMSearchFilterApplyFile_Click;
                 if (menuTag == "hl")
@@ -1288,7 +1287,7 @@ namespace VieweD.Forms
             }
         }
 
-        private void FindNext(ViewedProjectTab project)
+        private static void FindNext(ViewedProjectTab project)
         {
             if (project.PacketsListBox.Items.Count <= 0)
             {
@@ -1335,11 +1334,13 @@ namespace VieweD.Forms
                 return;
             }
 
-            ViewedProjectTab newProject = new ViewedProjectTab();
-            newProject.ImageIndex = 4;
-            newProject.ProjectFile = string.Empty;
-            newProject.Text = @"*" + project.Text;
-            newProject.OpenedLogFile = string.Empty;
+            var newProject = new ViewedProjectTab
+            {
+                ImageIndex = 4,
+                ProjectFile = string.Empty,
+                Text = @"*" + project.Text,
+                OpenedLogFile = string.Empty,
+            };
             newProject.InputReader = project.InputReader?.CreateNew(newProject);
             newProject.InputParser = project.InputParser?.CreateNew(newProject);
 
@@ -1426,7 +1427,7 @@ namespace VieweD.Forms
                 if (!long.TryParse(h, System.Globalization.NumberStyles.HexNumber, System.Globalization.CultureInfo.InvariantCulture, out var positiveVal))
                     positiveVal = val;
 
-                var sVal = string.Empty;
+                string sVal;
                 if (positiveVal != val)
                     sVal = typeName + @": 0x" + h + @" - " + positiveVal + @" (" + val + @")";
                 else
@@ -1495,7 +1496,7 @@ namespace VieweD.Forms
 
             SuggestionListBox.Items.Clear();
             // var cursorPosText = "(" + line + "," + linePos + ")";
-            var cursorPosText = string.Empty;
+            string cursorPosText;
             if ((rawPos >= 0) && (rawPos < maxPos))
             {
                 cursorPosText = "Cursor: " + rawPos.ToHex(2);// + " "+ cursorPosText;
@@ -1585,6 +1586,15 @@ namespace VieweD.Forms
         private void MainForm_Shown(object sender, EventArgs e)
         {
             HandleCommandLine();
+        }
+
+        private void MMToolsExportCSV_Click(object sender, EventArgs e)
+        {
+            if (TCProjects.SelectedTab is not ViewedProjectTab project)
+                return;
+            using var exportDlg = new ExportCsvDialog();
+            exportDlg.LoadFromProject(project);
+            exportDlg.ShowDialog();
         }
     }
 }

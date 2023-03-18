@@ -924,7 +924,7 @@ public class ViewedProjectTab : TabPage
         var dialogOk = (settings.ShowDialog() == DialogResult.OK);
         if (dialogOk)
         {
-            var newRulesFile = (settings.CBRules.SelectedValue as string);
+            var newRulesFile = (settings.CbRules.SelectedValue as string);
             if ((oldRulesFile != newRulesFile) && (newRulesFile != null) && File.Exists(newRulesFile) && (InputParser != null))
             {
                 MessageBox.Show(Resources.RulesChangedReparsingProject, Resources.SaveProject,

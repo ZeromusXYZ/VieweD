@@ -103,6 +103,8 @@
             PMSuggestLookup = new ToolStripMenuItem();
             PMSuggestCustomLookup = new ToolStripMenuItem();
             SaveProjectFileDialog = new SaveFileDialog();
+            MMTools = new ToolStripMenuItem();
+            MMToolsExportCSV = new ToolStripMenuItem();
             MM.SuspendLayout();
             StatusBar.SuspendLayout();
             TCProjects.SuspendLayout();
@@ -124,7 +126,7 @@
             // 
             // MM
             // 
-            MM.Items.AddRange(new ToolStripItem[] { MMFile, MMVersion, MMProject, MMSearch, MMLinks });
+            MM.Items.AddRange(new ToolStripItem[] { MMFile, MMVersion, MMProject, MMSearch, MMTools, MMLinks });
             resources.ApplyResources(MM, "MM");
             MM.Name = "MM";
             // 
@@ -629,6 +631,18 @@
             SaveProjectFileDialog.DefaultExt = "pvd";
             resources.ApplyResources(SaveProjectFileDialog, "SaveProjectFileDialog");
             // 
+            // MMTools
+            // 
+            MMTools.DropDownItems.AddRange(new ToolStripItem[] { MMToolsExportCSV });
+            MMTools.Name = "MMTools";
+            resources.ApplyResources(MMTools, "MMTools");
+            // 
+            // MMToolsExportCSV
+            // 
+            MMToolsExportCSV.Name = "MMToolsExportCSV";
+            resources.ApplyResources(MMToolsExportCSV, "MMToolsExportCSV");
+            MMToolsExportCSV.Click += MMToolsExportCSV_Click;
+            // 
             // MainForm
             // 
             resources.ApplyResources(this, "$this");
@@ -738,5 +752,7 @@
         private ToolStripSeparator PMSuggestN1;
         private ToolStripMenuItem PMSuggestLookup;
         private ToolStripMenuItem PMSuggestCustomLookup;
+        private ToolStripMenuItem MMTools;
+        private ToolStripMenuItem MMToolsExportCSV;
     }
 }

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.Automation;
 using System.Xml.Linq;
 using VieweD.engine.common;
 
@@ -70,17 +71,17 @@ namespace VieweD.Forms
             TextLogFile.Text = ParentProject.OpenedLogFile;
             TextVideoFile.Text = ParentProject.VideoSettings.VideoFile;
 
-            CBInputReader.Text = ParentProject.InputReader?.Name ?? string.Empty;
-            CBInputReader.Enabled = CBInputReader.Text == string.Empty;
-            CBParser.Text = ParentProject.InputParser?.Name ?? string.Empty;
-            CBParser.Enabled = CBParser.Text == string.Empty;
+            CbInputReader.Text = ParentProject.InputReader?.Name ?? string.Empty;
+            CbInputReader.Enabled = CbInputReader.Text == string.Empty;
+            CbParser.Text = ParentProject.InputParser?.Name ?? string.Empty;
+            CbParser.Enabled = CbParser.Text == string.Empty;
 
             // TODO: Fill in all rules files
             FillRulesListFromParser();
-            CBRules.Items.Clear();
-            CBRules.DataSource = RulesSelectionList;
-            CBRules.DisplayMember = "Display";
-            CBRules.ValueMember = "Value";
+            CbRules.Items.Clear();
+            CbRules.DataSource = RulesSelectionList;
+            CbRules.DisplayMember = "Display";
+            CbRules.ValueMember = "Value";
 
             CreateVisualTags(ParentProject.Tags);
 
@@ -100,15 +101,15 @@ namespace VieweD.Forms
             TextProjectFile.Text = string.Empty;
             TextLogFile.Text = string.Empty;
             TextVideoFile.Text = string.Empty;
-            CBInputReader.Items.Clear();
-            CBParser.Items.Clear();
-            CBRules.Items.Clear();
+            CbInputReader.Items.Clear();
+            CbParser.Items.Clear();
+            CbRules.Items.Clear();
 
             foreach (var baseInputReader in EngineManager.AllInputReaders)
-                CBInputReader.Items.Add(baseInputReader.Name);
+                CbInputReader.Items.Add(baseInputReader.Name);
 
             foreach (var baseParser in EngineManager.AllParsers)
-                CBParser.Items.Add(baseParser.Name);
+                CbParser.Items.Add(baseParser.Name);
 
             RequiresReload = false;
         }
@@ -125,15 +126,17 @@ namespace VieweD.Forms
             if (string.IsNullOrWhiteSpace(tag))
                 return;
 
-            var label = new Label();
-            label.BorderStyle = BorderStyle.Fixed3D;
-            label.BackColor = SystemColors.Highlight;
-            label.ForeColor = SystemColors.HighlightText;
-            TagLayout.Controls.Add(label);
-            label.Text = tag;
-            label.AutoSize = true;
-            label.Cursor = Cursors.No;
+            var label = new Label
+            {
+                BorderStyle = BorderStyle.Fixed3D,
+                BackColor = SystemColors.Highlight,
+                ForeColor = SystemColors.HighlightText,
+                Text = tag,
+                AutoSize = true,
+                Cursor = Cursors.No,
+            };
             label.Click += TagLabel_Click;
+            TagLayout.Controls.Add(label);
         }
 
         private void TagLabel_Click(object? sender, EventArgs e)
@@ -162,23 +165,6 @@ namespace VieweD.Forms
                 if (!string.IsNullOrWhiteSpace(s))
                     AddTag(s);
             }
-        }
-
-        private string VisualTagsToString(string spacer = ",")
-        {
-            var res = string.Empty;
-
-            foreach (Control c in TagLayout.Controls)
-            {
-                if ((c is not Label label) || (string.IsNullOrWhiteSpace(label.Text)))
-                    continue;
-
-                if (res != string.Empty)
-                    res += spacer;
-                res += label.Text;
-            }
-
-            return res;
         }
     }
 }

@@ -12,7 +12,7 @@ namespace VieweD.Forms
             InitializeComponent();
         }
 
-        private void btnOK_Click(object sender, EventArgs e)
+        private void BtnOK_Click(object sender, EventArgs e)
         {
             SaveButtonsIntoColorSettings();
 
@@ -51,7 +51,7 @@ namespace VieweD.Forms
             DialogResult = DialogResult.OK;
         }
 
-        private void btnCancel_Click(object sender, EventArgs e)
+        private void BtnCancel_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;
         }
@@ -189,13 +189,13 @@ namespace VieweD.Forms
             Settings.Default.ColField15 = LocalFieldColors[15];
         }
 
-        private void btnDefault_Click(object sender, EventArgs e)
+        private void BtnDefault_Click(object sender, EventArgs e)
         {
             Settings.Default.Reset();
             LoadSettingsIntoForm(true);
         }
 
-        private void btnColorButton_Click(object sender, EventArgs e)
+        private void BtnColorButton_Click(object sender, EventArgs e)
         {
             if (sender is not Button btn)
                 return;
@@ -441,7 +441,7 @@ namespace VieweD.Forms
             }
         }
 
-        private void btnPacketListFont_Click(object sender, EventArgs e)
+        private void BtnPacketListFont_Click(object sender, EventArgs e)
         {
             FontDlg.Font = Settings.Default.PacketListFont;
             if (FontDlg.ShowDialog() == DialogResult.OK)
@@ -452,7 +452,7 @@ namespace VieweD.Forms
             }
         }
 
-        private void btnGridViewFont_Click(object sender, EventArgs e)
+        private void BtnGridViewFont_Click(object sender, EventArgs e)
         {
             FontDlg.Font = Settings.Default.GridViewFont;
             if (FontDlg.ShowDialog() == DialogResult.OK)
@@ -464,7 +464,7 @@ namespace VieweD.Forms
             UpdateFieldColorGrid();
         }
 
-        private void btnRawViewFont_Click(object sender, EventArgs e)
+        private void BtnRawViewFont_Click(object sender, EventArgs e)
         {
             FontDlg.Font = Settings.Default.RawViewFont;
             if (FontDlg.ShowDialog() == DialogResult.OK)
