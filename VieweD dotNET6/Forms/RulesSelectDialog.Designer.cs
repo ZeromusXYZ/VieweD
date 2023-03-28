@@ -1,4 +1,7 @@
-﻿namespace VieweD.Forms
+﻿using System.Windows.Forms;
+using System.Drawing;
+
+namespace VieweD.Forms
 {
     partial class RulesSelectDialog
     {

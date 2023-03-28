@@ -1,10 +1,20 @@
-﻿using System.ComponentModel;
-using System.Windows.Forms.VisualStyles;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Drawing;
+using System.IO;
+using System.Linq;
 using VieweD.Forms;
 using VieweD.Helpers.System;
 using VieweD.engine.serialize;
 using VieweD.Properties;
 using System.Media;
+using System.Windows.Forms;
+using System.Xml;
+using CsvHelper;
+using CsvHelper.Configuration;
+using System.Globalization;
+using Ionic.BZip2;
 
 namespace VieweD.engine.common;
 public class ViewedProjectTab : TabPage
@@ -22,7 +32,7 @@ public class ViewedProjectTab : TabPage
     /// <summary>
     /// Name of this project (derived from ProjectFile)
     /// </summary>
-    public string ProjectName => string.IsNullOrWhiteSpace(ProjectFile) ? "VieweD Project.pvd" : Path.GetFileNameWithoutExtension(ProjectFile);
+    public string ProjectName => string.IsNullOrWhiteSpace(ProjectFile) ? "VieweD Project" : Path.GetFileNameWithoutExtension(ProjectFile);
 
     public string ProjectFile
     {
@@ -31,15 +41,15 @@ public class ViewedProjectTab : TabPage
         {
             if (value != _projectFile)
                 IsDirty = true;
-            _projectFile = value; 
-            
+            _projectFile = value;
+            Settings.ProjectFile = value;
         }
     }
 
     /// <summary>
-    /// Actual file that has been loaded
+    /// Project Settings
     /// </summary>
-    public string OpenedLogFile { get; set; }
+    public ProjectSettings Settings { get; set; }
 
     /// <summary>
     /// List of Data Packets
@@ -60,11 +70,12 @@ public class ViewedProjectTab : TabPage
     public BaseParser? InputParser { get; set; }
     public DataLookups DataLookup { get; set; }
     public string TimeStampFormat { internal get; set; }
+    public bool RequiresSubPacketCreation { get; set; }
 
     /// <summary>
     /// Mapping to use to convert a target port number to a StreamId used by the parsers
     /// </summary>
-    public Dictionary<ushort, (byte, string)> PortToStreamIdMapping { get; private set; } = new ();
+    public Dictionary<ushort, (byte, string, string)> PortToStreamIdMapping { get; } = new ();
     public PacketListFilter Filter { get; set; }
 
     #region popup_menu_items
@@ -84,7 +95,6 @@ public class ViewedProjectTab : TabPage
     private ToolStripMenuItem PmPlExportPacket { get; }
     #endregion
 
-    public List<string> Tags { get; set; }
     /// <summary>
     /// Set to true if a old format project file was loaded
     /// </summary>
@@ -92,21 +102,22 @@ public class ViewedProjectTab : TabPage
 
     public SearchParameters SearchParameters { get; set; }
     public List<string> AllFieldNames { get; set; }
-    public ProjectVideoSettings VideoSettings { get; set; } = new();
     public VideoForm? Video { get; set; }
     public RulesEditorForm? CurrentEditor { get; set; }
     public GameViewForm? GameView { get; set; }
+    public string DecryptionKeyName { get; set; } = string.Empty;
 
     public ViewedProjectTab()
     {
         TimeStampFormat = "HH:mm:ss";
         _projectFile = string.Empty;
+        Settings = new ProjectSettings();
 
         Filter = new PacketListFilter();
         Filter.Clear();
 
-        Tags = new List<string>();
-        Tags.Clear();
+        Settings.Tags = new List<string>();
+        Settings.Tags.Clear();
 
         AllFieldNames = new List<string>();
         SearchParameters = new SearchParameters();
@@ -189,9 +200,10 @@ public class ViewedProjectTab : TabPage
 
         // Initialize Empty Project
         ProjectFile = "project.pvd"; // Path.Combine(Directory.GetCurrentDirectory(), "project.pvd");
-        OpenedLogFile = string.Empty;
+        Settings.LogFile = string.Empty;
         CurrentSyncId = -1;
         LoadedPacketList = new List<BasePacketData>();
+        RequiresSubPacketCreation = false;
 
         // Load Static Lookups
         DataLookup = new DataLookups();
@@ -373,7 +385,8 @@ public class ViewedProjectTab : TabPage
             var thisRule = packetData.ParentProject.InputParser?.Rules?.GetPacketRule(packetData);
             if (thisRule != null)
             {
-                var lookupName = PacketFilterListEntry.AsString(thisRule.PacketId, thisRule.Level, thisRule.StreamId);
+                // var lookupName = PacketFilterListEntry.AsString(thisRule.PacketId, thisRule.Level, thisRule.StreamId);
+                var lookupName = thisRule.PacketId.ToHex(3) + (InputParser?.PacketCompressionLevelMaximum > 0 ? " L" + thisRule.Level : "") + (PortToStreamIdMapping.Count > 1 ? " " + GetStreamIdName(thisRule.StreamId) : "");
                 PmPlShowPacketName.Text = lookupName + @" - " + thisRule.Name; // lookupKey.ToString("X8");
                 PmPlEditParser.Tag = thisRule;
                 if (packetData.PacketDataDirection != PacketDataDirection.Unknown)
@@ -473,6 +486,42 @@ public class ViewedProjectTab : TabPage
         }
     }
 
+    public void EditTemplate(string templateName)
+    {
+        if (CurrentEditor != null)
+        {
+            CurrentEditor.BringToFront();
+            CurrentEditor.Focus();
+            SystemSounds.Exclamation.Play();
+            return;
+        }
+
+        var reader = InputParser?.Rules;
+
+        if (reader == null)
+            return;
+
+        if (!reader.Templates.TryGetValue(templateName, out var templateNode))
+        {
+            var templatesRoot = reader.XmlDoc?.SelectSingleNode("/root/templates");
+            if (templatesRoot == null)
+                return;
+
+            templateNode = XmlHelper.CreateNewXmlElementNode(templatesRoot, "template");
+            // templateNode = reader.XmlDoc?.CreateNode(XmlNodeType.Element, "template", null);
+            if (templateNode == null)
+                return;
+
+            XmlHelper.SetAttribute(templateNode, "name", templateName);
+            // templatesRoot.AppendChild(templateNode);
+            reader.Templates.Add(templateName, templateNode);
+            // Update the AllTemplates node
+            reader.AllTemplates = reader.XmlDoc?.SelectNodes("/root/templates/template");
+        }
+
+        CurrentEditor = RulesEditorForm.OpenTemplateEditor(templateNode, this);
+    }
+
     public void OnProjectDataChanged()
     {
         MainForm.Instance?.OnProjectDataChanged(this);
@@ -528,7 +577,7 @@ public class ViewedProjectTab : TabPage
     /// </summary>
     public void PopulateListBox(int selectIndex = -1)
     {
-        Cursor = Cursors.WaitCursor;
+        OnPopulateProgressUpdate(0, LoadedPacketList.Count);
         lock (LoadedPacketList)
         {
             PacketsListBox.BeginUpdate();
@@ -558,7 +607,6 @@ public class ViewedProjectTab : TabPage
             PacketsListBox.EndUpdate();
             OnPopulateProgressUpdate(1, 1);
         }
-        Cursor = Cursors.Default;
     }
 
     /// <summary>
@@ -573,7 +621,7 @@ public class ViewedProjectTab : TabPage
         {
             CurrentSyncId = pd.SyncId;
             MainForm.Instance?.ShowPacketData(pd);
-            Video?.UpdateVideoPositionFromProject(pd.VirtualOffsetFromStart + VideoSettings.VideoOffset);
+            Video?.UpdateVideoPositionFromProject(pd.VirtualOffsetFromStart + Settings.VideoSettings.VideoOffset);
         }
         else
         {
@@ -701,7 +749,6 @@ public class ViewedProjectTab : TabPage
 
         // Header text
         var s = lb.Items[e.Index].ToString();
-        // s = pd.VirtualTimeStamp.ToString() + "." + pd.VirtualTimeStamp.Millisecond.ToString("0000");
 
         var icon1 = new Rectangle(e.Bounds.Left, e.Bounds.Top + ((e.Bounds.Height - Resources.mini_unk_icon.Height) / 2), Resources.mini_unk_icon.Width, Resources.mini_unk_icon.Height);
         var icon2 = icon1 with { X = icon1.Left + icon1.Width, Y = icon1.Top };
@@ -800,11 +847,10 @@ public class ViewedProjectTab : TabPage
     /// <returns></returns>
     private bool IsInVideoTimeRange(TimeSpan timeOffset)
     {
-        // TODO: Do actual calculations
         if ((Video == null) || (Video.MPlayer == null))
             return false;
 
-        var videoPos = timeOffset - VideoSettings.VideoOffset;
+        var videoPos = timeOffset - Settings.VideoSettings.VideoOffset;
         return ((videoPos >= TimeSpan.Zero) && (videoPos.TotalMilliseconds < Video.MPlayer.Length));
     }
 
@@ -814,7 +860,6 @@ public class ViewedProjectTab : TabPage
     /// <returns></returns>
     private bool HasVideoAttached()
     {
-        // TODO: Do actual check
         return (Video?.MPlayer?.Length ?? 0) > 0;
     }
 
@@ -880,15 +925,21 @@ public class ViewedProjectTab : TabPage
         MainForm.Instance?.UpdateStatusBarProgress(position, maxValue, string.Format(Resources.ParsePackets,parser.Name), null);
     }
 
+    public static void OnExpandProgressUpdate(BaseParser parser, int position, int maxValue)
+    {
+        // NOTE: it's possible to manipulate the value based on the reader
+        MainForm.Instance?.UpdateStatusBarProgress(position, maxValue, string.Format(Resources.ExpandingPackets, parser.Name), null);
+    }
+
     /// <summary>
     /// Get the rules' stream id and name based on a port number
     /// </summary>
     /// <param name="port"></param>
     /// <param name="defaultValue"></param>
     /// <returns></returns>
-    public (byte, string) GetExpectedStreamIdByPort(ushort port, byte defaultValue)
+    public (byte, string, string) GetExpectedStreamIdByPort(ushort port, byte defaultValue)
     {
-        return PortToStreamIdMapping.TryGetValue(port, out var id) ? id : (defaultValue, "S"+defaultValue);
+        return PortToStreamIdMapping.TryGetValue(port, out var id) ? id : (defaultValue, "S"+defaultValue, "?");
     }
 
     public string GetStreamIdName(byte id)
@@ -901,15 +952,37 @@ public class ViewedProjectTab : TabPage
         return "S" + id;
     }
 
+    public string GetStreamIdShortName(byte id)
+    {
+        foreach (var valueTuple in PortToStreamIdMapping)
+        {
+            if (valueTuple.Value.Item1 == id)
+                return valueTuple.Value.Item3;
+        }
+        return "?";
+    }
+
+    public ushort GetStreamIdPort(byte id)
+    {
+        foreach (var valueTuple in PortToStreamIdMapping)
+        {
+            if (valueTuple.Value.Item1 == id)
+                return valueTuple.Key;
+        }
+        return 0;
+    }
+
+
     /// <summary>
     /// Makes sure that a port is a valid option, adds it at the end if not yet registered
     /// </summary>
     /// <param name="port"></param>
     /// <param name="streamName"></param>
-    public void RegisterPort(ushort port, string streamName)
+    /// <param name="shortName"></param>
+    public void RegisterPort(ushort port, string streamName, string shortName)
     {
         if (!PortToStreamIdMapping.TryGetValue(port, out _))
-            PortToStreamIdMapping.Add(port, ((byte)PortToStreamIdMapping.Count, streamName));
+            PortToStreamIdMapping.Add(port, ((byte)PortToStreamIdMapping.Count, streamName, shortName));
     }
 
     /// <summary>
@@ -924,17 +997,20 @@ public class ViewedProjectTab : TabPage
         var dialogOk = (settings.ShowDialog() == DialogResult.OK);
         if (dialogOk)
         {
+            Settings.Tags = settings.GetTagsList();
+            Settings.VideoSettings.VideoUrl = settings.TextVideoURL.Text;
+            Settings.ProjectUrl = settings.TextProjectURL.Text;
+            Settings.Description = settings.TextDescription.Text;
             var newRulesFile = (settings.CbRules.SelectedValue as string);
             if ((oldRulesFile != newRulesFile) && (newRulesFile != null) && File.Exists(newRulesFile) && (InputParser != null))
             {
-                MessageBox.Show(Resources.RulesChangedReparsingProject, Resources.SaveProject,
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(Resources.RulesChangedReparsingProject, Resources.SaveProject, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 InputParser.OpenRulesFile(newRulesFile);
                 InputParser.ParseAllData(true);
                 ReIndexLoadedPackets();
                 PopulateListBox();
-                IsDirty = true;
             }
+            IsDirty = true;
         }
         return dialogOk;
     }
@@ -973,42 +1049,42 @@ public class ViewedProjectTab : TabPage
 
     public bool SaveProjectSettingsFile(string fileName, string projectFolder)
     {
+        // temporary save file paths so they can be returned after making relative
+        var pFile = Settings.ProjectFile;
+        var log = Settings.LogFile;
+        var video = Settings.VideoSettings.VideoFile;
+        var rFile = Helper.MakeRelative(ProjectFolder, InputParser?.Rules?.LoadedRulesFileName ?? "");
+        var res = false;
         try
         {
-            var settings = new ProjectSettings
-            {
-                ProjectFile = Helper.MakeRelative(projectFolder, ProjectFile),
-                LogFile = Helper.MakeRelative(projectFolder, OpenedLogFile),
-                InputReader = InputReader?.Name ?? "",
-                Parser = InputParser?.Name ?? "",
-                RulesFile = Helper.MakeRelative(projectFolder, InputParser?.Rules?.LoadedRulesFileName ?? ""),
-                VideoSettings =
-                {
-                    VideoFile = Helper.MakeRelative(projectFolder, VideoSettings.VideoFile),
-                    VideoUrl = VideoSettings.VideoUrl,
-                    VideoOffset = VideoSettings.VideoOffset,
-                },
-                Tags = Tags,
-                LastTimeOffset = (PacketsListBox.SelectedItem as BasePacketData)?.VirtualOffsetFromStart ?? TimeSpan.Zero,
-            };
-            settings.Filter.CopyFrom(Filter);
-            settings.Search.CopyFrom(SearchParameters);
+            Settings.ProjectFile = Helper.MakeRelative(ProjectFolder, Settings.ProjectFile);
+            Settings.LogFile = Helper.MakeRelative(ProjectFolder, Settings.LogFile);
+            Settings.VideoSettings.VideoFile = Helper.MakeRelative(ProjectFolder, Settings.VideoSettings.VideoFile);
+            Settings.InputReader = InputReader?.Name ?? "";
+            Settings.Parser = InputParser?.Name ?? "";
+            Settings.RulesFile = rFile ;
+            Settings.Filter.CopyFrom(Filter);
+            Settings.Search.CopyFrom(SearchParameters);
 
             var writer = new System.Xml.Serialization.XmlSerializer(typeof(ProjectSettings));
 
             using var fileStream = File.Create(fileName);
 
-            writer.Serialize(fileStream, settings);
+            writer.Serialize(fileStream, Settings);
             fileStream.Close();
             RequestUpdatedProjectFileName = false;
             IsDirty = false;
-            return true;
+            res = true;
         }
         catch
         {
             //
         }
-        return false;
+
+        Settings.ProjectFile = pFile;
+        Settings.LogFile = log;
+        Settings.VideoSettings.VideoFile = video;
+        return res;
     }
 
     private ProjectSettings? LoadLegacyProjectSettings(List<string> sl)
@@ -1147,7 +1223,7 @@ public class ViewedProjectTab : TabPage
     {
         if (IsDirty && (skipSave == false))
         {
-            if (MessageBox.Show("Save changes to project: " + Text + " ?", Resources.SaveProject,
+            if (MessageBox.Show(string.Format(Resources.SaveChangesToProject, Text), Resources.SaveProject,
                     MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 MainForm.Instance?.SaveProject(this, ModifierKeys.HasFlag(Keys.Shift));
         }
@@ -1158,7 +1234,7 @@ public class ViewedProjectTab : TabPage
 
     public void ReloadPacketListColorsFromSettings()
     {
-        PacketsListBox.Font = Settings.Default.PacketListFont;
+        PacketsListBox.Font = Properties.Settings.Default.PacketListFont;
         PacketsListBox.ItemHeight = (int)Math.Ceiling(PacketsListBox.Font.GetHeight());
         PacketsListBox.Dock = DockStyle.Fill;
         PacketsListBox.Refresh();
@@ -1185,7 +1261,7 @@ public class ViewedProjectTab : TabPage
 
     public void GotoVideoOffset(int videoPosition)
     {
-        var offset = TimeSpan.FromMilliseconds(videoPosition).Add(VideoSettings.VideoOffset);
+        var offset = TimeSpan.FromMilliseconds(videoPosition).Add(Settings.VideoSettings.VideoOffset);
         if (PacketsListBox.Items.Count > 1)
         {
             if ((PacketsListBox.Items[0] is BasePacketData data0) && (offset < data0.OffsetFromStart))
@@ -1234,4 +1310,179 @@ public class ViewedProjectTab : TabPage
         Video.Show();
         Video.BringToFront();
     }
+
+    public void RunExportDataTool(string exportName)
+    {
+        if ((InputParser == null) || (InputParser.Rules == null))
+            return;
+        
+        if (!InputParser.Rules.ExportDataTools.TryGetValue(exportName, out var exportTool))
+            return;
+
+        InputParser.Rules.CurrentExportDataTool = exportTool;
+        InputParser.Rules.CurrentExportCount = 0;
+        var targetFile = Path.Combine(ProjectFolder, exportTool.FileName);
+        if (File.Exists(targetFile))
+        {
+            var res = MessageBox.Show(string.Format(Resources.AppendToCurrentFile, targetFile), Resources.OverwriteFileTitle,
+                MessageBoxButtons.YesNoCancel);
+            if (res == DialogResult.Yes)
+            {
+                // Good to go
+            }
+            else if (res == DialogResult.No)
+            {
+                // No = Create a new file, so delete the old one
+                File.Delete(targetFile);
+            }
+            else
+            {
+                // Cancelled
+                return;
+            }
+        }
+
+
+        // Re-run parser with tool enabled
+        File.AppendAllText(targetFile, exportTool.Header);
+        InputParser.ParseAllData(false);
+        File.AppendAllText(targetFile, exportTool.Footer);
+
+        // Disable again
+        InputParser.Rules.CurrentExportDataTool = null;
+
+        // Show export report
+        MessageBox.Show(
+            InputParser.Rules.CurrentExportCount > 0
+                ? string.Format(Resources.ExportedXItems, InputParser.Rules.CurrentExportCount)
+                : Resources.NoDataExported, Resources.ExportDataTitle, MessageBoxButtons.OK,
+            MessageBoxIcon.Information);
+
+    }
+
+    /// <summary>
+    /// Returns a list of FullFilterKeys of each used 
+    /// </summary>
+    /// <param name="direction"></param>
+    /// <returns></returns>
+    public List<ulong> GetAllUsedPacketsByDirection(PacketDataDirection direction)
+    {
+        var res = new List<ulong>();
+        foreach (var basePacketData in LoadedPacketList)
+        {
+            if (basePacketData.PacketDataDirection != direction)
+                continue;
+
+            var key = PacketFilterListEntry.EncodeFilterKey(basePacketData.PacketId, basePacketData.CompressionLevel,
+                basePacketData.StreamId);
+            if (!res.Contains(key))
+                res.Add(key);
+        }
+        return res;
+    }
+
+    public bool ExportParsedDataAsXml(string fileName)
+    {
+        try
+        {
+            var xmlDoc = new XmlDocument();
+            var listNode = xmlDoc.CreateNode(XmlNodeType.Element, "packetlist", null);
+            xmlDoc.AppendChild(listNode);
+            foreach (var basePacketData in LoadedPacketList)
+            {
+                // var packetNode = xmlDoc.CreateNode(XmlNodeType.Element, "packetdata", null);
+                var packetNode = XmlHelper.CreateNewXmlElementNode(listNode, "d");
+                if (packetNode == null)
+                    break; // Error
+
+                // XmlHelper.SetAttribute(packetNode, "header", basePacketData.HeaderText);
+                XmlHelper.SetAttribute(packetNode, "t", basePacketData.TimeStamp.Ticks.ToString());
+                XmlHelper.SetAttribute(packetNode, "s", GetStreamIdName(basePacketData.StreamId));
+                if (basePacketData.CompressionLevel > 0)
+                    XmlHelper.SetAttribute(packetNode, "l", basePacketData.CompressionLevel.ToString());
+                XmlHelper.SetAttribute(packetNode, "p", basePacketData.PacketId.ToHex(3));
+                foreach (var parsedField in basePacketData.ParsedData)
+                {
+                    if ((parsedField.DisplayedByteOffset == "") &&
+                        (parsedField.FieldName == Resources.UnParsedFieldName) &&
+                        (parsedField.FieldValue == Resources.UnParsedFieldDescription))
+                        break;
+
+                    var parseNode = XmlHelper.CreateNewXmlElementNode(packetNode, "p");
+                    if (parseNode == null)
+                        break; // Error
+
+                    XmlHelper.SetAttribute(parseNode, "p", parsedField.DisplayedByteOffset);
+                    XmlHelper.SetAttribute(parseNode, "n", parsedField.FieldName);
+                    XmlHelper.SetAttribute(parseNode, "v", parsedField.FieldValue);
+                }
+            }
+
+            using (var outFileStream = File.Create(fileName))
+            {
+                using var outStream = new BZip2OutputStream(outFileStream);
+                xmlDoc.Save(outStream);
+                // xmlDoc.Save(fileName);
+            }
+
+            using (var inFileStream = File.Open(fileName, FileMode.Open))
+            {
+                var inStream = new BZip2InputStream(inFileStream);
+                using (var testStream = File.Create(fileName + ".txt"))
+                {
+                    inStream.CopyTo(testStream);
+                }
+            }
+        }
+        catch
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    public bool ExportParsedDataAsCsv(string fileName)
+    {
+        try
+        {
+            using var writer = new StreamWriter(fileName);
+            var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+            {
+                NewLine = Environment.NewLine,
+                Delimiter = ";",
+                InjectionOptions = InjectionOptions.Escape,
+            };
+            using var csv = new CsvWriter(writer, config);
+
+            foreach (var basePacketData in LoadedPacketList)
+            {
+                csv.WriteField("");
+                csv.WriteField("");
+                csv.WriteField("");
+                csv.NextRecord();
+                foreach (var parsedField in basePacketData.ParsedData)
+                {
+                    if ((parsedField.DisplayedByteOffset == "") &&
+                        (parsedField.FieldName == Resources.UnParsedFieldName) &&
+                        (parsedField.FieldValue == Resources.UnParsedFieldDescription))
+                        break;
+
+                    csv.WriteField(parsedField.DisplayedByteOffset);
+                    csv.WriteField(parsedField.FieldName);
+                    csv.WriteField(parsedField.FieldValue);
+                    csv.NextRecord();
+                }
+                
+            }
+            csv.Flush();
+        }
+        catch
+        {
+            return false;
+        }
+
+        return true;
+    }
+
 }

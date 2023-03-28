@@ -1,5 +1,7 @@
-﻿using System.Globalization;
-using System.Reflection.Metadata;
+﻿using System;
+using System.Globalization;
+using System.IO;
+using System.Windows.Forms;
 using LibVLCSharp.Shared;
 using VieweD.engine.common;
 using VieweD.Properties;
@@ -60,23 +62,23 @@ namespace VieweD.Forms
         {
             if (ParentProject == null)
                 return false;
-            if (!File.Exists(ParentProject.VideoSettings.VideoFile))
+            if (!File.Exists(ParentProject.Settings.VideoSettings.VideoFile))
                 return false;
 
-            return OpenVideoFile(ParentProject.VideoSettings.VideoFile);
+            return OpenVideoFile(ParentProject.Settings.VideoSettings.VideoFile);
         }
 
         private void BtnOpenVideoFile_Click(object sender, EventArgs e)
         {
             OpenVideoFileDialog.InitialDirectory = ParentProject?.ProjectFolder ?? "";
-            OpenVideoFileDialog.FileName = ParentProject?.VideoSettings.VideoFile ?? "";
+            OpenVideoFileDialog.FileName = ParentProject?.Settings.VideoSettings.VideoFile ?? "";
             if (OpenVideoFileDialog.ShowDialog() == DialogResult.OK)
             {
                 if (OpenVideoFile(OpenVideoFileDialog.FileName))
                 {
                     if (ParentProject != null)
                     {
-                        ParentProject.VideoSettings.VideoFile = OpenVideoFileDialog.FileName;
+                        ParentProject.Settings.VideoSettings.VideoFile = OpenVideoFileDialog.FileName;
                         ParentProject.IsDirty = true;
                     }
                     BtnPause.Focus();
@@ -341,28 +343,24 @@ namespace VieweD.Forms
             var currentVideoOffset = TimeSpan.FromMilliseconds(MPlayer.Length * MPlayer.Position);
             var dataOffset = data.VirtualOffsetFromStart;
             var newOffset = dataOffset - currentVideoOffset;
-            var delta = newOffset - ParentProject.VideoSettings.VideoOffset;
+            var delta = newOffset - ParentProject.Settings.VideoSettings.VideoOffset;
 
             // Ignore if delta is too low
-            if ((delta.TotalMilliseconds >= -10) && (delta.TotalMilliseconds <= 10))
+            if (delta.TotalMilliseconds is >= -10 and <= 10)
             {
-                MessageBox.Show("Already synced to this position", "Sync with project", MessageBoxButtons.OK,
+                MessageBox.Show(Resources.AlreadySyncedToThisPosition, Resources.SyncWithProjectTitle, MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
                 return;
             }
 
             if (MessageBox.Show(
-                    "Do you want to update the video syncronization offset to\n" +
-                    newOffset.ToString()+ "? \n\n" +
-                    "Previous offset was\n" +
-                    ParentProject.VideoSettings.VideoOffset.ToString()+"\n\n" +
-                    "Difference = " + delta.ToString(),
-                    "Sync with project", 
+                    string.Format(Resources.UpdateToNewVideoOffset, newOffset, ParentProject.Settings.VideoSettings.VideoOffset, delta),
+                    Resources.SyncWithProjectTitle, 
                     MessageBoxButtons.YesNo, 
                     MessageBoxIcon.Question) != DialogResult.Yes)
                 return;
 
-            ParentProject.VideoSettings.VideoOffset = newOffset;
+            ParentProject.Settings.VideoSettings.VideoOffset = newOffset;
             ParentProject.IsDirty = true;
         }
     }

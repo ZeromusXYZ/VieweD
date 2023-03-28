@@ -5,7 +5,7 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
-    <ImplicitUsings>enable</ImplicitUsings>
+    <ImplicitUsings>disable</ImplicitUsings>
     <AssemblyVersion>0.10.0.0</AssemblyVersion>
     <FileVersion>0.10.0.0</FileVersion>
     <PackageLicenseExpression>Unlicense</PackageLicenseExpression>
@@ -19,19 +19,37 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="data\aa\lookup\" />
     <Folder Include="Helpers\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="CsvHelper" Version="30.0.1" />
+    <PackageReference Include="DotNetZip" Version="1.16.0" />
     <PackageReference Include="FastColoredTextBox.Net6" Version="1.0.0" />
     <PackageReference Include="LibVLCSharp.WinForms" Version="3.6.8" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="4.5.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.5.0" />
     <PackageReference Include="VideoLAN.LibVLC.Windows" Version="3.0.18" />
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="data\aa\engine\AaDInputReader.cs">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="data\aa\engine\AaPacketRule.cs">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="data\aa\engine\AaParser.cs">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="data\aa\engine\AaRulesReader.cs">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Compile>
     <Compile Update="Forms\ParserDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\DecryptKeySelectDialog.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Properties\Resources.Designer.cs">
@@ -54,6 +72,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="data\aa\engine\reference.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="data\aa\keys\readme.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="data\aa\rules\readme.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="data\ffxi\filter\hide movement.pfl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -190,7 +217,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="data\ffxi\rules\ffxi-example.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
     <None Update="data\ffxi\rules\ffxi.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

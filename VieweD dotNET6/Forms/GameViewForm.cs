@@ -1,8 +1,11 @@
-﻿using VieweD.engine.common;
-using VieweD.Forms;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Forms;
+using VieweD.engine.common;
 using VieweD.Helpers.System;
 
-namespace VieweD
+namespace VieweD.Forms
 {
     public partial class GameViewForm : Form
     {
@@ -37,6 +40,7 @@ namespace VieweD
             lbLookupValues.DataSource = null;
             lbLookupGroups.Items.Clear();
 
+            // ReSharper disable once CoVariantArrayConversion
             lbLookupGroups.Items.AddRange(ParentProject.DataLookup.LookupLists.Keys.ToArray());
             lbLookupGroups.Sorted = true;
         }
@@ -44,7 +48,7 @@ namespace VieweD
         private void LbLookupGroups_SelectedIndexChanged(object sender, EventArgs e)
         {
             UseWaitCursor = true;
-            this.Cursor = Cursors.WaitCursor;
+            Cursor = Cursors.WaitCursor;
             Refresh();
             var item = lbLookupGroups.SelectedItem;
             if (item == null)
@@ -60,9 +64,11 @@ namespace VieweD
             var newList = new List<FilterEntry>();
             foreach (var d in LastLookupList.Data)
             {
-                var newEntry = new FilterEntry();
-                newEntry.Value = d.Value.Id.ToString();
-                string t = string.Empty;
+                var newEntry = new FilterEntry
+                {
+                    Value = d.Value.Id.ToString(),
+                };
+                string t;
                 if (cbHexIndex.Checked)
                     t = "0x" + d.Value.Id.ToString("X8") + " => " + d.Value.Val;
                 else
@@ -89,19 +95,7 @@ namespace VieweD
 
         private void SendToClipBoard(string clipText)
         {
-            try
-            {
-                // Because nothing is ever as simple as the next line >.>
-                // Clipboard.SetText(s);
-                // Helper will (try to) prevent errors when copying to clipboard because of threading issues
-                var clipHelp = new SetClipboardHelper(DataFormats.Text, clipText);
-                clipHelp.DontRetryWorkOnFailed = false;
-                clipHelp.Go();
-            }
-            catch
-            {
-                // Ignore
-            }
+            ClipboardHelper.SetClipboard(clipText);
         }
 
         private void BtnCopyID_Click(object sender, EventArgs e)

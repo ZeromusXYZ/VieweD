@@ -81,6 +81,25 @@ namespace VieweD.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Already synced to this position.
+        /// </summary>
+        internal static string AlreadySyncedToThisPosition {
+            get {
+                return ResourceManager.GetString("AlreadySyncedToThisPosition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you want to append to the currently existing file ?
+        ///{0}.
+        /// </summary>
+        internal static string AppendToCurrentFile {
+            get {
+                return ResourceManager.GetString("AppendToCurrentFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap application_exit_16 {
@@ -177,6 +196,15 @@ namespace VieweD.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Compiling plugins ....
+        /// </summary>
+        internal static string CompilingPluginsTitle {
+            get {
+                return ResourceManager.GetString("CompilingPluginsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap cone_altglass_2_x48 {
@@ -192,6 +220,15 @@ namespace VieweD.Properties {
         internal static string ConfirmClose {
             get {
                 return ResourceManager.GetString("ConfirmClose", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy to Clipboard.
+        /// </summary>
+        internal static string CopyToClipboardTitle {
+            get {
+                return ResourceManager.GetString("CopyToClipboardTitle", resourceCulture);
             }
         }
         
@@ -339,6 +376,33 @@ namespace VieweD.Properties {
         internal static string ErrorInRulesFile {
             get {
                 return ResourceManager.GetString("ErrorInRulesFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Expanding packet data using {0}.
+        /// </summary>
+        internal static string ExpandingPackets {
+            get {
+                return ResourceManager.GetString("ExpandingPackets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export data.
+        /// </summary>
+        internal static string ExportDataTitle {
+            get {
+                return ResourceManager.GetString("ExportDataTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exported {0} item(s).
+        /// </summary>
+        internal static string ExportedXItems {
+            get {
+                return ResourceManager.GetString("ExportedXItems", resourceCulture);
             }
         }
         
@@ -624,6 +688,15 @@ namespace VieweD.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No data exported.
+        /// </summary>
+        internal static string NoDataExported {
+            get {
+                return ResourceManager.GetString("NoDataExported", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No rule attached to this packet, create a new one?.
         /// </summary>
         internal static string NoRuleAttachedToThisPacketCreateNewRule {
@@ -687,6 +760,15 @@ namespace VieweD.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Overwrite file.
+        /// </summary>
+        internal static string OverwriteFileTitle {
+            get {
+                return ResourceManager.GetString("OverwriteFileTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Parsing packet data using {0}.
         /// </summary>
         internal static string ParsePackets {
@@ -701,6 +783,15 @@ namespace VieweD.Properties {
         internal static string ParserError {
             get {
                 return ResourceManager.GetString("ParserError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plugin Compile Error.
+        /// </summary>
+        internal static string PluginCompileError {
+            get {
+                return ResourceManager.GetString("PluginCompileError", resourceCulture);
             }
         }
         
@@ -796,6 +887,25 @@ namespace VieweD.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to File Format Error.
+        /// </summary>
+        internal static string ReadAllDataFileFormatErrorTitle {
+            get {
+                return ResourceManager.GetString("ReadAllDataFileFormatErrorTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unknown cmd type: {0} 
+        ///@{1}.
+        /// </summary>
+        internal static string ReadAllDataUnknownCommand {
+            get {
+                return ResourceManager.GetString("ReadAllDataUnknownCommand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rule Error.
         /// </summary>
         internal static string RuleError {
@@ -819,6 +929,15 @@ namespace VieweD.Properties {
         internal static string SaveCancelled {
             get {
                 return ResourceManager.GetString("SaveCancelled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save changes to project: {0} ?.
+        /// </summary>
+        internal static string SaveChangesToProject {
+            get {
+                return ResourceManager.GetString("SaveChangesToProject", resourceCulture);
             }
         }
         
@@ -887,6 +1006,15 @@ namespace VieweD.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sync with project.
+        /// </summary>
+        internal static string SyncWithProjectTitle {
+            get {
+                return ResourceManager.GetString("SyncWithProjectTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ???.
         /// </summary>
         internal static string TypeUnknown {
@@ -950,6 +1078,21 @@ namespace VieweD.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Do you want to update the video syncronization offset to
+        ///{0}?
+        ///
+        ///Previous offset was
+        ///{1}
+        ///
+        ///Difference = {2}.
+        /// </summary>
+        internal static string UpdateToNewVideoOffset {
+            get {
+                return ResourceManager.GetString("UpdateToNewVideoOffset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap usgaiji_10 {
@@ -996,6 +1139,15 @@ namespace VieweD.Properties {
             get {
                 object obj = ResourceManager.GetObject("view_visible_16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Welcome file not found!.
+        /// </summary>
+        internal static string WelcomeFileNotFound {
+            get {
+                return ResourceManager.GetString("WelcomeFileNotFound", resourceCulture);
             }
         }
         

@@ -228,11 +228,44 @@
   <data name="MMSearch.Text" xml:space="preserve">
     <value>&amp;Search</value>
   </data>
+  <data name="MMToolsEditTemplateItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>122, 22</value>
+  </data>
+  <data name="MMToolsEditTemplateItem.Text" xml:space="preserve">
+    <value>Template</value>
+  </data>
+  <data name="MMToolsEditTemplates.Size" type="System.Drawing.Size, System.Drawing">
+    <value>198, 22</value>
+  </data>
+  <data name="MMToolsEditTemplates.Text" xml:space="preserve">
+    <value>Edit Templates</value>
+  </data>
+  <data name="toolStripMenuItem2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>195, 6</value>
+  </data>
   <data name="MMToolsExportCSV.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>198, 22</value>
   </data>
   <data name="MMToolsExportCSV.Text" xml:space="preserve">
     <value>Export as &amp;CSV ...</value>
+  </data>
+  <data name="dataToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
+  </data>
+  <data name="dataToolStripMenuItem.Text" xml:space="preserve">
+    <value>Data</value>
+  </data>
+  <data name="MMToolExportData.Size" type="System.Drawing.Size, System.Drawing">
+    <value>198, 22</value>
+  </data>
+  <data name="MMToolExportData.Text" xml:space="preserve">
+    <value>Export data</value>
+  </data>
+  <data name="MMToolsExportParsed.Size" type="System.Drawing.Size, System.Drawing">
+    <value>198, 22</value>
+  </data>
+  <data name="MMToolsExportParsed.Text" xml:space="preserve">
+    <value>Export parsed project ...</value>
   </data>
   <data name="MMTools.Size" type="System.Drawing.Size, System.Drawing">
     <value>46, 20</value>
@@ -519,7 +552,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAEZTeXN0ZW0uV2luZG93cy5Gb3JtcywgQ3VsdHVyZT1uZXV0cmFs
         LCBQdWJsaWNLZXlUb2tlbj1iNzdhNWM1NjE5MzRlMDg5BQEAAAAmU3lzdGVtLldpbmRvd3MuRm9ybXMu
         SW1hZ2VMaXN0U3RyZWFtZXIBAAAABERhdGEHAgIAAAAJAwAAAA8DAAAAbAwAAAJNU0Z0AUkBTAIBAQUB
-        AAGAAQEBgAEBARABAAEQAQAE/wEJAQAI/wFCAU0BNgEEBgABNgEEAgABKAMAAUADAAEgAwABAQEAAQgG
+        AAEIAQIBCAECARABAAEQAQAE/wEJAQAI/wFCAU0BNgEEBgABNgEEAgABKAMAAUADAAEgAwABAQEAAQgG
         AAEIGAABgAIAAYADAAKAAQABgAMAAYABAAGAAQACgAIAA8ABAAHAAdwBwAEAAfABygGmAQABMwUAATMB
         AAEzAQABMwEAAjMCAAMWAQADHAEAAyIBAAMpAQADVQEAA00BAANCAQADOQEAAYABfAH/AQACUAH/AQAB
         kwEAAdYBAAH/AewBzAEAAcYB1gHvAQAB1gLnAQABkAGpAa0CAAH/ATMDAAFmAwABmQMAAcwCAAEzAwAC
@@ -755,7 +788,7 @@
     <value>3, 3</value>
   </data>
   <data name="RichTextData.Size" type="System.Drawing.Size, System.Drawing">
-    <value>584, 126</value>
+    <value>509, 126</value>
   </data>
   <data name="RichTextData.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -833,10 +866,10 @@
     <value>12</value>
   </data>
   <data name="SuggestionListBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>593, 3</value>
+    <value>518, 3</value>
   </data>
   <data name="SuggestionListBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>144, 126</value>
+    <value>219, 126</value>
   </data>
   <data name="SuggestionListBox.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -881,7 +914,7 @@
     <value>0</value>
   </data>
   <data name="LayoutRawAndSuggested.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="RichTextData" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="SuggestionListBox" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,590,Percent,100" /&gt;&lt;Rows Styles="Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="RichTextData" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="SuggestionListBox" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,515,Percent,100" /&gt;&lt;Rows Styles="Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="&gt;&gt;SplitContainerFieldsAndRawData.Panel2.Name" xml:space="preserve">
     <value>SplitContainerFieldsAndRawData.Panel2</value>
@@ -1216,6 +1249,48 @@
   <data name="&gt;&gt;MMSearchHighlightMenuN1.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;MMTools.Name" xml:space="preserve">
+    <value>MMTools</value>
+  </data>
+  <data name="&gt;&gt;MMTools.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MMToolsEditTemplates.Name" xml:space="preserve">
+    <value>MMToolsEditTemplates</value>
+  </data>
+  <data name="&gt;&gt;MMToolsEditTemplates.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MMToolsEditTemplateItem.Name" xml:space="preserve">
+    <value>MMToolsEditTemplateItem</value>
+  </data>
+  <data name="&gt;&gt;MMToolsEditTemplateItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStripMenuItem2.Name" xml:space="preserve">
+    <value>toolStripMenuItem2</value>
+  </data>
+  <data name="&gt;&gt;toolStripMenuItem2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MMToolsExportCSV.Name" xml:space="preserve">
+    <value>MMToolsExportCSV</value>
+  </data>
+  <data name="&gt;&gt;MMToolsExportCSV.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MMToolExportData.Name" xml:space="preserve">
+    <value>MMToolExportData</value>
+  </data>
+  <data name="&gt;&gt;MMToolExportData.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;dataToolStripMenuItem.Name" xml:space="preserve">
+    <value>dataToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;dataToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;MMLinks.Name" xml:space="preserve">
     <value>MMLinks</value>
   </data>
@@ -1396,16 +1471,10 @@
   <data name="&gt;&gt;SaveProjectFileDialog.Type" xml:space="preserve">
     <value>System.Windows.Forms.SaveFileDialog, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;MMTools.Name" xml:space="preserve">
-    <value>MMTools</value>
+  <data name="&gt;&gt;MMToolsExportParsed.Name" xml:space="preserve">
+    <value>MMToolsExportParsed</value>
   </data>
-  <data name="&gt;&gt;MMTools.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;MMToolsExportCSV.Name" xml:space="preserve">
-    <value>MMToolsExportCSV</value>
-  </data>
-  <data name="&gt;&gt;MMToolsExportCSV.Type" xml:space="preserve">
+  <data name="&gt;&gt;MMToolsExportParsed.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">

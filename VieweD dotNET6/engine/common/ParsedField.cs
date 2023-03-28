@@ -1,4 +1,7 @@
-﻿namespace VieweD.engine.common;
+﻿using System;
+using System.Drawing;
+
+namespace VieweD.engine.common;
 
 public class ParsedField
 {

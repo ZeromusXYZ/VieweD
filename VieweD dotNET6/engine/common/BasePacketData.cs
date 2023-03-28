@@ -1,5 +1,8 @@
-﻿using System.Globalization;
-using System.Net.NetworkInformation;
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Globalization;
+using System.Linq;
 using VieweD.Helpers.System;
 using VieweD.Properties;
 
@@ -18,7 +21,7 @@ public class BasePacketData
     /// Compression CompressionLevel of the packet if applicable
     /// </summary>
     public byte CompressionLevel { get; set; }
-    public byte StreamId => ParentProject?.GetExpectedStreamIdByPort(SourcePort, 0).Item1 ?? 0;
+    public byte StreamId => ParentProject.GetExpectedStreamIdByPort(SourcePort, 0).Item1;
 
     public string HeaderText { get; set; }
     public string OriginalHeaderText { get; set; }
@@ -60,6 +63,13 @@ public class BasePacketData
     public DateTime TimeStamp { get; set; }
     public TimeSpan OffsetFromStart { get; set; }
     public TimeSpan VirtualOffsetFromStart { get; set; }
+    public string ParsedPacketName { get; set; }
+
+    public BasePacketData? ParentPacket { get; set; }
+    public List<BasePacketData> SubPackets { get; set; }
+    public bool IsTruncatedByParser { get; set; }
+    public int UnParseSubPacketCount { get; set; }
+    public bool DoNotParse { get; set; }
 
     public BasePacketData(ViewedProjectTab parentProject)
     {
@@ -69,6 +79,7 @@ public class BasePacketData
         MarkedAsDimmed = false;
         MarkedAsInvalid = false;
         PacketId = 0;
+        ParsedPacketName = string.Empty;
         SyncId = 0;
         CompressionLevel = 0;
         HeaderText = "Header";
@@ -89,6 +100,10 @@ public class BasePacketData
         OffsetFromStart = TimeSpan.Zero;
         Cursor = 0;
         BitCursor = 0;
+        ParentPacket = null;
+        SubPackets = new List<BasePacketData>();
+        IsTruncatedByParser = false;
+        UnParseSubPacketCount = 0;
     }
 
     public ParsedField? GetParsedFieldByByteIndex(int index, bool preferSelectedFields = false)
@@ -284,16 +299,7 @@ public class BasePacketData
         Cursor = pos + size;
         return res.ToArray();
     }
-
-    public string GetIp4AtPos(int pos, bool reversed = false)
-    {
-        if (pos > ByteData.Count - 4) return "";
-        Cursor = pos + 4;
-        if (reversed)
-            return ByteData[pos + 3] + "." + ByteData[pos + 2] + "." + ByteData[pos + 1] + "." + ByteData[pos + 0];
-        else return ByteData[pos + 0] + "." + ByteData[pos + 1] + "." + ByteData[pos + 2] + "." + ByteData[pos + 3];
-    }
-
+    
     public long GetBitsAtPos(int pos, int bitOffset, int bitsSize)
     {
         long res = 0;
@@ -370,7 +376,7 @@ public class BasePacketData
         }
         else
         {
-            var maxCol = Math.Min(PacketColors.DataColors.Count, Properties.Settings.Default.ColFieldCount);
+            var maxCol = Math.Min(PacketColors.DataColors.Count, Settings.Default.ColFieldCount);
             var colorId = (ParsedData.Count % maxCol);
             newParsed.FieldColor = PacketColors.DataColors[colorId];
         }
@@ -458,6 +464,9 @@ public class BasePacketData
 
     public virtual string GetPacketName(PacketDataDirection direction, uint id)
     {
+        if (!string.IsNullOrWhiteSpace(ParsedPacketName))
+            return ParsedPacketName;
+
         return direction switch
         {
             PacketDataDirection.Unknown => Resources.TypeUnknown,
@@ -470,7 +479,7 @@ public class BasePacketData
     public virtual void BuildHeaderText()
     {
         var timeString = string.Empty;
-        if (TimeStamp.Ticks > 0) timeString = TimeStamp.ToString(ParentProject.TimeStampFormat);
+        if (TimeStamp.Ticks > 0) timeString = TimeStamp.ToString(ParentProject.TimeStampFormat, CultureInfo.InvariantCulture);
         string directionString = PacketDataDirection switch
         {
             PacketDataDirection.Outgoing => Resources.DirectionOut,
@@ -478,7 +487,51 @@ public class BasePacketData
             _ => Resources.DirectionUnknown
         };
 
-        HeaderText = timeString + " " + directionString + " " + PacketId.ToHex(3) + " - " + GetPacketName();
+        var nestText = "";
+        if (ParentPacket != null)
+        {
+            var mySubIndex = ParentPacket.SubPackets.IndexOf(this);
+            nestText = mySubIndex >= ParentPacket.SubPackets.Count - 1 ? "└─ " : "├─ ";
+        }
+
+        var streamName = string.Empty;
+        var levelName = string.Empty;
+        var packetIdString = PacketId.ToHex(3) + " ";
+
+        // If the stream has no short name attached, assume it won't get parsed and just mark it by it's normal name
+        var streamInfoFromPort = ParentProject.GetExpectedStreamIdByPort(SourcePort, 0);
+        var streamShortName = streamInfoFromPort.Item3;
+        if (streamInfoFromPort.Item3 == "")
+        {
+            streamName = "";
+            ParsedPacketName = streamInfoFromPort.Item2;
+            levelName = string.Empty;
+            packetIdString = string.Empty;
+            DoNotParse = true;
+        }
+        else
+        {
+            if ((CompressionLevel > 0) || (ParentProject.InputParser?.PacketCompressionLevelMaximum > 0))
+            {
+                if (ParentProject.PortToStreamIdMapping.Count > 1)
+                    levelName = streamShortName + CompressionLevel + " ";
+                else
+                    levelName = "L" + CompressionLevel + " ";
+            }
+            else
+            {
+                if (ParentProject.PortToStreamIdMapping.Count > 1)
+                    streamName = streamShortName + " ";
+            }
+        }
+
+        HeaderText = timeString + " " +
+                     directionString + " " +
+                     streamName +
+                     levelName +
+                     packetIdString +
+                     nestText + 
+                     GetPacketName();
     }
 
     public static Color GetDataColor(int fieldIndex)

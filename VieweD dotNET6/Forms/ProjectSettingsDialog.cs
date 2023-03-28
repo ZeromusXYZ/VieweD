@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Windows.Forms.Automation;
-using System.Xml.Linq;
 using VieweD.engine.common;
+using VieweD.Helpers.System;
 
 namespace VieweD.Forms
 {
@@ -18,7 +14,8 @@ namespace VieweD.Forms
         public ViewedProjectTab? ParentProject { get; set; }
         public bool RequiresReload { get; set; }
         private string DefaultTitle { get; set; } = string.Empty;
-        private List<RuleComboBoxEntry> RulesSelectionList { get; set; } = new();
+        private List<RuleComboBoxEntry> RulesSelectionList { get; } = new();
+        private const string KeyNotUsed = "<not used>";
 
         public ProjectSettingsDialog()
         {
@@ -68,29 +65,35 @@ namespace VieweD.Forms
 
             Text = DefaultTitle + @" - " + ParentProject.ProjectName;
             TextProjectFile.Text = ParentProject.ProjectFile;
-            TextLogFile.Text = ParentProject.OpenedLogFile;
-            TextVideoFile.Text = ParentProject.VideoSettings.VideoFile;
+            TextLogFile.Text = ParentProject.Settings.LogFile;
+            TextVideoFile.Text = ParentProject.Settings.VideoSettings.VideoFile;
+            TextProjectURL.Text = ParentProject.Settings.ProjectUrl;
+            TextVideoURL.Text = ParentProject.Settings.VideoSettings.VideoUrl;
+            TextDescription.Text = ParentProject.Settings.Description;
+
+            DecryptionKeyNameLabel.Text = ParentProject.DecryptionKeyName != string.Empty ? ParentProject.DecryptionKeyName : KeyNotUsed;
 
             CbInputReader.Text = ParentProject.InputReader?.Name ?? string.Empty;
             CbInputReader.Enabled = CbInputReader.Text == string.Empty;
             CbParser.Text = ParentProject.InputParser?.Name ?? string.Empty;
             CbParser.Enabled = CbParser.Text == string.Empty;
 
-            // TODO: Fill in all rules files
             FillRulesListFromParser();
             CbRules.Items.Clear();
             CbRules.DataSource = RulesSelectionList;
             CbRules.DisplayMember = "Display";
             CbRules.ValueMember = "Value";
 
-            CreateVisualTags(ParentProject.Tags);
+            CreateVisualTags(ParentProject.Settings.Tags);
 
             RequiresReload = false;
         }
 
         private void ProjectSettingsDialog_Load(object sender, EventArgs e)
         {
-
+            CBIncludePacketIds.Checked = Properties.Settings.Default.CopySummaryPacketIDs;
+            CBIncludePacketNames.Checked = Properties.Settings.Default.CopySummaryPacketNames;
+            CBHideUrlPreviews.Checked = Properties.Settings.Default.CopySummaryNoAutoLoad;
         }
 
         private void ClearForm()
@@ -165,6 +168,160 @@ namespace VieweD.Forms
                 if (!string.IsNullOrWhiteSpace(s))
                     AddTag(s);
             }
+        }
+
+        public List<string> GetTagsList()
+        {
+            var res = new List<string>();
+            foreach (Control tagLayoutControl in TagLayout.Controls)
+            {
+                if (tagLayoutControl is Label label)
+                {
+                    var s = label.Text.Trim();
+                    if (s != string.Empty)
+                        res.Add(s);
+                }
+            }
+            return res;
+        }
+
+        private void BtnCopySummary_Click(object sender, EventArgs e)
+        {
+            var clipText = "";
+            clipText += "**Name**: " + Path.GetFileNameWithoutExtension(TextProjectFile.Text) + "\n";
+            clipText += "**Description**: " + TextDescription.Text + "\n";
+            // Download URL
+            if (!string.IsNullOrWhiteSpace(TextProjectURL.Text))
+            {
+                if (CBHideUrlPreviews.Checked)
+                    clipText += "> **Logs**: <" + TextProjectURL.Text + ">\n";
+                else
+                    clipText += "> **Logs**: " + TextProjectURL.Text + "\n";
+            }
+
+            // Video URL
+            if (!string.IsNullOrWhiteSpace(TextVideoURL.Text))
+            {
+                if (CBHideUrlPreviews.Checked)
+                    clipText += "> **Video**: <" + TextVideoURL.Text + ">\n";
+                else
+                    clipText += "> **Video**: " + TextVideoURL.Text + "\n";
+            }
+
+            // Tags
+            var tagText = string.Join(", ", GetTagsList());
+            if (tagText != string.Empty)
+                clipText += "> **Tags**: *" + tagText + "*\n";
+
+            if (CBIncludePacketIds.Checked || CBIncludePacketNames.Checked)
+            {
+                // Packet IDs
+                // Incoming
+                //var useLevels = ParentProject?.InputParser?.Rules?.UsesCompressionLevels ?? false;
+                var useStreams = ParentProject?.InputParser?.Rules?.UsesMultipleStreams ?? false;
+
+                // Dir, StreamId, CompressionLevel, PacketID
+                Dictionary<PacketDataDirection, Dictionary<byte, Dictionary<byte, List<uint>>>> keyOutput = new();
+
+                // Grab all used packet Ids
+                foreach (var dir in Enum.GetValues<PacketDataDirection>())
+                {
+                    var packetsUsed = ParentProject?.GetAllUsedPacketsByDirection(dir);
+                    if (packetsUsed == null) 
+                        continue;
+
+                    //var packets = string.Empty;
+                    foreach (var key in packetsUsed)
+                    {
+                        var (pId, pLevel, pStream) = PacketFilterListEntry.DecodeFilterKey(key);
+                        // Get Direction
+                        if (!keyOutput.TryGetValue(dir, out var keyStreamLevelPacket))
+                        {
+                            keyStreamLevelPacket = new();
+                            keyOutput.Add(dir, keyStreamLevelPacket);
+                        }
+
+                        // Get Stream
+                        if (!keyStreamLevelPacket.TryGetValue(pStream, out var keyLevelPacket))
+                        {
+                            keyLevelPacket = new Dictionary<byte, List<uint>>();
+                            keyStreamLevelPacket.Add(pStream, keyLevelPacket);
+                        }
+
+                        // Get Level
+                        if (!keyLevelPacket.TryGetValue(pLevel, out var listPacketId))
+                        {
+                            listPacketId = new();
+                            keyLevelPacket.Add(pLevel, listPacketId);
+                        }
+
+                        if (!listPacketId.Contains(pId))
+                            listPacketId.Add(pId);
+                    }
+
+                }
+
+                // Create output
+                foreach (var outDirStreamLevelPacket in keyOutput)
+                {
+                    foreach (var outStreamLevelPacket in outDirStreamLevelPacket.Value)
+                    {
+                        if (ParentProject?.GetStreamIdShortName(outStreamLevelPacket.Key) == "")
+                            continue;
+
+                        clipText += "> **" + outDirStreamLevelPacket.Key + "**";
+                        if (useStreams)
+                            clipText += " " + ParentProject!.GetStreamIdName(outStreamLevelPacket.Key);
+                        clipText += ": *";
+                        var s = string.Empty;
+                        foreach (var outLevelPacket in outStreamLevelPacket.Value)
+                        {
+                            //if (useLevels)
+                            //    clipText += " L" + outLevelPacket.Key;
+                            foreach (var outList in outLevelPacket.Value)
+                            {
+                                if (s != string.Empty)
+                                    s += ", ";
+
+                                if (CBIncludePacketIds.Checked)
+                                {
+                                    s += outList.ToString("X3"); // don't include the 0x here .ToHex(3);
+                                }
+
+                                if (CBIncludePacketNames.Checked)
+                                {
+                                    var r = ParentProject?.InputParser?.Rules?.GetPacketRule(
+                                        outDirStreamLevelPacket.Key, outStreamLevelPacket.Key, outLevelPacket.Key,
+                                        outList);
+                                    if (CBIncludePacketIds.Checked)
+                                        s += " ";
+                                    if ((r != null) && (!string.IsNullOrWhiteSpace(r.Name)))
+                                        s += r.Name;
+                                    else
+                                    {
+                                        if (CBIncludePacketIds.Checked)
+                                            s += "?";
+                                        else
+                                            s += outList.ToString("X3");
+                                    }
+                                }
+                            }
+                        }
+
+                        clipText += s + "*\n";
+                    }
+                }
+            }
+
+            ClipboardHelper.SetClipboard(clipText);
+        }
+
+        private void ProjectSettingsDialog_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Properties.Settings.Default.CopySummaryPacketIDs = CBIncludePacketIds.Checked;
+            Properties.Settings.Default.CopySummaryPacketNames = CBIncludePacketNames.Checked;
+            Properties.Settings.Default.CopySummaryNoAutoLoad = CBHideUrlPreviews.Checked;
+            Properties.Settings.Default.Save();
         }
     }
 }

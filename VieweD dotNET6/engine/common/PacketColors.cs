@@ -1,4 +1,7 @@
-﻿namespace VieweD.engine.common;
+﻿using System.Collections.Generic;
+using System.Drawing;
+
+namespace VieweD.engine.common;
 
 public static class PacketColors
 {

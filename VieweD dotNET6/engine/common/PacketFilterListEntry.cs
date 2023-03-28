@@ -83,6 +83,21 @@ public class PacketFilterListEntry
         }
     }
 
+    public static ulong EncodeFilterKey(uint packetId, byte compressionLevel, byte streamId)
+    {
+        return packetId + ((ulong)streamId << StreamBitOffset) + ((ulong)compressionLevel << CompressionBitOffset);
+    }
+
+    /// <summary>
+    /// Splits a key into packetId, compressionLevel, steamId
+    /// </summary>
+    /// <param name="key"></param>
+    /// <returns></returns>
+    public static (uint, byte, byte) DecodeFilterKey(ulong key)
+    {
+        return ((uint)(key & uint.MaxValue), (byte)((key >> CompressionBitOffset) & 0xFF), (byte)((key >> StreamBitOffset) & 0xFF));
+    }
+
     public override string ToString()
     {
         return PacketId.ToHex(3) + (CompressionLevel > 0 ? " L" + CompressionLevel : "") + (StreamId > 0 ? " S" + StreamId : "");

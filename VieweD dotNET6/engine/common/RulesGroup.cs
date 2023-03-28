@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.IO;
+﻿using System;
 using System.Xml;
 using VieweD.Helpers.System;
 
@@ -39,14 +38,15 @@ public class RulesGroup
                     continue;
 
                 var attributes = XmlHelper.ReadNodeAttributes(section);
-                switch (section?.Name.ToLower())
+                switch (section.Name.ToLower())
                 {
                     case "server":
                         Port = Convert.ToUInt16(XmlHelper.GetAttributeInt(attributes, "port"));
                         var streamName = XmlHelper.GetAttributeString(attributes, "name");
+                        var streamShortName = XmlHelper.GetAttributeString(attributes, "shortname");
                         if (!string.IsNullOrWhiteSpace(streamName))
                             StreamIdName = streamName;
-                        Parent.ParentProject?.RegisterPort(Port,StreamIdName);
+                        Parent.ParentProject?.RegisterPort(Port,StreamIdName,streamShortName);
                         StreamId = Parent.ParentProject?.GetExpectedStreamIdByPort(Port, 0).Item1 ?? StreamId;
                         break;
                     case "decryptor":
@@ -85,13 +85,12 @@ public class RulesGroup
                         Parent.UsesCompressionLevels = true;
                     var description = XmlHelper.GetAttributeString(attributes, "desc");
                     var packetRule = Parent.CreateNewPacketRule(this, PacketDataDirection.Incoming, StreamId, level, pType, description, pNode);
-                    if (packetRule == null)
-                        continue;
+                    //if (packetRule == null)
+                    //    continue;
 
                     if (Parent.S2C.ContainsKey(packetRule.LookupKey))
                     {
                         Parent.S2C.Remove(packetRule.LookupKey);
-                        Debug.WriteLine("Duplicate S2C Key " + packetRule.LookupKey.ToHex());
                     }
 
                     Parent.S2C.Add(packetRule.LookupKey, packetRule);
@@ -134,13 +133,12 @@ public class RulesGroup
                         Parent.UsesCompressionLevels = true;
                     var description = XmlHelper.GetAttributeString(attributes, "desc");
                     var packetRule = reader.CreateNewPacketRule(this, PacketDataDirection.Outgoing, StreamId, level, pType, description, pNode);
-                    if (packetRule == null)
-                        continue;
+                    //if (packetRule == null)
+                    //    continue;
 
                     if (Parent.C2S.ContainsKey(packetRule.LookupKey))
                     {
                         Parent.C2S.Remove(packetRule.LookupKey);
-                        Debug.WriteLine("Duplicate C2S Key " + packetRule.LookupKey.ToHex());
                     }
 
                     Parent.C2S.Add(packetRule.LookupKey, packetRule);

@@ -1,4 +1,6 @@
-﻿using System.Globalization;
+﻿using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
 using System.Xml;
 
 namespace VieweD.Helpers.System
@@ -106,14 +108,41 @@ namespace VieweD.Helpers.System
 
         public static string FormatXml(this string xml, XmlWriterSettings settings)
         {
-            using (var textReader = new StringReader(xml))
-            using (var xmlReader = XmlReader.Create(textReader, new XmlReaderSettings { ConformanceLevel = settings.ConformanceLevel }))
-            using (var textWriter = new StringWriter())
+            try
             {
+                using var textReader = new StringReader(xml);
+                using var xmlReader = XmlReader.Create(textReader,
+                    new XmlReaderSettings { ConformanceLevel = settings.ConformanceLevel });
+                using var textWriter = new StringWriter();
                 using (var xmlWriter = XmlWriter.Create(textWriter, settings))
                     xmlWriter.WriteNode(xmlReader, true);
                 return textWriter.ToString();
             }
+            catch
+            {
+                return xml;
+            }
         }
+
+        public static XmlNode? CreateNewXmlElementNode(XmlNode parentNode, string elementName)
+        {
+            var node = parentNode.OwnerDocument?.CreateNode(XmlNodeType.Element, elementName, null) ?? null;
+            if (node != null)
+            {
+                parentNode.AppendChild(node);
+            }
+            return node;
+        }
+
+        public static XmlNode? CreateNewXmlTextNode(XmlNode parentNode, string elementName)
+        {
+            var node = parentNode.OwnerDocument?.CreateNode(XmlNodeType.Text, elementName, null) ?? null;
+            if (node != null)
+            {
+                parentNode.AppendChild(node);
+            }
+            return node;
+        }
+
     }
 }

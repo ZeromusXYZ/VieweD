@@ -22,7 +22,8 @@ public class FfxiParser : BaseParser
         Rules = new FfxiRulesReader(parentProject);
     }
 
-    public FfxiParser() : base()
+    // ReSharper disable once UnusedMember.Global
+    public FfxiParser()
     {
         // Supported Readers
         SupportedReaders.Add("FFXI Packeteer");
@@ -38,8 +39,9 @@ public class FfxiParser : BaseParser
     {
         packetData.ParsedData.Clear();
         // In your own parser, replace this check with whatever 
-        if (packetData is not BasePacketData data)
-            return false;
+        //if (packetData is not BasePacketData data)
+        //    return false;
+        var data = packetData;
 
         if (data.ByteData.Count < 4)
         {

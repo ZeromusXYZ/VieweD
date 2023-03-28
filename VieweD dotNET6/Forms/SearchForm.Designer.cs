@@ -1,4 +1,6 @@
-﻿using VieweD.Properties;
+﻿using System.Windows.Forms;
+using System.Drawing;
+using VieweD.Properties;
 
 namespace VieweD.Forms
 {

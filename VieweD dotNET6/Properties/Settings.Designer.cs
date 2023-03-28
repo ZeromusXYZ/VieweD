@@ -37,7 +37,7 @@ namespace VieweD.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Consolas, 9pt")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Consolas, 8.25pt")]
         public global::System.Drawing.Font PacketListFont {
             get {
                 return ((global::System.Drawing.Font)(this["PacketListFont"]));
@@ -49,7 +49,7 @@ namespace VieweD.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Consolas, 9pt")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Consolas, 8.25pt")]
         public global::System.Drawing.Font RawViewFont {
             get {
                 return ((global::System.Drawing.Font)(this["RawViewFont"]));
@@ -62,12 +62,12 @@ namespace VieweD.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Consolas, 9pt")]
-        public global::System.Drawing.Font GridViewFont {
+        public global::System.Drawing.Font FieldViewFont {
             get {
-                return ((global::System.Drawing.Font)(this["GridViewFont"]));
+                return ((global::System.Drawing.Font)(this["FieldViewFont"]));
             }
             set {
-                this["GridViewFont"] = value;
+                this["FieldViewFont"] = value;
             }
         }
         
@@ -788,6 +788,42 @@ namespace VieweD.Properties {
             }
             set {
                 this["AskCreateNewProjectFile"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool CopySummaryPacketIDs {
+            get {
+                return ((bool)(this["CopySummaryPacketIDs"]));
+            }
+            set {
+                this["CopySummaryPacketIDs"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool CopySummaryPacketNames {
+            get {
+                return ((bool)(this["CopySummaryPacketNames"]));
+            }
+            set {
+                this["CopySummaryPacketNames"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool CopySummaryNoAutoLoad {
+            get {
+                return ((bool)(this["CopySummaryNoAutoLoad"]));
+            }
+            set {
+                this["CopySummaryNoAutoLoad"] = value;
             }
         }
     }
