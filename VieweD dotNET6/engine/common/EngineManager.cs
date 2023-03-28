@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Windows.Forms;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using VieweD.Forms;
+using VieweD.Properties;
 
 namespace VieweD.engine.common
 {
@@ -22,8 +23,7 @@ namespace VieweD.engine.common
         public static List<string> PluginErrors = new();
         public static TimeSpan CompileTime { get; set; } = TimeSpan.FromSeconds(0);
         private static Assembly? _pluginsAssembly;
-        // public static bool PreParseData => Properties.Settings.Default.PreParseData;
-        public static bool ShowStringHexData => Properties.Settings.Default.ShowStringHexData;
+        public static Assembly? PluginAssembly => _pluginsAssembly;
 
         private EngineManager()
         {
@@ -78,13 +78,24 @@ namespace VieweD.engine.common
             AllParsers.Sort();
         }
 
+        private static IEnumerable<SyntaxTree> ParseSourceIntoSyntaxTrees(IEnumerable<string> fileList)
+        {
+            var syntaxTrees = new List<SyntaxTree>();
+            foreach (var pluginFile in fileList)
+            {
+                var script = File.ReadAllText(pluginFile);
+                syntaxTrees.Add(CSharpSyntaxTree.ParseText(script));
+            }
+            return syntaxTrees;
+        }
+
         public static bool CompilePlugins()
         {
             var appDir = Path.GetDirectoryName(Application.ExecutablePath) ?? "";
             var pluginsDir = Path.Combine(appDir, "data");
             // var oldDirectory = Directory.GetCurrentDirectory();
             var startTime = DateTime.UtcNow;
-            var loadingTitle = @"Compiling plugins ...";
+            var loadingTitle = Resources.CompilingPluginsTitle;
             {
                 MainForm.Instance?.UpdateStatusBarProgress(0, 100, loadingTitle, null);
 
@@ -115,28 +126,15 @@ namespace VieweD.engine.common
                 MainForm.Instance?.UpdateStatusBarProgress(20, 100, loadingTitle, null);
 
                 // Read all .cs files into a syntaxTree
-                var syntaxTrees = new List<SyntaxTree>();
-                foreach (var pluginFile in PluginFiles)
-                {
-                    var script = File.ReadAllText(pluginFile);
-                    syntaxTrees.Add(CSharpSyntaxTree.ParseText(script));
-                    MainForm.Instance?.UpdateStatusBarProgress(
-                        (int)(((float)syntaxTrees.Count / (float)PluginFiles.Count) * 20f) + 20,
-                        100, loadingTitle, null);
-                }
+                var syntaxTrees = ParseSourceIntoSyntaxTrees(PluginFiles);
 
                 MainForm.Instance?.UpdateStatusBarProgress(40, 100, loadingTitle, null);
 
                 // Get all references from main program
                 var references = new List<MetadataReference>();
-                var assemblies = AppDomain.CurrentDomain.GetAssemblies().Where(p => !p.IsDynamic && !string.IsNullOrEmpty(p.Location)).ToList();
+                var assemblies = AppDomain.CurrentDomain.GetAssemblies().Where(p => !p.IsDynamic && !string.IsNullOrEmpty(p.Location)).ToArray();
                 foreach (var asm in assemblies)
-                {
                     references.Add(MetadataReference.CreateFromFile(asm.Location));
-                    MainForm.Instance?.UpdateStatusBarProgress(
-                        (int)(((float)references.Count / (float)assemblies.Count) * 10f) + 40, 
-                        100, loadingTitle, null);
-                }
 
                 MainForm.Instance?.UpdateStatusBarProgress(50, 100, loadingTitle, null);
 
@@ -171,18 +169,18 @@ namespace VieweD.engine.common
                             PluginErrors.Add(error.ToString());
 
                     // Directory.SetCurrentDirectory(oldDirectory);
+                    CompileTime = DateTime.UtcNow - startTime;
                     return false;
                 }
 
                 MainForm.Instance?.UpdateStatusBarProgress(95, 100, loadingTitle, null);
 
                 // Load Temp Assembly
-                _pluginsAssembly = Assembly.LoadFile(tempAssemblyFile); ;
+                _pluginsAssembly = Assembly.LoadFile(tempAssemblyFile);
 
                 MainForm.Instance?.UpdateStatusBarProgress(100, 100, loadingTitle, null);
             }
-            var endTime = DateTime.UtcNow;
-            CompileTime = endTime - startTime;
+            CompileTime = DateTime.UtcNow - startTime;
 
             // Directory.SetCurrentDirectory(oldDirectory);
             return true;

@@ -1,6 +1,9 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
+using System.IO;
+using System.Linq;
 using System.Text;
 using System.Xml;
 using VieweD.Forms;
@@ -672,7 +675,6 @@ public class RulesActionCompareOperation : RulesAction
         if (MainForm.Instance?.ShowDebugInfo ?? false)
         {
             packetData.AddParsedError("A" + GetActionStepName(), Node.Name, $"{res} <= {val1Attribute}({val1}) {_operatorName} {val2Attribute}({val2})", Depth, Color.DarkGray);
-            Debug.WriteLine($"{GetActionStepName()} {this.GetType().Name}: {val1Attribute}({val1}) {_operatorName} {val2Attribute}({val2}) => {res}");
         }
 
         // Do child actions
@@ -701,9 +703,6 @@ public class RulesActionCompareOperation : RulesAction
                 LoopActionResult = LoopActionResult.Break;
                 packetData.AddParsedError("A" + child.GetActionStepName(), Node.Name, "Reached past end of Packet Data",
                     Depth);
-
-                if (MainForm.Instance?.ShowDebugInfo ?? false)
-                    Debug.WriteLine($"{GetActionStepName()} {this.GetType().Name} - EOP");
 
                 break;
             }
@@ -734,9 +733,6 @@ public class RulesActionCompareOperation : RulesAction
                 packetData.AddParsedError("A" + child.GetActionStepName(), Node.Name, "Reached past end of Packet Data",
                     Depth);
 
-                if (MainForm.Instance?.ShowDebugInfo ?? false)
-                    Debug.WriteLine($"{GetActionStepName()} {this.GetType().Name} - EOP");
-
                 break;
             }
         }
@@ -758,8 +754,7 @@ public class RulesActionElse : RulesAction
     {
         if (MainForm.Instance?.ShowDebugInfo ?? false)
         {
-            packetData.AddParsedError("A" + GetActionStepName(), Node.Name, $"<else />", Depth, Color.DarkGray);
-            Debug.WriteLine($"{GetActionStepName()} {this.GetType().Name}: else");
+            packetData.AddParsedError("A" + GetActionStepName(), Node.Name, "<else />", Depth, Color.DarkGray);
         }
     }
 }
@@ -801,10 +796,9 @@ public class RulesActionArithmeticOperation : RulesAction
         }
 
         long val2 = 0;
-        var val2Attribute = "<none>";
         if ((_arg2Name != string.Empty) && (_arg2Name != "0"))
         {
-            val2Attribute = XmlHelper.GetAttributeString(Attributes, _arg2Name);
+            var val2Attribute = XmlHelper.GetAttributeString(Attributes, _arg2Name);
 
             if (val2Attribute == string.Empty)
             {
@@ -876,7 +870,6 @@ public class RulesActionArithmeticOperation : RulesAction
         if (MainForm.Instance?.ShowDebugInfo ?? false)
         {
             packetData.AddParsedError("A" + GetActionStepName(), Node.Name, "(" + val1.ToString() + " " + _operatorName + " " + val2.ToString() + ") => " + res.ToString() + " => " + destinationAttribute, Depth);
-            Debug.WriteLine($"{GetActionStepName()} {this.GetType().Name}: {val1Attribute}({val1}) {_operatorName} {val2Attribute}({val2}) => {destinationAttribute}({res})");
         }
     }
 }
@@ -970,7 +963,6 @@ public class RulesActionDoubleArithmeticOperation : RulesAction
         if (MainForm.Instance?.ShowDebugInfo ?? false)
         {
             packetData.AddParsedError("A" + GetActionStepName(), Node.Name, "(" + val1.ToString(CultureInfo.InvariantCulture) + " " + _operatorName + " " + val2.ToString(CultureInfo.InvariantCulture) + ") => " + res.ToString(CultureInfo.InvariantCulture) + " => " + destinationAttribute, Depth);
-            Debug.WriteLine($"{GetActionStepName()} {this.GetType().Name}: {val1Attribute}({val1}) {_operatorName} {val2Attribute}({val2}) => {destinationAttribute}({res})");
         }
     }
 }
@@ -1021,14 +1013,12 @@ public class RulesActionLoop : RulesAction
         if (MaxSafetyCount < 1)
         {
             packetData.AddParsedError("A" + GetActionStepName(), Node.Name, "Maximum loop count must be bigger than zero", Depth);
-            Debug.WriteLine($"{GetActionStepName()} {this.GetType().Name} - Maximum loop count must be bigger than zero");
             return;
         }
 
         if (MainForm.Instance?.ShowDebugInfo ?? false)
         {
             packetData.AddParsedError("A" + GetActionStepName(), Node.Name, $"{this.GetType().Name} - Begin", Depth);
-            Debug.WriteLine($"{GetActionStepName()} {this.GetType().Name} - Begin");
         }
 
         // Do child actions
@@ -1036,13 +1026,8 @@ public class RulesActionLoop : RulesAction
         var safetyCounter = 0;
         while (LoopActionResult == LoopActionResult.Normal)
         {
-            for (var i = 0; i < ChildActions.Count; i++)
+            foreach (var child in ChildActions)
             {
-                var child = ChildActions[i];
-                if (MainForm.Instance?.ShowDebugInfo ?? false)
-                {
-                    Debug.WriteLine($"{GetActionStepName()} {this.GetType().Name} - Step {i} ({child.Node.Name})");
-                }
                 try
                 {
                     child.RunAction(packetData);
@@ -1050,22 +1035,15 @@ public class RulesActionLoop : RulesAction
                 catch (Exception ex)
                 {
                     packetData.AddParsedError("A" + child.GetActionStepName(), "Error@ \"" + child.Node.Name + "\"", "Exception: " + ex.Message + " => " + child.Node.OuterXml, Depth);
-                    Debug.WriteLine($"{GetActionStepName()} {this.GetType().Name} - Step {i} ({child.Node.Name}) Exception: {ex.Message}");
                     LoopActionResult = LoopActionResult.Break ;
                 }
                 
                 if (LoopActionResult == LoopActionResult.Continue)
                 {
-                    if (MainForm.Instance?.ShowDebugInfo ?? false)
-                        Debug.WriteLine($"{GetActionStepName()} {this.GetType().Name} - Continue");
-
                     continue;
                 }
                 if (LoopActionResult == LoopActionResult.Break)
                 {
-                    if (MainForm.Instance?.ShowDebugInfo ?? false)
-                        Debug.WriteLine($"{GetActionStepName()} {this.GetType().Name} - Break");
-
                     break;
                 }
 
@@ -1075,9 +1053,6 @@ public class RulesActionLoop : RulesAction
                     // Force break the loop if past end of packet
                     LoopActionResult = LoopActionResult.Break;
                     packetData.AddParsedError("A" + child.GetActionStepName(), Node.Name, "Reached past end of Packet Data", Depth);
-                    if (MainForm.Instance?.ShowDebugInfo ?? false)
-                        Debug.WriteLine($"{GetActionStepName()} {this.GetType().Name} - EOP");
-
                     break;
                 }
             }
@@ -1085,7 +1060,6 @@ public class RulesActionLoop : RulesAction
             
             if (safetyCounter > MaxSafetyCount)
             {
-                Debug.WriteLine($"{this.ParentRule.Name} {GetActionStepName()} {this.GetType().Name} - SafetyCheck, took over {MaxSafetyCount} loops");
                 break;
             }
 
@@ -1094,8 +1068,6 @@ public class RulesActionLoop : RulesAction
         }
 
         LoopActionResult = LoopActionResult.Normal;
-        if (MainForm.Instance?.ShowDebugInfo ?? false)
-            Debug.WriteLine($"{GetActionStepName()} {this.GetType().Name} - End");
     }
 }
 
@@ -1234,7 +1206,6 @@ public class RulesActionSaveLookup : RulesAction
         if (MainForm.Instance?.ShowDebugInfo ?? false)
         {
             packetData.AddParsedError("A" + GetActionStepName(), Node.Name, "Save (" + sourceId + " => " + sourceValue + ") into " + destListName, Depth);
-            Console.WriteLine($"{GetActionStepName()} {GetType().Name}: {sourceId}({idAttribute}) => {sourceValue}({valAttribute}) into {destListName}");
         }
     }
 }
@@ -1298,7 +1269,6 @@ public class RulesActionTemplate : RulesAction
         var templates = parent.Parent.Parent.Templates;
         if (!templates.TryGetValue(TemplateName, out var thisTemplate))
         {
-            Debug.WriteLine("Template not found: " + TemplateName);
             return;
         }
 
@@ -1322,24 +1292,17 @@ public class RulesActionTemplate : RulesAction
         if (MainForm.Instance?.ShowDebugInfo ?? false)
         {
             packetData.AddParsedError("A" + GetActionStepName(), Node.Name, "Begin Template: " + TemplateName, Depth);
-            Debug.WriteLine("{1} {0} - Begin Template", this.GetType().Name, GetActionStepName());
         }
 
         // Do child actions
-        for (var i = 0; i < ChildActions.Count; i++)
+        foreach (var child in ChildActions)
         {
-            var child = ChildActions[i];
-            if (MainForm.Instance?.ShowDebugInfo ?? false)
-            {
-                Debug.WriteLine("{1} {0} - Template Step {2} ({3})", this.GetType().Name, GetActionStepName(), i, child.Node.Name);
-            }
             try
             {
                 child.RunAction(packetData);
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("{1} {0} - Template Step {2} ({3}) Exception: {4}", this.GetType().Name, GetActionStepName(), i, child.Node.Name, ex.Message);
                 packetData.AddParsedError("A" + child.GetActionStepName(), "Error at \"" + child.Node.Name + "\"", "Exception: " + ex.Message + " => " + child.Node.OuterXml, Depth);
                 LoopActionResult = LoopActionResult.Break;
             }
@@ -1350,15 +1313,9 @@ public class RulesActionTemplate : RulesAction
             {
                 LoopActionResult = LoopActionResult.Break;
                 packetData.AddParsedError("A" + child.GetActionStepName(), Node.Name, "Reached past end of Packet Data", Depth);
-                if (MainForm.Instance?.ShowDebugInfo ?? false)
-                    Debug.WriteLine("{1} {0} - EOP", this.GetType().Name, GetActionStepName());
-
                 break;
             }
         }
-
-        if (MainForm.Instance?.ShowDebugInfo ?? false)
-            Debug.WriteLine($"{GetActionStepName()} {this.GetType().Name} - End Template");
     }
 }
 
@@ -1368,13 +1325,13 @@ public class RulesActionTemplate : RulesAction
 public class RulesActionEcho : RulesAction
 {
     public string FieldName;
-    private List<RulesAction> ChildActions;
+    private readonly List<RulesAction> _childActions;
 
     public RulesActionEcho(PacketRule parent, RulesAction? parentAction, XmlNode thisNode, int thisStep, string name) : base(parent, parentAction, thisNode, thisStep, false)
     {
         FieldName = XmlHelper.GetAttributeString(Attributes, name.ToLower());
 
-        ChildActions = new List<RulesAction>();
+        _childActions = new List<RulesAction>();
         for (var i = 0; i < thisNode.ChildNodes.Count; i++)
         {
             var actionNode = thisNode.ChildNodes.Item(i);
@@ -1383,7 +1340,7 @@ public class RulesActionEcho : RulesAction
             var attributes = XmlHelper.ReadNodeAttributes(actionNode);
             var newAction = parent.BuildRuleAction(this, actionNode, attributes, i);
             if (newAction != null)
-                ChildActions.Add(newAction);
+                _childActions.Add(newAction);
         }
     }
 
@@ -1420,7 +1377,7 @@ public class RulesActionEcho : RulesAction
         packetData.AddParsedError("A" + GetActionStepName(), echoName, lookupVal + dataString + hexString, Depth);
 
         // Do child actions
-        foreach (var child in ChildActions)
+        foreach (var child in _childActions)
         {
             try
             {
@@ -1570,7 +1527,7 @@ public class RulesActionReadBitValue : RulesAction
         var fieldName = XmlHelper.GetAttributeString(Attributes, "name");
 
         var pos = packetData.Cursor;
-        var endBitPos = ((packetData.Cursor * 8) + packetData.BitCursor + (int)bitCount); // end bit
+        var endBitPos = ((packetData.Cursor * 8) + packetData.BitCursor + bitCount); // end bit
         var endPos = ((endBitPos % 8) == 0) ? (endBitPos / 8) - 1 : (endBitPos / 8); // end byte
         var posFieldString = pos.ToHex(2) + ":" + packetData.BitCursor + "~" + (packetData.BitCursor + bitCount - 1);
 
@@ -1649,5 +1606,39 @@ public class RulesActionCursor : RulesAction
     {
         // This only needs to update the cursor
         GotoStartPosition(packetData);
+    }
+}
+
+public class RulesActionToolsExport : RulesAction
+{
+    private readonly string _exportFieldName;
+
+    public RulesActionToolsExport(PacketRule parent, RulesAction? parentAction, XmlNode thisNode, int thisStep, string exportFieldName) : base(parent, parentAction, thisNode, thisStep, false)
+    {
+        _exportFieldName = exportFieldName;
+    }
+
+    public override void RunAction(BasePacketData packetData)
+    {
+        // Only run when export tool is active
+        var activeTool = ParentRule.Parent.Parent.CurrentExportDataTool;
+        if (activeTool == null)
+            return;
+
+        var exporterName = XmlHelper.GetAttributeString(Attributes, _exportFieldName);
+
+        // Check if it's this node's tool that is running
+        if (exporterName.Equals(activeTool.Name, StringComparison.InvariantCultureIgnoreCase) == false)
+            return;
+
+        var targetFile = Path.Combine(ParentRule.Parent.Parent.ParentProject.ProjectFolder, activeTool.FileName);
+
+        var outputString = (ParentRule.Parent.Parent.CurrentExportCount > 0 ? activeTool.ItemSeparator : "") + activeTool.Item;
+        foreach (var variable in ParentRule.LocalVars)
+            outputString = outputString.Replace("{#" + variable.Key + "}", variable.Value);
+
+        File.AppendAllText(targetFile, outputString);
+
+        ParentRule.Parent.Parent.CurrentExportCount++;
     }
 }

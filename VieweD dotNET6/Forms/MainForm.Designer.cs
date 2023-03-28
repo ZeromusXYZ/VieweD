@@ -1,4 +1,7 @@
-﻿namespace VieweD.Forms
+﻿using System.Windows.Forms;
+using System.Drawing;
+
+namespace VieweD.Forms
 {
     partial class MainForm
     {
@@ -59,6 +62,13 @@
             MMSearchHighlightMenu = new ToolStripMenuItem();
             MMSearchHighlightReset = new ToolStripMenuItem();
             MMSearchHighlightMenuN1 = new ToolStripSeparator();
+            MMTools = new ToolStripMenuItem();
+            MMToolsEditTemplates = new ToolStripMenuItem();
+            MMToolsEditTemplateItem = new ToolStripMenuItem();
+            toolStripMenuItem2 = new ToolStripSeparator();
+            MMToolsExportCSV = new ToolStripMenuItem();
+            MMToolExportData = new ToolStripMenuItem();
+            dataToolStripMenuItem = new ToolStripMenuItem();
             MMLinks = new ToolStripMenuItem();
             MMLinksGitHub = new ToolStripMenuItem();
             MMLinksDikscord = new ToolStripMenuItem();
@@ -103,8 +113,7 @@
             PMSuggestLookup = new ToolStripMenuItem();
             PMSuggestCustomLookup = new ToolStripMenuItem();
             SaveProjectFileDialog = new SaveFileDialog();
-            MMTools = new ToolStripMenuItem();
-            MMToolsExportCSV = new ToolStripMenuItem();
+            MMToolsExportParsed = new ToolStripMenuItem();
             MM.SuspendLayout();
             StatusBar.SuspendLayout();
             TCProjects.SuspendLayout();
@@ -292,6 +301,49 @@
             // 
             MMSearchHighlightMenuN1.Name = "MMSearchHighlightMenuN1";
             resources.ApplyResources(MMSearchHighlightMenuN1, "MMSearchHighlightMenuN1");
+            // 
+            // MMTools
+            // 
+            MMTools.DropDownItems.AddRange(new ToolStripItem[] { MMToolsEditTemplates, toolStripMenuItem2, MMToolsExportCSV, MMToolExportData, MMToolsExportParsed });
+            MMTools.Name = "MMTools";
+            resources.ApplyResources(MMTools, "MMTools");
+            // 
+            // MMToolsEditTemplates
+            // 
+            MMToolsEditTemplates.DropDownItems.AddRange(new ToolStripItem[] { MMToolsEditTemplateItem });
+            MMToolsEditTemplates.Name = "MMToolsEditTemplates";
+            resources.ApplyResources(MMToolsEditTemplates, "MMToolsEditTemplates");
+            MMToolsEditTemplates.DropDownOpening += MMToolsEditTemplates_DropDownOpening;
+            MMToolsEditTemplates.DropDownItemClicked += MMToolsEditTemplates_DropDownItemClicked;
+            // 
+            // MMToolsEditTemplateItem
+            // 
+            MMToolsEditTemplateItem.Name = "MMToolsEditTemplateItem";
+            resources.ApplyResources(MMToolsEditTemplateItem, "MMToolsEditTemplateItem");
+            // 
+            // toolStripMenuItem2
+            // 
+            toolStripMenuItem2.Name = "toolStripMenuItem2";
+            resources.ApplyResources(toolStripMenuItem2, "toolStripMenuItem2");
+            // 
+            // MMToolsExportCSV
+            // 
+            MMToolsExportCSV.Name = "MMToolsExportCSV";
+            resources.ApplyResources(MMToolsExportCSV, "MMToolsExportCSV");
+            MMToolsExportCSV.Click += MMToolsExportCSV_Click;
+            // 
+            // MMToolExportData
+            // 
+            MMToolExportData.DropDownItems.AddRange(new ToolStripItem[] { dataToolStripMenuItem });
+            MMToolExportData.Name = "MMToolExportData";
+            resources.ApplyResources(MMToolExportData, "MMToolExportData");
+            MMToolExportData.DropDownOpening += MMToolExportData_DropDownOpening;
+            MMToolExportData.DropDownItemClicked += MMToolExportData_DropDownItemClicked;
+            // 
+            // dataToolStripMenuItem
+            // 
+            dataToolStripMenuItem.Name = "dataToolStripMenuItem";
+            resources.ApplyResources(dataToolStripMenuItem, "dataToolStripMenuItem");
             // 
             // MMLinks
             // 
@@ -631,17 +683,11 @@
             SaveProjectFileDialog.DefaultExt = "pvd";
             resources.ApplyResources(SaveProjectFileDialog, "SaveProjectFileDialog");
             // 
-            // MMTools
+            // MMToolsExportParsed
             // 
-            MMTools.DropDownItems.AddRange(new ToolStripItem[] { MMToolsExportCSV });
-            MMTools.Name = "MMTools";
-            resources.ApplyResources(MMTools, "MMTools");
-            // 
-            // MMToolsExportCSV
-            // 
-            MMToolsExportCSV.Name = "MMToolsExportCSV";
-            resources.ApplyResources(MMToolsExportCSV, "MMToolsExportCSV");
-            MMToolsExportCSV.Click += MMToolsExportCSV_Click;
+            MMToolsExportParsed.Name = "MMToolsExportParsed";
+            resources.ApplyResources(MMToolsExportParsed, "MMToolsExportParsed");
+            MMToolsExportParsed.Click += MMToolsExportParsed_Click;
             // 
             // MainForm
             // 
@@ -754,5 +800,11 @@
         private ToolStripMenuItem PMSuggestCustomLookup;
         private ToolStripMenuItem MMTools;
         private ToolStripMenuItem MMToolsExportCSV;
+        private ToolStripSeparator toolStripMenuItem2;
+        private ToolStripMenuItem MMToolsEditTemplates;
+        private ToolStripMenuItem MMToolsEditTemplateItem;
+        private ToolStripMenuItem MMToolExportData;
+        private ToolStripMenuItem dataToolStripMenuItem;
+        private ToolStripMenuItem MMToolsExportParsed;
     }
 }

@@ -437,4 +437,66 @@
   <data name="UnParsedFieldDescription" xml:space="preserve">
     <value>Unparsed data below</value>
   </data>
+  <data name="CompilingPluginsTitle" xml:space="preserve">
+    <value>Compiling plugins ...</value>
+  </data>
+  <data name="ExpandingPackets" xml:space="preserve">
+    <value>Expanding packet data using {0}</value>
+    <comment>0: parser name</comment>
+  </data>
+  <data name="OverwriteFileTitle" xml:space="preserve">
+    <value>Overwrite file</value>
+  </data>
+  <data name="AppendToCurrentFile" xml:space="preserve">
+    <value>Do you want to append to the currently existing file ?
+{0}</value>
+    <comment>0: filename</comment>
+  </data>
+  <data name="ExportedXItems" xml:space="preserve">
+    <value>Exported {0} item(s)</value>
+    <comment>0: item count</comment>
+  </data>
+  <data name="NoDataExported" xml:space="preserve">
+    <value>No data exported</value>
+  </data>
+  <data name="ExportDataTitle" xml:space="preserve">
+    <value>Export data</value>
+  </data>
+  <data name="ReadAllDataUnknownCommand" xml:space="preserve">
+    <value>Unknown cmd type: {0} 
+@{1}</value>
+    <comment>0: command name  1: position</comment>
+  </data>
+  <data name="ReadAllDataFileFormatErrorTitle" xml:space="preserve">
+    <value>File Format Error</value>
+  </data>
+  <data name="CopyToClipboardTitle" xml:space="preserve">
+    <value>Copy to Clipboard</value>
+  </data>
+  <data name="PluginCompileError" xml:space="preserve">
+    <value>Plugin Compile Error</value>
+  </data>
+  <data name="WelcomeFileNotFound" xml:space="preserve">
+    <value>Welcome file not found!</value>
+  </data>
+  <data name="AlreadySyncedToThisPosition" xml:space="preserve">
+    <value>Already synced to this position</value>
+  </data>
+  <data name="SyncWithProjectTitle" xml:space="preserve">
+    <value>Sync with project</value>
+  </data>
+  <data name="UpdateToNewVideoOffset" xml:space="preserve">
+    <value>Do you want to update the video syncronization offset to
+{0}?
+
+Previous offset was
+{1}
+
+Difference = {2}</value>
+    <comment>0: new offset  1: old offset  2: delta</comment>
+  </data>
+  <data name="SaveChangesToProject" xml:space="preserve">
+    <value>Save changes to project: {0} ?</value>
+    <comment>0: project name</comment>
+  </data>
 </root>

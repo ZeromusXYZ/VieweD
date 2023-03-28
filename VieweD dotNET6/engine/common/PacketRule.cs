@@ -1,8 +1,8 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 using System.Xml;
-using VieweD.Forms;
 using VieweD.Helpers.System;
 
 namespace VieweD.engine.common;
@@ -18,7 +18,7 @@ public class PacketRule
     public List<RulesAction> Actions { get; protected set; }
     public Dictionary<string, string> LocalVars { get; protected set; }
 
-    public virtual uint LookupKey => (uint)((StreamId * 0x1000000) + (Level * 0x10000) + PacketId);
+    public virtual ulong LookupKey => PacketFilterListEntry.EncodeFilterKey(PacketId, Level, StreamId);
 
     public PacketRule(RulesGroup parent, byte streamId, byte level, ushort packetId, string description, XmlNode node)
     {
@@ -72,12 +72,14 @@ public class PacketRule
                 var isReversed = dataType.StartsWith("r-");
                 switch (dataType)
                 {
+                    case "b":
                     case "byte":
                         res = new RulesActionReadByte(this, parentAction, actionNode, step);
                         break;
                     case "sbyte":
                         res = new RulesActionReadSByte(this, parentAction, actionNode, step);
                         break;
+                    case "w":
                     case "uint16":
                     case "r-uint16":
                     case "word":
@@ -283,6 +285,9 @@ public class PacketRule
             case "echo":
                 res = new RulesActionEcho(this, parentAction, actionNode, step, "arg");
                 break;
+            case "export":
+                res = new RulesActionToolsExport(this, parentAction, actionNode, step, "name");
+                break;
             case "cur":
             case "cursor":
                 res = new RulesActionCursor(this, parentAction, actionNode, step);
@@ -352,8 +357,6 @@ public class PacketRule
         if (LocalVars.TryGetValue(name, out _))
             LocalVars.Remove(name);
         LocalVars.Add(name, newValue);
-        if (MainForm.Instance?.ShowDebugInfo ?? false)
-            Debug.WriteLine($"SetLocalVar({name},{newValue})");
     }
 
     public string GetLocalVar(string name)

@@ -1,4 +1,8 @@
-﻿using System.Text;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using System.Windows.Forms;
 using System.Xml;
 using VieweD.Forms;
 using VieweD.Helpers.System;
@@ -11,16 +15,28 @@ public class RulesReader
     public XmlDocument? XmlDoc { get; set; }
     public XmlNodeList? AllRulesGroups { get; set; }
     public XmlNodeList? AllTemplates { get; set; }
-    public Dictionary<byte, RulesGroup> RuleGroups { get; set; } = new Dictionary<byte, RulesGroup>();
-    public Dictionary<uint, PacketRule> C2S { get; set; } = new Dictionary<uint, PacketRule>(); // out: client to server
-    public Dictionary<uint, PacketRule> S2C { get; set; } = new Dictionary<uint, PacketRule>(); // In : server to client
-    public Dictionary<string, XmlNode> Templates { get; set; } = new Dictionary<string, XmlNode>();
+    public Dictionary<byte, RulesGroup> RuleGroups { get; set; } = new();
+    public Dictionary<ulong, PacketRule> C2S { get; set; } = new(); // out: client to server
+    public Dictionary<ulong, PacketRule> S2C { get; set; } = new(); // In : server to client
+    public Dictionary<string, XmlNode> Templates { get; set; } = new();
     public string LoadedRulesFileName { get; protected set; } = string.Empty;
-    public ViewedProjectTab ParentProject { get; private set; }
+    public ViewedProjectTab ParentProject { get; }
     // protected ZlibCodec DecompressionHandler { get; set; } = new ZlibCodec(Ionic.Zlib.CompressionMode.Decompress);
     public string ExpectedClientVersion { get; set; } = string.Empty;
     public bool UsesCompressionLevels { get; internal set; }
     public bool UsesMultipleStreams { get; private set; }
+    public virtual string DefaultDataParseElementName => "data";
+
+    /// <summary>
+    /// List of all export nodes
+    /// </summary>
+    public virtual Dictionary<string, ExportDataTool> ExportDataTools { get; set; } = new();
+    /// <summary>
+    /// Currently active export data tool
+    /// </summary>
+    public ExportDataTool? CurrentExportDataTool { get; set; } = null;
+
+    public int CurrentExportCount { get; set; } = 0;
 
     public RulesReader(ViewedProjectTab parent)
     {
@@ -75,6 +91,32 @@ public class RulesReader
             UsesMultipleStreams = false;
         }
 
+        // Read Export Tools Data
+        ExportDataTools.Clear();
+        var exports = XmlDoc.SelectNodes("/root/tools/dataexport");
+        if (exports != null)
+        {
+            foreach (XmlNode exportNode in exports)
+            {
+                var attr = XmlHelper.ReadNodeAttributes(exportNode);
+                var exportName = XmlHelper.GetAttributeString(attr, "name");
+                var exportDataTool = new ExportDataTool
+                {
+                    Name = XmlHelper.GetAttributeString(attr, "name"),
+                    FileName = XmlHelper.GetAttributeString(attr, "filename"),
+                    Header = exportNode.SelectSingleNode("header")?.InnerText ?? string.Empty,
+                    Footer = exportNode.SelectSingleNode("footer")?.InnerText ?? string.Empty
+                };
+                var itemNode = exportNode.SelectSingleNode("item");
+                if (itemNode != null)
+                {
+                    exportDataTool.Item = itemNode.InnerText;
+                    exportDataTool.ItemSeparator = XmlHelper.GetAttributeString(XmlHelper.ReadNodeAttributes(itemNode), "separator");
+                }
+                ExportDataTools.Add(exportName, exportDataTool);
+            }
+        }
+
         return true;
     }
 
@@ -116,20 +158,20 @@ public class RulesReader
 
     public virtual PacketRule? GetPacketRule(PacketDataDirection pdd, byte streamId, byte level, uint packetId)
     {
-        var key = (uint)((streamId * 0x01000000) + (level * 0x10000) + packetId);
-        var level0Key = (uint)((streamId * 0x01000000) + packetId);
+        var key = new PacketFilterListEntry(packetId, level, streamId);
+        var level0Key = new PacketFilterListEntry(packetId, 0, streamId);
         switch (pdd)
         {
             case PacketDataDirection.Incoming:
-                if (S2C.TryGetValue(key, out var inP))
+                if (S2C.TryGetValue(key.FilterKey, out var inP))
                     return inP;
-                if (S2C.TryGetValue(level0Key, out var inP0))
+                if (S2C.TryGetValue(level0Key.FilterKey, out var inP0))
                     return inP0;
                 break;
             case PacketDataDirection.Outgoing:
-                if (C2S.TryGetValue(key, out var outP))
+                if (C2S.TryGetValue(key.FilterKey, out var outP))
                     return outP;
-                if (C2S.TryGetValue(level0Key, out var outP0))
+                if (C2S.TryGetValue(level0Key.FilterKey, out var outP0))
                     return outP0;
                 break;
             case PacketDataDirection.Unknown:
@@ -173,52 +215,55 @@ public class RulesReader
     {
         // Example:
         // var basic = editor.AddMenuItem(miInsert.Items, "Basic Types", "");
-        // editor.AddMenuItem(basic!.DropDownItems, "Byte (8 bit)", "<data type=\"byte\" name=\"byte field\" />");
+        // editor.AddMenuItem(basic!.DropDownItems, "Byte (8 bit)", "<" + DefaultDataParseElementName + " type=\"byte\" name=\"byte field\" />");
 
         //--------------------------------------
 
         // Basic
         var basic = editor.AddMenuItem(miInsert.Items, "Basic Types", "");
 
-        editor.AddMenuItem(basic!.DropDownItems, "byte (8  bit)", "<data type=\"byte\" name=\"|byte|\" />");
-        editor.AddMenuItem(basic.DropDownItems, "ushort (16 bit)", "<data type=\"ushort\" name=\"|ushort|\" />");
-        editor.AddMenuItem(basic.DropDownItems, "short (16 bit signed)", "<data type=\"short\" name=\"|short|\" />");
+        editor.AddMenuItem(basic!.DropDownItems, "byte (8  bit)", "<" + DefaultDataParseElementName + " type=\"byte\" name=\"|byte|\" />");
+        editor.AddMenuItem(basic.DropDownItems, "ushort (16 bit)", "<" + DefaultDataParseElementName + " type=\"ushort\" name=\"|ushort|\" />");
+        editor.AddMenuItem(basic.DropDownItems, "short (16 bit signed)", "<" + DefaultDataParseElementName + " type=\"short\" name=\"|short|\" />");
         editor.AddMenuItem(basic.DropDownItems, "-", "");
-        editor.AddMenuItem(basic.DropDownItems, "uint (32 bit)", "<data type=\"uint\" name=\"|uint|\" />");
-        editor.AddMenuItem(basic.DropDownItems, "int (32 bit signed)", "<data type=\"int\" name=\"|int|\" />");
-        editor.AddMenuItem(basic.DropDownItems, "ulong (64 bit)", "<data type=\"ulong\" name=\"|ulong|\" />");
-        editor.AddMenuItem(basic.DropDownItems, "long (64 bit signed)", "<data type=\"long\" name=\"long|\" />");
+        editor.AddMenuItem(basic.DropDownItems, "uint (32 bit)", "<" + DefaultDataParseElementName + " type=\"uint\" name=\"|uint|\" />");
+        editor.AddMenuItem(basic.DropDownItems, "int (32 bit signed)", "<" + DefaultDataParseElementName + " type=\"int\" name=\"|int|\" />");
+        editor.AddMenuItem(basic.DropDownItems, "ulong (64 bit)", "<" + DefaultDataParseElementName + " type=\"ulong\" name=\"|ulong|\" />");
+        editor.AddMenuItem(basic.DropDownItems, "long (64 bit signed)", "<" + DefaultDataParseElementName + " type=\"long\" name=\"long|\" />");
         editor.AddMenuItem(basic.DropDownItems, "-", "");
-        editor.AddMenuItem(basic.DropDownItems, "float (32 bit)", "<data type=\"float\" name=\"|float|\" />");
-        editor.AddMenuItem(basic.DropDownItems, "double (64 bit)", "<data type=\"double\" name=\"|double|\" />");
+        editor.AddMenuItem(basic.DropDownItems, "float (32 bit)", "<" + DefaultDataParseElementName + " type=\"float\" name=\"|float|\" />");
+        editor.AddMenuItem(basic.DropDownItems, "double (64 bit)", "<" + DefaultDataParseElementName + " type=\"double\" name=\"|double|\" />");
 
+        editor.AddMenuItem(miInsert.Items, "-", "");
 
         var strings = editor.AddMenuItem(miInsert.Items, "Strings", "");
-        editor.AddMenuItem(strings!.DropDownItems, "string with size (ASCII)", "<data type=\"zs\" name=\"|ascii size+string|\" />");
-        editor.AddMenuItem(strings.DropDownItems, "string (ASCII)", "<data type=\"s\" arg=\"0\" name=\"|ascii string|\" />");
-        editor.AddMenuItem(strings.DropDownItems, "string with size (Unicode)", "<data type=\"zu\" name=\"|unicode size+string|\" />");
-        editor.AddMenuItem(strings.DropDownItems, "string (Unicode)", "<data type=\"u\" arg=\"0\" name=\"|unicode string|\" />");
-        editor.AddMenuItem(strings.DropDownItems, "string with size (UTF8)", "<data type=\"zu8\" name=\"|utf8 size+string|\" />");
-        editor.AddMenuItem(strings.DropDownItems, "string (UTF8)", "<data type=\"t\" arg=\"0\" name=\"|utf8 string|\" />");
+        editor.AddMenuItem(strings!.DropDownItems, "string with size (UTF8)", "<" + DefaultDataParseElementName + " type=\"zu8\" name=\"|utf8 size+string|\" />");
+        editor.AddMenuItem(strings.DropDownItems, "string (UTF8)", "<" + DefaultDataParseElementName + " type=\"t\" arg=\"0\" name=\"|utf8 string|\" />");
+        editor.AddMenuItem(strings.DropDownItems, "-", "");
+        editor.AddMenuItem(strings.DropDownItems, "string with size (ASCII)", "<" + DefaultDataParseElementName + " type=\"zs\" name=\"|ascii size+string|\" />");
+        editor.AddMenuItem(strings.DropDownItems, "string (ASCII)", "<" + DefaultDataParseElementName + " type=\"s\" arg=\"0\" name=\"|ascii string|\" />");
+        editor.AddMenuItem(strings.DropDownItems, "string with size (Unicode)", "<" + DefaultDataParseElementName + " type=\"zu\" name=\"|unicode size+string|\" />");
+        editor.AddMenuItem(strings.DropDownItems, "string (Unicode)", "<" + DefaultDataParseElementName + " type=\"u\" arg=\"0\" name=\"|unicode string|\" />");
 
         // Complex
         var complex = editor.AddMenuItem(miInsert.Items, "Complex Types", "");
 
-        editor.AddMenuItem(complex!.DropDownItems, "bits as value", "<data type=\"bitval\" bits=\"8\" style=\"normal\" name=\"|bit value|\" />");
-        editor.AddMenuItem(complex.DropDownItems, "bits (multi-line)", "<data type=\"bits\" bits=\"8\" style=\"normal\" name=\"|bits|\" />");
-        editor.AddMenuItem(complex.DropDownItems, "bits (all bits)", "<data type=\"bits\" bits=\"8\" style=\"full\" name=\"|bits|\" />");
-        editor.AddMenuItem(complex.DropDownItems, "bits (single-line)", "<data type=\"bits\" bits=\"8\" style=\"compact\" name=\"|bits|\" />");
-        editor.AddMenuItem(complex.DropDownItems, "Byte Array", "<data type=\"a\" arg=\"16\" name=\"|array|\" />");
+        editor.AddMenuItem(complex!.DropDownItems, "bits as value", "<" + DefaultDataParseElementName + " type=\"bitval\" bits=\"8\" style=\"normal\" name=\"|bit value|\" />");
+        editor.AddMenuItem(complex.DropDownItems, "bits (multi-line)", "<" + DefaultDataParseElementName + " type=\"bits\" bits=\"8\" style=\"normal\" name=\"|bits|\" />");
+        editor.AddMenuItem(complex.DropDownItems, "bits (all bits)", "<" + DefaultDataParseElementName + " type=\"bits\" bits=\"8\" style=\"full\" name=\"|bits|\" />");
+        editor.AddMenuItem(complex.DropDownItems, "bits (single-line)", "<" + DefaultDataParseElementName + " type=\"bits\" bits=\"8\" style=\"compact\" name=\"|bits|\" />");
+        editor.AddMenuItem(complex.DropDownItems, "Byte Array", "<" + DefaultDataParseElementName + " type=\"a\" arg=\"16\" name=\"|array|\" />");
         editor.AddMenuItem(complex.DropDownItems, "-", "");
-        editor.AddMenuItem(complex.DropDownItems, "milliseconds (uint32)", "<data type=\"ms\" name=\"|milliseconds|\" />");
+        editor.AddMenuItem(complex.DropDownItems, "milliseconds (uint32)", "<" + DefaultDataParseElementName + " type=\"ms\" name=\"|milliseconds|\" />");
         editor.AddMenuItem(complex.DropDownItems, "-", "");
-        editor.AddMenuItem(complex.DropDownItems, "int (24 bit)", "<data type=\"uint24\" name=\"|uint24|\" />");
-        editor.AddMenuItem(complex.DropDownItems, "half-float (16 bit)", "<data type=\"half\" name=\"|half|\" />");
+        editor.AddMenuItem(complex.DropDownItems, "int (24 bit)", "<" + DefaultDataParseElementName + " type=\"uint24\" name=\"|uint24|\" />");
+        editor.AddMenuItem(complex.DropDownItems, "half-float (16 bit)", "<" + DefaultDataParseElementName + " type=\"half\" name=\"|half|\" />");
         editor.AddMenuItem(complex.DropDownItems, "-", "");
-        editor.AddMenuItem(complex.DropDownItems, "IPv4 (4 byte)", "<data type=\"ip4\" name=\"|IP|\" />");
-        editor.AddMenuItem(complex.DropDownItems, "IPv6 (6 byte)", "<data type=\"ip6\" name=\"|IP|\" />");
+        editor.AddMenuItem(complex.DropDownItems, "IPv4 (4 byte)", "<" + DefaultDataParseElementName + " type=\"ip4\" name=\"|IP|\" />");
+        editor.AddMenuItem(complex.DropDownItems, "IPv6 (6 byte)", "<" + DefaultDataParseElementName + " type=\"ip6\" name=\"|IP|\" />");
 
         // Functions
+        editor.AddMenuItem(miInsert.Items, "-", "");
         var functions = editor.AddMenuItem(miInsert.Items, "Functions", "");
 
         var ifs = editor.AddMenuItem(functions!.DropDownItems, "Compare", "");
@@ -264,9 +309,23 @@ public class RulesReader
             "\t</ifgt>\n" +
             "\t<!-- your code here -->\n" +
             "</loop>");
-
+        editor.AddMenuItem(functions.DropDownItems, "-", "");
         editor.AddMenuItem(functions.DropDownItems, "save lookup", "<lookup save=\"NewSavedField\" source=\"sourceIdFieldName\" val=\"valueToSafeFieldName\" />");
         editor.AddMenuItem(functions.DropDownItems, "save lookup with value-lookup", "<lookup save=\"NewSavedField\" source=\"sourceIdFieldName\" val=\"valueToSafeFieldName\" altlookup=\"referenceLookupFieldForValue\" />");
+
+        editor.AddMenuItem(miInsert.Items, "-", "");
+
+        var others = editor.AddMenuItem(miInsert.Items, "Other", "");
+        editor.AddMenuItem(others!.DropDownItems, "cursor", "<cursor pos=\"4\" bit=\"0\" />");
+        editor.AddMenuItem(others.DropDownItems, "-", "");
+        editor.AddMenuItem(others.DropDownItems, "echo", "<echo arg=\"a\" name=\"Info\" />");
+        editor.AddMenuItem(others.DropDownItems, "echo block", "<echo arg=\"a\" name=\"Info\" >\n" +
+                                                               "\t<!-- your code here -->\n" +
+                                                               "</echo>\n");
+        editor.AddMenuItem(others.DropDownItems, "-", "");
+        editor.AddMenuItem(others.DropDownItems, "comment", "<!--- your comment here -->");
+
+        editor.AddMenuItem(miInsert.Items, "-", "");
 
         // Lookup tags
         if (editor.PacketData != null)
@@ -285,15 +344,14 @@ public class RulesReader
         }
         templates!.Enabled = templates.DropDownItems.Count > 0;
 
-        var others = editor.AddMenuItem(miInsert.Items, "Other", "");
-        editor.AddMenuItem(others!.DropDownItems, "cursor", "<cursor pos=\"4\" bit=\"0\" />");
-        editor.AddMenuItem(others.DropDownItems, "-", "");
-        editor.AddMenuItem(others.DropDownItems, "echo", "<echo arg=\"a\" name=\"Info\" />");
-        editor.AddMenuItem(others.DropDownItems, "echo block", "<echo arg=\"a\" name=\"Info\" >\n" +
-                                                                "\t<!-- your code here -->\n" +
-                                                                "</echo>\n");
-        editor.AddMenuItem(others.DropDownItems, "-", "");
-        editor.AddMenuItem(others.DropDownItems, "comment", "<!--- your comment here -->");
+        // Data Export Tools in rule file
+        var exports = editor.AddMenuItem(miInsert.Items, "Data export", "");
+        if (editor.Rule != null)
+        {
+            foreach (var t in editor.Rule.Parent.Parent.ExportDataTools)
+                editor.AddMenuItem(exports!.DropDownItems, t.Key, "<export name=\"" + t.Key + "\" />");
+        }
+        exports!.Enabled = exports.DropDownItems.Count > 0;
     }
 
     public PacketRule? CreateNewUserPacketRule(PacketDataDirection packetDataDirection, PacketFilterListEntry key, string newName)

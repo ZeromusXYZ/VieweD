@@ -1,4 +1,6 @@
-﻿namespace VieweD.data.ffxi.engine
+﻿using System;
+
+namespace VieweD.data.ffxi.engine
 {
     public enum VanadielDayOfWeek { Firesday = 0, Earthsday = 1, Watersday = 2, Windsday = 3, Iceday = 4, Thundersday = 5, Lightsday = 6, Darksday = 7 }
 

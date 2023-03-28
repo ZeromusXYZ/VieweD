@@ -1,23 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using VieweD.Properties;
 
 namespace VieweD.Helpers.System
 {
     // Source: https://stackoverflow.com/questions/899350/how-do-i-copy-the-contents-of-a-string-to-the-clipboard-in-c
     /// <summary>
-    /// Usage: new SetClipboardHelper( DataFormats.Text, "See, I'm on the clipboard" ).Go();
+    /// Usage: new ClipboardHelper( DataFormats.Text, "See, I'm on the clipboard" ).Go();
     /// </summary>
-    class SetClipboardHelper : StaHelper
+    class ClipboardHelper : StaHelper
     {
         readonly string _format;
         readonly object _data;
 
-        public SetClipboardHelper(string format, object data)
+        public ClipboardHelper(string format, object data)
         {
             _format = format;
             _data = data;
@@ -32,15 +29,34 @@ namespace VieweD.Helpers.System
 
             Clipboard.SetDataObject(obj, true);
         }
+
+        public static void SetClipboard(string clipText)
+        {
+            try
+            {
+                // Because nothing is ever as simple as the next line >.>
+                // Clipboard.SetText(s);
+                // Helper will (try to) prevent errors when copying to clipboard because of threading issues
+                var clipHelp = new ClipboardHelper(DataFormats.Text, clipText)
+                {
+                    DoNotRetryWorkOnFailed = false
+                };
+                clipHelp.Go();
+            }
+            catch
+            {
+                // Ignore
+            }
+        }
     }
 
     abstract class StaHelper
     {
-        readonly ManualResetEvent _complete = new ManualResetEvent(false);
+        private readonly ManualResetEvent _complete = new (false);
 
         public void Go()
         {
-            var thread = new Thread(new ThreadStart(DoWork))
+            var thread = new Thread(DoWork)
             {
                 IsBackground = true,
             };
@@ -58,7 +74,7 @@ namespace VieweD.Helpers.System
             }
             catch (Exception ex)
             {
-                if (DontRetryWorkOnFailed)
+                if (DoNotRetryWorkOnFailed)
                     throw;
                 else
                 {
@@ -70,7 +86,7 @@ namespace VieweD.Helpers.System
                     catch
                     {
                         // ex from first exception
-                        MessageBox.Show(ex.Message,"Copy to Clipboard",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                        MessageBox.Show(ex.Message,Resources.CopyToClipboardTitle,MessageBoxButtons.OK,MessageBoxIcon.Error);
                         // LogAndShowMessage(ex);
                     }
                 }
@@ -81,7 +97,7 @@ namespace VieweD.Helpers.System
             }
         }
 
-        public bool DontRetryWorkOnFailed { get; set; }
+        public bool DoNotRetryWorkOnFailed { get; set; }
 
         // Implemented in base class to do actual work.
         protected abstract void Work();

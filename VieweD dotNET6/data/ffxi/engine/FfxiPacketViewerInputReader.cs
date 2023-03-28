@@ -1,4 +1,7 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
+using System.IO;
+using System.Linq;
 using VieweD.engine.common;
 
 namespace VieweD.data.ffxi.engine;
@@ -9,7 +12,7 @@ public class FfxiPacketViewerInputReader : BaseInputReader
     public override string Description => "Supports .log files containing Final Fantasy XI capture data made by the Packet Viewer plugin for Windower";
     public override string DataFolder => "ffxi";
 
-    private StreamReader? Reader { get; set; } = null;
+    private StreamReader? Reader { get; set; }
 
     // Source: https://docs.microsoft.com/en-us/dotnet/api/system.datetime.parse?view=netframework-4.7.2#System_DateTime_Parse_System_String_System_IFormatProvider_System_Globalization_DateTimeStyles_
     // Assume a date and time string formatted for the fr-FR culture is the local 
@@ -24,11 +27,20 @@ public class FfxiPacketViewerInputReader : BaseInputReader
     public FfxiPacketViewerInputReader(ViewedProjectTab parentProject) : base(parentProject)
     {
         ExpectedFileExtensions.Add(".log");
+
+        InitReader();
     }
 
-    public FfxiPacketViewerInputReader() : base()
+    // ReSharper disable once UnusedMember.Global
+    public FfxiPacketViewerInputReader()
     {
         ExpectedFileExtensions.Add(".log");
+    }
+
+    private void InitReader()
+    {
+        ParentProject!.PortToStreamIdMapping.Clear();
+        ParentProject.RegisterPort(0, "Game", "G"); // 0 - Base Game
     }
 
     public override BaseInputReader CreateNew(ViewedProjectTab parentProject)
@@ -56,6 +68,11 @@ public class FfxiPacketViewerInputReader : BaseInputReader
         if (Reader == null)
             return -1;
 
+        if (ParentProject == null)
+            return -1;
+
+        ParentProject.TimeStampFormat = "HH:mm:ss";
+
         var packetCounter = 0;
         try
         {
@@ -68,7 +85,6 @@ public class FfxiPacketViewerInputReader : BaseInputReader
             BasePacketData? packetData = null;
             var hasHadDataHeader = false;
             var pastStartOfDataMarker = false;
-            var isUndefinedPacketDirection = false;
             var askForPacketType = true;
             var preferredDirection = PacketDataDirection.Unknown;
 
@@ -94,6 +110,7 @@ public class FfxiPacketViewerInputReader : BaseInputReader
                         OriginalHeaderText = s
                     };
 
+                    bool isUndefinedPacketDirection;
                     if (sLower.Contains("incoming", StringComparison.InvariantCulture))
                     {
                         packetData.PacketDataDirection = PacketDataDirection.Incoming;
@@ -127,17 +144,18 @@ public class FfxiPacketViewerInputReader : BaseInputReader
                     {
                         askForPacketType = false;
                         // preferredDirection = PacketDataDirection.Incoming;
-                        isUndefinedPacketDirection = false;
+                        // isUndefinedPacketDirection = false;
+
                         packetData.PacketDataDirection = preferredDirection;
 
                         if (ViewedProjectTab.PacketDataDirectionDialog(packetData, out var newDirection))
                         {
                             packetData.PacketDataDirection = newDirection;
                         }
-                        else
-                        {
-                            isUndefinedPacketDirection = true;
-                        }
+                        // else
+                        // {
+                        //    isUndefinedPacketDirection = true;
+                        // }
                         
                     }
 
@@ -224,6 +242,7 @@ public class FfxiPacketViewerInputReader : BaseInputReader
     /// Add a formatted hex text line as data (generic)
     /// </summary>
     /// <param name="line"></param>
+    /// <param name="packetData"></param>
     /// <returns></returns>
     private static int AddRawLineAsBytes(string line, BasePacketData packetData)
     {

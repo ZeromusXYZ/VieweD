@@ -1,7 +1,13 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Drawing;
 using System.Globalization;
+using System.IO;
+using System.Linq;
 using System.Reflection;
+using System.Windows.Forms;
 using Microsoft.CodeAnalysis;
 using VieweD.engine.common;
 using VieweD.Helpers.System;
@@ -36,10 +42,13 @@ namespace VieweD.Forms
 
             // Load Settings
             PacketColors.UpdateColorsFromSettings();
-            DgvParsed.Font = Settings.Default.GridViewFont;
+            DgvParsed.Font = Settings.Default.FieldViewFont;
             MiFieldDebug.Checked = ShowDebugInfo;
 
             _ = EngineManager.Instance;
+
+            if (EngineManager.PluginErrors.Count > 0)
+                MessageBox.Show(string.Join('\n', EngineManager.PluginErrors), Resources.PluginCompileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
 
             // Load the welcome text
             try
@@ -48,7 +57,7 @@ namespace VieweD.Forms
                 if (File.Exists(rtfFile))
                     RichTextWelcome.LoadFile(rtfFile);
                 else
-                    RichTextWelcome.Text = "Welcome file not found!";
+                    RichTextWelcome.Text = Resources.WelcomeFileNotFound;
             }
             catch
             {
@@ -57,7 +66,7 @@ namespace VieweD.Forms
 
             // Update Status Bar
             UpdateStatusBar(null);
-            UpdateStatusBarProgress(0, 0, null, null);
+            UpdateStatusBarProgress(1, 1, null, null);
         }
 
         private void MMFileExit_Click(object sender, EventArgs e)
@@ -74,9 +83,9 @@ namespace VieweD.Forms
                 StatusBarProject.Text =
                     string.Format(Resources.StatusProjectFolder, projectTab.ProjectFolder);
                 var t = AppTitle;
-                if (projectTab.OpenedLogFile != string.Empty)
+                if (projectTab.Settings.LogFile != string.Empty)
                 {
-                    t += " - " + projectTab.OpenedLogFile;
+                    t += " - " + projectTab.Settings.LogFile;
                     if (projectTab.IsDirty)
                         t += " *";
                 }
@@ -93,12 +102,19 @@ namespace VieweD.Forms
 
         public void UpdateStatusBarProgress(int position, int maxValue, string? title, Color? color)
         {
+            // Ensure max and position values are within valid range
+            if (maxValue < 1)
+                maxValue = 1;
+            position = Math.Clamp(position, 0, maxValue);
             StatusBarProgressBar.Minimum = 0;
             StatusBarProgressBar.Maximum = maxValue;
             StatusBarProgressBar.Value = position;
             StatusBarProgressBar.Visible = position != maxValue;
             StatusBar.Update();
             LoadingForm.OnProgress(position, maxValue, title, color);
+            var waiting = position < maxValue;
+            Application.UseWaitCursor = waiting;
+            Cursor = waiting ? Cursors.WaitCursor : Cursors.Default;
         }
 
         public void OnProjectDataChanged(ViewedProjectTab projectTab)
@@ -146,6 +162,7 @@ namespace VieweD.Forms
                 expectedProjectFolder = Helper.MakeProjectDirectoryFromLogFileName(logFileName);
             }
 
+            // Check if the expected project folder exists
             if (Directory.Exists(expectedProjectFolder))
             {
                 var projectFiles = Directory.GetFiles(expectedProjectFolder, "*.pvd", SearchOption.TopDirectoryOnly).ToList();
@@ -172,16 +189,20 @@ namespace VieweD.Forms
                     return;
                 }
 
+                project.Settings = projectSetting;
+
                 logFileName = projectSetting.LogFile;
+                //project.Settings.ProjectUrl = projectSetting.ProjectUrl;
+                project.DecryptionKeyName = projectSetting.DecryptionName;
                 project.InputReader = EngineManager.Instance.GetInputReaderByName(projectSetting.InputReader, project);
 
                 project.InputParser = EngineManager.Instance.GetParserByName(projectSetting.Parser, project);
 
                 rulesFileName = projectSetting.RulesFile;
-                project.Tags = projectSetting.Tags;
-                project.VideoSettings.VideoFile = projectSetting.VideoSettings.VideoFile;
-                project.VideoSettings.VideoUrl = projectSetting.VideoSettings.VideoUrl;
-                project.VideoSettings.VideoOffset = projectSetting.VideoSettings.VideoOffset;
+                //project.Settings.Tags = projectSetting.Tags;
+                //project.Settings.VideoSettings.VideoFile = projectSetting.VideoSettings.VideoFile;
+                //project.Settings.VideoSettings.VideoUrl = projectSetting.VideoSettings.VideoUrl;
+                //project.Settings.VideoSettings.VideoOffset = projectSetting.VideoSettings.VideoOffset;
 
                 project.Filter.CopyFrom(projectSetting.Filter);
                 project.SearchParameters.CopyFrom(projectSetting.Search);
@@ -236,10 +257,7 @@ namespace VieweD.Forms
                 project.InputParser.ParentProject = project;
 
                 if ((rulesFileName == string.Empty) || (!File.Exists(rulesFileName)))
-                {
                     rulesFileName = RulesSelectDialog.SelectRulesFile(rulesFileName, project);
-                    // rulesFileName = Path.Combine(Application.StartupPath, "data", project.InputReader.DataFolder, "rules", project.InputParser.DefaultRulesFile);
-                }
 
                 if (!project.InputParser.OpenRulesFile(rulesFileName))
                 {
@@ -248,6 +266,8 @@ namespace VieweD.Forms
                     return;
                 }
 
+                if (project.RequiresSubPacketCreation)
+                    project.InputParser.ExpandSubPackets();
                 project.InputParser.ParseAllData(true);
                 project.ReIndexLoadedPackets();
                 project.PopulateListBox();
@@ -255,8 +275,8 @@ namespace VieweD.Forms
                 project.IsDirty = project.RequestUpdatedProjectFileName;
                 project.OnProjectDataChanged();
 
-                if ((Settings.Default.AutoLoadVideo > 0) && !string.IsNullOrWhiteSpace(project.VideoSettings.VideoFile) &&
-                    (File.Exists(project.VideoSettings.VideoFile)))
+                if ((Settings.Default.AutoLoadVideo > 0) && !string.IsNullOrWhiteSpace(project.Settings.VideoSettings.VideoFile) &&
+                    (File.Exists(project.Settings.VideoSettings.VideoFile)))
                 {
                     project.OpenVideoForm();
                 }
@@ -498,6 +518,9 @@ namespace VieweD.Forms
             }
             #endregion
 
+            var headerTextSize = TextRenderer.MeasureText(InfoGridHeader, Settings.Default.RawViewFont);
+            LayoutRawAndSuggested.ColumnStyles[0].Width = headerTextSize.Width + 30;
+
             #region RawData
             PacketDataToRichText(packetData, RichTextData);
             #endregion
@@ -508,10 +531,11 @@ namespace VieweD.Forms
 #pragma warning disable IDE0079 // Remove unnecessary suppression
         [SuppressMessage("ReSharper", "StringLiteralTypo")]
 #pragma warning restore IDE0079 // Remove unnecessary suppression
-        private static void PacketDataToRichText(BasePacketData packetData, RichTextBox rt)
+        private static void PacketDataToRichText(BasePacketData packetData, RichTextBox richText)
         {
-            rt.Tag = packetData;
-            var rtInfo = rt;
+            richText.Tag = packetData;
+            richText.Font = Settings.Default.RawViewFont;
+            var fontSizeTag = (int)Math.Floor(Settings.Default.RawViewFont.Size * 2f);
             var rtf = string.Empty;
             List<Color> colorTable = new();
             var lastForegroundColorIndex = -1;
@@ -553,22 +577,23 @@ namespace VieweD.Forms
                 rtfHead += "{\\colortbl;";
 
                 foreach (var col in colorTable)
-                    rtfHead += "\\red" + col.R.ToString() + "\\green" + col.G.ToString() + "\\blue" + col.B.ToString() + ";";
+                    rtfHead += "\\red" + col.R + "\\green" + col.G + "\\blue" + col.B + ";";
 
                 rtfHead += "}";
-                rtfHead += "\\viewkind4\\uc1\\pard\\cf1\\highlight2\\f0\\fs18 ";
+                rtfHead += "{\\*\\generator VieweD}";
+                rtfHead += "\\viewkind4\\uc1\\pard\\cf1\\highlight2\\f0\\fs" + fontSizeTag + " ";
 
                 return rtfHead;
             }
 
             void SetColorBasic()
             {
-                SetRtfColor(rtInfo.ForeColor, rtInfo.BackColor);
+                SetRtfColor(richText.ForeColor, richText.BackColor);
             }
 
             void SetColorGrid()
             {
-                SetRtfColor(Color.DarkGray, rtInfo.BackColor);
+                SetRtfColor(Color.DarkGray, richText.BackColor);
             }
 
             void SetColorSelect()
@@ -584,9 +609,9 @@ namespace VieweD.Forms
             void SetColorNotSelect(int fieldIndex, bool forChars)
             {
                 if ((hasSelectedFields) || forChars)
-                    SetRtfColor(BasePacketData.GetDataColor(fieldIndex), rtInfo.BackColor);
+                    SetRtfColor(BasePacketData.GetDataColor(fieldIndex), richText.BackColor);
                 else
-                    SetRtfColor(rtInfo.BackColor, BasePacketData.GetDataColor(fieldIndex));
+                    SetRtfColor(richText.BackColor, BasePacketData.GetDataColor(fieldIndex));
             }
 
             void AddCharsOnTheRight(int startIndex)
@@ -630,10 +655,10 @@ namespace VieweD.Forms
                 }
             }
 
-            rtInfo.SuspendLayout();
-            rtInfo.ForeColor = SystemColors.WindowText;
-            rtInfo.BackColor = SystemColors.Window;
-            // rtInfo.Clear();
+            richText.SuspendLayout();
+            richText.ForeColor = SystemColors.WindowText;
+            richText.BackColor = SystemColors.Window;
+            // richText.Clear();
 
             // The main grid header
             SetColorGrid();
@@ -794,13 +819,13 @@ namespace VieweD.Forms
                     addCharCount = 0;
                 }
                 rtf += "\\par\n";
-                // rtInfo.AppendText("\r\n");
+                // richText.AppendText("\r\n");
             }
             rtf += "}\n";
-            rtInfo.WordWrap = false;
-            rtInfo.Rtf = BuildHeaderWithColorTable() + rtf;
-            rtInfo.Refresh();
-            rtInfo.ResumeLayout();
+            richText.WordWrap = false;
+            richText.Rtf = BuildHeaderWithColorTable() + rtf;
+            richText.Refresh();
+            richText.ResumeLayout();
 
 
             /*
@@ -808,15 +833,15 @@ namespace VieweD.Forms
             {
                 var line = (endCursor / 16) + 2;
                 var linePos = endCursor % 16;
-                var rawPos = rtInfo.GetFirstCharIndexFromLine(line) + 7 + (linePos * 3);
+                var rawPos = richText.GetFirstCharIndexFromLine(line) + 7 + (linePos * 3);
                 if (linePos > 3)
                     rawPos++;
                 if (linePos > 7)
                     rawPos++;
                 if (linePos > 11)
                     rawPos++;
-                rtInfo.SelectionStart = rawPos;
-                rtInfo.SelectionLength = 0;
+                richText.SelectionStart = rawPos;
+                richText.SelectionLength = 0;
             }
             */
         }
@@ -921,7 +946,7 @@ namespace VieweD.Forms
             {
                 if (project.RequestUpdatedProjectFileName)
                 {
-                    var dir = Helper.MakeProjectDirectoryFromLogFileName(project.OpenedLogFile);
+                    var dir = Helper.MakeProjectDirectoryFromLogFileName(project.Settings.LogFile);
                     project.ProjectFile = Path.Combine(dir, Path.GetFileName(dir.TrimEnd(Path.DirectorySeparatorChar)) + ".pvd");
                     SaveProjectFileDialog.FileName = Path.ChangeExtension(project.ProjectFile, ".pvd");
                     MessageBox.Show(
@@ -1204,7 +1229,7 @@ namespace VieweD.Forms
                 {
                     Tag = fileName,
                 };
-                
+
                 if (menuTag == "ap")
                     newItem.Click += MMSearchFilterApplyFile_Click;
                 if (menuTag == "hl")
@@ -1250,7 +1275,7 @@ namespace VieweD.Forms
             {
                 Settings.Default.Save();
                 PacketColors.UpdateColorsFromSettings();
-                DgvParsed.Font = Settings.Default.GridViewFont;
+                DgvParsed.Font = Settings.Default.FieldViewFont;
 
                 // Apply packet list font to open tabs
                 foreach (var page in TCProjects.TabPages)
@@ -1339,7 +1364,6 @@ namespace VieweD.Forms
                 ImageIndex = 4,
                 ProjectFile = string.Empty,
                 Text = @"*" + project.Text,
-                OpenedLogFile = string.Empty,
             };
             newProject.InputReader = project.InputReader?.CreateNew(newProject);
             newProject.InputParser = project.InputParser?.CreateNew(newProject);
@@ -1424,7 +1448,7 @@ namespace VieweD.Forms
                     h = h.Substring(h.Length - hexWidth, hexWidth);
                 else
                     h = h.PadLeft(hexWidth, 'F');
-                if (!long.TryParse(h, System.Globalization.NumberStyles.HexNumber, System.Globalization.CultureInfo.InvariantCulture, out var positiveVal))
+                if (!long.TryParse(h, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out var positiveVal))
                     positiveVal = val;
 
                 string sVal;
@@ -1441,6 +1465,7 @@ namespace VieweD.Forms
                 {
                     foreach (var ll in CurrentPacketData.ParentProject.DataLookup.LookupLists)
                     {
+                        // ReSharper disable once IntVariableOverflowInUncheckedContext
                         if (ll.Value.Data.TryGetValue((ulong)val, out var v))
                             if (v.Id > 0)
                             {
@@ -1595,6 +1620,89 @@ namespace VieweD.Forms
             using var exportDlg = new ExportCsvDialog();
             exportDlg.LoadFromProject(project);
             exportDlg.ShowDialog();
+        }
+
+        private void MMToolsEditTemplates_DropDownOpening(object sender, EventArgs e)
+        {
+            if (TCProjects.SelectedTab is not ViewedProjectTab project)
+                return;
+
+            if (sender is not ToolStripMenuItem menuItem)
+                return;
+
+            menuItem.DropDownItems.Clear();
+            if ((project.InputParser == null) || (project.InputParser.Rules == null))
+                return;
+
+            foreach (var rulesTemplate in project.InputParser.Rules.Templates)
+                menuItem.DropDownItems.Add(rulesTemplate.Key).Tag = rulesTemplate.Key;
+
+            menuItem.DropDownItems.Add("-");
+            menuItem.DropDownItems.Add("<create new>").Tag = "???";
+        }
+
+        private void MMToolsEditTemplates_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            if (TCProjects.SelectedTab is not ViewedProjectTab project)
+                return;
+
+            if (e.ClickedItem.Tag is not string templateName)
+                return;
+
+            if (templateName == "???")
+            {
+                templateName = InputBoxDialog.InputTextBox(string.Empty, "New Template", "Template name:");
+            }
+
+            if (templateName != string.Empty)
+                project.EditTemplate(templateName);
+        }
+
+        private void MMToolExportData_DropDownOpening(object sender, EventArgs e)
+        {
+            if (TCProjects.SelectedTab is not ViewedProjectTab project)
+                return;
+
+            if (sender is not ToolStripMenuItem menuItem)
+                return;
+
+            menuItem.DropDownItems.Clear();
+            if ((project.InputParser == null) || (project.InputParser.Rules == null))
+                return;
+
+            foreach (var exportDataTool in project.InputParser.Rules.ExportDataTools)
+                menuItem.DropDownItems.Add(exportDataTool.Key).Tag = exportDataTool.Key;
+        }
+
+        private void MMToolExportData_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            // Clicked menu
+            if (TCProjects.SelectedTab is not ViewedProjectTab project)
+                return;
+
+            if (e.ClickedItem.Tag is not string exportName)
+                return;
+
+            if (exportName != string.Empty)
+                project.RunExportDataTool(exportName);
+        }
+
+        private void MMToolsExportParsed_Click(object sender, EventArgs e)
+        {
+            if (TCProjects.SelectedTab is not ViewedProjectTab project)
+                return;
+            
+            if (project.ExportParsedDataAsXml(Path.Combine(project.ProjectFolder, "export.vpx")))
+                MessageBox.Show($"Saved Xml");
+            else
+                MessageBox.Show($"Failed Xml");
+            
+            /*
+            if (project.ExportParsedDataAsCsv(Path.Combine(project.ProjectFolder, "export.vpc")))
+                MessageBox.Show($"Saved CSV");
+            else
+                MessageBox.Show($"Failed CSV");
+            */
         }
     }
 }

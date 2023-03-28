@@ -1,4 +1,8 @@
-﻿using VieweD.engine.common;
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Windows.Forms;
+using VieweD.engine.common;
 using VieweD.Properties;
 
 namespace VieweD.Forms
@@ -33,7 +37,7 @@ namespace VieweD.Forms
             Settings.Default.AskCreateNewProjectFile = CbAskNewProject.Checked;
 
             Settings.Default.PacketListFont = BtnPacketListFont.Font;
-            Settings.Default.GridViewFont = BtnGridViewFont.Font;
+            Settings.Default.FieldViewFont = BtnGridViewFont.Font;
             Settings.Default.RawViewFont = BtnRawViewFont.Font;
 
             Settings.Default.CreditsName = DefaultCreditsTextBox.Text;
@@ -105,7 +109,7 @@ namespace VieweD.Forms
             LocalFieldColors.Add(Settings.Default.ColField14);
             LocalFieldColors.Add(Settings.Default.ColField15);
 
-            BtnGridViewFont.Font = Settings.Default.GridViewFont;
+            BtnGridViewFont.Font = Settings.Default.FieldViewFont;
             BtnGridViewFont.Text = BtnGridViewFont.Font.Name + @", " + BtnGridViewFont.Font.SizeInPoints + @"pt";
 
             TbFieldColorCount.Value = Settings.Default.ColFieldCount;
@@ -454,7 +458,7 @@ namespace VieweD.Forms
 
         private void BtnGridViewFont_Click(object sender, EventArgs e)
         {
-            FontDlg.Font = Settings.Default.GridViewFont;
+            FontDlg.Font = Settings.Default.FieldViewFont;
             if (FontDlg.ShowDialog() == DialogResult.OK)
             {
                 BtnGridViewFont.Font = FontDlg.Font;

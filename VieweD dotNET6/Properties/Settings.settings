@@ -6,12 +6,12 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="PacketListFont" Type="System.Drawing.Font" Scope="User">
-      <Value Profile="(Default)">Consolas, 9pt</Value>
+      <Value Profile="(Default)">Consolas, 8.25pt</Value>
     </Setting>
     <Setting Name="RawViewFont" Type="System.Drawing.Font" Scope="User">
-      <Value Profile="(Default)">Consolas, 9pt</Value>
+      <Value Profile="(Default)">Consolas, 8.25pt</Value>
     </Setting>
-    <Setting Name="GridViewFont" Type="System.Drawing.Font" Scope="User">
+    <Setting Name="FieldViewFont" Type="System.Drawing.Font" Scope="User">
       <Value Profile="(Default)">Consolas, 9pt</Value>
     </Setting>
     <Setting Name="ColFontIN" Type="System.Drawing.Color" Scope="User">
@@ -192,6 +192,15 @@
       <Value Profile="(Default)">;</Value>
     </Setting>
     <Setting Name="AskCreateNewProjectFile" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="CopySummaryPacketIDs" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="CopySummaryPacketNames" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="CopySummaryNoAutoLoad" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
   </Settings>

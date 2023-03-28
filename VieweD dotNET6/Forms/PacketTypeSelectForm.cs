@@ -1,4 +1,7 @@
-﻿namespace VieweD.Forms
+﻿using System;
+using System.Windows.Forms;
+
+namespace VieweD.Forms
 {
     public partial class PacketTypeSelectForm : Form
     {

@@ -1,4 +1,8 @@
-﻿namespace VieweD.Forms
+﻿using System.Windows.Forms;
+using System.Drawing;
+using VieweD.Properties;
+
+namespace VieweD.Forms
 {
     partial class VideoForm
     {
@@ -299,7 +303,7 @@
             PMSync.Enabled = false;
             PMSync.Name = "PMSync";
             PMSync.Size = new Size(165, 22);
-            PMSync.Text = "Sync with project";
+            PMSync.Text = Resources.SyncWithProjectTitle;
             PMSync.Click += PMSync_Click;
             // 
             // OpenVideoFileDialog

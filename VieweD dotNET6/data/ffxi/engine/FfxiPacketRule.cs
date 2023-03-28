@@ -1,4 +1,6 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Xml;
 using VieweD.engine.common;
 using VieweD.Helpers.System;
@@ -17,31 +19,20 @@ public class FfxiPacketRule : PacketRule
     public override RulesAction BuildFallbackDataAction(RulesAction? parentAction, XmlNode actionNode,
         Dictionary<string, string> attributes, int step, string dataType, bool isReversed)
     {
-        switch (dataType)
+        return dataType switch
         {
-            case "dir":
-                return new RulesActionFfxiReadDirectionByte(this, parentAction, actionNode, step);
-            case "pos":
-                return new RulesActionFfxiReadPosition(this, parentAction, actionNode, step);
-            case "combatskill":
-                return new RulesActionFfxiReadCombatSkill(this, parentAction, actionNode, step);
-            case "craftskill":
-                return new RulesActionFfxiReadCraftSkill(this, parentAction, actionNode, step);
-            case "jobpoints":
-                return new RulesActionFfxiReadJobPoints(this, parentAction, actionNode, step);
-            case "buffs":
-                return new RulesActionFfxiReadBuffs(this, parentAction, actionNode, step, "arg");
-            case "vanatime":
-                return new RulesActionFfxiReadVanaTime(this, parentAction, actionNode, step);
-            case "roequest":
-                return new RulesActionFfxiReadRoEQuest(this, parentAction, actionNode, step);
-            case "linkshell":
-                return new RulesActionFfxiReadLinkShellName(this, parentAction, actionNode, step);
-            case "inscription":
-                return new RulesActionFfxiReadItemInscription(this, parentAction, actionNode, step);
-            default:
-                return base.BuildFallbackDataAction(parentAction, actionNode, attributes, step, dataType, isReversed);
-        }
+            "dir" => new RulesActionFfxiReadDirectionByte(this, parentAction, actionNode, step),
+            "pos" => new RulesActionFfxiReadPosition(this, parentAction, actionNode, step),
+            "combatskill" => new RulesActionFfxiReadCombatSkill(this, parentAction, actionNode, step),
+            "craftskill" => new RulesActionFfxiReadCraftSkill(this, parentAction, actionNode, step),
+            "jobpoints" => new RulesActionFfxiReadJobPoints(this, parentAction, actionNode, step),
+            "buffs" => new RulesActionFfxiReadBuffs(this, parentAction, actionNode, step, "arg"),
+            "vanatime" => new RulesActionFfxiReadVanaTime(this, parentAction, actionNode, step),
+            "roequest" => new RulesActionFfxiReadRoEQuest(this, parentAction, actionNode, step),
+            "linkshell" => new RulesActionFfxiReadLinkShellName(this, parentAction, actionNode, step),
+            "inscription" => new RulesActionFfxiReadItemInscription(this, parentAction, actionNode, step),
+            _ => base.BuildFallbackDataAction(parentAction, actionNode, attributes, step, dataType, isReversed)
+        };
     }
 }
 
@@ -50,7 +41,7 @@ public class FfxiPacketRule : PacketRule
 /// </summary>
 public class RulesActionFfxiReadDirectionByte : RulesAction
 {
-    private static readonly string[] CompassDirectionNames = new string[16]
+    private static readonly string[] CompassDirectionNames = new []
         { "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW", "N", "NNE", "NE", "ENE" };
 
     public RulesActionFfxiReadDirectionByte(PacketRule parent, RulesAction? parentAction, XmlNode thisNode,
@@ -122,9 +113,9 @@ public class RulesActionFfxiReadCombatSkill : RulesAction
         var pos = packetData.Cursor;
         var val = packetData.GetUInt16AtPos(packetData.Cursor);
         var cappedString = ((val & 0x8000) != 0) ? " (Capped)" : string.Empty;
-        var skilllevel = (val & 0x7FFF);
+        var skillLevel = (val & 0x7FFF);
 
-        var dataString = skilllevel + cappedString + " - " + val.ToHex();
+        var dataString = skillLevel + cappedString + " - " + val.ToHex();
         var varName = XmlHelper.GetAttributeString(Attributes, "name");
         packetData.AddParsedField(true, pos, packetData.Cursor - 1, pos.ToHex(2), varName, dataString, Depth);
     }
@@ -177,7 +168,7 @@ public class RulesActionFfxiReadJobPoints : RulesAction
 
 public class RulesActionFfxiReadBuffs : RulesAction
 {
-    private string _countName;
+    private readonly string _countName;
 
     public RulesActionFfxiReadBuffs(PacketRule parent, RulesAction? parentAction, XmlNode thisNode, int thisStep, string countName) :
         base(parent, parentAction, thisNode, thisStep, false)

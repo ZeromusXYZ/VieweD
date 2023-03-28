@@ -1,15 +1,20 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
+using System.IO;
+using System.Linq;
 using VieweD.engine.common;
 
 namespace VieweD.data.ffxi.engine;
 
+// ReSharper disable once UnusedMember.Global
+/// <inheritdoc />
 public class FfxiPacketeerInputReader : BaseInputReader
 {
     public override string Name => "FFXI Packeteer";
     public override string Description => "Supports .txt files containing Final Fantasy XI capture data made by Packeteer for Ashita";
     public override string DataFolder => "ffxi";
 
-    private StreamReader? Reader { get; set; } = null;
+    private StreamReader? Reader { get; set; }
 
     // Source: https://docs.microsoft.com/en-us/dotnet/api/system.datetime.parse?view=netframework-4.7.2#System_DateTime_Parse_System_String_System_IFormatProvider_System_Globalization_DateTimeStyles_
     // Assume a date and time string formatted for the fr-FR culture is the local 
@@ -24,12 +29,21 @@ public class FfxiPacketeerInputReader : BaseInputReader
     public FfxiPacketeerInputReader(ViewedProjectTab parentProject) : base(parentProject)
     {
         ExpectedFileExtensions.Add(".txt");
+
+        InitReader();
     }
 
-    public FfxiPacketeerInputReader() : base()
+    public FfxiPacketeerInputReader()
     {
         ExpectedFileExtensions.Add(".txt");
     }
+
+    private void InitReader()
+    {
+        ParentProject!.PortToStreamIdMapping.Clear();
+        ParentProject.RegisterPort(0, "Game", "G"); // 0 - Base Game
+    }
+
 
     public override BaseInputReader CreateNew(ViewedProjectTab parentProject)
     {
@@ -56,6 +70,11 @@ public class FfxiPacketeerInputReader : BaseInputReader
     {
         if (Reader == null)
             return -1;
+
+        if (ParentProject == null)
+            return -1;
+
+        ParentProject.TimeStampFormat = "HH:mm:ss";
 
         var packetCounter = 0;
         try
@@ -200,57 +219,10 @@ public class FfxiPacketeerInputReader : BaseInputReader
     }
 
     /// <summary>
-    /// Add a formatted hex text line as data (generic)
-    /// </summary>
-    /// <param name="line"></param>
-    /// <returns></returns>
-    private static int AddRawLineAsBytes(string line, BasePacketData packetData)
-    {
-        // Removes spaces and tabs
-        var simpleLine = line.Replace(" ", "").Replace("\t", "");
-
-        // Data should start after the first pipeline symbol
-        var dataStartPos = simpleLine.IndexOf("|", StringComparison.InvariantCulture) + 1;
-        if (simpleLine.Length < dataStartPos + 32)
-        {
-            // Data seems too short
-            return 0;
-        }
-
-        var dataString = simpleLine.Substring(dataStartPos, 32); // max 32 hex digits expect
-
-        var c = 0;
-        for (var i = 0; i <= 0xf; i++)
-        {
-            var h = dataString.Substring(i * 2, 2);
-            if (h != "--")
-            {
-                if (byte.TryParse(h, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out var b))
-                    packetData.ByteData.Add(b);
-                c++;
-            }
-        }
-
-        return c;
-
-        /* Example:
-        //        1         2         3         4         5         6         7         8         9
-        01234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
-
-        [2018-05-16 18:11:35] Outgoing packet 0x015:
-                |  0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F      | 0123456789ABCDEF
-            -----------------------------------------------------  ----------------------
-              0 | 15 10 9E 00 CF 50 A0 C3 04 0E 1C C2 46 BF 33 43    0 | .....P......F.3C
-              1 | 00 00 02 00 5D 00 00 00 49 97 B8 69 00 00 00 00    1 | ....]...I..i....
-        ...
-              5 | 00 00 00 00 -- -- -- -- -- -- -- -- -- -- -- --    5 | ....------------
-        */
-    }
-
-    /// <summary>
     /// Add a formatted hex text line as data (packeteer specific)
     /// </summary>
     /// <param name="s"></param>
+    /// <param name="packetData"></param>
     /// <returns></returns>
     public static int AddRawPacketeerLineAsBytes(string s, BasePacketData packetData)
     {

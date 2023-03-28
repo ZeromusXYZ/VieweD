@@ -1,5 +1,9 @@
-﻿using CsvHelper;
+﻿using System;
+using System.Collections.Generic;
+using CsvHelper;
 using System.Globalization;
+using System.IO;
+using System.Windows.Forms;
 using CsvHelper.Configuration;
 using VieweD.engine.common;
 using VieweD.Properties;
@@ -31,6 +35,10 @@ namespace VieweD.Forms
                     if ((parsedField.FieldName.Equals(Resources.UnParsedFieldName, StringComparison.InvariantCultureIgnoreCase))
                         &&
                         (string.IsNullOrWhiteSpace(parsedField.DisplayedByteOffset)))
+                        continue;
+
+                    // skip rule comments
+                    if (parsedField.FieldName.Equals("#comment", StringComparison.InvariantCultureIgnoreCase))
                         continue;
 
                     // Generate field names list
@@ -133,9 +141,9 @@ namespace VieweD.Forms
                     if (pItem is not BasePacketData data)
                         continue;
 
-                    for (var i = 0; i < selectedFieldNames.Count; i++)
+                    foreach (var fieldName in selectedFieldNames)
                     {
-                        var field = data.GetFirstParsedFieldByName(selectedFieldNames[i] as string ?? string.Empty);
+                        var field = data.GetFirstParsedFieldByName(fieldName as string ?? string.Empty);
                         if (field == null)
                         {
                             csv.WriteField(string.Empty);

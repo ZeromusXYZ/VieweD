@@ -1,4 +1,7 @@
-﻿using VieweD.Helpers.System;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using VieweD.Helpers.System;
 using VieweD.Properties;
 
 namespace VieweD.engine.common;
@@ -21,11 +24,6 @@ public class BaseInputReader : IComparable<BaseInputReader>
     /// Owning project
     /// </summary>
     public ViewedProjectTab? ParentProject { get; set; }
-
-    /// <summary>
-    /// Filename of the log file that is used as the current source
-    /// </summary>
-    public string SourceFile { get; protected set; } = "";
 
     /// <summary>
     /// Is the source opened
@@ -125,12 +123,12 @@ public class BaseInputReader : IComparable<BaseInputReader>
             var res = Open(SourceStream);
             if (res)
             {
-                ParentProject.OpenedLogFile = source;
+                ParentProject.Settings.LogFile = source;
                 ParentProject.Text = Helper.MakeTabName(source);
             }
             else
             {
-                ParentProject.OpenedLogFile = string.Empty;
+                ParentProject.Settings.LogFile = string.Empty;
                 ParentProject.Text = Resources.TypeUnknown;
             }
 

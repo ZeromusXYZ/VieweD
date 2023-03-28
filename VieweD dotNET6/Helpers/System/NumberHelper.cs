@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Globalization;
 
 namespace VieweD.Helpers.System
@@ -28,6 +29,17 @@ namespace VieweD.Helpers.System
         public static string ToHex(this byte val, int digits = 2)
         {
             return "0x" + val.ToString("X" + digits);
+        }
+
+        public static string ToBinary(this byte val, int bits = 8)
+        {
+            var res = string.Empty;
+            var startMask = 0x01 << (bits - 1);
+
+            for (var bitMask = startMask; bitMask >= 0x01; bitMask >>= 1)
+                res += ((val & bitMask) != 0 ? "1" : "0");
+
+            return "0b" + res;
         }
 
         public static string ToHex(this sbyte val, int digits = 2)

@@ -1,4 +1,7 @@
-﻿namespace VieweD.engine.common;
+﻿using System;
+using System.Collections.Generic;
+
+namespace VieweD.engine.common;
 
 public class BaseParser : IComparable<BaseParser>
 {
@@ -7,7 +10,7 @@ public class BaseParser : IComparable<BaseParser>
     public virtual string DefaultRulesFile => "rules.xml";
     public ViewedProjectTab? ParentProject { get; set; }
     public RulesReader? Rules { get; protected set; }
-    protected List<string> SupportedReaders { get; set; } = new List<string>();
+    protected List<string> SupportedReaders { get; set; } = new ();
     public virtual int PacketIdMinimum => 0;
     public virtual int PacketIdMaximum => 0xFFFF;
     public virtual int PacketCompressionLevelMaximum => 0;
@@ -49,8 +52,9 @@ public class BaseParser : IComparable<BaseParser>
     {
         packetData.ParsedData.Clear();
         // In your own parser, replace this check with whatever 
-        if (packetData is not BasePacketData data)
-            return false;
+        //if (packetData is not BasePacketData data)
+        //    return false;
+        var data = packetData;
 
         // Do actual parsing, you can overwrite packetData values here if you want
         var rule = Rules?.GetPacketRule(data);
@@ -111,5 +115,12 @@ public class BaseParser : IComparable<BaseParser>
                 return true;
         }
         return false;
+    }
+
+    public virtual void ExpandSubPackets()
+    {
+        // If the input reader supports sub packets, your parser should split them up here.
+        if (ParentProject != null)
+            ParentProject.RequiresSubPacketCreation = false;
     }
 }

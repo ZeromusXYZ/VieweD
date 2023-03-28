@@ -1,5 +1,5 @@
-﻿using System.Xml;
-using Microsoft.CodeAnalysis.FlowAnalysis;
+﻿using System.Windows.Forms;
+using System.Xml;
 using VieweD.engine.common;
 using VieweD.Forms;
 using VieweD.Helpers.System;
@@ -48,6 +48,7 @@ public class FfxiRulesReader : RulesReader
     {
         base.BuildEditorPopupMenu(miInsert, editor);
 
+        editor.AddMenuItem(miInsert.Items, "-", "");
         var ffxiMenu = editor.AddMenuItem(miInsert.Items, "FFXI Specific", "");
 
         editor.AddMenuItem(ffxiMenu!.DropDownItems, "Position (12 byte)", "<data type=\"pos\" name=\"|Position|\" />");

@@ -1,4 +1,6 @@
-﻿namespace VieweD.Forms
+﻿using System.Windows.Forms;
+
+namespace VieweD.Forms
 {
     partial class FilterForm
     {

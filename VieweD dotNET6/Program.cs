@@ -1,3 +1,5 @@
+using System;
+using System.Windows.Forms;
 using VieweD.Forms;
 
 namespace VieweD
