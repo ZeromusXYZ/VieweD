@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Media;
 using System.Reflection;
 using System.Windows.Forms;
 using Microsoft.CodeAnalysis;
@@ -1691,18 +1692,70 @@ namespace VieweD.Forms
         {
             if (TCProjects.SelectedTab is not ViewedProjectTab project)
                 return;
-            
-            if (project.ExportParsedDataAsXml(Path.Combine(project.ProjectFolder, "export.vpx")))
+
+            if (project.ExportParsedDataAsXml(Path.Combine(project.ProjectFolder, "export.vpx"), true))
                 MessageBox.Show($"Saved Xml");
             else
                 MessageBox.Show($"Failed Xml");
-            
+
             /*
             if (project.ExportParsedDataAsCsv(Path.Combine(project.ProjectFolder, "export.vpc")))
                 MessageBox.Show($"Saved CSV");
             else
                 MessageBox.Show($"Failed CSV");
             */
+        }
+
+        private void MMProjectCopySelectedPackets_Click(object sender, EventArgs e)
+        {
+            if (TCProjects.SelectedTab is not ViewedProjectTab project)
+                return;
+
+            var list = new List<BasePacketData>();
+            foreach (var selectedItem in project.PacketsListBox.SelectedItems)
+            {
+                if (selectedItem is BasePacketData packetData)
+                    list.Add(packetData);
+            }
+            var s = project.ExportPacketsAsXmlString(list, true, true, true);
+            list.Clear();
+            ClipboardHelper.SetClipboard(s);
+        }
+
+        private void MMProjectExportPackets_Click(object sender, EventArgs e)
+        {
+            if (TCProjects.SelectedTab is not ViewedProjectTab project)
+                return;
+
+            ExportSaveFileDialog.InitialDirectory = project.ProjectFolder;
+            ExportSaveFileDialog.FileName = project.ProjectName + ".vpx";
+            if (ExportSaveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                if (!project.ExportParsedDataAsXml(ExportSaveFileDialog.FileName, true))
+                    MessageBox.Show($"Failed to export!");
+                else
+                    SystemSounds.Asterisk.Play();
+            }
+        }
+
+        private void MMFileImportParsedData_Click(object sender, EventArgs e)
+        {
+            if (ImportParsedDataFileDialog.ShowDialog() != DialogResult.OK)
+                return;
+
+            var project = new ViewedProjectTab();
+            if (project.ImportFromVpxFile(ImportParsedDataFileDialog.FileName))
+            {
+                project.Text = Helper.MakeTabName(ImportParsedDataFileDialog.FileName);
+                TCProjects.TabPages.Add(project);
+                if (TCProjects.ImageList != null)
+                    project.ImageIndex = 1; // viewed icon
+                TCProjects.SelectedTab = project;
+            }
+            else
+            {
+                project.CloseProject(true);
+            }
         }
     }
 }

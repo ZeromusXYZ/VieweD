@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Security;
 using VieweD.Forms;
 using VieweD.Helpers.System;
 using VieweD.engine.serialize;
@@ -14,9 +15,12 @@ using System.Xml;
 using CsvHelper;
 using CsvHelper.Configuration;
 using System.Globalization;
+using System.Text;
 using Ionic.BZip2;
+using System.Net;
 
 namespace VieweD.engine.common;
+
 public class ViewedProjectTab : TabPage
 {
     private string _projectFile;
@@ -28,11 +32,15 @@ public class ViewedProjectTab : TabPage
     /// <summary>
     /// Directory of this project (derived from ProjectFile
     /// </summary>
-    public string ProjectFolder => string.IsNullOrWhiteSpace(ProjectFile) ? "" : Path.GetDirectoryName(ProjectFile) ?? "";
+    public string ProjectFolder =>
+        string.IsNullOrWhiteSpace(ProjectFile) ? "" : Path.GetDirectoryName(ProjectFile) ?? "";
+
     /// <summary>
     /// Name of this project (derived from ProjectFile)
     /// </summary>
-    public string ProjectName => string.IsNullOrWhiteSpace(ProjectFile) ? "VieweD Project" : Path.GetFileNameWithoutExtension(ProjectFile);
+    public string ProjectName => string.IsNullOrWhiteSpace(ProjectFile)
+        ? "VieweD Project"
+        : Path.GetFileNameWithoutExtension(ProjectFile);
 
     public string ProjectFile
     {
@@ -75,10 +83,12 @@ public class ViewedProjectTab : TabPage
     /// <summary>
     /// Mapping to use to convert a target port number to a StreamId used by the parsers
     /// </summary>
-    public Dictionary<ushort, (byte, string, string)> PortToStreamIdMapping { get; } = new ();
+    public Dictionary<ushort, (byte, string, string)> PortToStreamIdMapping { get; } = new();
+
     public PacketListFilter Filter { get; set; }
 
     #region popup_menu_items
+
     // Popup Menu Controls
     private ContextMenuStrip PmPl { get; }
     private ToolStripMenuItem PmPlShowPacketName { get; }
@@ -93,6 +103,7 @@ public class ViewedProjectTab : TabPage
     private ToolStripSeparator PmPls4 { get; }
     private ToolStripMenuItem PmPlEditParser { get; }
     private ToolStripMenuItem PmPlExportPacket { get; }
+
     #endregion
 
     /// <summary>
@@ -139,6 +150,7 @@ public class ViewedProjectTab : TabPage
         #endregion
 
         #region CreatePopupMenu
+
         // Create Popup Menu
         PmPl = new ContextMenuStrip();
         PmPl.Opening += PmPL_Opening;
@@ -196,6 +208,7 @@ public class ViewedProjectTab : TabPage
         PmPl.Items.Add(PmPlExportPacket);
 
         PacketsListBox.ContextMenuStrip = PmPl;
+
         #endregion
 
         // Initialize Empty Project
@@ -207,7 +220,7 @@ public class ViewedProjectTab : TabPage
 
         // Load Static Lookups
         DataLookup = new DataLookups();
-        
+
         ReIndexLoadedPackets();
         PopulateListBox();
         IsDirty = false;
@@ -260,6 +273,7 @@ public class ViewedProjectTab : TabPage
         {
             Filter.FilterInType = FilterType.Off;
         }
+
         Filter.FilterOutType = FilterType.AllowNone;
 
         Filter.MarkAsDimmed = hasShift;
@@ -279,6 +293,7 @@ public class ViewedProjectTab : TabPage
         {
             Filter.FilterOutType = FilterType.Off;
         }
+
         Filter.FilterInType = FilterType.AllowNone;
 
         Filter.MarkAsDimmed = hasShift;
@@ -294,7 +309,8 @@ public class ViewedProjectTab : TabPage
         if (packetData == null)
             return;
 
-        var packetKey = new PacketFilterListEntry(packetData.PacketId, packetData.CompressionLevel, packetData.StreamId);
+        var packetKey =
+            new PacketFilterListEntry(packetData.PacketId, packetData.CompressionLevel, packetData.StreamId);
 
         switch (packetData.PacketDataDirection)
         {
@@ -304,6 +320,7 @@ public class ViewedProjectTab : TabPage
                     Filter.FilterInType = FilterType.HidePackets;
                     Filter.FilterInList.Clear();
                 }
+
                 Filter.FilterInList.Add(packetKey);
                 break;
             case PacketDataDirection.Outgoing:
@@ -312,6 +329,7 @@ public class ViewedProjectTab : TabPage
                     Filter.FilterOutType = FilterType.HidePackets;
                     Filter.FilterOutList.Clear();
                 }
+
                 Filter.FilterOutList.Add(packetKey);
                 break;
             default:
@@ -331,7 +349,8 @@ public class ViewedProjectTab : TabPage
         if (packetData == null)
             return;
 
-        var packetKey = new PacketFilterListEntry(packetData.PacketId, packetData.CompressionLevel, packetData.StreamId);
+        var packetKey =
+            new PacketFilterListEntry(packetData.PacketId, packetData.CompressionLevel, packetData.StreamId);
 
         switch (packetData.PacketDataDirection)
         {
@@ -371,8 +390,8 @@ public class ViewedProjectTab : TabPage
         PmPlResetFilters.Enabled = (Filter.FilterInType != FilterType.Off) || (Filter.FilterOutType != FilterType.Off);
         PmPls4.Enabled = packetData != null;
         PmPlEditParser.Enabled = packetData != null;
-        PmPlExportPacket.Enabled = false;// packetData != null;
-        
+        PmPlExportPacket.Enabled = false; // packetData != null;
+
         if (packetData == null)
         {
             PmPlShowPacketName.Text = Resources.NothingSelected;
@@ -386,7 +405,9 @@ public class ViewedProjectTab : TabPage
             if (thisRule != null)
             {
                 // var lookupName = PacketFilterListEntry.AsString(thisRule.PacketId, thisRule.Level, thisRule.StreamId);
-                var lookupName = thisRule.PacketId.ToHex(3) + (InputParser?.PacketCompressionLevelMaximum > 0 ? " L" + thisRule.Level : "") + (PortToStreamIdMapping.Count > 1 ? " " + GetStreamIdName(thisRule.StreamId) : "");
+                var lookupName = thisRule.PacketId.ToHex(3) +
+                                 (InputParser?.PacketCompressionLevelMaximum > 0 ? " L" + thisRule.Level : "") +
+                                 (PortToStreamIdMapping.Count > 1 ? " " + GetStreamIdName(thisRule.StreamId) : "");
                 PmPlShowPacketName.Text = lookupName + @" - " + thisRule.Name; // lookupKey.ToString("X8");
                 PmPlEditParser.Tag = thisRule;
                 if (packetData.PacketDataDirection != PacketDataDirection.Unknown)
@@ -468,7 +489,9 @@ public class ViewedProjectTab : TabPage
                 if (expectedName != string.Empty)
                     newName = expectedName;
 
-                rule = InputParser?.Rules?.CreateNewUserPacketRule(packetData.PacketDataDirection, new PacketFilterListEntry(packetData.PacketId, packetData.CompressionLevel, packetData.StreamId), newName) ?? null;
+                rule = InputParser?.Rules?.CreateNewUserPacketRule(packetData.PacketDataDirection,
+                    new PacketFilterListEntry(packetData.PacketId, packetData.CompressionLevel, packetData.StreamId),
+                    newName) ?? null;
             }
 
             //rule?.Build();
@@ -480,7 +503,7 @@ public class ViewedProjectTab : TabPage
             }
             else
             {
-                MessageBox.Show(Resources.NoRuleLinkedToThisPacket, Resources.NoRuleFound, 
+                MessageBox.Show(Resources.NoRuleLinkedToThisPacket, Resources.NoRuleFound,
                     MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
             }
         }
@@ -544,7 +567,7 @@ public class ViewedProjectTab : TabPage
                 LoadedPacketList[i].OffsetFromStart = LoadedPacketList[i].TimeStamp - startTime;
                 LoadedPacketList[i].VirtualOffsetFromStart = LoadedPacketList[i].OffsetFromStart;
 
-                if ((LoadedPacketList[i].OffsetFromStart == lastSameOffset) && (i < LoadedPacketList.Count-1))
+                if ((LoadedPacketList[i].OffsetFromStart == lastSameOffset) && (i < LoadedPacketList.Count - 1))
                 {
                     sameTimeCount++;
                 }
@@ -557,13 +580,14 @@ public class ViewedProjectTab : TabPage
                         // Only update virtual times if there is a noticeable time difference
                         if (timeSpanDelta.TotalMilliseconds > 1)
                         {
-                            for (var n = 1; n <= sameTimeCount-1; n++)
+                            for (var n = 1; n <= sameTimeCount - 1; n++)
                             {
                                 LoadedPacketList[lastSameTimeIndex + n].VirtualOffsetFromStart =
                                     lastSameOffset + (timeSpanDelta * n);
                             }
                         }
                     }
+
                     lastSameOffset = LoadedPacketList[i].OffsetFromStart;
                     lastSameTimeIndex = i;
                     sameTimeCount = 0;
@@ -591,12 +615,12 @@ public class ViewedProjectTab : TabPage
 
                 if (packetData.IsVisible == false)
                     continue;
-                
+
                 PacketsListBox.Items.Add(packetData);
-                
+
                 if ((i % 50) == 0)
                     OnPopulateProgressUpdate(i, LoadedPacketList.Count);
-                
+
                 // Select the specified index if needed (or the closest after it)
                 if ((selectIndex < 0) || (selectIndex > i))
                     continue;
@@ -604,6 +628,7 @@ public class ViewedProjectTab : TabPage
                 selectIndex = -1;
                 PacketsListBox.SelectedItem = packetData;
             }
+
             PacketsListBox.EndUpdate();
             OnPopulateProgressUpdate(1, 1);
         }
@@ -677,11 +702,11 @@ public class ViewedProjectTab : TabPage
                     backCol = PacketColors.ColorSelectIn;
                     textCol = PacketColors.ColorSelectedFontIn;
                 }
-                else
-                if (barOn)
+                else if (barOn)
                     backCol = PacketColors.ColorSyncIn;
                 else
                     backCol = PacketColors.ColorBackIn;
+
                 barCol = PacketColors.ColorBarIn;
                 break;
             case PacketDataDirection.Outgoing:
@@ -691,11 +716,11 @@ public class ViewedProjectTab : TabPage
                     backCol = PacketColors.ColorSelectOut;
                     textCol = PacketColors.ColorSelectedFontOut;
                 }
-                else
-                if (barOn)
+                else if (barOn)
                     backCol = PacketColors.ColorSyncOut;
                 else
                     backCol = PacketColors.ColorBackOut;
+
                 barCol = PacketColors.ColorBarOut;
                 break;
             case PacketDataDirection.Unknown:
@@ -706,11 +731,11 @@ public class ViewedProjectTab : TabPage
                     backCol = PacketColors.ColorSelectUnknown;
                     textCol = PacketColors.ColorSelectedFontUnknown;
                 }
-                else
-                if (barOn)
+                else if (barOn)
                     backCol = PacketColors.ColorSyncUnknown;
                 else
                     backCol = PacketColors.ColorBackUnknown;
+
                 barCol = PacketColors.ColorBarUnknown;
                 break;
         }
@@ -733,7 +758,8 @@ public class ViewedProjectTab : TabPage
                     backCol.B > 128 ? 255 : backCol.B * 2);
 
             // Text color is always a RGB average of the foreground and background colors
-            textCol = Color.FromArgb(textCol.A, (backCol.R + textCol.R) / 2, (backCol.G + textCol.G) / 2, (backCol.B + textCol.B) / 2);
+            textCol = Color.FromArgb(textCol.A, (backCol.R + textCol.R) / 2, (backCol.G + textCol.G) / 2,
+                (backCol.B + textCol.B) / 2);
 
             // NOTE: We currently don't change the bar color as it looks unusually weird if in the same sync
             // barCol = Color.FromArgb(barCol.A, barCol.R / 4, barCol.G / 4, barCol.B / 4);
@@ -750,7 +776,9 @@ public class ViewedProjectTab : TabPage
         // Header text
         var s = lb.Items[e.Index].ToString();
 
-        var icon1 = new Rectangle(e.Bounds.Left, e.Bounds.Top + ((e.Bounds.Height - Resources.mini_unk_icon.Height) / 2), Resources.mini_unk_icon.Width, Resources.mini_unk_icon.Height);
+        var icon1 = new Rectangle(e.Bounds.Left,
+            e.Bounds.Top + ((e.Bounds.Height - Resources.mini_unk_icon.Height) / 2), Resources.mini_unk_icon.Width,
+            Resources.mini_unk_icon.Height);
         var icon2 = icon1 with { X = icon1.Left + icon1.Width, Y = icon1.Top };
 
         // Draw the video strip icon if this packet is within a video segment
@@ -763,11 +791,13 @@ public class ViewedProjectTab : TabPage
         Rectangle textBounds;
         if (HasVideoAttached())
         {
-            textBounds = new Rectangle(e.Bounds.Left + (icon1.Width * 2), e.Bounds.Top, e.Bounds.Width - (icon1.Width * 2), e.Bounds.Height);
+            textBounds = new Rectangle(e.Bounds.Left + (icon1.Width * 2), e.Bounds.Top,
+                e.Bounds.Width - (icon1.Width * 2), e.Bounds.Height);
         }
         else
         {
-            textBounds = new Rectangle(e.Bounds.Left + (icon1.Width), e.Bounds.Top, e.Bounds.Width - (icon1.Width), e.Bounds.Height);
+            textBounds = new Rectangle(e.Bounds.Left + (icon1.Width), e.Bounds.Top, e.Bounds.Width - (icon1.Width),
+                e.Bounds.Height);
         }
 
         switch (PacketColors.PacketListStyle)
@@ -778,8 +808,7 @@ public class ViewedProjectTab : TabPage
                 {
                     e.Graphics.DrawImage(Resources.mini_in_icon, icon1);
                 }
-                else
-                if (pd.PacketDataDirection == PacketDataDirection.Outgoing)
+                else if (pd.PacketDataDirection == PacketDataDirection.Outgoing)
                 {
                     e.Graphics.DrawImage(Resources.mini_out_icon, icon1);
                 }
@@ -787,6 +816,7 @@ public class ViewedProjectTab : TabPage
                 {
                     e.Graphics.DrawImage(Resources.mini_unk_icon, icon1);
                 }
+
                 break;
             case 2:
                 // transparent arrows
@@ -794,8 +824,7 @@ public class ViewedProjectTab : TabPage
                 {
                     e.Graphics.DrawImage(Resources.mini_in_ticon, icon1);
                 }
-                else
-                if (pd.PacketDataDirection == PacketDataDirection.Outgoing)
+                else if (pd.PacketDataDirection == PacketDataDirection.Outgoing)
                 {
                     e.Graphics.DrawImage(Resources.mini_out_ticon, icon1);
                 }
@@ -803,6 +832,7 @@ public class ViewedProjectTab : TabPage
                 {
                     e.Graphics.DrawImage(Resources.mini_unk_ticon, icon1);
                 }
+
                 break;
             default:
                 // No icons, just text
@@ -811,8 +841,7 @@ public class ViewedProjectTab : TabPage
                 {
                     s = "<= " + s;
                 }
-                else
-                if (pd.PacketDataDirection == PacketDataDirection.Outgoing)
+                else if (pd.PacketDataDirection == PacketDataDirection.Outgoing)
                 {
                     s = "=> " + s;
                 }
@@ -820,6 +849,7 @@ public class ViewedProjectTab : TabPage
                 {
                     s = "?? " + s;
                 }
+
                 break;
         }
 
@@ -833,7 +863,8 @@ public class ViewedProjectTab : TabPage
             // If it's also the selected item, double the width
             if (isSelected)
                 barSize = 16;
-            e.Graphics.FillRectangle(barBrush, new Rectangle(e.Bounds.Right - barSize, e.Bounds.Top, barSize, e.Bounds.Height));
+            e.Graphics.FillRectangle(barBrush,
+                new Rectangle(e.Bounds.Right - barSize, e.Bounds.Top, barSize, e.Bounds.Height));
         }
 
         // If the ListBox has focus, draw a focus rectangle around the selected item.
@@ -908,11 +939,13 @@ public class ViewedProjectTab : TabPage
         }
     }
 
-    public static void OnInputProgressUpdate(BaseInputReader inputReader, int position, int maxValue)
+    public static void OnInputProgressUpdate(BaseInputReader? inputReader, int position, int maxValue)
     {
         // NOTE: it's possible to manipulate the value based on the reader
-        MainForm.Instance?.UpdateStatusBarProgress(position, maxValue,"Reading with " + inputReader.Name,null);
+        var title = inputReader != null ? "Reading with " + inputReader.Name : "Reading input data";
+        MainForm.Instance?.UpdateStatusBarProgress(position, maxValue, title, null);
     }
+
     public static void OnPopulateProgressUpdate(int position, int maxValue)
     {
         // NOTE: it's possible to manipulate the value based on the reader
@@ -922,13 +955,15 @@ public class ViewedProjectTab : TabPage
     public static void OnParseProgressUpdate(BaseParser parser, int position, int maxValue)
     {
         // NOTE: it's possible to manipulate the value based on the reader
-        MainForm.Instance?.UpdateStatusBarProgress(position, maxValue, string.Format(Resources.ParsePackets,parser.Name), null);
+        MainForm.Instance?.UpdateStatusBarProgress(position, maxValue,
+            string.Format(Resources.ParsePackets, parser.Name), null);
     }
 
     public static void OnExpandProgressUpdate(BaseParser parser, int position, int maxValue)
     {
         // NOTE: it's possible to manipulate the value based on the reader
-        MainForm.Instance?.UpdateStatusBarProgress(position, maxValue, string.Format(Resources.ExpandingPackets, parser.Name), null);
+        MainForm.Instance?.UpdateStatusBarProgress(position, maxValue,
+            string.Format(Resources.ExpandingPackets, parser.Name), null);
     }
 
     /// <summary>
@@ -939,7 +974,7 @@ public class ViewedProjectTab : TabPage
     /// <returns></returns>
     public (byte, string, string) GetExpectedStreamIdByPort(ushort port, byte defaultValue)
     {
-        return PortToStreamIdMapping.TryGetValue(port, out var id) ? id : (defaultValue, "S"+defaultValue, "?");
+        return PortToStreamIdMapping.TryGetValue(port, out var id) ? id : (defaultValue, "S" + defaultValue, "?");
     }
 
     public string GetStreamIdName(byte id)
@@ -949,7 +984,18 @@ public class ViewedProjectTab : TabPage
             if (valueTuple.Value.Item1 == id)
                 return valueTuple.Value.Item2;
         }
+
         return "S" + id;
+    }
+
+    public byte GetStreamIdByName(string name)
+    {
+        foreach (var valueTuple in PortToStreamIdMapping)
+        {
+            if (valueTuple.Value.Item2 == name)
+                return valueTuple.Value.Item1;
+        }
+        return 0;
     }
 
     public string GetStreamIdShortName(byte id)
@@ -959,6 +1005,7 @@ public class ViewedProjectTab : TabPage
             if (valueTuple.Value.Item1 == id)
                 return valueTuple.Value.Item3;
         }
+
         return "?";
     }
 
@@ -969,6 +1016,7 @@ public class ViewedProjectTab : TabPage
             if (valueTuple.Value.Item1 == id)
                 return valueTuple.Key;
         }
+
         return 0;
     }
 
@@ -1002,16 +1050,20 @@ public class ViewedProjectTab : TabPage
             Settings.ProjectUrl = settings.TextProjectURL.Text;
             Settings.Description = settings.TextDescription.Text;
             var newRulesFile = (settings.CbRules.SelectedValue as string);
-            if ((oldRulesFile != newRulesFile) && (newRulesFile != null) && File.Exists(newRulesFile) && (InputParser != null))
+            if ((oldRulesFile != newRulesFile) && (newRulesFile != null) && File.Exists(newRulesFile) &&
+                (InputParser != null))
             {
-                MessageBox.Show(Resources.RulesChangedReparsingProject, Resources.SaveProject, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(Resources.RulesChangedReparsingProject, Resources.SaveProject, MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
                 InputParser.OpenRulesFile(newRulesFile);
                 InputParser.ParseAllData(true);
                 ReIndexLoadedPackets();
                 PopulateListBox();
             }
+
             IsDirty = true;
         }
+
         return dialogOk;
     }
 
@@ -1032,8 +1084,7 @@ public class ViewedProjectTab : TabPage
             isUndefinedPacketDirection = false;
             //packetData.PacketDataDirection = selectedDirection;
         }
-        else
-        if (askDlgRes == DialogResult.No)
+        else if (askDlgRes == DialogResult.No)
         {
             selectedDirection = PacketDataDirection.Outgoing;
             isUndefinedPacketDirection = false;
@@ -1062,7 +1113,7 @@ public class ViewedProjectTab : TabPage
             Settings.VideoSettings.VideoFile = Helper.MakeRelative(ProjectFolder, Settings.VideoSettings.VideoFile);
             Settings.InputReader = InputReader?.Name ?? "";
             Settings.Parser = InputParser?.Name ?? "";
-            Settings.RulesFile = rFile ;
+            Settings.RulesFile = rFile;
             Settings.Filter.CopyFrom(Filter);
             Settings.Search.CopyFrom(SearchParameters);
 
@@ -1103,39 +1154,32 @@ public class ViewedProjectTab : TabPage
                 {
                     res.LogFile = Helper.TryMakeFullPath(ProjectFolder, fieldVal);
                 }
-                else
-                if (fieldType == "rules")
+                else if (fieldType == "rules")
                 {
                     res.RulesFile = Helper.TryMakeFullPath(ProjectFolder, fieldVal);
                 }
-                else
-                if (fieldType == "video")
+                else if (fieldType == "video")
                 {
                     res.VideoSettings.VideoFile = Helper.TryMakeFullPath(ProjectFolder, fieldVal);
                 }
-                else
-                if (fieldType == "youtube")
+                else if (fieldType == "youtube")
                 {
                     res.VideoSettings.VideoUrl = fieldVal;
                 }
-                else
-                if (fieldType == "offset")
+                else if (fieldType == "offset")
                 {
                     if (NumberHelper.TryFieldParse(fieldVal, out int n))
                         res.VideoSettings.VideoOffset = TimeSpan.FromMilliseconds(n);
                 }
-                else
-                if (fieldType == "packedsource")
+                else if (fieldType == "packedsource")
                 {
                     res.ProjectUrl = fieldVal;
                 }
-                else
-                if (fieldType == "tags")
+                else if (fieldType == "tags")
                 {
                     res.Tags = ProjectSettingsDialog.TagsToList(fieldVal);
                 }
-                else
-                if (fieldType == "decrypt")
+                else if (fieldType == "decrypt")
                 {
                     res.DecryptionName = fieldVal;
                 }
@@ -1161,6 +1205,7 @@ public class ViewedProjectTab : TabPage
         {
             return null;
         }
+
         return res;
     }
 
@@ -1187,6 +1232,7 @@ public class ViewedProjectTab : TabPage
                     res.RulesFile = Helper.TryMakeFullPath(pFolder, res.RulesFile);
                     res.VideoSettings.VideoFile = Helper.TryMakeFullPath(pFolder, res.VideoSettings.VideoFile);
                 }
+
                 return res;
             }
 
@@ -1209,6 +1255,7 @@ public class ViewedProjectTab : TabPage
                         // Ignore
                     }
                 }
+
                 return res;
             }
         }
@@ -1216,6 +1263,7 @@ public class ViewedProjectTab : TabPage
         {
             // Don't show a error, just return null
         }
+
         return null;
     }
 
@@ -1242,7 +1290,8 @@ public class ViewedProjectTab : TabPage
 
     public int SearchFrom(ViewedProjectTab project, SearchParameters search)
     {
-        if ((project.InputParser == null) || (project.InputParser.Rules == null) || (File.Exists(project.InputParser.Rules.LoadedRulesFileName) == false))
+        if ((project.InputParser == null) || (project.InputParser.Rules == null) ||
+            (File.Exists(project.InputParser.Rules.LoadedRulesFileName) == false))
             return 0;
 
         int c = 0;
@@ -1252,10 +1301,11 @@ public class ViewedProjectTab : TabPage
         //XorKey = original.XorKey;
         //AesKey = original.AesKey;
         foreach (var pd in project.LoadedPacketList.Where(pd => pd.MatchesSearch(search)))
-        { 
+        {
             LoadedPacketList.Add(pd);
             c++;
         }
+
         return c;
     }
 
@@ -1315,7 +1365,7 @@ public class ViewedProjectTab : TabPage
     {
         if ((InputParser == null) || (InputParser.Rules == null))
             return;
-        
+
         if (!InputParser.Rules.ExportDataTools.TryGetValue(exportName, out var exportTool))
             return;
 
@@ -1324,7 +1374,8 @@ public class ViewedProjectTab : TabPage
         var targetFile = Path.Combine(ProjectFolder, exportTool.FileName);
         if (File.Exists(targetFile))
         {
-            var res = MessageBox.Show(string.Format(Resources.AppendToCurrentFile, targetFile), Resources.OverwriteFileTitle,
+            var res = MessageBox.Show(string.Format(Resources.AppendToCurrentFile, targetFile),
+                Resources.OverwriteFileTitle,
                 MessageBoxButtons.YesNoCancel);
             if (res == DialogResult.Yes)
             {
@@ -1378,29 +1429,65 @@ public class ViewedProjectTab : TabPage
             if (!res.Contains(key))
                 res.Add(key);
         }
+
         return res;
     }
 
-    public bool ExportParsedDataAsXml(string fileName)
+    public List<BasePacketData> GetVisiblePacketList()
     {
-        try
+        var list = new List<BasePacketData>();
+        foreach (var selectedItem in PacketsListBox.Items)
         {
-            var xmlDoc = new XmlDocument();
-            var listNode = xmlDoc.CreateNode(XmlNodeType.Element, "packetlist", null);
-            xmlDoc.AppendChild(listNode);
-            foreach (var basePacketData in LoadedPacketList)
-            {
-                // var packetNode = xmlDoc.CreateNode(XmlNodeType.Element, "packetdata", null);
-                var packetNode = XmlHelper.CreateNewXmlElementNode(listNode, "d");
-                if (packetNode == null)
-                    break; // Error
+            if (selectedItem is BasePacketData packetData)
+                list.Add(packetData);
+        }
 
-                // XmlHelper.SetAttribute(packetNode, "header", basePacketData.HeaderText);
-                XmlHelper.SetAttribute(packetNode, "t", basePacketData.TimeStamp.Ticks.ToString());
-                XmlHelper.SetAttribute(packetNode, "s", GetStreamIdName(basePacketData.StreamId));
-                if (basePacketData.CompressionLevel > 0)
-                    XmlHelper.SetAttribute(packetNode, "l", basePacketData.CompressionLevel.ToString());
-                XmlHelper.SetAttribute(packetNode, "p", basePacketData.PacketId.ToHex(3));
+        return list;
+    }
+
+    public string ExportPacketsAsXmlString(List<BasePacketData> packets, bool includeRawData, bool includeParsedData,
+        bool separateLines)
+    {
+        var xmlDoc = ExportPacketsAsXml(packets, includeRawData, includeParsedData);
+
+        return !separateLines ? xmlDoc.OuterXml : xmlDoc.OuterXml.Replace("\r", "").Replace("><", ">\n<");
+    }
+
+    public XmlDocument ExportPacketsAsXml(List<BasePacketData> packets, bool includeRawData, bool includeParsedData)
+    {
+        var xmlDoc = new XmlDocument();
+        var listNode = xmlDoc.CreateNode(XmlNodeType.Element, "packetlist", null);
+        xmlDoc.AppendChild(listNode);
+        MainForm.Instance?.UpdateStatusBarProgress(0, packets.Count, "Export Packets", null);
+        var progress = 0;
+        foreach (var basePacketData in packets)
+        {
+            // var packetNode = xmlDoc.CreateNode(XmlNodeType.Element, "packetdata", null);
+            var packetNode = XmlHelper.CreateNewXmlElementNode(listNode, "pd"); // packet data
+            if (packetNode == null)
+                break; // Error
+
+            XmlHelper.SetAttribute(packetNode, "d", basePacketData.PacketDataDirection == PacketDataDirection.Incoming ? "I" : basePacketData.PacketDataDirection == PacketDataDirection.Outgoing ? "O" : "?");
+            XmlHelper.SetAttribute(packetNode, "s", GetStreamIdName(basePacketData.StreamId));
+            XmlHelper.SetAttribute(packetNode, "n", basePacketData.GetPacketName());
+            if (basePacketData.CompressionLevel > 0)
+                XmlHelper.SetAttribute(packetNode, "l", basePacketData.CompressionLevel.ToString());
+            XmlHelper.SetAttribute(packetNode, "p", basePacketData.PacketId.ToHex(3));
+            XmlHelper.SetAttribute(packetNode, "t", basePacketData.TimeStamp.Ticks.ToString());
+            if (basePacketData.SyncId > 0)
+                XmlHelper.SetAttribute(packetNode, "c", basePacketData.SyncId.ToString());
+
+            if (includeRawData)
+            {
+                var dataNode = XmlHelper.CreateNewXmlElementNode(packetNode, "d");
+                if (dataNode != null)
+                {
+                    dataNode.InnerText = basePacketData.GetDataAtPos(0, basePacketData.ByteData.Count).Trim();
+                }
+            }
+
+            if (includeParsedData)
+            {
                 foreach (var parsedField in basePacketData.ParsedData)
                 {
                     if ((parsedField.DisplayedByteOffset == "") &&
@@ -1418,21 +1505,35 @@ public class ViewedProjectTab : TabPage
                 }
             }
 
-            using (var outFileStream = File.Create(fileName))
-            {
-                using var outStream = new BZip2OutputStream(outFileStream);
-                xmlDoc.Save(outStream);
-                // xmlDoc.Save(fileName);
-            }
+            progress++;
+            MainForm.Instance?.UpdateStatusBarProgress(progress, packets.Count, "Export Packets", null);
+        }
 
-            using (var inFileStream = File.Open(fileName, FileMode.Open))
+        MainForm.Instance?.UpdateStatusBarProgress(packets.Count, packets.Count, "Export Packets", null);
+        return xmlDoc;
+    }
+
+    public bool ExportParsedDataAsXml(string fileName, bool compressed)
+    {
+        try
+        {
+            var list = GetVisiblePacketList();
+            if (compressed)
             {
-                var inStream = new BZip2InputStream(inFileStream);
-                using (var testStream = File.Create(fileName + ".txt"))
-                {
-                    inStream.CopyTo(testStream);
-                }
+                var xmlDoc = ExportPacketsAsXml(list, true, true);
+                using var fileStream = new FileStream(fileName, FileMode.Create);
+                fileStream.Write(new byte[] { 0x56, 0x50, 0x58, 0 });
+                using var bStream = new BZip2OutputStream(fileStream, false);
+                LoadingForm.OnProgress(0, 100, "Saving export", null, true);
+                xmlDoc.Save(bStream);
             }
+            else
+            {
+                var xml = ExportPacketsAsXmlString(list, true, true, false);
+                LoadingForm.OnProgress(0, 100, "Saving export", null, true);
+                File.WriteAllText(fileName, xml);
+            }
+            LoadingForm.OnProgress(100, 100, "Saving export", null, true);
         }
         catch
         {
@@ -1442,6 +1543,7 @@ public class ViewedProjectTab : TabPage
         return true;
     }
 
+    /*
     public bool ExportParsedDataAsCsv(string fileName)
     {
         try
@@ -1484,5 +1586,90 @@ public class ViewedProjectTab : TabPage
 
         return true;
     }
+    */
 
+    public bool ImportFromVpxFile(string fileName)
+    {
+        try
+        {
+            using var fileStream = File.OpenRead(fileName);
+            var header = new byte[4];
+            if (fileStream.Read(header, 0, header.Length) < 4)
+                throw new Exception("file is too small");
+            //0x56, 0x50, 0x58, 0
+            if ((header[0] != 0x56)|| (header[1] != 0x50) || (header[2] != 0x58))
+                throw new Exception("Invalid header");
+            if (header[3] != 0)
+                throw new Exception("Unsupported file version");
+
+            using var bStream = new BZip2InputStream(fileStream);
+            var xmlDoc = new XmlDocument();
+            xmlDoc.Load(bStream);
+
+            ushort streamCounter = 1;
+            var xmlPackets = xmlDoc.SelectNodes("/packetlist/pd");
+            OnInputProgressUpdate(null, 0, 1);
+            if (xmlPackets != null)
+            {
+                OnInputProgressUpdate(null, 0, xmlPackets.Count);
+                for (var x = 0; x < xmlPackets.Count; x++)
+                {
+                    var xmlPacket = xmlPackets[x];
+                    if (xmlPacket == null)
+                        continue;
+
+                    var packetAttributes = XmlHelper.ReadNodeAttributes(xmlPacket);
+
+                    var packetStreamName = XmlHelper.GetAttributeString(packetAttributes, "s");
+                    // for now register dummy ports where stream Id = Port
+                    var packetStreamId = GetStreamIdByName(packetStreamName);
+                    if (packetStreamId == 0)
+                    {
+                        RegisterPort(streamCounter, packetStreamName, packetStreamName[..1]);
+                        packetStreamId = GetStreamIdByName(packetStreamName);
+                    }
+
+                    var packetLevel = (byte)XmlHelper.GetAttributeInt(packetAttributes, "l");
+                    var packetId = (uint)XmlHelper.GetAttributeInt(packetAttributes, "p");
+                    var packetTicks = XmlHelper.GetAttributeInt(packetAttributes, "t");
+                    var packetName = XmlHelper.GetAttributeString(packetAttributes, "n");
+                    var packetDirection = XmlHelper.GetAttributeString(packetAttributes, "d");
+                    var packetSync = (int)XmlHelper.GetAttributeInt(packetAttributes, "c");
+
+                    var packet = new BasePacketData(this);
+                    packet.SourcePort = GetStreamIdPort(packetStreamId);
+                    packet.PacketDataDirection = packetDirection == "I"
+                        ? PacketDataDirection.Incoming
+                        : packetDirection == "O"
+                            ? PacketDataDirection.Outgoing
+                            : PacketDataDirection.Unknown;
+                    packet.PacketId = packetId;
+                    packet.CompressionLevel = packetLevel;
+                    packet.ParsedPacketName = packetName;
+                    packet.TimeStamp = DateTime.UtcNow.AddTicks(packetTicks);
+                    packet.SyncId = packetSync;
+                    packet.DoNotParse = true;
+
+                    packet.BuildHeaderText();
+
+                    // TODO: Read Raw Data
+                    // TODO: Read Parsed Data
+
+                    LoadedPacketList.Add(packet);
+                    if ((x % 20) == 0)
+                        OnInputProgressUpdate(null, x, xmlPackets.Count);
+                }
+            }
+            OnInputProgressUpdate(null, 1, 1);
+            ReIndexLoadedPackets();
+            PopulateListBox();
+
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return false;
+        }
+        return true;
+    }
 }

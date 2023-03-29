@@ -33,7 +33,7 @@ namespace VieweD.Forms
         {
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             MM = new MenuStrip();
             MMFile = new ToolStripMenuItem();
             MMFileOpen = new ToolStripMenuItem();
@@ -45,6 +45,9 @@ namespace VieweD.Forms
             MMProject = new ToolStripMenuItem();
             MMProjectSave = new ToolStripMenuItem();
             toolStripMenuItem1 = new ToolStripSeparator();
+            MMProjectCopySelectedPackets = new ToolStripMenuItem();
+            MMProjectExportPackets = new ToolStripMenuItem();
+            toolStripMenuItem3 = new ToolStripSeparator();
             MMProjectGameData = new ToolStripMenuItem();
             MMProjectVideo = new ToolStripMenuItem();
             MMProjectN1 = new ToolStripSeparator();
@@ -69,6 +72,7 @@ namespace VieweD.Forms
             MMToolsExportCSV = new ToolStripMenuItem();
             MMToolExportData = new ToolStripMenuItem();
             dataToolStripMenuItem = new ToolStripMenuItem();
+            MMToolsExportParsed = new ToolStripMenuItem();
             MMLinks = new ToolStripMenuItem();
             MMLinksGitHub = new ToolStripMenuItem();
             MMLinksDikscord = new ToolStripMenuItem();
@@ -113,7 +117,9 @@ namespace VieweD.Forms
             PMSuggestLookup = new ToolStripMenuItem();
             PMSuggestCustomLookup = new ToolStripMenuItem();
             SaveProjectFileDialog = new SaveFileDialog();
-            MMToolsExportParsed = new ToolStripMenuItem();
+            ExportSaveFileDialog = new SaveFileDialog();
+            MMFileImportParsedData = new ToolStripMenuItem();
+            ImportParsedDataFileDialog = new OpenFileDialog();
             MM.SuspendLayout();
             StatusBar.SuspendLayout();
             TCProjects.SuspendLayout();
@@ -141,7 +147,7 @@ namespace VieweD.Forms
             // 
             // MMFile
             // 
-            MMFile.DropDownItems.AddRange(new ToolStripItem[] { MMFileOpen, MMFileN1, MMFileSettings, MMFileN2, MMFileExit });
+            MMFile.DropDownItems.AddRange(new ToolStripItem[] { MMFileOpen, MMFileImportParsedData, MMFileN1, MMFileSettings, MMFileN2, MMFileExit });
             MMFile.Name = "MMFile";
             resources.ApplyResources(MMFile, "MMFile");
             // 
@@ -183,7 +189,7 @@ namespace VieweD.Forms
             // 
             // MMProject
             // 
-            MMProject.DropDownItems.AddRange(new ToolStripItem[] { MMProjectSave, toolStripMenuItem1, MMProjectGameData, MMProjectVideo, MMProjectN1, MMProjectSettings, MMProjectN2, MMProjectClose });
+            MMProject.DropDownItems.AddRange(new ToolStripItem[] { MMProjectSave, toolStripMenuItem1, MMProjectCopySelectedPackets, MMProjectExportPackets, toolStripMenuItem3, MMProjectGameData, MMProjectVideo, MMProjectN1, MMProjectSettings, MMProjectN2, MMProjectClose });
             MMProject.Name = "MMProject";
             resources.ApplyResources(MMProject, "MMProject");
             // 
@@ -198,6 +204,23 @@ namespace VieweD.Forms
             // 
             toolStripMenuItem1.Name = "toolStripMenuItem1";
             resources.ApplyResources(toolStripMenuItem1, "toolStripMenuItem1");
+            // 
+            // MMProjectCopySelectedPackets
+            // 
+            MMProjectCopySelectedPackets.Name = "MMProjectCopySelectedPackets";
+            resources.ApplyResources(MMProjectCopySelectedPackets, "MMProjectCopySelectedPackets");
+            MMProjectCopySelectedPackets.Click += MMProjectCopySelectedPackets_Click;
+            // 
+            // MMProjectExportPackets
+            // 
+            MMProjectExportPackets.Name = "MMProjectExportPackets";
+            resources.ApplyResources(MMProjectExportPackets, "MMProjectExportPackets");
+            MMProjectExportPackets.Click += MMProjectExportPackets_Click;
+            // 
+            // toolStripMenuItem3
+            // 
+            toolStripMenuItem3.Name = "toolStripMenuItem3";
+            resources.ApplyResources(toolStripMenuItem3, "toolStripMenuItem3");
             // 
             // MMProjectGameData
             // 
@@ -344,6 +367,12 @@ namespace VieweD.Forms
             // 
             dataToolStripMenuItem.Name = "dataToolStripMenuItem";
             resources.ApplyResources(dataToolStripMenuItem, "dataToolStripMenuItem");
+            // 
+            // MMToolsExportParsed
+            // 
+            MMToolsExportParsed.Name = "MMToolsExportParsed";
+            resources.ApplyResources(MMToolsExportParsed, "MMToolsExportParsed");
+            MMToolsExportParsed.Click += MMToolsExportParsed_Click;
             // 
             // MMLinks
             // 
@@ -503,11 +532,11 @@ namespace VieweD.Forms
             DgvParsed.AllowUserToAddRows = false;
             DgvParsed.AllowUserToDeleteRows = false;
             DgvParsed.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.BackColor = SystemColors.Control;
-            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
-            DgvParsed.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.BackColor = SystemColors.Control;
+            dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            DgvParsed.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
             DgvParsed.ClipboardCopyMode = DataGridViewClipboardCopyMode.Disable;
             DgvParsed.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             DgvParsed.Columns.AddRange(new DataGridViewColumn[] { DgvPosition, DgvName, DgvValue });
@@ -683,11 +712,21 @@ namespace VieweD.Forms
             SaveProjectFileDialog.DefaultExt = "pvd";
             resources.ApplyResources(SaveProjectFileDialog, "SaveProjectFileDialog");
             // 
-            // MMToolsExportParsed
+            // ExportSaveFileDialog
             // 
-            MMToolsExportParsed.Name = "MMToolsExportParsed";
-            resources.ApplyResources(MMToolsExportParsed, "MMToolsExportParsed");
-            MMToolsExportParsed.Click += MMToolsExportParsed_Click;
+            ExportSaveFileDialog.DefaultExt = "vpx";
+            resources.ApplyResources(ExportSaveFileDialog, "ExportSaveFileDialog");
+            // 
+            // MMFileImportParsedData
+            // 
+            MMFileImportParsedData.Name = "MMFileImportParsedData";
+            resources.ApplyResources(MMFileImportParsedData, "MMFileImportParsedData");
+            MMFileImportParsedData.Click += MMFileImportParsedData_Click;
+            // 
+            // ImportParsedDataFileDialog
+            // 
+            ImportParsedDataFileDialog.DefaultExt = "vpx";
+            resources.ApplyResources(ImportParsedDataFileDialog, "ImportParsedDataFileDialog");
             // 
             // MainForm
             // 
@@ -806,5 +845,11 @@ namespace VieweD.Forms
         private ToolStripMenuItem MMToolExportData;
         private ToolStripMenuItem dataToolStripMenuItem;
         private ToolStripMenuItem MMToolsExportParsed;
+        private ToolStripMenuItem MMProjectCopySelectedPackets;
+        private ToolStripSeparator toolStripMenuItem3;
+        private ToolStripMenuItem MMProjectExportPackets;
+        private SaveFileDialog ExportSaveFileDialog;
+        private ToolStripMenuItem MMFileImportParsedData;
+        private OpenFileDialog ImportParsedDataFileDialog;
     }
 }

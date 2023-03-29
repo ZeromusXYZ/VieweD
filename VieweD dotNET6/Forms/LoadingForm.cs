@@ -22,7 +22,7 @@ namespace VieweD.Forms
         private DateTime _showThresholdTime = DateTime.MinValue;
         private DateTime _unFreezeThresholdTime = DateTime.MinValue;
 
-        public static void OnProgress(int position, int maxValue, string? title, Color? color)
+        public static void OnProgress(int position, int maxValue, string? title, Color? color, bool forceShow = false)
         {
             if ((Instance == null) && (position <= 0) && (maxValue <= 0))
                 return;
@@ -36,6 +36,12 @@ namespace VieweD.Forms
                     Instance.Text = title;
                 if (color != null)
                     Instance.BackColor = (Color)color;
+            }
+
+            if (forceShow)
+            {
+                Instance._showThresholdTime = DateTime.UtcNow.AddSeconds(-2000);
+                Instance._unFreezeThresholdTime = DateTime.UtcNow.AddSeconds(-2000);
             }
 
             if ((Instance.Visible == false) && (DateTime.UtcNow >= Instance._showThresholdTime))
@@ -56,7 +62,7 @@ namespace VieweD.Forms
                 Application.DoEvents();
             }
 
-            if (position == maxValue)
+            if (position >= maxValue)
             {
                 // Done loading, free the form
                 Instance.Close();
