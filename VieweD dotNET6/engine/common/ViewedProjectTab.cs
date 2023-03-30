@@ -1502,6 +1502,9 @@ public class ViewedProjectTab : TabPage
                     XmlHelper.SetAttribute(parseNode, "p", parsedField.DisplayedByteOffset);
                     XmlHelper.SetAttribute(parseNode, "n", parsedField.FieldName);
                     XmlHelper.SetAttribute(parseNode, "v", parsedField.FieldValue);
+                    XmlHelper.SetAttribute(parseNode, "b", parsedField.StartingByte.ToString());
+                    XmlHelper.SetAttribute(parseNode, "e", parsedField.EndingByte.ToString());
+                    XmlHelper.SetAttribute(parseNode, "d", parsedField.NestingDepth.ToString());
                 }
             }
 
@@ -1638,6 +1641,7 @@ public class ViewedProjectTab : TabPage
 
                     var packet = new BasePacketData(this);
                     packet.SourcePort = GetStreamIdPort(packetStreamId);
+                    packet.DoNotParse = true;
                     packet.PacketDataDirection = packetDirection == "I"
                         ? PacketDataDirection.Incoming
                         : packetDirection == "O"
@@ -1648,12 +1652,34 @@ public class ViewedProjectTab : TabPage
                     packet.ParsedPacketName = packetName;
                     packet.TimeStamp = DateTime.UtcNow.AddTicks(packetTicks);
                     packet.SyncId = packetSync;
-                    packet.DoNotParse = true;
 
                     packet.BuildHeaderText();
 
-                    // TODO: Read Raw Data
-                    // TODO: Read Parsed Data
+                    var dataNode = xmlPacket.SelectSingleNode("d");
+                    if (dataNode != null)
+                    {
+                        packet.ByteData.Clear();
+                        packet.ByteData.AddRange(NumberHelper.HexStringToBytes(dataNode.InnerText));
+                    }
+
+                    var parsedNodes = xmlPacket.SelectNodes("p");
+                    if (parsedNodes != null)
+                    {
+                        foreach (XmlNode parsedNode in parsedNodes)
+                        {
+                            var parsedField = new ParsedField();
+                            var fieldAttributes = XmlHelper.ReadNodeAttributes(parsedNode);
+                            packet.AddParsedField(
+                                true,
+                                (int)XmlHelper.GetAttributeInt(fieldAttributes, "b"),
+                                (int)XmlHelper.GetAttributeInt(fieldAttributes, "e"),
+                                XmlHelper.GetAttributeString(fieldAttributes, "p"),
+                                XmlHelper.GetAttributeString(fieldAttributes, "n"),
+                                XmlHelper.GetAttributeString(fieldAttributes, "v"),
+                                (int)XmlHelper.GetAttributeInt(fieldAttributes, "d")
+                            );
+                        }
+                    }
 
                     LoadedPacketList.Add(packet);
                     if ((x % 20) == 0)

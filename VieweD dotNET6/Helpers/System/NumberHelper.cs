@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Globalization;
 
 namespace VieweD.Helpers.System
@@ -252,6 +253,24 @@ namespace VieweD.Helpers.System
                 res += bytes[i].ToString("X2");
             }
 
+            return res;
+        }
+
+        public static List<byte> HexStringToBytes(string text)
+        {
+            var res = new List<byte>();
+            var currentByte = string.Empty;
+            foreach (var c in text.ToUpper())
+            {
+                if (((c >= '0') && (c <= '9')) || ((c >= 'A') && (c <= 'F')))
+                    currentByte += c;
+                if ((currentByte.Length > 1) && byte.TryParse(currentByte, NumberStyles.HexNumber,
+                        CultureInfo.InvariantCulture, out var b))
+                {
+                    res.Add(b);
+                    currentByte = string.Empty;
+                }
+            }
             return res;
         }
 
