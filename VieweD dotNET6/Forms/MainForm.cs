@@ -1722,7 +1722,7 @@ namespace VieweD.Forms
             ClipboardHelper.SetClipboard(s);
         }
 
-        private void MMProjectExportPackets_Click(object sender, EventArgs e)
+        private void MMFileExportVpx_Click(object sender, EventArgs e)
         {
             if (TCProjects.SelectedTab is not ViewedProjectTab project)
                 return;
@@ -1738,7 +1738,7 @@ namespace VieweD.Forms
             }
         }
 
-        private void MMFileImportParsedData_Click(object sender, EventArgs e)
+        private void MMFileImportVpx_Click(object sender, EventArgs e)
         {
             if (ImportParsedDataFileDialog.ShowDialog() != DialogResult.OK)
                 return;

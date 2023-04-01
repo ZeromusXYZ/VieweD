@@ -66,34 +66,43 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="MMFileOpen.Size" type="System.Drawing.Size, System.Drawing">
-    <value>186, 22</value>
+    <value>196, 22</value>
   </data>
   <data name="MMFileOpen.Text" xml:space="preserve">
     <value>&amp;Open ...</value>
   </data>
-  <data name="MMFileImportParsedData.Size" type="System.Drawing.Size, System.Drawing">
-    <value>186, 22</value>
+  <data name="toolStripMenuItem4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>193, 6</value>
   </data>
-  <data name="MMFileImportParsedData.Text" xml:space="preserve">
-    <value>Import parsed data ...</value>
+  <data name="MMFileImportVpx.Size" type="System.Drawing.Size, System.Drawing">
+    <value>196, 22</value>
+  </data>
+  <data name="MMFileImportVpx.Text" xml:space="preserve">
+    <value>Import from VPX ...</value>
+  </data>
+  <data name="MMFileExportVpx.Size" type="System.Drawing.Size, System.Drawing">
+    <value>196, 22</value>
+  </data>
+  <data name="MMFileExportVpx.Text" xml:space="preserve">
+    <value>Export packet to VPX ...</value>
   </data>
   <data name="MMFileN1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>183, 6</value>
+    <value>193, 6</value>
   </data>
   <data name="MMFileSettings.Size" type="System.Drawing.Size, System.Drawing">
-    <value>186, 22</value>
+    <value>196, 22</value>
   </data>
   <data name="MMFileSettings.Text" xml:space="preserve">
     <value>Program &amp;settings</value>
   </data>
   <data name="MMFileN2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>183, 6</value>
+    <value>193, 6</value>
   </data>
   <data name="MMFileExit.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
     <value>Alt+F4</value>
   </data>
   <data name="MMFileExit.Size" type="System.Drawing.Size, System.Drawing">
-    <value>186, 22</value>
+    <value>196, 22</value>
   </data>
   <data name="MMFileExit.Text" xml:space="preserve">
     <value>E&amp;xit</value>
@@ -113,6 +122,66 @@
   </data>
   <data name="MMVersion.Text" xml:space="preserve">
     <value>Version</value>
+  </data>
+  <data name="MMProjectSave.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
+    <value>Ctrl+S</value>
+  </data>
+  <data name="MMProjectSave.Size" type="System.Drawing.Size, System.Drawing">
+    <value>214, 22</value>
+  </data>
+  <data name="MMProjectSave.Text" xml:space="preserve">
+    <value>&amp;Save</value>
+  </data>
+  <data name="toolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>211, 6</value>
+  </data>
+  <data name="MMProjectCopySelectedPackets.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
+    <value>Ctrl+Shift+C</value>
+  </data>
+  <data name="MMProjectCopySelectedPackets.Size" type="System.Drawing.Size, System.Drawing">
+    <value>214, 22</value>
+  </data>
+  <data name="MMProjectCopySelectedPackets.Text" xml:space="preserve">
+    <value>Copy Packet</value>
+  </data>
+  <data name="toolStripMenuItem3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>211, 6</value>
+  </data>
+  <data name="MMProjectGameData.Size" type="System.Drawing.Size, System.Drawing">
+    <value>214, 22</value>
+  </data>
+  <data name="MMProjectGameData.Text" xml:space="preserve">
+    <value>Game Data ...</value>
+  </data>
+  <data name="MMProjectVideo.Size" type="System.Drawing.Size, System.Drawing">
+    <value>214, 22</value>
+  </data>
+  <data name="MMProjectVideo.Text" xml:space="preserve">
+    <value>Video Link ...</value>
+  </data>
+  <data name="MMProjectN1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>211, 6</value>
+  </data>
+  <data name="MMProjectSettings.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
+    <value>Ctrl+P</value>
+  </data>
+  <data name="MMProjectSettings.Size" type="System.Drawing.Size, System.Drawing">
+    <value>214, 22</value>
+  </data>
+  <data name="MMProjectSettings.Text" xml:space="preserve">
+    <value>Se&amp;ttings ...</value>
+  </data>
+  <data name="MMProjectN2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>211, 6</value>
+  </data>
+  <data name="MMProjectClose.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
+    <value>Ctrl+W</value>
+  </data>
+  <data name="MMProjectClose.Size" type="System.Drawing.Size, System.Drawing">
+    <value>214, 22</value>
+  </data>
+  <data name="MMProjectClose.Text" xml:space="preserve">
+    <value>&amp;Close</value>
   </data>
   <data name="MMProject.Size" type="System.Drawing.Size, System.Drawing">
     <value>56, 20</value>
@@ -161,72 +230,6 @@
   </data>
   <data name="&gt;&gt;MM.ZOrder" xml:space="preserve">
     <value>4</value>
-  </data>
-  <data name="MMProjectSave.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
-    <value>Ctrl+S</value>
-  </data>
-  <data name="MMProjectSave.Size" type="System.Drawing.Size, System.Drawing">
-    <value>214, 22</value>
-  </data>
-  <data name="MMProjectSave.Text" xml:space="preserve">
-    <value>&amp;Save</value>
-  </data>
-  <data name="toolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>211, 6</value>
-  </data>
-  <data name="MMProjectCopySelectedPackets.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
-    <value>Ctrl+Shift+C</value>
-  </data>
-  <data name="MMProjectCopySelectedPackets.Size" type="System.Drawing.Size, System.Drawing">
-    <value>214, 22</value>
-  </data>
-  <data name="MMProjectCopySelectedPackets.Text" xml:space="preserve">
-    <value>Copy Packet</value>
-  </data>
-  <data name="MMProjectExportPackets.Size" type="System.Drawing.Size, System.Drawing">
-    <value>214, 22</value>
-  </data>
-  <data name="MMProjectExportPackets.Text" xml:space="preserve">
-    <value>Export packets ...</value>
-  </data>
-  <data name="toolStripMenuItem3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>211, 6</value>
-  </data>
-  <data name="MMProjectGameData.Size" type="System.Drawing.Size, System.Drawing">
-    <value>214, 22</value>
-  </data>
-  <data name="MMProjectGameData.Text" xml:space="preserve">
-    <value>Game Data ...</value>
-  </data>
-  <data name="MMProjectVideo.Size" type="System.Drawing.Size, System.Drawing">
-    <value>214, 22</value>
-  </data>
-  <data name="MMProjectVideo.Text" xml:space="preserve">
-    <value>Video Link ...</value>
-  </data>
-  <data name="MMProjectN1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>211, 6</value>
-  </data>
-  <data name="MMProjectSettings.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
-    <value>Ctrl+P</value>
-  </data>
-  <data name="MMProjectSettings.Size" type="System.Drawing.Size, System.Drawing">
-    <value>214, 22</value>
-  </data>
-  <data name="MMProjectSettings.Text" xml:space="preserve">
-    <value>Se&amp;ttings ...</value>
-  </data>
-  <data name="MMProjectN2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>211, 6</value>
-  </data>
-  <data name="MMProjectClose.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
-    <value>Ctrl+W</value>
-  </data>
-  <data name="MMProjectClose.Size" type="System.Drawing.Size, System.Drawing">
-    <value>214, 22</value>
-  </data>
-  <data name="MMProjectClose.Text" xml:space="preserve">
-    <value>&amp;Close</value>
   </data>
   <data name="MMSearchFind.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
     <value>Ctrl+F</value>
@@ -504,7 +507,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAEZTeXN0ZW0uV2luZG93cy5Gb3JtcywgQ3VsdHVyZT1uZXV0cmFs
         LCBQdWJsaWNLZXlUb2tlbj1iNzdhNWM1NjE5MzRlMDg5BQEAAAAmU3lzdGVtLldpbmRvd3MuRm9ybXMu
         SW1hZ2VMaXN0U3RyZWFtZXIBAAAABERhdGEHAgIAAAAJAwAAAA8DAAAAbAwAAAJNU0Z0AUkBTAIBAQUB
-        AAEwAQIBMAECARABAAEQAQAE/wEJAQAI/wFCAU0BNgEEBgABNgEEAgABKAMAAUADAAEgAwABAQEAAQgG
+        AAFAAQIBQAECARABAAEQAQAE/wEJAQAI/wFCAU0BNgEEBgABNgEEAgABKAMAAUADAAEgAwABAQEAAQgG
         AAEIGAABgAIAAYADAAKAAQABgAMAAYABAAGAAQACgAIAA8ABAAHAAdwBwAEAAfABygGmAQABMwUAATMB
         AAEzAQABMwEAAjMCAAMWAQADHAEAAyIBAAMpAQADVQEAA00BAANCAQADOQEAAYABfAH/AQACUAH/AQAB
         kwEAAdYBAAH/AewBzAEAAcYB1gHvAQAB1gLnAQABkAGpAa0CAAH/ATMDAAFmAwABmQMAAcwCAAEzAwAC
@@ -1204,6 +1207,24 @@
   <data name="&gt;&gt;MMFileOpen.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;toolStripMenuItem4.Name" xml:space="preserve">
+    <value>toolStripMenuItem4</value>
+  </data>
+  <data name="&gt;&gt;toolStripMenuItem4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MMFileImportVpx.Name" xml:space="preserve">
+    <value>MMFileImportVpx</value>
+  </data>
+  <data name="&gt;&gt;MMFileImportVpx.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MMFileExportVpx.Name" xml:space="preserve">
+    <value>MMFileExportVpx</value>
+  </data>
+  <data name="&gt;&gt;MMFileExportVpx.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;MMFileN1.Name" xml:space="preserve">
     <value>MMFileN1</value>
   </data>
@@ -1256,12 +1277,6 @@
     <value>MMProjectCopySelectedPackets</value>
   </data>
   <data name="&gt;&gt;MMProjectCopySelectedPackets.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;MMProjectExportPackets.Name" xml:space="preserve">
-    <value>MMProjectExportPackets</value>
-  </data>
-  <data name="&gt;&gt;MMProjectExportPackets.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;toolStripMenuItem3.Name" xml:space="preserve">
@@ -1605,12 +1620,6 @@
   </data>
   <data name="&gt;&gt;ExportSaveFileDialog.Type" xml:space="preserve">
     <value>System.Windows.Forms.SaveFileDialog, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;MMFileImportParsedData.Name" xml:space="preserve">
-    <value>MMFileImportParsedData</value>
-  </data>
-  <data name="&gt;&gt;MMFileImportParsedData.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;ImportParsedDataFileDialog.Name" xml:space="preserve">
     <value>ImportParsedDataFileDialog</value>

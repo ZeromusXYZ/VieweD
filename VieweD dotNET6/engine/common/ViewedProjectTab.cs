@@ -1456,8 +1456,26 @@ public class ViewedProjectTab : TabPage
     public XmlDocument ExportPacketsAsXml(List<BasePacketData> packets, bool includeRawData, bool includeParsedData)
     {
         var xmlDoc = new XmlDocument();
-        var listNode = xmlDoc.CreateNode(XmlNodeType.Element, "packetlist", null);
-        xmlDoc.AppendChild(listNode);
+        var vpxNode = xmlDoc.CreateNode(XmlNodeType.Element, "vpx", null);
+        xmlDoc.AppendChild(vpxNode);
+        // port mappings
+        var portNode = XmlHelper.CreateNewXmlElementNode(vpxNode, "ports");
+        foreach (var mapping in PortToStreamIdMapping)
+        {
+            var streamNode = XmlHelper.CreateNewXmlElementNode(portNode, "stream");
+            if (streamNode == null)
+                break; // Error
+            XmlHelper.SetAttribute(streamNode, "port", mapping.Key.ToString());
+            XmlHelper.SetAttribute(streamNode, "id", mapping.Value.Item1.ToString());
+            XmlHelper.SetAttribute(streamNode, "name", mapping.Value.Item2);
+            XmlHelper.SetAttribute(streamNode, "short", mapping.Value.Item3);
+        }
+
+        // packet data
+        var listNode = XmlHelper.CreateNewXmlElementNode(vpxNode, "packetlist");
+        if (listNode != null)
+            XmlHelper.AddAttribute(listNode, "timestamp", TimeStampFormat);
+
         MainForm.Instance?.UpdateStatusBarProgress(0, packets.Count, "Export Packets", null);
         var progress = 0;
         foreach (var basePacketData in packets)
@@ -1468,7 +1486,11 @@ public class ViewedProjectTab : TabPage
                 break; // Error
 
             XmlHelper.SetAttribute(packetNode, "d", basePacketData.PacketDataDirection == PacketDataDirection.Incoming ? "I" : basePacketData.PacketDataDirection == PacketDataDirection.Outgoing ? "O" : "?");
-            XmlHelper.SetAttribute(packetNode, "s", GetStreamIdName(basePacketData.StreamId));
+            // XmlHelper.SetAttribute(packetNode, "s", GetStreamIdName(basePacketData.StreamId));
+            if (basePacketData.SourcePort > 0)
+                XmlHelper.SetAttribute(packetNode, "sp", basePacketData.SourcePort.ToString());
+            if (basePacketData.DestinationPort > 0)
+                XmlHelper.SetAttribute(packetNode, "dp", basePacketData.DestinationPort.ToString());
             XmlHelper.SetAttribute(packetNode, "n", basePacketData.GetPacketName());
             if (basePacketData.CompressionLevel > 0)
                 XmlHelper.SetAttribute(packetNode, "l", basePacketData.CompressionLevel.ToString());
@@ -1520,10 +1542,15 @@ public class ViewedProjectTab : TabPage
     {
         try
         {
-            var list = GetVisiblePacketList();
+            using var exportSettingsDialog = new ExportVpxDialog();
+            if (exportSettingsDialog.ShowDialog() != DialogResult.OK)
+                return false;
+
+            var list = exportSettingsDialog.CbExportOnlyVisible.Checked ? GetVisiblePacketList() : LoadedPacketList;
+
             if (compressed)
             {
-                var xmlDoc = ExportPacketsAsXml(list, true, true);
+                var xmlDoc = ExportPacketsAsXml(list, exportSettingsDialog.ExportBytes, exportSettingsDialog.ExportParsed);
                 using var fileStream = new FileStream(fileName, FileMode.Create);
                 fileStream.Write(new byte[] { 0x56, 0x50, 0x58, 0 });
                 using var bStream = new BZip2OutputStream(fileStream, false);
@@ -1532,7 +1559,7 @@ public class ViewedProjectTab : TabPage
             }
             else
             {
-                var xml = ExportPacketsAsXmlString(list, true, true, false);
+                var xml = ExportPacketsAsXmlString(list, exportSettingsDialog.ExportBytes, exportSettingsDialog.ExportParsed, false);
                 LoadingForm.OnProgress(0, 100, "Saving export", null, true);
                 File.WriteAllText(fileName, xml);
             }
@@ -1608,10 +1635,37 @@ public class ViewedProjectTab : TabPage
             using var bStream = new BZip2InputStream(fileStream);
             var xmlDoc = new XmlDocument();
             xmlDoc.Load(bStream);
-
-            ushort streamCounter = 1;
-            var xmlPackets = xmlDoc.SelectNodes("/packetlist/pd");
             OnInputProgressUpdate(null, 0, 1);
+
+            // port mappings
+            ushort streamCounter = 1;
+            var xmlPorts = xmlDoc.SelectNodes("/vpx/ports/stream");
+            if (xmlPorts != null)
+            {
+                PortToStreamIdMapping.Clear();
+                foreach (XmlNode xmlPort in xmlPorts)
+                {
+                    var portAttributes = XmlHelper.ReadNodeAttributes(xmlPort);
+                    var portNumber = (ushort)XmlHelper.GetAttributeInt(portAttributes, "port");
+                    var streamId = (byte)XmlHelper.GetAttributeInt(portAttributes, "id");
+                    var streamName = XmlHelper.GetAttributeString(portAttributes, "name");
+                    var streamShortName = XmlHelper.GetAttributeString(portAttributes, "short");
+
+                    PortToStreamIdMapping.Add(portNumber, (streamId, streamName, streamShortName));
+                }
+            }
+
+            // packet data
+            var xmlPacketList = xmlDoc.SelectSingleNode("/vpx/packetlist");
+            if (xmlPacketList != null)
+            {
+                var listAttributes = XmlHelper.ReadNodeAttributes(xmlPacketList);
+                var tsf = XmlHelper.GetAttributeString(listAttributes, "timestamp");
+                if (!string.IsNullOrWhiteSpace(tsf))
+                    TimeStampFormat = tsf;
+            }
+
+            var xmlPackets = xmlDoc.SelectNodes("/vpx/packetlist/pd");
             if (xmlPackets != null)
             {
                 OnInputProgressUpdate(null, 0, xmlPackets.Count);
@@ -1623,7 +1677,11 @@ public class ViewedProjectTab : TabPage
 
                     var packetAttributes = XmlHelper.ReadNodeAttributes(xmlPacket);
 
+                    var sPort = (ushort)XmlHelper.GetAttributeInt(packetAttributes, "sp");
+                    var dPort = (ushort)XmlHelper.GetAttributeInt(packetAttributes, "dp");
                     var packetStreamName = XmlHelper.GetAttributeString(packetAttributes, "s");
+
+                    /*
                     // for now register dummy ports where stream Id = Port
                     var packetStreamId = GetStreamIdByName(packetStreamName);
                     if (packetStreamId == 0)
@@ -1631,6 +1689,7 @@ public class ViewedProjectTab : TabPage
                         RegisterPort(streamCounter, packetStreamName, packetStreamName[..1]);
                         packetStreamId = GetStreamIdByName(packetStreamName);
                     }
+                    */
 
                     var packetLevel = (byte)XmlHelper.GetAttributeInt(packetAttributes, "l");
                     var packetId = (uint)XmlHelper.GetAttributeInt(packetAttributes, "p");
@@ -1640,7 +1699,8 @@ public class ViewedProjectTab : TabPage
                     var packetSync = (int)XmlHelper.GetAttributeInt(packetAttributes, "c");
 
                     var packet = new BasePacketData(this);
-                    packet.SourcePort = GetStreamIdPort(packetStreamId);
+                    packet.SourcePort = sPort;// GetStreamIdPort(packetStreamId);
+                    packet.DestinationPort = dPort;
                     packet.DoNotParse = true;
                     packet.PacketDataDirection = packetDirection == "I"
                         ? PacketDataDirection.Incoming

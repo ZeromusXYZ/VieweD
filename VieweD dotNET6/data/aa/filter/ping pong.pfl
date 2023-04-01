@@ -1,0 +1,5 @@
+rem;original-file;ping pong.pfl
+outtype;hide
+out;0x012-0x02-0x02;Ping
+intype;hide
+in;0x013-0x02-0x02;Pong

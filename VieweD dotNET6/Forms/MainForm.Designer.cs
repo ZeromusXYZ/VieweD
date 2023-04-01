@@ -37,6 +37,9 @@ namespace VieweD.Forms
             MM = new MenuStrip();
             MMFile = new ToolStripMenuItem();
             MMFileOpen = new ToolStripMenuItem();
+            toolStripMenuItem4 = new ToolStripSeparator();
+            MMFileImportVpx = new ToolStripMenuItem();
+            MMFileExportVpx = new ToolStripMenuItem();
             MMFileN1 = new ToolStripSeparator();
             MMFileSettings = new ToolStripMenuItem();
             MMFileN2 = new ToolStripSeparator();
@@ -46,7 +49,6 @@ namespace VieweD.Forms
             MMProjectSave = new ToolStripMenuItem();
             toolStripMenuItem1 = new ToolStripSeparator();
             MMProjectCopySelectedPackets = new ToolStripMenuItem();
-            MMProjectExportPackets = new ToolStripMenuItem();
             toolStripMenuItem3 = new ToolStripSeparator();
             MMProjectGameData = new ToolStripMenuItem();
             MMProjectVideo = new ToolStripMenuItem();
@@ -118,7 +120,6 @@ namespace VieweD.Forms
             PMSuggestCustomLookup = new ToolStripMenuItem();
             SaveProjectFileDialog = new SaveFileDialog();
             ExportSaveFileDialog = new SaveFileDialog();
-            MMFileImportParsedData = new ToolStripMenuItem();
             ImportParsedDataFileDialog = new OpenFileDialog();
             MM.SuspendLayout();
             StatusBar.SuspendLayout();
@@ -147,7 +148,7 @@ namespace VieweD.Forms
             // 
             // MMFile
             // 
-            MMFile.DropDownItems.AddRange(new ToolStripItem[] { MMFileOpen, MMFileImportParsedData, MMFileN1, MMFileSettings, MMFileN2, MMFileExit });
+            MMFile.DropDownItems.AddRange(new ToolStripItem[] { MMFileOpen, toolStripMenuItem4, MMFileImportVpx, MMFileExportVpx, MMFileN1, MMFileSettings, MMFileN2, MMFileExit });
             MMFile.Name = "MMFile";
             resources.ApplyResources(MMFile, "MMFile");
             // 
@@ -158,6 +159,23 @@ namespace VieweD.Forms
             resources.ApplyResources(MMFileOpen, "MMFileOpen");
             MMFileOpen.Click += MMFileOpen_Click;
             // 
+            // toolStripMenuItem4
+            // 
+            toolStripMenuItem4.Name = "toolStripMenuItem4";
+            resources.ApplyResources(toolStripMenuItem4, "toolStripMenuItem4");
+            // 
+            // MMFileImportVpx
+            // 
+            MMFileImportVpx.Name = "MMFileImportVpx";
+            resources.ApplyResources(MMFileImportVpx, "MMFileImportVpx");
+            MMFileImportVpx.Click += MMFileImportVpx_Click;
+            // 
+            // MMFileExportVpx
+            // 
+            MMFileExportVpx.Name = "MMFileExportVpx";
+            resources.ApplyResources(MMFileExportVpx, "MMFileExportVpx");
+            MMFileExportVpx.Click += MMFileExportVpx_Click;
+            // 
             // MMFileN1
             // 
             MMFileN1.Name = "MMFileN1";
@@ -165,6 +183,7 @@ namespace VieweD.Forms
             // 
             // MMFileSettings
             // 
+            MMFileSettings.Image = Properties.Resources.document_properties_16;
             MMFileSettings.Name = "MMFileSettings";
             resources.ApplyResources(MMFileSettings, "MMFileSettings");
             MMFileSettings.Click += MMFileSettings_Click;
@@ -189,7 +208,7 @@ namespace VieweD.Forms
             // 
             // MMProject
             // 
-            MMProject.DropDownItems.AddRange(new ToolStripItem[] { MMProjectSave, toolStripMenuItem1, MMProjectCopySelectedPackets, MMProjectExportPackets, toolStripMenuItem3, MMProjectGameData, MMProjectVideo, MMProjectN1, MMProjectSettings, MMProjectN2, MMProjectClose });
+            MMProject.DropDownItems.AddRange(new ToolStripItem[] { MMProjectSave, toolStripMenuItem1, MMProjectCopySelectedPackets, toolStripMenuItem3, MMProjectGameData, MMProjectVideo, MMProjectN1, MMProjectSettings, MMProjectN2, MMProjectClose });
             MMProject.Name = "MMProject";
             resources.ApplyResources(MMProject, "MMProject");
             // 
@@ -211,12 +230,6 @@ namespace VieweD.Forms
             resources.ApplyResources(MMProjectCopySelectedPackets, "MMProjectCopySelectedPackets");
             MMProjectCopySelectedPackets.Click += MMProjectCopySelectedPackets_Click;
             // 
-            // MMProjectExportPackets
-            // 
-            MMProjectExportPackets.Name = "MMProjectExportPackets";
-            resources.ApplyResources(MMProjectExportPackets, "MMProjectExportPackets");
-            MMProjectExportPackets.Click += MMProjectExportPackets_Click;
-            // 
             // toolStripMenuItem3
             // 
             toolStripMenuItem3.Name = "toolStripMenuItem3";
@@ -224,12 +237,14 @@ namespace VieweD.Forms
             // 
             // MMProjectGameData
             // 
+            MMProjectGameData.Image = Properties.Resources.mini_unk_ticon;
             MMProjectGameData.Name = "MMProjectGameData";
             resources.ApplyResources(MMProjectGameData, "MMProjectGameData");
             MMProjectGameData.Click += MMProjectGameData_Click;
             // 
             // MMProjectVideo
             // 
+            MMProjectVideo.Image = Properties.Resources.mini_video_icon;
             MMProjectVideo.Name = "MMProjectVideo";
             resources.ApplyResources(MMProjectVideo, "MMProjectVideo");
             MMProjectVideo.Click += MMProjectVideo_Click;
@@ -717,12 +732,6 @@ namespace VieweD.Forms
             ExportSaveFileDialog.DefaultExt = "vpx";
             resources.ApplyResources(ExportSaveFileDialog, "ExportSaveFileDialog");
             // 
-            // MMFileImportParsedData
-            // 
-            MMFileImportParsedData.Name = "MMFileImportParsedData";
-            resources.ApplyResources(MMFileImportParsedData, "MMFileImportParsedData");
-            MMFileImportParsedData.Click += MMFileImportParsedData_Click;
-            // 
             // ImportParsedDataFileDialog
             // 
             ImportParsedDataFileDialog.DefaultExt = "vpx";
@@ -847,9 +856,10 @@ namespace VieweD.Forms
         private ToolStripMenuItem MMToolsExportParsed;
         private ToolStripMenuItem MMProjectCopySelectedPackets;
         private ToolStripSeparator toolStripMenuItem3;
-        private ToolStripMenuItem MMProjectExportPackets;
         private SaveFileDialog ExportSaveFileDialog;
-        private ToolStripMenuItem MMFileImportParsedData;
+        private ToolStripMenuItem MMFileImportVpx;
         private OpenFileDialog ImportParsedDataFileDialog;
+        private ToolStripSeparator toolStripMenuItem4;
+        private ToolStripMenuItem MMFileExportVpx;
     }
 }
