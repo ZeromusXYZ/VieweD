@@ -499,4 +499,94 @@ Difference = {2}</value>
     <value>Save changes to project: {0} ?</value>
     <comment>0: project name</comment>
   </data>
+  <data name="AddToArchiveTitle" xml:space="preserve">
+    <value>Add files to archive</value>
+  </data>
+  <data name="application_zip_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\kde-icons\application-zip-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="document_export_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\kde-icons\document-export-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="document_import_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\kde-icons\document-import-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="edit_copy_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\kde-icons\edit-copy-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="edit_cut_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\kde-icons\edit-cut-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="edit_delete_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\kde-icons\edit-delete-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="edit_download_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\kde-icons\edit-download-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="edit_find_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\kde-icons\edit-find-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="edit_find_replace_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\kde-icons\edit-find-replace-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="edit_guides_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\kde-icons\edit-guides-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="edit_move_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\kde-icons\edit-move-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="edit_node_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\kde-icons\edit-node-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="edit_paste_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\kde-icons\edit-paste-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="edit_redo_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\kde-icons\edit-redo-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="edit_reset_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\kde-icons\edit-reset-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="edit_select_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\kde-icons\edit-select-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="edit_select_all_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\kde-icons\edit-select-all-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="edit_select_invert_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\kde-icons\edit-select-invert-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="edit_select_none_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\kde-icons\edit-select-none-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="edit_select_original_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\kde-icons\edit-select-original-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="edit_undo_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\kde-icons\edit-undo-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tag_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\kde-icons\tag-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tag_delete_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\kde-icons\tag-delete-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tag_edit_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\kde-icons\tag-edit-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tag_new_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\kde-icons\tag-new-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="document_edit_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\kde-icons\document-edit-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="gnumeric_autofilter_delete_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\kde-icons\gnumeric-autofilter-delete-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="text_csv_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\kde-icons\text-csv-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="view_filter_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\kde-icons\view-filter-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

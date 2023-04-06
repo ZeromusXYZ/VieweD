@@ -18,6 +18,7 @@ using System.Globalization;
 using System.Text;
 using Ionic.BZip2;
 using System.Net;
+using VieweD.engine.common;
 
 namespace VieweD.engine.common;
 
@@ -191,7 +192,7 @@ public class ViewedProjectTab : TabPage
 
         PmPlResetFilters = new ToolStripMenuItem("Reset all filters");
         PmPlResetFilters.Click += PmPLResetFilter_Click;
-        PmPlResetFilters.Image = Resources.view_close_16;
+        PmPlResetFilters.Image = Resources.gnumeric_autofilter_delete_16;
         PmPl.Items.Add(PmPlResetFilters);
 
         PmPls4 = new ToolStripSeparator();
@@ -199,12 +200,12 @@ public class ViewedProjectTab : TabPage
 
         PmPlEditParser = new ToolStripMenuItem("Edit this parser");
         PmPlEditParser.Click += PmPLEditParser_Click;
-        PmPlEditParser.Image = Resources.document_properties_16;
+        PmPlEditParser.Image = Resources.document_edit_16;
         PmPl.Items.Add(PmPlEditParser);
 
         PmPlExportPacket = new ToolStripMenuItem("Export Packet");
         PmPlExportPacket.Click += PmPLExport_Click;
-        PmPlExportPacket.Image = Resources.document_save_as_16;
+        PmPlExportPacket.Image = Resources.document_export_16;
         PmPl.Items.Add(PmPlExportPacket);
 
         PacketsListBox.ContextMenuStrip = PmPl;
@@ -995,6 +996,7 @@ public class ViewedProjectTab : TabPage
             if (valueTuple.Value.Item2 == name)
                 return valueTuple.Value.Item1;
         }
+
         return 0;
     }
 
@@ -1485,7 +1487,9 @@ public class ViewedProjectTab : TabPage
             if (packetNode == null)
                 break; // Error
 
-            XmlHelper.SetAttribute(packetNode, "d", basePacketData.PacketDataDirection == PacketDataDirection.Incoming ? "I" : basePacketData.PacketDataDirection == PacketDataDirection.Outgoing ? "O" : "?");
+            XmlHelper.SetAttribute(packetNode, "d",
+                basePacketData.PacketDataDirection == PacketDataDirection.Incoming ? "I" :
+                basePacketData.PacketDataDirection == PacketDataDirection.Outgoing ? "O" : "?");
             // XmlHelper.SetAttribute(packetNode, "s", GetStreamIdName(basePacketData.StreamId));
             if (basePacketData.SourcePort > 0)
                 XmlHelper.SetAttribute(packetNode, "sp", basePacketData.SourcePort.ToString());
@@ -1550,7 +1554,8 @@ public class ViewedProjectTab : TabPage
 
             if (compressed)
             {
-                var xmlDoc = ExportPacketsAsXml(list, exportSettingsDialog.ExportBytes, exportSettingsDialog.ExportParsed);
+                var xmlDoc = ExportPacketsAsXml(list, exportSettingsDialog.ExportBytes,
+                    exportSettingsDialog.ExportParsed);
                 using var fileStream = new FileStream(fileName, FileMode.Create);
                 fileStream.Write(new byte[] { 0x56, 0x50, 0x58, 0 });
                 using var bStream = new BZip2OutputStream(fileStream, false);
@@ -1559,10 +1564,12 @@ public class ViewedProjectTab : TabPage
             }
             else
             {
-                var xml = ExportPacketsAsXmlString(list, exportSettingsDialog.ExportBytes, exportSettingsDialog.ExportParsed, false);
+                var xml = ExportPacketsAsXmlString(list, exportSettingsDialog.ExportBytes,
+                    exportSettingsDialog.ExportParsed, false);
                 LoadingForm.OnProgress(0, 100, "Saving export", null, true);
                 File.WriteAllText(fileName, xml);
             }
+
             LoadingForm.OnProgress(100, 100, "Saving export", null, true);
         }
         catch
@@ -1620,142 +1627,179 @@ public class ViewedProjectTab : TabPage
 
     public bool ImportFromVpxFile(string fileName)
     {
+        using var fileStream = File.OpenRead(fileName);
+        return ImportFromVpxStream(fileStream, true, true);
+    }
+
+    public bool ImportFromVpxString(string data)
+    {
         try
         {
-            using var fileStream = File.OpenRead(fileName);
-            var header = new byte[4];
-            if (fileStream.Read(header, 0, header.Length) < 4)
-                throw new Exception("file is too small");
-            //0x56, 0x50, 0x58, 0
-            if ((header[0] != 0x56)|| (header[1] != 0x50) || (header[2] != 0x58))
-                throw new Exception("Invalid header");
-            if (header[3] != 0)
-                throw new Exception("Unsupported file version");
+            var xml = new XmlDocument();
+            xml.LoadXml(data);
+            return ImportFromVpxXml(xml);
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+    }
 
-            using var bStream = new BZip2InputStream(fileStream);
+    private bool ImportFromVpxXml(XmlDocument xmlDoc)
+    {
+        OnInputProgressUpdate(null, 0, 1);
+
+        // port mappings
+        var xmlPorts = xmlDoc.SelectNodes("/vpx/ports/stream");
+        if (xmlPorts != null)
+        {
+            PortToStreamIdMapping.Clear();
+            foreach (XmlNode xmlPort in xmlPorts)
+            {
+                var portAttributes = XmlHelper.ReadNodeAttributes(xmlPort);
+                var portNumber = (ushort)XmlHelper.GetAttributeInt(portAttributes, "port");
+                var streamId = (byte)XmlHelper.GetAttributeInt(portAttributes, "id");
+                var streamName = XmlHelper.GetAttributeString(portAttributes, "name");
+                var streamShortName = XmlHelper.GetAttributeString(portAttributes, "short");
+
+                PortToStreamIdMapping.Add(portNumber, (streamId, streamName, streamShortName));
+            }
+        }
+
+        // packet data
+        var xmlPacketList = xmlDoc.SelectSingleNode("/vpx/packetlist");
+        if (xmlPacketList != null)
+        {
+            var listAttributes = XmlHelper.ReadNodeAttributes(xmlPacketList);
+            var tsf = XmlHelper.GetAttributeString(listAttributes, "timestamp");
+            if (!string.IsNullOrWhiteSpace(tsf))
+                TimeStampFormat = tsf;
+        }
+
+        var xmlPackets = xmlDoc.SelectNodes("/vpx/packetlist/pd");
+        if (xmlPackets != null)
+        {
+            OnInputProgressUpdate(null, 0, xmlPackets.Count);
+            for (var x = 0; x < xmlPackets.Count; x++)
+            {
+                var xmlPacket = xmlPackets[x];
+                if (xmlPacket == null)
+                    continue;
+
+                var packetAttributes = XmlHelper.ReadNodeAttributes(xmlPacket);
+
+                var sPort = (ushort)XmlHelper.GetAttributeInt(packetAttributes, "sp");
+                var dPort = (ushort)XmlHelper.GetAttributeInt(packetAttributes, "dp");
+                var packetStreamName = XmlHelper.GetAttributeString(packetAttributes, "s");
+
+                /*
+                // for now register dummy ports where stream Id = Port
+                var packetStreamId = GetStreamIdByName(packetStreamName);
+                if (packetStreamId == 0)
+                {
+                    RegisterPort(streamCounter, packetStreamName, packetStreamName[..1]);
+                    packetStreamId = GetStreamIdByName(packetStreamName);
+                }
+                */
+
+                var packetLevel = (byte)XmlHelper.GetAttributeInt(packetAttributes, "l");
+                var packetId = (uint)XmlHelper.GetAttributeInt(packetAttributes, "p");
+                var packetTicks = XmlHelper.GetAttributeInt(packetAttributes, "t");
+                var packetName = XmlHelper.GetAttributeString(packetAttributes, "n");
+                var packetDirection = XmlHelper.GetAttributeString(packetAttributes, "d");
+                var packetSync = (int)XmlHelper.GetAttributeInt(packetAttributes, "c");
+
+                var packet = new BasePacketData(this);
+                packet.SourcePort = sPort; // GetStreamIdPort(packetStreamId);
+                packet.DestinationPort = dPort;
+                packet.DoNotParse = true;
+                packet.PacketDataDirection = packetDirection == "I"
+                    ? PacketDataDirection.Incoming
+                    : packetDirection == "O"
+                        ? PacketDataDirection.Outgoing
+                        : PacketDataDirection.Unknown;
+                packet.PacketId = packetId;
+                packet.CompressionLevel = packetLevel;
+                packet.ParsedPacketName = packetName;
+                packet.TimeStamp = DateTime.UtcNow.AddTicks(packetTicks);
+                packet.SyncId = packetSync;
+
+                packet.BuildHeaderText();
+
+                var dataNode = xmlPacket.SelectSingleNode("d");
+                if (dataNode != null)
+                {
+                    packet.ByteData.Clear();
+                    packet.ByteData.AddRange(NumberHelper.HexStringToBytes(dataNode.InnerText));
+                }
+
+                var parsedNodes = xmlPacket.SelectNodes("p");
+                if (parsedNodes != null)
+                {
+                    foreach (XmlNode parsedNode in parsedNodes)
+                    {
+                        var parsedField = new ParsedField();
+                        var fieldAttributes = XmlHelper.ReadNodeAttributes(parsedNode);
+                        packet.AddParsedField(
+                            true,
+                            (int)XmlHelper.GetAttributeInt(fieldAttributes, "b"),
+                            (int)XmlHelper.GetAttributeInt(fieldAttributes, "e"),
+                            XmlHelper.GetAttributeString(fieldAttributes, "p"),
+                            XmlHelper.GetAttributeString(fieldAttributes, "n"),
+                            XmlHelper.GetAttributeString(fieldAttributes, "v"),
+                            (int)XmlHelper.GetAttributeInt(fieldAttributes, "d")
+                        );
+                    }
+                }
+
+                LoadedPacketList.Add(packet);
+                if ((x % 20) == 0)
+                    OnInputProgressUpdate(null, x, xmlPackets.Count);
+            }
+        }
+
+        OnInputProgressUpdate(null, 1, 1);
+        ReIndexLoadedPackets();
+        PopulateListBox();
+        return true;
+    }
+
+
+    public bool ImportFromVpxStream(Stream fileStream, bool isCompressed, bool includesHeader)
+    {
+        try
+        {
+            if (includesHeader)
+            {
+                var header = new byte[4];
+                if (fileStream.Read(header, 0, header.Length) < 4)
+                    throw new Exception("file is too small");
+                //0x56, 0x50, 0x58, 0
+                if ((header[0] != 0x56) || (header[1] != 0x50) || (header[2] != 0x58))
+                    throw new Exception("Invalid header");
+                if (header[3] != 0)
+                    throw new Exception("Unsupported file version");
+            }
+
+            Stream? aStream = fileStream;
+            BZip2InputStream? bStream = null;
+            if (isCompressed)
+            {
+                bStream = new BZip2InputStream(fileStream);
+                aStream = bStream;
+            }
+
             var xmlDoc = new XmlDocument();
-            xmlDoc.Load(bStream);
-            OnInputProgressUpdate(null, 0, 1);
+            xmlDoc.Load(aStream);
 
-            // port mappings
-            ushort streamCounter = 1;
-            var xmlPorts = xmlDoc.SelectNodes("/vpx/ports/stream");
-            if (xmlPorts != null)
-            {
-                PortToStreamIdMapping.Clear();
-                foreach (XmlNode xmlPort in xmlPorts)
-                {
-                    var portAttributes = XmlHelper.ReadNodeAttributes(xmlPort);
-                    var portNumber = (ushort)XmlHelper.GetAttributeInt(portAttributes, "port");
-                    var streamId = (byte)XmlHelper.GetAttributeInt(portAttributes, "id");
-                    var streamName = XmlHelper.GetAttributeString(portAttributes, "name");
-                    var streamShortName = XmlHelper.GetAttributeString(portAttributes, "short");
-
-                    PortToStreamIdMapping.Add(portNumber, (streamId, streamName, streamShortName));
-                }
-            }
-
-            // packet data
-            var xmlPacketList = xmlDoc.SelectSingleNode("/vpx/packetlist");
-            if (xmlPacketList != null)
-            {
-                var listAttributes = XmlHelper.ReadNodeAttributes(xmlPacketList);
-                var tsf = XmlHelper.GetAttributeString(listAttributes, "timestamp");
-                if (!string.IsNullOrWhiteSpace(tsf))
-                    TimeStampFormat = tsf;
-            }
-
-            var xmlPackets = xmlDoc.SelectNodes("/vpx/packetlist/pd");
-            if (xmlPackets != null)
-            {
-                OnInputProgressUpdate(null, 0, xmlPackets.Count);
-                for (var x = 0; x < xmlPackets.Count; x++)
-                {
-                    var xmlPacket = xmlPackets[x];
-                    if (xmlPacket == null)
-                        continue;
-
-                    var packetAttributes = XmlHelper.ReadNodeAttributes(xmlPacket);
-
-                    var sPort = (ushort)XmlHelper.GetAttributeInt(packetAttributes, "sp");
-                    var dPort = (ushort)XmlHelper.GetAttributeInt(packetAttributes, "dp");
-                    var packetStreamName = XmlHelper.GetAttributeString(packetAttributes, "s");
-
-                    /*
-                    // for now register dummy ports where stream Id = Port
-                    var packetStreamId = GetStreamIdByName(packetStreamName);
-                    if (packetStreamId == 0)
-                    {
-                        RegisterPort(streamCounter, packetStreamName, packetStreamName[..1]);
-                        packetStreamId = GetStreamIdByName(packetStreamName);
-                    }
-                    */
-
-                    var packetLevel = (byte)XmlHelper.GetAttributeInt(packetAttributes, "l");
-                    var packetId = (uint)XmlHelper.GetAttributeInt(packetAttributes, "p");
-                    var packetTicks = XmlHelper.GetAttributeInt(packetAttributes, "t");
-                    var packetName = XmlHelper.GetAttributeString(packetAttributes, "n");
-                    var packetDirection = XmlHelper.GetAttributeString(packetAttributes, "d");
-                    var packetSync = (int)XmlHelper.GetAttributeInt(packetAttributes, "c");
-
-                    var packet = new BasePacketData(this);
-                    packet.SourcePort = sPort;// GetStreamIdPort(packetStreamId);
-                    packet.DestinationPort = dPort;
-                    packet.DoNotParse = true;
-                    packet.PacketDataDirection = packetDirection == "I"
-                        ? PacketDataDirection.Incoming
-                        : packetDirection == "O"
-                            ? PacketDataDirection.Outgoing
-                            : PacketDataDirection.Unknown;
-                    packet.PacketId = packetId;
-                    packet.CompressionLevel = packetLevel;
-                    packet.ParsedPacketName = packetName;
-                    packet.TimeStamp = DateTime.UtcNow.AddTicks(packetTicks);
-                    packet.SyncId = packetSync;
-
-                    packet.BuildHeaderText();
-
-                    var dataNode = xmlPacket.SelectSingleNode("d");
-                    if (dataNode != null)
-                    {
-                        packet.ByteData.Clear();
-                        packet.ByteData.AddRange(NumberHelper.HexStringToBytes(dataNode.InnerText));
-                    }
-
-                    var parsedNodes = xmlPacket.SelectNodes("p");
-                    if (parsedNodes != null)
-                    {
-                        foreach (XmlNode parsedNode in parsedNodes)
-                        {
-                            var parsedField = new ParsedField();
-                            var fieldAttributes = XmlHelper.ReadNodeAttributes(parsedNode);
-                            packet.AddParsedField(
-                                true,
-                                (int)XmlHelper.GetAttributeInt(fieldAttributes, "b"),
-                                (int)XmlHelper.GetAttributeInt(fieldAttributes, "e"),
-                                XmlHelper.GetAttributeString(fieldAttributes, "p"),
-                                XmlHelper.GetAttributeString(fieldAttributes, "n"),
-                                XmlHelper.GetAttributeString(fieldAttributes, "v"),
-                                (int)XmlHelper.GetAttributeInt(fieldAttributes, "d")
-                            );
-                        }
-                    }
-
-                    LoadedPacketList.Add(packet);
-                    if ((x % 20) == 0)
-                        OnInputProgressUpdate(null, x, xmlPackets.Count);
-                }
-            }
-            OnInputProgressUpdate(null, 1, 1);
-            ReIndexLoadedPackets();
-            PopulateListBox();
-
+            var res = ImportFromVpxXml(xmlDoc);
+            bStream?.Dispose();
+            return res;
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
             return false;
         }
-        return true;
     }
 }

@@ -54,6 +54,7 @@ namespace VieweD.Forms
             MMProjectVideo = new ToolStripMenuItem();
             MMProjectN1 = new ToolStripSeparator();
             MMProjectSettings = new ToolStripMenuItem();
+            MMProjectPack = new ToolStripMenuItem();
             MMProjectN2 = new ToolStripSeparator();
             MMProjectClose = new ToolStripMenuItem();
             MMSearch = new ToolStripMenuItem();
@@ -74,16 +75,12 @@ namespace VieweD.Forms
             MMToolsExportCSV = new ToolStripMenuItem();
             MMToolExportData = new ToolStripMenuItem();
             dataToolStripMenuItem = new ToolStripMenuItem();
-            MMToolsExportParsed = new ToolStripMenuItem();
             MMLinks = new ToolStripMenuItem();
             MMLinksGitHub = new ToolStripMenuItem();
             MMLinksDikscord = new ToolStripMenuItem();
             MMLinksN1 = new ToolStripSeparator();
             MMLinksKoFi = new ToolStripMenuItem();
             MMLinksN2 = new ToolStripSeparator();
-            MMLinks7Zip = new ToolStripMenuItem();
-            MMLinks7ZipMain = new ToolStripMenuItem();
-            MMLinks7ZipDownload = new ToolStripMenuItem();
             MMLinksVLC = new ToolStripMenuItem();
             MMLinksWireshark = new ToolStripMenuItem();
             StatusBar = new StatusStrip();
@@ -121,6 +118,7 @@ namespace VieweD.Forms
             SaveProjectFileDialog = new SaveFileDialog();
             ExportSaveFileDialog = new SaveFileDialog();
             ImportParsedDataFileDialog = new OpenFileDialog();
+            MMFileImportFromClipboard = new ToolStripMenuItem();
             MM.SuspendLayout();
             StatusBar.SuspendLayout();
             TCProjects.SuspendLayout();
@@ -148,7 +146,7 @@ namespace VieweD.Forms
             // 
             // MMFile
             // 
-            MMFile.DropDownItems.AddRange(new ToolStripItem[] { MMFileOpen, toolStripMenuItem4, MMFileImportVpx, MMFileExportVpx, MMFileN1, MMFileSettings, MMFileN2, MMFileExit });
+            MMFile.DropDownItems.AddRange(new ToolStripItem[] { MMFileOpen, toolStripMenuItem4, MMFileImportFromClipboard, MMFileImportVpx, MMFileExportVpx, MMFileN1, MMFileSettings, MMFileN2, MMFileExit });
             MMFile.Name = "MMFile";
             resources.ApplyResources(MMFile, "MMFile");
             // 
@@ -166,12 +164,14 @@ namespace VieweD.Forms
             // 
             // MMFileImportVpx
             // 
+            MMFileImportVpx.Image = Properties.Resources.document_import_16;
             MMFileImportVpx.Name = "MMFileImportVpx";
             resources.ApplyResources(MMFileImportVpx, "MMFileImportVpx");
             MMFileImportVpx.Click += MMFileImportVpx_Click;
             // 
             // MMFileExportVpx
             // 
+            MMFileExportVpx.Image = Properties.Resources.document_export_16;
             MMFileExportVpx.Name = "MMFileExportVpx";
             resources.ApplyResources(MMFileExportVpx, "MMFileExportVpx");
             MMFileExportVpx.Click += MMFileExportVpx_Click;
@@ -208,7 +208,7 @@ namespace VieweD.Forms
             // 
             // MMProject
             // 
-            MMProject.DropDownItems.AddRange(new ToolStripItem[] { MMProjectSave, toolStripMenuItem1, MMProjectCopySelectedPackets, toolStripMenuItem3, MMProjectGameData, MMProjectVideo, MMProjectN1, MMProjectSettings, MMProjectN2, MMProjectClose });
+            MMProject.DropDownItems.AddRange(new ToolStripItem[] { MMProjectSave, toolStripMenuItem1, MMProjectCopySelectedPackets, toolStripMenuItem3, MMProjectGameData, MMProjectVideo, MMProjectN1, MMProjectSettings, MMProjectPack, MMProjectN2, MMProjectClose });
             MMProject.Name = "MMProject";
             resources.ApplyResources(MMProject, "MMProject");
             // 
@@ -226,6 +226,7 @@ namespace VieweD.Forms
             // 
             // MMProjectCopySelectedPackets
             // 
+            MMProjectCopySelectedPackets.Image = Properties.Resources.edit_copy_16;
             MMProjectCopySelectedPackets.Name = "MMProjectCopySelectedPackets";
             resources.ApplyResources(MMProjectCopySelectedPackets, "MMProjectCopySelectedPackets");
             MMProjectCopySelectedPackets.Click += MMProjectCopySelectedPackets_Click;
@@ -261,6 +262,13 @@ namespace VieweD.Forms
             resources.ApplyResources(MMProjectSettings, "MMProjectSettings");
             MMProjectSettings.Click += MMProjectSettings_Click;
             // 
+            // MMProjectPack
+            // 
+            MMProjectPack.Image = Properties.Resources.application_zip_16;
+            MMProjectPack.Name = "MMProjectPack";
+            resources.ApplyResources(MMProjectPack, "MMProjectPack");
+            MMProjectPack.Click += MMProjectPack_Click;
+            // 
             // MMProjectN2
             // 
             MMProjectN2.Name = "MMProjectN2";
@@ -281,12 +289,14 @@ namespace VieweD.Forms
             // 
             // MMSearchFind
             // 
+            MMSearchFind.Image = Properties.Resources.edit_find_16;
             MMSearchFind.Name = "MMSearchFind";
             resources.ApplyResources(MMSearchFind, "MMSearchFind");
             MMSearchFind.Click += MMSearchFind_Click;
             // 
             // MMSearchFindNext
             // 
+            MMSearchFindNext.Image = Properties.Resources.edit_find_16;
             MMSearchFindNext.Name = "MMSearchFindNext";
             resources.ApplyResources(MMSearchFindNext, "MMSearchFindNext");
             MMSearchFindNext.Click += MMSearchFindNext_Click;
@@ -298,6 +308,7 @@ namespace VieweD.Forms
             // 
             // MMSearchEditFilter
             // 
+            MMSearchEditFilter.Image = Properties.Resources.document_edit_16;
             MMSearchEditFilter.Name = "MMSearchEditFilter";
             resources.ApplyResources(MMSearchEditFilter, "MMSearchEditFilter");
             MMSearchEditFilter.Click += MMSearchEditFilter_Click;
@@ -305,6 +316,7 @@ namespace VieweD.Forms
             // MMSearchApplyMenu
             // 
             MMSearchApplyMenu.DropDownItems.AddRange(new ToolStripItem[] { MMSearchApplyReset, MMSearchApplyMenuN1 });
+            MMSearchApplyMenu.Image = Properties.Resources.view_filter_16;
             MMSearchApplyMenu.Name = "MMSearchApplyMenu";
             resources.ApplyResources(MMSearchApplyMenu, "MMSearchApplyMenu");
             MMSearchApplyMenu.Tag = "ap";
@@ -324,6 +336,7 @@ namespace VieweD.Forms
             // MMSearchHighlightMenu
             // 
             MMSearchHighlightMenu.DropDownItems.AddRange(new ToolStripItem[] { MMSearchHighlightReset, MMSearchHighlightMenuN1 });
+            MMSearchHighlightMenu.Image = Properties.Resources.view_filter_16;
             MMSearchHighlightMenu.Name = "MMSearchHighlightMenu";
             resources.ApplyResources(MMSearchHighlightMenu, "MMSearchHighlightMenu");
             MMSearchHighlightMenu.Tag = "hl";
@@ -342,13 +355,14 @@ namespace VieweD.Forms
             // 
             // MMTools
             // 
-            MMTools.DropDownItems.AddRange(new ToolStripItem[] { MMToolsEditTemplates, toolStripMenuItem2, MMToolsExportCSV, MMToolExportData, MMToolsExportParsed });
+            MMTools.DropDownItems.AddRange(new ToolStripItem[] { MMToolsEditTemplates, toolStripMenuItem2, MMToolsExportCSV, MMToolExportData });
             MMTools.Name = "MMTools";
             resources.ApplyResources(MMTools, "MMTools");
             // 
             // MMToolsEditTemplates
             // 
             MMToolsEditTemplates.DropDownItems.AddRange(new ToolStripItem[] { MMToolsEditTemplateItem });
+            MMToolsEditTemplates.Image = Properties.Resources.document_edit_16;
             MMToolsEditTemplates.Name = "MMToolsEditTemplates";
             resources.ApplyResources(MMToolsEditTemplates, "MMToolsEditTemplates");
             MMToolsEditTemplates.DropDownOpening += MMToolsEditTemplates_DropDownOpening;
@@ -366,6 +380,7 @@ namespace VieweD.Forms
             // 
             // MMToolsExportCSV
             // 
+            MMToolsExportCSV.Image = Properties.Resources.text_csv_16;
             MMToolsExportCSV.Name = "MMToolsExportCSV";
             resources.ApplyResources(MMToolsExportCSV, "MMToolsExportCSV");
             MMToolsExportCSV.Click += MMToolsExportCSV_Click;
@@ -373,6 +388,7 @@ namespace VieweD.Forms
             // MMToolExportData
             // 
             MMToolExportData.DropDownItems.AddRange(new ToolStripItem[] { dataToolStripMenuItem });
+            MMToolExportData.Image = Properties.Resources.document_export_16;
             MMToolExportData.Name = "MMToolExportData";
             resources.ApplyResources(MMToolExportData, "MMToolExportData");
             MMToolExportData.DropDownOpening += MMToolExportData_DropDownOpening;
@@ -383,15 +399,9 @@ namespace VieweD.Forms
             dataToolStripMenuItem.Name = "dataToolStripMenuItem";
             resources.ApplyResources(dataToolStripMenuItem, "dataToolStripMenuItem");
             // 
-            // MMToolsExportParsed
-            // 
-            MMToolsExportParsed.Name = "MMToolsExportParsed";
-            resources.ApplyResources(MMToolsExportParsed, "MMToolsExportParsed");
-            MMToolsExportParsed.Click += MMToolsExportParsed_Click;
-            // 
             // MMLinks
             // 
-            MMLinks.DropDownItems.AddRange(new ToolStripItem[] { MMLinksGitHub, MMLinksDikscord, MMLinksN1, MMLinksKoFi, MMLinksN2, MMLinks7Zip, MMLinksVLC, MMLinksWireshark });
+            MMLinks.DropDownItems.AddRange(new ToolStripItem[] { MMLinksGitHub, MMLinksDikscord, MMLinksN1, MMLinksKoFi, MMLinksN2, MMLinksVLC, MMLinksWireshark });
             MMLinks.Name = "MMLinks";
             resources.ApplyResources(MMLinks, "MMLinks");
             // 
@@ -428,27 +438,6 @@ namespace VieweD.Forms
             // 
             MMLinksN2.Name = "MMLinksN2";
             resources.ApplyResources(MMLinksN2, "MMLinksN2");
-            // 
-            // MMLinks7Zip
-            // 
-            MMLinks7Zip.DropDownItems.AddRange(new ToolStripItem[] { MMLinks7ZipMain, MMLinks7ZipDownload });
-            resources.ApplyResources(MMLinks7Zip, "MMLinks7Zip");
-            MMLinks7Zip.Image = Properties.Resources._7zip_x64;
-            MMLinks7Zip.Name = "MMLinks7Zip";
-            // 
-            // MMLinks7ZipMain
-            // 
-            MMLinks7ZipMain.Name = "MMLinks7ZipMain";
-            resources.ApplyResources(MMLinks7ZipMain, "MMLinks7ZipMain");
-            MMLinks7ZipMain.Tag = "https://www.7-zip.org/";
-            MMLinks7ZipMain.Click += MMLinksOpen_Click;
-            // 
-            // MMLinks7ZipDownload
-            // 
-            MMLinks7ZipDownload.Name = "MMLinks7ZipDownload";
-            resources.ApplyResources(MMLinks7ZipDownload, "MMLinks7ZipDownload");
-            MMLinks7ZipDownload.Tag = "https://sourceforge.net/p/sevenzip/discussion/45797/thread/adc65bfa/";
-            MMLinks7ZipDownload.Click += MMLinksOpen_Click;
             // 
             // MMLinksVLC
             // 
@@ -737,6 +726,13 @@ namespace VieweD.Forms
             ImportParsedDataFileDialog.DefaultExt = "vpx";
             resources.ApplyResources(ImportParsedDataFileDialog, "ImportParsedDataFileDialog");
             // 
+            // MMFileImportFromClipboard
+            // 
+            MMFileImportFromClipboard.Image = Properties.Resources.edit_paste_16;
+            MMFileImportFromClipboard.Name = "MMFileImportFromClipboard";
+            resources.ApplyResources(MMFileImportFromClipboard, "MMFileImportFromClipboard");
+            MMFileImportFromClipboard.Click += MMFileImportFromClipboard_Click;
+            // 
             // MainForm
             // 
             resources.ApplyResources(this, "$this");
@@ -799,6 +795,7 @@ namespace VieweD.Forms
         private RichTextBox RichTextData;
         private ToolStripMenuItem MMProject;
         private ToolStripMenuItem MMProjectSettings;
+        private ToolStripMenuItem MMProjectPack;
         private ToolStripMenuItem MMProjectClose;
         private ToolStripSeparator MMProjectN2;
         private RichTextBox RichTextWelcome;
@@ -816,11 +813,8 @@ namespace VieweD.Forms
         private ToolStripSeparator MMLinksN1;
         private ToolStripMenuItem MMLinksKoFi;
         private ToolStripSeparator MMLinksN2;
-        private ToolStripMenuItem MMLinks7Zip;
         private ToolStripMenuItem MMLinksVLC;
         private ToolStripMenuItem MMLinksWireshark;
-        private ToolStripMenuItem MMLinks7ZipMain;
-        private ToolStripMenuItem MMLinks7ZipDownload;
         private ContextMenuStrip MiFieldView;
         private ToolStripMenuItem MiFieldFields;
         private ToolStripMenuItem MIFieldLocalVars;
@@ -853,7 +847,6 @@ namespace VieweD.Forms
         private ToolStripMenuItem MMToolsEditTemplateItem;
         private ToolStripMenuItem MMToolExportData;
         private ToolStripMenuItem dataToolStripMenuItem;
-        private ToolStripMenuItem MMToolsExportParsed;
         private ToolStripMenuItem MMProjectCopySelectedPackets;
         private ToolStripSeparator toolStripMenuItem3;
         private SaveFileDialog ExportSaveFileDialog;
@@ -861,5 +854,6 @@ namespace VieweD.Forms
         private OpenFileDialog ImportParsedDataFileDialog;
         private ToolStripSeparator toolStripMenuItem4;
         private ToolStripMenuItem MMFileExportVpx;
+        private ToolStripMenuItem MMFileImportFromClipboard;
     }
 }

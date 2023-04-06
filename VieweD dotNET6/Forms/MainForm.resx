@@ -66,43 +66,49 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="MMFileOpen.Size" type="System.Drawing.Size, System.Drawing">
-    <value>196, 22</value>
+    <value>201, 22</value>
   </data>
   <data name="MMFileOpen.Text" xml:space="preserve">
     <value>&amp;Open ...</value>
   </data>
   <data name="toolStripMenuItem4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>193, 6</value>
+    <value>198, 6</value>
+  </data>
+  <data name="MMFileImportFromClipboard.Size" type="System.Drawing.Size, System.Drawing">
+    <value>201, 22</value>
+  </data>
+  <data name="MMFileImportFromClipboard.Text" xml:space="preserve">
+    <value>Import from clipboard</value>
   </data>
   <data name="MMFileImportVpx.Size" type="System.Drawing.Size, System.Drawing">
-    <value>196, 22</value>
+    <value>201, 22</value>
   </data>
   <data name="MMFileImportVpx.Text" xml:space="preserve">
     <value>Import from VPX ...</value>
   </data>
   <data name="MMFileExportVpx.Size" type="System.Drawing.Size, System.Drawing">
-    <value>196, 22</value>
+    <value>201, 22</value>
   </data>
   <data name="MMFileExportVpx.Text" xml:space="preserve">
-    <value>Export packet to VPX ...</value>
+    <value>Export packets to VPX ...</value>
   </data>
   <data name="MMFileN1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>193, 6</value>
+    <value>198, 6</value>
   </data>
   <data name="MMFileSettings.Size" type="System.Drawing.Size, System.Drawing">
-    <value>196, 22</value>
+    <value>201, 22</value>
   </data>
   <data name="MMFileSettings.Text" xml:space="preserve">
     <value>Program &amp;settings</value>
   </data>
   <data name="MMFileN2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>193, 6</value>
+    <value>198, 6</value>
   </data>
   <data name="MMFileExit.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
     <value>Alt+F4</value>
   </data>
   <data name="MMFileExit.Size" type="System.Drawing.Size, System.Drawing">
-    <value>196, 22</value>
+    <value>201, 22</value>
   </data>
   <data name="MMFileExit.Text" xml:space="preserve">
     <value>E&amp;xit</value>
@@ -122,6 +128,54 @@
   </data>
   <data name="MMVersion.Text" xml:space="preserve">
     <value>Version</value>
+  </data>
+  <data name="MMProject.Size" type="System.Drawing.Size, System.Drawing">
+    <value>56, 20</value>
+  </data>
+  <data name="MMProject.Text" xml:space="preserve">
+    <value>&amp;Project</value>
+  </data>
+  <data name="MMSearch.Size" type="System.Drawing.Size, System.Drawing">
+    <value>54, 20</value>
+  </data>
+  <data name="MMSearch.Text" xml:space="preserve">
+    <value>&amp;Search</value>
+  </data>
+  <data name="MMTools.Size" type="System.Drawing.Size, System.Drawing">
+    <value>46, 20</value>
+  </data>
+  <data name="MMTools.Text" xml:space="preserve">
+    <value>&amp;Tools</value>
+  </data>
+  <data name="MMLinks.Size" type="System.Drawing.Size, System.Drawing">
+    <value>46, 20</value>
+  </data>
+  <data name="MMLinks.Text" xml:space="preserve">
+    <value>&amp;Links</value>
+  </data>
+  <data name="MM.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="MM.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1084, 24</value>
+  </data>
+  <data name="MM.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="MM.Text" xml:space="preserve">
+    <value>mainmenu</value>
+  </data>
+  <data name="&gt;&gt;MM.Name" xml:space="preserve">
+    <value>MM</value>
+  </data>
+  <data name="&gt;&gt;MM.Type" xml:space="preserve">
+    <value>System.Windows.Forms.MenuStrip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MM.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;MM.ZOrder" xml:space="preserve">
+    <value>4</value>
   </data>
   <data name="MMProjectSave.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
     <value>Ctrl+S</value>
@@ -171,6 +225,12 @@
   <data name="MMProjectSettings.Text" xml:space="preserve">
     <value>Se&amp;ttings ...</value>
   </data>
+  <data name="MMProjectPack.Size" type="System.Drawing.Size, System.Drawing">
+    <value>214, 22</value>
+  </data>
+  <data name="MMProjectPack.Text" xml:space="preserve">
+    <value>Pack project to .zip ...</value>
+  </data>
   <data name="MMProjectN2.Size" type="System.Drawing.Size, System.Drawing">
     <value>211, 6</value>
   </data>
@@ -182,54 +242,6 @@
   </data>
   <data name="MMProjectClose.Text" xml:space="preserve">
     <value>&amp;Close</value>
-  </data>
-  <data name="MMProject.Size" type="System.Drawing.Size, System.Drawing">
-    <value>56, 20</value>
-  </data>
-  <data name="MMProject.Text" xml:space="preserve">
-    <value>&amp;Project</value>
-  </data>
-  <data name="MMSearch.Size" type="System.Drawing.Size, System.Drawing">
-    <value>54, 20</value>
-  </data>
-  <data name="MMSearch.Text" xml:space="preserve">
-    <value>&amp;Search</value>
-  </data>
-  <data name="MMTools.Size" type="System.Drawing.Size, System.Drawing">
-    <value>46, 20</value>
-  </data>
-  <data name="MMTools.Text" xml:space="preserve">
-    <value>&amp;Tools</value>
-  </data>
-  <data name="MMLinks.Size" type="System.Drawing.Size, System.Drawing">
-    <value>46, 20</value>
-  </data>
-  <data name="MMLinks.Text" xml:space="preserve">
-    <value>&amp;Links</value>
-  </data>
-  <data name="MM.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="MM.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1084, 24</value>
-  </data>
-  <data name="MM.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="MM.Text" xml:space="preserve">
-    <value>mainmenu</value>
-  </data>
-  <data name="&gt;&gt;MM.Name" xml:space="preserve">
-    <value>MM</value>
-  </data>
-  <data name="&gt;&gt;MM.Type" xml:space="preserve">
-    <value>System.Windows.Forms.MenuStrip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;MM.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;MM.ZOrder" xml:space="preserve">
-    <value>4</value>
   </data>
   <data name="MMSearchFind.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
     <value>Ctrl+F</value>
@@ -292,7 +304,7 @@
     <value>99, 6</value>
   </data>
   <data name="MMToolsEditTemplates.Size" type="System.Drawing.Size, System.Drawing">
-    <value>198, 22</value>
+    <value>158, 22</value>
   </data>
   <data name="MMToolsEditTemplates.Text" xml:space="preserve">
     <value>Edit Templates</value>
@@ -304,16 +316,16 @@
     <value>Template</value>
   </data>
   <data name="toolStripMenuItem2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>195, 6</value>
+    <value>155, 6</value>
   </data>
   <data name="MMToolsExportCSV.Size" type="System.Drawing.Size, System.Drawing">
-    <value>198, 22</value>
+    <value>158, 22</value>
   </data>
   <data name="MMToolsExportCSV.Text" xml:space="preserve">
     <value>Export as &amp;CSV ...</value>
   </data>
   <data name="MMToolExportData.Size" type="System.Drawing.Size, System.Drawing">
-    <value>198, 22</value>
+    <value>158, 22</value>
   </data>
   <data name="MMToolExportData.Text" xml:space="preserve">
     <value>Export data</value>
@@ -323,12 +335,6 @@
   </data>
   <data name="dataToolStripMenuItem.Text" xml:space="preserve">
     <value>Data</value>
-  </data>
-  <data name="MMToolsExportParsed.Size" type="System.Drawing.Size, System.Drawing">
-    <value>198, 22</value>
-  </data>
-  <data name="MMToolsExportParsed.Text" xml:space="preserve">
-    <value>Export parsed project ...</value>
   </data>
   <data name="MMLinksGitHub.Size" type="System.Drawing.Size, System.Drawing">
     <value>199, 22</value>
@@ -353,27 +359,6 @@
   </data>
   <data name="MMLinksN2.Size" type="System.Drawing.Size, System.Drawing">
     <value>196, 6</value>
-  </data>
-  <data name="MMLinks7Zip.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="MMLinks7Zip.Size" type="System.Drawing.Size, System.Drawing">
-    <value>199, 22</value>
-  </data>
-  <data name="MMLinks7Zip.Text" xml:space="preserve">
-    <value>7-zip</value>
-  </data>
-  <data name="MMLinks7ZipMain.Size" type="System.Drawing.Size, System.Drawing">
-    <value>216, 22</value>
-  </data>
-  <data name="MMLinks7ZipMain.Text" xml:space="preserve">
-    <value>Visit 7-Zip site</value>
-  </data>
-  <data name="MMLinks7ZipDownload.Size" type="System.Drawing.Size, System.Drawing">
-    <value>216, 22</value>
-  </data>
-  <data name="MMLinks7ZipDownload.Text" xml:space="preserve">
-    <value>Download required version</value>
   </data>
   <data name="MMLinksVLC.Size" type="System.Drawing.Size, System.Drawing">
     <value>199, 22</value>
@@ -507,7 +492,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAEZTeXN0ZW0uV2luZG93cy5Gb3JtcywgQ3VsdHVyZT1uZXV0cmFs
         LCBQdWJsaWNLZXlUb2tlbj1iNzdhNWM1NjE5MzRlMDg5BQEAAAAmU3lzdGVtLldpbmRvd3MuRm9ybXMu
         SW1hZ2VMaXN0U3RyZWFtZXIBAAAABERhdGEHAgIAAAAJAwAAAA8DAAAAbAwAAAJNU0Z0AUkBTAIBAQUB
-        AAFAAQIBQAECARABAAEQAQAE/wEJAQAI/wFCAU0BNgEEBgABNgEEAgABKAMAAUADAAEgAwABAQEAAQgG
+        AAFgAQIBYAECARABAAEQAQAE/wEJAQAI/wFCAU0BNgEEBgABNgEEAgABKAMAAUADAAEgAwABAQEAAQgG
         AAEIGAABgAIAAYADAAKAAQABgAMAAYABAAGAAQACgAIAA8ABAAHAAdwBwAEAAfABygGmAQABMwUAATMB
         AAEzAQABMwEAAjMCAAMWAQADHAEAAyIBAAMpAQADVQEAA00BAANCAQADOQEAAYABfAH/AQACUAH/AQAB
         kwEAAdYBAAH/AewBzAEAAcYB1gHvAQAB1gLnAQABkAGpAa0CAAH/ATMDAAFmAwABmQMAAcwCAAEzAwAC
@@ -1309,6 +1294,12 @@
   <data name="&gt;&gt;MMProjectSettings.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;MMProjectPack.Name" xml:space="preserve">
+    <value>MMProjectPack</value>
+  </data>
+  <data name="&gt;&gt;MMProjectPack.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;MMProjectN2.Name" xml:space="preserve">
     <value>MMProjectN2</value>
   </data>
@@ -1429,12 +1420,6 @@
   <data name="&gt;&gt;dataToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;MMToolsExportParsed.Name" xml:space="preserve">
-    <value>MMToolsExportParsed</value>
-  </data>
-  <data name="&gt;&gt;MMToolsExportParsed.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="&gt;&gt;MMLinks.Name" xml:space="preserve">
     <value>MMLinks</value>
   </data>
@@ -1470,24 +1455,6 @@
   </data>
   <data name="&gt;&gt;MMLinksN2.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;MMLinks7Zip.Name" xml:space="preserve">
-    <value>MMLinks7Zip</value>
-  </data>
-  <data name="&gt;&gt;MMLinks7Zip.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;MMLinks7ZipMain.Name" xml:space="preserve">
-    <value>MMLinks7ZipMain</value>
-  </data>
-  <data name="&gt;&gt;MMLinks7ZipMain.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;MMLinks7ZipDownload.Name" xml:space="preserve">
-    <value>MMLinks7ZipDownload</value>
-  </data>
-  <data name="&gt;&gt;MMLinks7ZipDownload.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;MMLinksVLC.Name" xml:space="preserve">
     <value>MMLinksVLC</value>
@@ -1626,6 +1593,12 @@
   </data>
   <data name="&gt;&gt;ImportParsedDataFileDialog.Type" xml:space="preserve">
     <value>System.Windows.Forms.OpenFileDialog, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MMFileImportFromClipboard.Name" xml:space="preserve">
+    <value>MMFileImportFromClipboard</value>
+  </data>
+  <data name="&gt;&gt;MMFileImportFromClipboard.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>MainForm</value>

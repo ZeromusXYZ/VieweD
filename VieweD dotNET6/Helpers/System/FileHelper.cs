@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace VieweD.Helpers.System
 {
@@ -56,6 +57,18 @@ namespace VieweD.Helpers.System
                 res = null;
             }
             return res ;
+        }
+
+        public static bool ExploreFile(string filePath)
+        {
+            if (!File.Exists(filePath))
+            {
+                return false;
+            }
+            //Clean up file path so it can be navigated OK
+            filePath = Path.GetFullPath(filePath);
+            Process.Start("explorer.exe", $"/select,\"{filePath}\"");
+            return true;
         }
     }
 }

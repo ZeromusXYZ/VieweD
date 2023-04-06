@@ -1688,24 +1688,6 @@ namespace VieweD.Forms
                 project.RunExportDataTool(exportName);
         }
 
-        private void MMToolsExportParsed_Click(object sender, EventArgs e)
-        {
-            if (TCProjects.SelectedTab is not ViewedProjectTab project)
-                return;
-
-            if (project.ExportParsedDataAsXml(Path.Combine(project.ProjectFolder, "export.vpx"), true))
-                MessageBox.Show($"Saved Xml");
-            else
-                MessageBox.Show($"Failed Xml");
-
-            /*
-            if (project.ExportParsedDataAsCsv(Path.Combine(project.ProjectFolder, "export.vpc")))
-                MessageBox.Show($"Saved CSV");
-            else
-                MessageBox.Show($"Failed CSV");
-            */
-        }
-
         private void MMProjectCopySelectedPackets_Click(object sender, EventArgs e)
         {
             if (TCProjects.SelectedTab is not ViewedProjectTab project)
@@ -1747,6 +1729,47 @@ namespace VieweD.Forms
             if (project.ImportFromVpxFile(ImportParsedDataFileDialog.FileName))
             {
                 project.Text = Helper.MakeTabName(ImportParsedDataFileDialog.FileName);
+                TCProjects.TabPages.Add(project);
+                if (TCProjects.ImageList != null)
+                    project.ImageIndex = 1; // viewed icon
+                TCProjects.SelectedTab = project;
+            }
+            else
+            {
+                project.CloseProject(true);
+            }
+        }
+
+        private void MMProjectPack_Click(object sender, EventArgs e)
+        {
+            if (TCProjects.SelectedTab is not ViewedProjectTab project)
+                return;
+
+            using var exportDlg = new PackProjectDialog();
+            if (exportDlg.LoadFromProject(project))
+                exportDlg.ShowDialog();
+        }
+
+        private void MMFileImportFromClipboard_Click(object sender, EventArgs e)
+        {
+            var clipText = Clipboard.GetText(TextDataFormat.Text).Trim();
+
+            if (string.IsNullOrWhiteSpace(clipText))
+            {
+                MessageBox.Show("No data on clipboard","Import from clipboard", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                return;
+            }
+
+            if (!clipText.StartsWith("<vpx"))
+            {
+                MessageBox.Show("Clipboard does not seem to contain packet data", "Import from clipboard", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            var project = new ViewedProjectTab();
+            if (project.ImportFromVpxString(clipText))
+            {
+                project.Text = "Clipboard";
                 TCProjects.TabPages.Add(project);
                 if (TCProjects.ImageList != null)
                     project.ImageIndex = 1; // viewed icon
