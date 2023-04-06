@@ -103,7 +103,7 @@ public class ViewedProjectTab : TabPage
     private ToolStripMenuItem PmPlResetFilters { get; }
     private ToolStripSeparator PmPls4 { get; }
     private ToolStripMenuItem PmPlEditParser { get; }
-    private ToolStripMenuItem PmPlExportPacket { get; }
+    // private ToolStripMenuItem PmPlExportPacket { get; }
 
     #endregion
 
@@ -203,10 +203,10 @@ public class ViewedProjectTab : TabPage
         PmPlEditParser.Image = Resources.document_edit_16;
         PmPl.Items.Add(PmPlEditParser);
 
-        PmPlExportPacket = new ToolStripMenuItem("Export Packet");
-        PmPlExportPacket.Click += PmPLExport_Click;
-        PmPlExportPacket.Image = Resources.document_export_16;
-        PmPl.Items.Add(PmPlExportPacket);
+        //PmPlExportPacket = new ToolStripMenuItem("Export Packet");
+        //PmPlExportPacket.Click += PmPLExport_Click;
+        //PmPlExportPacket.Image = Resources.document_export_16;
+        //PmPl.Items.Add(PmPlExportPacket);
 
         PacketsListBox.ContextMenuStrip = PmPl;
 
@@ -390,8 +390,8 @@ public class ViewedProjectTab : TabPage
         PmPls3.Enabled = packetData != null;
         PmPlResetFilters.Enabled = (Filter.FilterInType != FilterType.Off) || (Filter.FilterOutType != FilterType.Off);
         PmPls4.Enabled = packetData != null;
-        PmPlEditParser.Enabled = packetData != null;
-        PmPlExportPacket.Enabled = false; // packetData != null;
+        PmPlEditParser.Enabled = (packetData != null) && (InputParser != null) && (InputParser.Rules != null);
+        //PmPlExportPacket.Enabled = false; // packetData != null;
 
         if (packetData == null)
         {
@@ -455,7 +455,7 @@ public class ViewedProjectTab : TabPage
 
     private void PacketsListBox_DoubleClick(object? sender, EventArgs e)
     {
-        EditCurrentPacketRule();
+        // EditCurrentPacketRule();
     }
 
     private void EditCurrentPacketRule()
@@ -643,7 +643,7 @@ public class ViewedProjectTab : TabPage
     private void PacketsListBox_SelectedIndexChanged(object? sender, EventArgs e)
     {
         PacketsListBox.Invalidate();
-        if (PacketsListBox.Items[PacketsListBox.SelectedIndex] is BasePacketData pd)
+        if ((PacketsListBox.SelectedIndex >= 0) && (PacketsListBox.Items[PacketsListBox.SelectedIndex] is BasePacketData pd))
         {
             CurrentSyncId = pd.SyncId;
             MainForm.Instance?.ShowPacketData(pd);

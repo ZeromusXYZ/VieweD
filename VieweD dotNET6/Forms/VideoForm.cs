@@ -198,15 +198,21 @@ namespace VieweD.Forms
         private void BtnFastForward_Click(object sender, EventArgs e)
         {
             // Skip forward 20 seconds (or 1 if shift is held)
-            var delta = (ModifierKeys & Keys.ShiftKey) != 0 ? 1000.0 : 20000.0;
+            var hasShift = (ModifierKeys & Keys.Shift) != 0;
+            var delta = (ModifierKeys & Keys.Shift) != 0 ? 1000.0 : 20000.0;
             if ((MPlayer?.IsSeekable ?? false) && (MPlayer.Length > 0))
-                MPlayerSeekTo(TimeSpan.FromMilliseconds((MPlayer.Position * MPlayer.Length) + delta));
+            {
+                if (hasShift)
+                    MPlayer?.NextFrame();
+                else
+                    MPlayerSeekTo(TimeSpan.FromMilliseconds((MPlayer.Position * MPlayer.Length) + delta));
+            }
         }
 
         private void BtnRewind_Click(object sender, EventArgs e)
         {
             // Skip back 20 seconds (or 1 if shift is held)
-            var delta = (ModifierKeys & Keys.ShiftKey) != 0 ? -1000.0 : -20000.0;
+            var delta = (ModifierKeys & Keys.Shift) != 0 ? -1000.0 : -20000.0;
             if ((MPlayer?.IsSeekable ?? false) && (MPlayer.Length > 0))
                 MPlayerSeekTo(TimeSpan.FromMilliseconds((MPlayer.Position * MPlayer.Length) + delta));
         }

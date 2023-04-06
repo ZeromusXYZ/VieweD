@@ -867,8 +867,12 @@ namespace VieweD.Forms
 
         private void TCProjects_SelectedIndexChanged(object sender, EventArgs e)
         {
-            UpdateStatusBar(TCProjects.SelectedTab as ViewedProjectTab);
-            if (TCProjects.SelectedTab is ViewedProjectTab project)
+            var project = TCProjects.SelectedTab as ViewedProjectTab;
+            UpdateStatusBar(project);
+            MMProject.Enabled = project != null;
+            MMSearch.Enabled = project != null;
+            MMTools.Enabled = project != null;
+            if (project != null)
             {
                 if (project.PacketsListBox.SelectedItem is BasePacketData packetData)
                 {
@@ -1625,13 +1629,13 @@ namespace VieweD.Forms
 
         private void MMToolsEditTemplates_DropDownOpening(object sender, EventArgs e)
         {
+            if (sender is not ToolStripMenuItem menuItem)
+                return;
+            menuItem.DropDownItems.Clear();
+
             if (TCProjects.SelectedTab is not ViewedProjectTab project)
                 return;
 
-            if (sender is not ToolStripMenuItem menuItem)
-                return;
-
-            menuItem.DropDownItems.Clear();
             if ((project.InputParser == null) || (project.InputParser.Rules == null))
                 return;
 
@@ -1661,13 +1665,13 @@ namespace VieweD.Forms
 
         private void MMToolExportData_DropDownOpening(object sender, EventArgs e)
         {
+            if (sender is not ToolStripMenuItem menuItem)
+                return;
+            menuItem.DropDownItems.Clear();
+
             if (TCProjects.SelectedTab is not ViewedProjectTab project)
                 return;
 
-            if (sender is not ToolStripMenuItem menuItem)
-                return;
-
-            menuItem.DropDownItems.Clear();
             if ((project.InputParser == null) || (project.InputParser.Rules == null))
                 return;
 
@@ -1756,7 +1760,7 @@ namespace VieweD.Forms
 
             if (string.IsNullOrWhiteSpace(clipText))
             {
-                MessageBox.Show("No data on clipboard","Import from clipboard", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                MessageBox.Show("No data on clipboard", "Import from clipboard", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
                 return;
             }
 
@@ -1779,6 +1783,17 @@ namespace VieweD.Forms
             {
                 project.CloseProject(true);
             }
+        }
+
+        private void MMProject_DropDownOpening(object sender, EventArgs e)
+        {
+            if (TCProjects.SelectedTab is not ViewedProjectTab project)
+                return;
+
+            MMProjectCopySelectedPackets.Enabled = project.PacketsListBox.SelectedItem != null;
+            MMProjectGameData.Enabled = project.DataLookup.LookupLists.Count > 0;
+            MMProjectSettings.Enabled = (project.InputParser != null) && (project.InputReader != null);
+            MMProjectPack.Enabled = Directory.Exists(project.ProjectFolder);
         }
     }
 }

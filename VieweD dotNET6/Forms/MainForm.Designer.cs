@@ -33,11 +33,12 @@ namespace VieweD.Forms
         {
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             MM = new MenuStrip();
             MMFile = new ToolStripMenuItem();
             MMFileOpen = new ToolStripMenuItem();
             toolStripMenuItem4 = new ToolStripSeparator();
+            MMFileImportFromClipboard = new ToolStripMenuItem();
             MMFileImportVpx = new ToolStripMenuItem();
             MMFileExportVpx = new ToolStripMenuItem();
             MMFileN1 = new ToolStripSeparator();
@@ -118,7 +119,6 @@ namespace VieweD.Forms
             SaveProjectFileDialog = new SaveFileDialog();
             ExportSaveFileDialog = new SaveFileDialog();
             ImportParsedDataFileDialog = new OpenFileDialog();
-            MMFileImportFromClipboard = new ToolStripMenuItem();
             MM.SuspendLayout();
             StatusBar.SuspendLayout();
             TCProjects.SuspendLayout();
@@ -161,6 +161,13 @@ namespace VieweD.Forms
             // 
             toolStripMenuItem4.Name = "toolStripMenuItem4";
             resources.ApplyResources(toolStripMenuItem4, "toolStripMenuItem4");
+            // 
+            // MMFileImportFromClipboard
+            // 
+            MMFileImportFromClipboard.Image = Properties.Resources.edit_paste_16;
+            MMFileImportFromClipboard.Name = "MMFileImportFromClipboard";
+            resources.ApplyResources(MMFileImportFromClipboard, "MMFileImportFromClipboard");
+            MMFileImportFromClipboard.Click += MMFileImportFromClipboard_Click;
             // 
             // MMFileImportVpx
             // 
@@ -209,8 +216,9 @@ namespace VieweD.Forms
             // MMProject
             // 
             MMProject.DropDownItems.AddRange(new ToolStripItem[] { MMProjectSave, toolStripMenuItem1, MMProjectCopySelectedPackets, toolStripMenuItem3, MMProjectGameData, MMProjectVideo, MMProjectN1, MMProjectSettings, MMProjectPack, MMProjectN2, MMProjectClose });
-            MMProject.Name = "MMProject";
             resources.ApplyResources(MMProject, "MMProject");
+            MMProject.Name = "MMProject";
+            MMProject.DropDownOpening += MMProject_DropDownOpening;
             // 
             // MMProjectSave
             // 
@@ -284,8 +292,8 @@ namespace VieweD.Forms
             // MMSearch
             // 
             MMSearch.DropDownItems.AddRange(new ToolStripItem[] { MMSearchFind, MMSearchFindNext, MMSearchN1, MMSearchEditFilter, MMSearchApplyMenu, MMSearchHighlightMenu });
-            MMSearch.Name = "MMSearch";
             resources.ApplyResources(MMSearch, "MMSearch");
+            MMSearch.Name = "MMSearch";
             // 
             // MMSearchFind
             // 
@@ -356,8 +364,8 @@ namespace VieweD.Forms
             // MMTools
             // 
             MMTools.DropDownItems.AddRange(new ToolStripItem[] { MMToolsEditTemplates, toolStripMenuItem2, MMToolsExportCSV, MMToolExportData });
-            MMTools.Name = "MMTools";
             resources.ApplyResources(MMTools, "MMTools");
+            MMTools.Name = "MMTools";
             // 
             // MMToolsEditTemplates
             // 
@@ -536,11 +544,11 @@ namespace VieweD.Forms
             DgvParsed.AllowUserToAddRows = false;
             DgvParsed.AllowUserToDeleteRows = false;
             DgvParsed.AllowUserToResizeRows = false;
-            dataGridViewCellStyle2.BackColor = SystemColors.Control;
-            dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
-            DgvParsed.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.BackColor = SystemColors.Control;
+            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            DgvParsed.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             DgvParsed.ClipboardCopyMode = DataGridViewClipboardCopyMode.Disable;
             DgvParsed.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             DgvParsed.Columns.AddRange(new DataGridViewColumn[] { DgvPosition, DgvName, DgvValue });
@@ -725,13 +733,6 @@ namespace VieweD.Forms
             // 
             ImportParsedDataFileDialog.DefaultExt = "vpx";
             resources.ApplyResources(ImportParsedDataFileDialog, "ImportParsedDataFileDialog");
-            // 
-            // MMFileImportFromClipboard
-            // 
-            MMFileImportFromClipboard.Image = Properties.Resources.edit_paste_16;
-            MMFileImportFromClipboard.Name = "MMFileImportFromClipboard";
-            resources.ApplyResources(MMFileImportFromClipboard, "MMFileImportFromClipboard");
-            MMFileImportFromClipboard.Click += MMFileImportFromClipboard_Click;
             // 
             // MainForm
             // 

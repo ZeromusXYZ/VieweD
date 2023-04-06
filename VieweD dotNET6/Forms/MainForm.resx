@@ -129,54 +129,6 @@
   <data name="MMVersion.Text" xml:space="preserve">
     <value>Version</value>
   </data>
-  <data name="MMProject.Size" type="System.Drawing.Size, System.Drawing">
-    <value>56, 20</value>
-  </data>
-  <data name="MMProject.Text" xml:space="preserve">
-    <value>&amp;Project</value>
-  </data>
-  <data name="MMSearch.Size" type="System.Drawing.Size, System.Drawing">
-    <value>54, 20</value>
-  </data>
-  <data name="MMSearch.Text" xml:space="preserve">
-    <value>&amp;Search</value>
-  </data>
-  <data name="MMTools.Size" type="System.Drawing.Size, System.Drawing">
-    <value>46, 20</value>
-  </data>
-  <data name="MMTools.Text" xml:space="preserve">
-    <value>&amp;Tools</value>
-  </data>
-  <data name="MMLinks.Size" type="System.Drawing.Size, System.Drawing">
-    <value>46, 20</value>
-  </data>
-  <data name="MMLinks.Text" xml:space="preserve">
-    <value>&amp;Links</value>
-  </data>
-  <data name="MM.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="MM.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1084, 24</value>
-  </data>
-  <data name="MM.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="MM.Text" xml:space="preserve">
-    <value>mainmenu</value>
-  </data>
-  <data name="&gt;&gt;MM.Name" xml:space="preserve">
-    <value>MM</value>
-  </data>
-  <data name="&gt;&gt;MM.Type" xml:space="preserve">
-    <value>System.Windows.Forms.MenuStrip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;MM.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;MM.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
   <data name="MMProjectSave.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
     <value>Ctrl+S</value>
   </data>
@@ -243,6 +195,15 @@
   <data name="MMProjectClose.Text" xml:space="preserve">
     <value>&amp;Close</value>
   </data>
+  <data name="MMProject.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="MMProject.Size" type="System.Drawing.Size, System.Drawing">
+    <value>56, 20</value>
+  </data>
+  <data name="MMProject.Text" xml:space="preserve">
+    <value>&amp;Project</value>
+  </data>
   <data name="MMSearchFind.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
     <value>Ctrl+F</value>
   </data>
@@ -273,12 +234,6 @@
   <data name="MMSearchEditFilter.Text" xml:space="preserve">
     <value>Edit Filter ...</value>
   </data>
-  <data name="MMSearchApplyMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>207, 22</value>
-  </data>
-  <data name="MMSearchApplyMenu.Text" xml:space="preserve">
-    <value>Apply Filter</value>
-  </data>
   <data name="MMSearchApplyReset.Size" type="System.Drawing.Size, System.Drawing">
     <value>102, 22</value>
   </data>
@@ -288,11 +243,11 @@
   <data name="MMSearchApplyMenuN1.Size" type="System.Drawing.Size, System.Drawing">
     <value>99, 6</value>
   </data>
-  <data name="MMSearchHighlightMenu.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="MMSearchApplyMenu.Size" type="System.Drawing.Size, System.Drawing">
     <value>207, 22</value>
   </data>
-  <data name="MMSearchHighlightMenu.Text" xml:space="preserve">
-    <value>Highlight Filter</value>
+  <data name="MMSearchApplyMenu.Text" xml:space="preserve">
+    <value>Apply Filter</value>
   </data>
   <data name="MMSearchHighlightReset.Size" type="System.Drawing.Size, System.Drawing">
     <value>102, 22</value>
@@ -303,17 +258,32 @@
   <data name="MMSearchHighlightMenuN1.Size" type="System.Drawing.Size, System.Drawing">
     <value>99, 6</value>
   </data>
-  <data name="MMToolsEditTemplates.Size" type="System.Drawing.Size, System.Drawing">
-    <value>158, 22</value>
+  <data name="MMSearchHighlightMenu.Size" type="System.Drawing.Size, System.Drawing">
+    <value>207, 22</value>
   </data>
-  <data name="MMToolsEditTemplates.Text" xml:space="preserve">
-    <value>Edit Templates</value>
+  <data name="MMSearchHighlightMenu.Text" xml:space="preserve">
+    <value>Highlight Filter</value>
+  </data>
+  <data name="MMSearch.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="MMSearch.Size" type="System.Drawing.Size, System.Drawing">
+    <value>54, 20</value>
+  </data>
+  <data name="MMSearch.Text" xml:space="preserve">
+    <value>&amp;Search</value>
   </data>
   <data name="MMToolsEditTemplateItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>122, 22</value>
   </data>
   <data name="MMToolsEditTemplateItem.Text" xml:space="preserve">
     <value>Template</value>
+  </data>
+  <data name="MMToolsEditTemplates.Size" type="System.Drawing.Size, System.Drawing">
+    <value>158, 22</value>
+  </data>
+  <data name="MMToolsEditTemplates.Text" xml:space="preserve">
+    <value>Edit Templates</value>
   </data>
   <data name="toolStripMenuItem2.Size" type="System.Drawing.Size, System.Drawing">
     <value>155, 6</value>
@@ -324,17 +294,26 @@
   <data name="MMToolsExportCSV.Text" xml:space="preserve">
     <value>Export as &amp;CSV ...</value>
   </data>
+  <data name="dataToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>98, 22</value>
+  </data>
+  <data name="dataToolStripMenuItem.Text" xml:space="preserve">
+    <value>Data</value>
+  </data>
   <data name="MMToolExportData.Size" type="System.Drawing.Size, System.Drawing">
     <value>158, 22</value>
   </data>
   <data name="MMToolExportData.Text" xml:space="preserve">
     <value>Export data</value>
   </data>
-  <data name="dataToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>98, 22</value>
+  <data name="MMTools.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
   </data>
-  <data name="dataToolStripMenuItem.Text" xml:space="preserve">
-    <value>Data</value>
+  <data name="MMTools.Size" type="System.Drawing.Size, System.Drawing">
+    <value>46, 20</value>
+  </data>
+  <data name="MMTools.Text" xml:space="preserve">
+    <value>&amp;Tools</value>
   </data>
   <data name="MMLinksGitHub.Size" type="System.Drawing.Size, System.Drawing">
     <value>199, 22</value>
@@ -375,33 +354,39 @@
   <data name="MMLinksWireshark.Text" xml:space="preserve">
     <value>Visit Wireshark site</value>
   </data>
+  <data name="MMLinks.Size" type="System.Drawing.Size, System.Drawing">
+    <value>46, 20</value>
+  </data>
+  <data name="MMLinks.Text" xml:space="preserve">
+    <value>&amp;Links</value>
+  </data>
+  <data name="MM.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="MM.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1084, 24</value>
+  </data>
+  <data name="MM.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="MM.Text" xml:space="preserve">
+    <value>mainmenu</value>
+  </data>
+  <data name="&gt;&gt;MM.Name" xml:space="preserve">
+    <value>MM</value>
+  </data>
+  <data name="&gt;&gt;MM.Type" xml:space="preserve">
+    <value>System.Windows.Forms.MenuStrip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MM.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;MM.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
   <metadata name="StatusBar.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>91, 17</value>
   </metadata>
-  <data name="StatusBar.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 577</value>
-  </data>
-  <data name="StatusBar.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1084, 24</value>
-  </data>
-  <data name="StatusBar.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="StatusBar.Text" xml:space="preserve">
-    <value>Status</value>
-  </data>
-  <data name="&gt;&gt;StatusBar.Name" xml:space="preserve">
-    <value>StatusBar</value>
-  </data>
-  <data name="&gt;&gt;StatusBar.Type" xml:space="preserve">
-    <value>System.Windows.Forms.StatusStrip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;StatusBar.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;StatusBar.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
   <data name="StatusBarProgressBar.AutoSize" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
@@ -432,8 +417,104 @@
   <data name="StatusBarProject.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleLeft</value>
   </data>
+  <data name="StatusBar.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 577</value>
+  </data>
+  <data name="StatusBar.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1084, 24</value>
+  </data>
+  <data name="StatusBar.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="StatusBar.Text" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="&gt;&gt;StatusBar.Name" xml:space="preserve">
+    <value>StatusBar</value>
+  </data>
+  <data name="&gt;&gt;StatusBar.Type" xml:space="preserve">
+    <value>System.Windows.Forms.StatusStrip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;StatusBar.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;StatusBar.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
   <data name="TCProjects.Alignment" type="System.Windows.Forms.TabAlignment, System.Windows.Forms">
     <value>Left</value>
+  </data>
+  <data name="TPWelcomeLayout.ColumnCount" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="RichTextWelcome.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
+  </data>
+  <data name="RichTextWelcome.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="RichTextWelcome.Size" type="System.Drawing.Size, System.Drawing">
+    <value>300, 501</value>
+  </data>
+  <data name="RichTextWelcome.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="RichTextWelcome.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="&gt;&gt;RichTextWelcome.Name" xml:space="preserve">
+    <value>RichTextWelcome</value>
+  </data>
+  <data name="&gt;&gt;RichTextWelcome.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RichTextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RichTextWelcome.Parent" xml:space="preserve">
+    <value>TPWelcomeLayout</value>
+  </data>
+  <data name="&gt;&gt;RichTextWelcome.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="TPWelcomeBtnClose.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
+  </data>
+  <data name="TPWelcomeBtnClose.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 510</value>
+  </data>
+  <data name="TPWelcomeBtnClose.Size" type="System.Drawing.Size, System.Drawing">
+    <value>300, 26</value>
+  </data>
+  <data name="TPWelcomeBtnClose.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="TPWelcomeBtnClose.Text" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="&gt;&gt;TPWelcomeBtnClose.Name" xml:space="preserve">
+    <value>TPWelcomeBtnClose</value>
+  </data>
+  <data name="&gt;&gt;TPWelcomeBtnClose.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TPWelcomeBtnClose.Parent" xml:space="preserve">
+    <value>TPWelcomeLayout</value>
+  </data>
+  <data name="&gt;&gt;TPWelcomeBtnClose.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="TPWelcomeLayout.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="TPWelcomeLayout.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="TPWelcomeLayout.RowCount" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="TPWelcomeLayout.Size" type="System.Drawing.Size, System.Drawing">
+    <value>303, 539</value>
+  </data>
+  <data name="TPWelcomeLayout.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
   </data>
   <data name="&gt;&gt;TPWelcomeLayout.Name" xml:space="preserve">
     <value>TPWelcomeLayout</value>
@@ -492,7 +573,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAEZTeXN0ZW0uV2luZG93cy5Gb3JtcywgQ3VsdHVyZT1uZXV0cmFs
         LCBQdWJsaWNLZXlUb2tlbj1iNzdhNWM1NjE5MzRlMDg5BQEAAAAmU3lzdGVtLldpbmRvd3MuRm9ybXMu
         SW1hZ2VMaXN0U3RyZWFtZXIBAAAABERhdGEHAgIAAAAJAwAAAA8DAAAAbAwAAAJNU0Z0AUkBTAIBAQUB
-        AAFgAQIBYAECARABAAEQAQAE/wEJAQAI/wFCAU0BNgEEBgABNgEEAgABKAMAAUADAAEgAwABAQEAAQgG
+        AAFwAQIBcAECARABAAEQAQAE/wEJAQAI/wFCAU0BNgEEBgABNgEEAgABKAMAAUADAAEgAwABAQEAAQgG
         AAEIGAABgAIAAYADAAKAAQABgAMAAYABAAGAAQACgAIAA8ABAAHAAdwBwAEAAfABygGmAQABMwUAATMB
         AAEzAQABMwEAAjMCAAMWAQADHAEAAyIBAAMpAQADVQEAA00BAANCAQADOQEAAYABfAH/AQACUAH/AQAB
         kwEAAdYBAAH/AewBzAEAAcYB1gHvAQAB1gLnAQABkAGpAa0CAAH/ATMDAAFmAwABmQMAAcwCAAEzAwAC
@@ -571,117 +652,6 @@
   <data name="&gt;&gt;TCProjects.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="TPWelcomeLayout.ColumnCount" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;RichTextWelcome.Name" xml:space="preserve">
-    <value>RichTextWelcome</value>
-  </data>
-  <data name="&gt;&gt;RichTextWelcome.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RichTextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;RichTextWelcome.Parent" xml:space="preserve">
-    <value>TPWelcomeLayout</value>
-  </data>
-  <data name="&gt;&gt;RichTextWelcome.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;TPWelcomeBtnClose.Name" xml:space="preserve">
-    <value>TPWelcomeBtnClose</value>
-  </data>
-  <data name="&gt;&gt;TPWelcomeBtnClose.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;TPWelcomeBtnClose.Parent" xml:space="preserve">
-    <value>TPWelcomeLayout</value>
-  </data>
-  <data name="&gt;&gt;TPWelcomeBtnClose.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="TPWelcomeLayout.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="TPWelcomeLayout.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
-  </data>
-  <data name="TPWelcomeLayout.RowCount" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="TPWelcomeLayout.Size" type="System.Drawing.Size, System.Drawing">
-    <value>303, 539</value>
-  </data>
-  <data name="TPWelcomeLayout.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;TPWelcomeLayout.Name" xml:space="preserve">
-    <value>TPWelcomeLayout</value>
-  </data>
-  <data name="&gt;&gt;TPWelcomeLayout.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;TPWelcomeLayout.Parent" xml:space="preserve">
-    <value>TPWelcome</value>
-  </data>
-  <data name="&gt;&gt;TPWelcomeLayout.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="TPWelcomeLayout.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="RichTextWelcome" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="TPWelcomeBtnClose" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="AutoSize,0" /&gt;&lt;Rows Styles="Percent,100,Absolute,32" /&gt;&lt;/TableLayoutSettings&gt;</value>
-  </data>
-  <data name="RichTextWelcome.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left, Right</value>
-  </data>
-  <data name="RichTextWelcome.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
-  </data>
-  <data name="RichTextWelcome.Size" type="System.Drawing.Size, System.Drawing">
-    <value>300, 501</value>
-  </data>
-  <data name="RichTextWelcome.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="RichTextWelcome.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;RichTextWelcome.Name" xml:space="preserve">
-    <value>RichTextWelcome</value>
-  </data>
-  <data name="&gt;&gt;RichTextWelcome.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RichTextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;RichTextWelcome.Parent" xml:space="preserve">
-    <value>TPWelcomeLayout</value>
-  </data>
-  <data name="&gt;&gt;RichTextWelcome.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="TPWelcomeBtnClose.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left, Right</value>
-  </data>
-  <data name="TPWelcomeBtnClose.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 510</value>
-  </data>
-  <data name="TPWelcomeBtnClose.Size" type="System.Drawing.Size, System.Drawing">
-    <value>300, 26</value>
-  </data>
-  <data name="TPWelcomeBtnClose.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="TPWelcomeBtnClose.Text" xml:space="preserve">
-    <value>Close</value>
-  </data>
-  <data name="&gt;&gt;TPWelcomeBtnClose.Name" xml:space="preserve">
-    <value>TPWelcomeBtnClose</value>
-  </data>
-  <data name="&gt;&gt;TPWelcomeBtnClose.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;TPWelcomeBtnClose.Parent" xml:space="preserve">
-    <value>TPWelcomeLayout</value>
-  </data>
-  <data name="&gt;&gt;TPWelcomeBtnClose.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
   <metadata name="DgvPosition.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
@@ -718,6 +688,27 @@
   <metadata name="MiFieldView.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>451, 17</value>
   </metadata>
+  <data name="MiFieldFields.Size" type="System.Drawing.Size, System.Drawing">
+    <value>175, 22</value>
+  </data>
+  <data name="MiFieldFields.Text" xml:space="preserve">
+    <value>Fields</value>
+  </data>
+  <data name="MIFieldLocalVars.Size" type="System.Drawing.Size, System.Drawing">
+    <value>175, 22</value>
+  </data>
+  <data name="MIFieldLocalVars.Text" xml:space="preserve">
+    <value>Local Vars</value>
+  </data>
+  <data name="MiFieldN1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>172, 6</value>
+  </data>
+  <data name="MiFieldDebug.Size" type="System.Drawing.Size, System.Drawing">
+    <value>175, 22</value>
+  </data>
+  <data name="MiFieldDebug.Text" xml:space="preserve">
+    <value>Debug information</value>
+  </data>
   <data name="MiFieldView.Size" type="System.Drawing.Size, System.Drawing">
     <value>176, 76</value>
   </data>
@@ -753,27 +744,6 @@
   </data>
   <data name="&gt;&gt;DgvParsed.ZOrder" xml:space="preserve">
     <value>0</value>
-  </data>
-  <data name="MiFieldFields.Size" type="System.Drawing.Size, System.Drawing">
-    <value>175, 22</value>
-  </data>
-  <data name="MiFieldFields.Text" xml:space="preserve">
-    <value>Fields</value>
-  </data>
-  <data name="MIFieldLocalVars.Size" type="System.Drawing.Size, System.Drawing">
-    <value>175, 22</value>
-  </data>
-  <data name="MIFieldLocalVars.Text" xml:space="preserve">
-    <value>Local Vars</value>
-  </data>
-  <data name="MiFieldN1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>172, 6</value>
-  </data>
-  <data name="MiFieldDebug.Size" type="System.Drawing.Size, System.Drawing">
-    <value>175, 22</value>
-  </data>
-  <data name="MiFieldDebug.Text" xml:space="preserve">
-    <value>Debug information</value>
   </data>
   <metadata name="OpenProjectFileDialog.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>193, 14</value>
@@ -832,6 +802,21 @@
   <data name="LayoutRawAndSuggested.ColumnCount" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
+  <data name="RichTextData.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="RichTextData.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="RichTextData.Size" type="System.Drawing.Size, System.Drawing">
+    <value>509, 126</value>
+  </data>
+  <data name="RichTextData.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="RichTextData.Text" xml:space="preserve">
+    <value />
+  </data>
   <data name="&gt;&gt;RichTextData.Name" xml:space="preserve">
     <value>RichTextData</value>
   </data>
@@ -843,6 +828,72 @@
   </data>
   <data name="&gt;&gt;RichTextData.ZOrder" xml:space="preserve">
     <value>0</value>
+  </data>
+  <metadata name="PMSuggestion.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>736, 17</value>
+  </metadata>
+  <data name="PMSuggestIntergers.Size" type="System.Drawing.Size, System.Drawing">
+    <value>161, 22</value>
+  </data>
+  <data name="PMSuggestIntergers.Text" xml:space="preserve">
+    <value>Integers</value>
+  </data>
+  <data name="PMSuggestFloats.Size" type="System.Drawing.Size, System.Drawing">
+    <value>161, 22</value>
+  </data>
+  <data name="PMSuggestFloats.Text" xml:space="preserve">
+    <value>Floating points</value>
+  </data>
+  <data name="PMSuggestDateTime.Size" type="System.Drawing.Size, System.Drawing">
+    <value>161, 22</value>
+  </data>
+  <data name="PMSuggestDateTime.Text" xml:space="preserve">
+    <value>DateTime</value>
+  </data>
+  <data name="PMSuggestN1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>158, 6</value>
+  </data>
+  <data name="PMSuggestLookup.Size" type="System.Drawing.Size, System.Drawing">
+    <value>161, 22</value>
+  </data>
+  <data name="PMSuggestLookup.Text" xml:space="preserve">
+    <value>Lookup lists</value>
+  </data>
+  <data name="PMSuggestCustomLookup.Size" type="System.Drawing.Size, System.Drawing">
+    <value>161, 22</value>
+  </data>
+  <data name="PMSuggestCustomLookup.Text" xml:space="preserve">
+    <value>Custom lookups</value>
+  </data>
+  <data name="PMSuggestion.Size" type="System.Drawing.Size, System.Drawing">
+    <value>162, 120</value>
+  </data>
+  <data name="PMSuggestion.Text" xml:space="preserve">
+    <value>Suggestion Settings</value>
+  </data>
+  <data name="&gt;&gt;PMSuggestion.Name" xml:space="preserve">
+    <value>PMSuggestion</value>
+  </data>
+  <data name="&gt;&gt;PMSuggestion.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="SuggestionListBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="SuggestionListBox.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 7pt</value>
+  </data>
+  <data name="SuggestionListBox.ItemHeight" type="System.Int32, mscorlib">
+    <value>12</value>
+  </data>
+  <data name="SuggestionListBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>518, 3</value>
+  </data>
+  <data name="SuggestionListBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>219, 126</value>
+  </data>
+  <data name="SuggestionListBox.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
   </data>
   <data name="&gt;&gt;SuggestionListBox.Name" xml:space="preserve">
     <value>SuggestionListBox</value>
@@ -954,111 +1005,6 @@
   </data>
   <data name="&gt;&gt;SplitContainerListAndFields.ZOrder" xml:space="preserve">
     <value>2</value>
-  </data>
-  <data name="RichTextData.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="RichTextData.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
-  </data>
-  <data name="RichTextData.Size" type="System.Drawing.Size, System.Drawing">
-    <value>509, 126</value>
-  </data>
-  <data name="RichTextData.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="RichTextData.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;RichTextData.Name" xml:space="preserve">
-    <value>RichTextData</value>
-  </data>
-  <data name="&gt;&gt;RichTextData.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RichTextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;RichTextData.Parent" xml:space="preserve">
-    <value>LayoutRawAndSuggested</value>
-  </data>
-  <data name="&gt;&gt;RichTextData.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <metadata name="PMSuggestion.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>736, 17</value>
-  </metadata>
-  <data name="PMSuggestion.Size" type="System.Drawing.Size, System.Drawing">
-    <value>162, 120</value>
-  </data>
-  <data name="PMSuggestion.Text" xml:space="preserve">
-    <value>Suggestion Settings</value>
-  </data>
-  <data name="&gt;&gt;PMSuggestion.Name" xml:space="preserve">
-    <value>PMSuggestion</value>
-  </data>
-  <data name="&gt;&gt;PMSuggestion.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="SuggestionListBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="SuggestionListBox.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Segoe UI, 7pt</value>
-  </data>
-  <data name="SuggestionListBox.ItemHeight" type="System.Int32, mscorlib">
-    <value>12</value>
-  </data>
-  <data name="SuggestionListBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>518, 3</value>
-  </data>
-  <data name="SuggestionListBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>219, 126</value>
-  </data>
-  <data name="SuggestionListBox.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;SuggestionListBox.Name" xml:space="preserve">
-    <value>SuggestionListBox</value>
-  </data>
-  <data name="&gt;&gt;SuggestionListBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ListBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;SuggestionListBox.Parent" xml:space="preserve">
-    <value>LayoutRawAndSuggested</value>
-  </data>
-  <data name="&gt;&gt;SuggestionListBox.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="PMSuggestIntergers.Size" type="System.Drawing.Size, System.Drawing">
-    <value>161, 22</value>
-  </data>
-  <data name="PMSuggestIntergers.Text" xml:space="preserve">
-    <value>Integers</value>
-  </data>
-  <data name="PMSuggestFloats.Size" type="System.Drawing.Size, System.Drawing">
-    <value>161, 22</value>
-  </data>
-  <data name="PMSuggestFloats.Text" xml:space="preserve">
-    <value>Floating points</value>
-  </data>
-  <data name="PMSuggestDateTime.Size" type="System.Drawing.Size, System.Drawing">
-    <value>161, 22</value>
-  </data>
-  <data name="PMSuggestDateTime.Text" xml:space="preserve">
-    <value>DateTime</value>
-  </data>
-  <data name="PMSuggestN1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>158, 6</value>
-  </data>
-  <data name="PMSuggestLookup.Size" type="System.Drawing.Size, System.Drawing">
-    <value>161, 22</value>
-  </data>
-  <data name="PMSuggestLookup.Text" xml:space="preserve">
-    <value>Lookup lists</value>
-  </data>
-  <data name="PMSuggestCustomLookup.Size" type="System.Drawing.Size, System.Drawing">
-    <value>161, 22</value>
-  </data>
-  <data name="PMSuggestCustomLookup.Text" xml:space="preserve">
-    <value>Custom lookups</value>
   </data>
   <metadata name="SaveProjectFileDialog.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>568, 17</value>
@@ -1197,6 +1143,12 @@
   </data>
   <data name="&gt;&gt;toolStripMenuItem4.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MMFileImportFromClipboard.Name" xml:space="preserve">
+    <value>MMFileImportFromClipboard</value>
+  </data>
+  <data name="&gt;&gt;MMFileImportFromClipboard.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;MMFileImportVpx.Name" xml:space="preserve">
     <value>MMFileImportVpx</value>
@@ -1593,12 +1545,6 @@
   </data>
   <data name="&gt;&gt;ImportParsedDataFileDialog.Type" xml:space="preserve">
     <value>System.Windows.Forms.OpenFileDialog, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;MMFileImportFromClipboard.Name" xml:space="preserve">
-    <value>MMFileImportFromClipboard</value>
-  </data>
-  <data name="&gt;&gt;MMFileImportFromClipboard.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>MainForm</value>
