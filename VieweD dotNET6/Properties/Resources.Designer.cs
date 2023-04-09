@@ -409,6 +409,34 @@ namespace VieweD.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Download.
+        /// </summary>
+        internal static string Download {
+            get {
+                return ResourceManager.GetString("Download", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download error.
+        /// </summary>
+        internal static string DownloadErrorTitle {
+            get {
+                return ResourceManager.GetString("DownloadErrorTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error downloading file !
+        ///{0}.
+        /// </summary>
+        internal static string DownloadFileError {
+            get {
+                return ResourceManager.GetString("DownloadFileError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap edit_copy_16 {
@@ -659,6 +687,16 @@ namespace VieweD.Properties {
         internal static string FailedToSaveRulesFile {
             get {
                 return ResourceManager.GetString("FailedToSaveRulesFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Target file already exists, do you want to override it?
+        ///{0}.
+        /// </summary>
+        internal static string FileExistsOverrideQuestion {
+            get {
+                return ResourceManager.GetString("FileExistsOverrideQuestion", resourceCulture);
             }
         }
         
@@ -1432,6 +1470,15 @@ namespace VieweD.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to VideoLink updated to use: {0}.
+        /// </summary>
+        internal static string VideoLinkUpdatedAfterDownload {
+            get {
+                return ResourceManager.GetString("VideoLinkUpdatedAfterDownload", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap view_close_16 {
@@ -1497,6 +1544,15 @@ namespace VieweD.Properties {
             get {
                 object obj = ResourceManager.GetObject("wireshark_x48", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This videos has no streams.
+        /// </summary>
+        internal static string YouTubeErrorNoStreams {
+            get {
+                return ResourceManager.GetString("YouTubeErrorNoStreams", resourceCulture);
             }
         }
     }

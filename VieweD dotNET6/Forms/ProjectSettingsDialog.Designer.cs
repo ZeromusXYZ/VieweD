@@ -396,9 +396,7 @@ namespace VieweD.Forms
         private TextBox TextProjectFile;
         private GroupBox GbInput;
         private Label label2;
-        private TextBox TextVideoFile;
         private Label label1;
-        private TextBox TextLogFile;
         private Label label3;
         private Label label6;
         private ComboBox CbInputReader;
@@ -432,5 +430,7 @@ namespace VieweD.Forms
         public TextBox TextDescription;
         private Button BtnDownloadSource;
         private Button BtnDownloadVideo;
+        public TextBox TextVideoFile;
+        public TextBox TextLogFile;
     }
 }

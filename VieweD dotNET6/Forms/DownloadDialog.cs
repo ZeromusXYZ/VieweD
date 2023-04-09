@@ -1,37 +1,42 @@
 ﻿using CG.Web.MegaApiClient;
-using LibVLCSharp.Shared;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Diagnostics.Eventing.Reader;
-using System.Drawing;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Text;
+using System.Runtime.InteropServices;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using VieweD.Helpers.System;
+using VieweD.Properties;
 using YoutubeExplode.Videos.Streams;
-using WebClient = System.Net.WebClient;
 
 namespace VieweD.Forms
 {
     public partial class DownloadDialog : Form
     {
         public static DownloadDialog? Instance { get; private set; }
-        private static CookieAwareWebClient? _webClient = null;
+        private static HttpClient? _webClient;
+        private static readonly CancellationToken CancellationToken = new();
 
-        public static CookieAwareWebClient WebClientInstance
+        public static HttpClient WebClientInstance
         {
             get
             {
                 if (_webClient == null)
                 {
-                    _webClient = new CookieAwareWebClient();
-                    _webClient.DownloadProgressChanged += WebClientOnDownloadProgressChanged;
+                    _webClient = new HttpClient();
+                    _webClient.DefaultRequestHeaders.Add("User-Agent", @"Mozilla/5.0 (Windows NT 10; Win64; x64; rv:56.0) Gecko/20100101 Firefox/56.0");
+                    _webClient.DefaultRequestHeaders.Add("Cache-Control", "no-cache");
+                    _webClient.DefaultRequestHeaders.Add("Accept-Encoding", "gzip, deflate");
+                    // Keep true if you download resources from different collections of URLs each time
+                    // Remove or set to false if you use the same URLs multiple times and frequently
+                    _webClient.DefaultRequestHeaders.ConnectionClose = true;
+                    // _webClient.DownloadProgressChanged += WebClientOnDownloadProgressChanged;
                 }
                 return _webClient;
             }
@@ -39,6 +44,8 @@ namespace VieweD.Forms
 
         private string _url = string.Empty;
         private string _targetFile = string.Empty;
+
+        public string TargetFile => _targetFile;
 
         public void SetDownloadJob(string url, string targetFile, string? dialogTitle)
         {
@@ -58,11 +65,8 @@ namespace VieweD.Forms
 
         private void BtnCancel_Click(object sender, EventArgs e)
         {
-            if (WebClientInstance != null)
-            {
-                BtnCancel.Enabled = false;
-                WebClientInstance.CancelAsync();
-            }
+            BtnCancel.Enabled = false;
+            WebClientInstance.CancelPendingRequests();
         }
 
         private void DownloadDialog_Load(object sender, EventArgs e)
@@ -75,8 +79,8 @@ namespace VieweD.Forms
         {
             if (File.Exists(_targetFile))
             {
-                if (MessageBox.Show($"Target file already exists, do you want to override it?\r\n{_targetFile}",
-                        "Download", MessageBoxButtons.YesNo) != DialogResult.Yes)
+                if (MessageBox.Show(string.Format(Resources.FileExistsOverrideQuestion, _targetFile),
+                        Resources.Download, MessageBoxButtons.YesNo) != DialogResult.Yes)
                     return DialogResult.Abort;
             }
 
@@ -85,21 +89,30 @@ namespace VieweD.Forms
 
         private void OnProgress(int pos, int max)
         {
-            this.Invoke(new MethodInvoker(delegate
+            try
             {
-                if (pos > 0)
+                this.Invoke(new MethodInvoker(delegate
                 {
-                    DownloadProgress.Style = ProgressBarStyle.Blocks;
-                }
-                else
-                {
-                    DownloadProgress.Style = ProgressBarStyle.Marquee;
-                }
+                    if (pos > 0)
+                    {
+                        DownloadProgress.Style = ProgressBarStyle.Blocks;
+                    }
+                    else
+                    {
+                        DownloadProgress.Style = ProgressBarStyle.Marquee;
+                    }
 
-                DownloadProgress.Minimum = 0;
-                DownloadProgress.Maximum = max;
-                DownloadProgress.Value = pos;
-            }));
+                    DownloadProgress.Minimum = 0;
+                    if (max < DownloadProgress.Value)
+                        DownloadProgress.Value = max;
+                    DownloadProgress.Maximum = max;
+                    DownloadProgress.Value = Math.Clamp(pos, 0, max);
+                }));
+            }
+            catch
+            {
+                // Ignore
+            }
         }
 
         private void bgw_DoWork(object sender, DoWorkEventArgs e)
@@ -107,6 +120,7 @@ namespace VieweD.Forms
             OnProgress(0, 100);
 
             var downloadedTempFile = DownloadFileFromUrl(_url, _targetFile);
+            /*
             if (!string.IsNullOrEmpty(downloadedTempFile))
             {
                 var dlExt = Path.GetExtension(downloadedTempFile).ToLower();
@@ -119,10 +133,35 @@ namespace VieweD.Forms
                     File.Move(oldFileName, _targetFile);
                 }
             }
+            */
 
-            if (!File.Exists(_targetFile))
+            var error = false;
+
+            if (string.IsNullOrWhiteSpace(downloadedTempFile) || !File.Exists(downloadedTempFile))
             {
-                MessageBox.Show($"Error downloading file !\r\n{_targetFile}", @"Download error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                error = true;
+            }
+            else if (File.Exists(downloadedTempFile))
+            {
+                var fi = new FileInfo(downloadedTempFile);
+                if (fi.Length <= 0)
+                {
+                    error = true;
+                    File.Delete(downloadedTempFile);
+                }
+            }
+            else
+            {
+                error = true;
+            }
+
+            if (error)
+            {
+                MessageBox.Show(string.Format(Resources.DownloadFileError, downloadedTempFile), Resources.DownloadErrorTitle,  MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                _targetFile = downloadedTempFile;
             }
         }
 
@@ -138,9 +177,9 @@ namespace VieweD.Forms
             OnProgress(e.ProgressPercentage, 100);
         }
 
-        public DownloadUrlType GuessUrlType(string URL)
+        public DownloadUrlType GuessUrlType(string url)
         {
-            var u = URL.ToLower();
+            var u = url.ToLower();
             if (u.StartsWith("http://") || u.StartsWith("https://"))
             {
                 var res = DownloadUrlType.Unknown;
@@ -162,48 +201,50 @@ namespace VieweD.Forms
             }
         }
 
-        public string DownloadFileFromUrl(string URL, string SuggestedFileName)
+        public string DownloadFileFromUrl(string url, string suggestedFileName)
         {
             var res = string.Empty;
-            var URLType = GuessUrlType(URL);
+            var urlType = GuessUrlType(url);
             try
             {
-                switch (URLType)
+                switch (urlType)
                 {
                     case DownloadUrlType.YouTube:
                         // Begin the download process
-                        res = SuggestedFileName;
-                        var y = DownloadFromYoutubeAsync(URL, res);
+                        if (DownloadFromYoutubeAsync(url, suggestedFileName).Result)
+                            res = suggestedFileName;
                         break;
                     case DownloadUrlType.MEGA:
-                        res = SuggestedFileName;
-                        var m = DownloadFromMegaAsync(URL, res);
-                        res = m.Result;
+                        res = DownloadFromMegaAsync(url, suggestedFileName).Result;
                         break;
                     case DownloadUrlType.GoogleDrive:
                         OnProgress(0, 100);
-                        var fi = WebFileDownloader.DownloadFileFromUrlToPath(URL, SuggestedFileName);
+                        var fi = WebFileDownloader.DownloadFileFromUrlToPath(url, suggestedFileName);
                         if ((fi != null) && (fi.Name != string.Empty))
                         {
-                            var downloadFile = WebFileDownloader.GetFileNameFromContentDisposition(WebFileDownloader.LastContentDisposition);
+                            var downloadFile = WebFileDownloader.LastContentDisposition; // .GetFileNameFromContentDisposition(WebFileDownloader.LastContentDisposition);
                             if (!string.IsNullOrWhiteSpace(downloadFile))
                             {
                                 var dlExt = Path.GetExtension(downloadFile).ToLower();
-                                if (dlExt != Path.GetExtension(SuggestedFileName).ToLower())
+                                if (dlExt != Path.GetExtension(suggestedFileName).ToLower())
                                 {
-                                    var oldFileName = SuggestedFileName;
-                                    SuggestedFileName = Path.ChangeExtension(SuggestedFileName, dlExt);
-                                    if (File.Exists(SuggestedFileName))
-                                        File.Delete(SuggestedFileName);
-                                    File.Move(oldFileName, SuggestedFileName);
+                                    var oldFileName = suggestedFileName;
+                                    suggestedFileName = Path.ChangeExtension(suggestedFileName, dlExt);
+                                    if (File.Exists(suggestedFileName))
+                                        File.Delete(suggestedFileName);
+                                    File.Move(oldFileName, suggestedFileName);
+                                    res = suggestedFileName;
+                                    break;
                                 }
                             }
+                            res = fi.FullName;
                         }
 
                         break;
                     default:
-                        WebFileDownloader.DownloadFileFromUrlToPath(URL, SuggestedFileName);
-                        res = SuggestedFileName;
+                        var fid = WebFileDownloader.DownloadFileFromUrlToPath(url, suggestedFileName);
+                        if (fid != null)
+                            res = fid.FullName;
                         break;
                 }
             }
@@ -214,20 +255,20 @@ namespace VieweD.Forms
             return res;
         }
 
-        public async Task<bool> DownloadFromYoutubeAsync(string URL, string fileName)
+        public async Task<bool> DownloadFromYoutubeAsync(string url, string fileName)
         {
             bool res = false;
             try
             {
                 var youtube = new YoutubeExplode.YoutubeClient();
-                var streamManifest = await youtube.Videos.Streams.GetManifestAsync(URL);
+                var streamManifest = await youtube.Videos.Streams.GetManifestAsync(url);
                 // Get media streams & choose the best muxed stream
                 var streamInfo = streamManifest.GetMuxedStreams().TryGetWithHighestVideoQuality();
 
                 if (streamInfo == null)
                 {
                     // Console.Error.WriteLine("This videos has no streams");
-                    MessageBox.Show(@"This videos has no streams", "Download YouTube Error");
+                    MessageBox.Show(Resources.YouTubeErrorNoStreams, Resources.DownloadErrorTitle);
                     res = false;
                 }
                 else
@@ -241,23 +282,23 @@ namespace VieweD.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Download YouTube Exception");
+                MessageBox.Show(ex.Message, Resources.DownloadErrorTitle);
             }
             return res;
         }
 
-        public async Task<string> DownloadFromMegaAsync(string URL, string fileName)
+        public async Task<string> DownloadFromMegaAsync(string url, string fileName)
         {
             string res;
             var destDir = Path.GetDirectoryName(fileName);
-            if (destDir == null)
-                destDir = "";
+            destDir ??= "";
+
             try
             {
                 var client = new MegaApiClient();
                 await client.LoginAnonymousAsync();
 
-                Uri fileLink = new Uri(URL);
+                Uri fileLink = new Uri(url);
                 var node = client.GetNodeFromLinkAsync(fileLink).Result;
                 res = Path.Combine(destDir, node.Name);
                 //Console.WriteLine($"Downloading {node.Name} => {res}");
@@ -289,7 +330,7 @@ namespace VieweD.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Download MEGA Exception");
+                MessageBox.Show(ex.Message, Resources.DownloadErrorTitle);
                 res = string.Empty;
             }
             return res;
@@ -302,21 +343,40 @@ namespace VieweD.Forms
 
         public static class WebFileDownloader
         {
-            private const string GOOGLE_DRIVE_DOMAIN = "drive.google.com";
-            private const string GOOGLE_DRIVE_DOMAIN2 = "https://drive.google.com";
+            private const string GoogleDriveDomain = "drive.google.com";
+            private const string GoogleDriveDomain2 = "https://drive.google.com";
             public static string LastContentDisposition = string.Empty;
 
             // Normal example: WebFileDownloader.DownloadFileFromUrlToPath( "http://example.com/file/download/link", @"C:\file.txt" );
             // Drive example: WebFileDownloader.DownloadFileFromUrlToPath( "http://drive.google.com/file/d/FILEID/view?usp=sharing", @"C:\file.txt" );
             public static FileInfo? DownloadFileFromUrlToPath(string url, string path, bool skipTypeCheck = false)
             {
-                if ((skipTypeCheck == false) && (url.StartsWith(GOOGLE_DRIVE_DOMAIN) || url.StartsWith(GOOGLE_DRIVE_DOMAIN2)))
+                if ((skipTypeCheck == false) && (url.StartsWith(GoogleDriveDomain) || url.StartsWith(GoogleDriveDomain2)))
                     return DownloadGoogleDriveFileFromUrlToPath(url, path);
 
                 try
                 {
-                    WebClientInstance.DownloadFile(url, path);
-                    LastContentDisposition = WebClientInstance.ResponseHeaders?.Get("content-disposition") ?? "";
+                    var progress = new InlineProgress();
+
+                    // Create a file stream to store the downloaded data.
+                    // This really can be any type of writeable stream.
+                    using (var fileStream = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.None))
+                    {
+                        // Use the custom extension method below to download the data.
+                        // The passed progress-instance will receive the download status updates.
+                        var response = WebClientInstance.DownloadAsync(url, fileStream, progress, CancellationToken).Result;
+                        LastContentDisposition = response?.Content.Headers.ContentDisposition?.FileName?.Trim('"') ?? "";
+                    }
+                    /*
+                    using(var response = WebClientInstance.GetAsync(url).Result)
+                    {
+                        using (var fileStream = File.Open(path, FileMode.Create))
+                        {
+                            response.Content.ReadAsStream().CopyTo(fileStream);
+                        }
+                        LastContentDisposition = response.Headers.GetValues("content-disposition").FirstOrDefault() ?? "";
+                    }
+                    */
                     return new FileInfo(path);
                 }
                 catch
@@ -367,14 +427,14 @@ namespace VieweD.Forms
                         content = reader.ReadToEnd();
                     }
 
-                    int linkIndex = content.LastIndexOf("href=\"/uc?");
+                    var linkIndex = content.LastIndexOf("href=\"/uc?", StringComparison.InvariantCulture);
                     if (linkIndex < 0)
                     {
                         return downloadedFile;
                     }
 
                     linkIndex += 6;
-                    int linkEnd = content.IndexOf('"', linkIndex);
+                    var linkEnd = content.IndexOf('"', linkIndex);
                     if (linkEnd < 0)
                     {
                         return downloadedFile;
@@ -394,7 +454,7 @@ namespace VieweD.Forms
             // - drive.google.com/uc?id=FILEID&export=download
             public static string GetGoogleDriveDownloadLinkFromUrl(string url)
             {
-                int index = url.IndexOf("id=");
+                int index = url.IndexOf("id=", StringComparison.InvariantCulture);
                 int closingIndex;
                 if (index > 0)
                 {
@@ -405,7 +465,7 @@ namespace VieweD.Forms
                 }
                 else
                 {
-                    index = url.IndexOf("file/d/");
+                    index = url.IndexOf("file/d/", StringComparison.InvariantCulture);
                     if (index < 0) // url is not in any of the supported forms
                         return string.Empty;
 
@@ -420,7 +480,7 @@ namespace VieweD.Forms
                     }
                 }
 
-                return string.Format("https://drive.google.com/uc?id={0}&export=download", url.Substring(index, closingIndex - index));
+                return $"https://drive.google.com/uc?id={url.Substring(index, closingIndex - index)}&export=download";
             }
 
             public static string GetFileNameFromContentDisposition(string cd)
@@ -443,97 +503,11 @@ namespace VieweD.Forms
             }
         }
 
-        // Web client used for Google Drive
-        public class CookieAwareWebClient : WebClient
-        {
-            private class CookieContainer
-            {
-                Dictionary<string, string> _cookies;
-
-                public string this[Uri url]
-                {
-                    get
-                    {
-                        if (_cookies.TryGetValue(url.Host, out var cookie))
-                            return cookie;
-
-                        return string.Empty;
-                    }
-                    set
-                    {
-                        _cookies[url.Host] = value;
-                    }
-                }
-
-                public CookieContainer()
-                {
-                    _cookies = new Dictionary<string, string>();
-                }
-            }
-
-            private CookieContainer cookies;
-
-            public CookieAwareWebClient() : base()
-            {
-                cookies = new CookieContainer();
-            }
-
-            protected override WebRequest GetWebRequest(Uri address)
-            {
-                var request = base.GetWebRequest(address);
-
-                if (request is HttpWebRequest httpRequest)
-                {
-                    var cookie = cookies[address];
-                    if (!string.IsNullOrWhiteSpace(cookie))
-                        httpRequest.Headers.Set("cookie", cookie);
-                }
-
-                return request;
-            }
-
-            protected override WebResponse GetWebResponse(WebRequest request, IAsyncResult result)
-            {
-                var response = base.GetWebResponse(request, result);
-
-                var getCookies = response.Headers.GetValues("Set-Cookie") ?? Array.Empty<string>();
-                if (getCookies.Length <= 0) 
-                    return response;
-
-                var cookie = string.Empty;
-                foreach (var c in getCookies)
-                    cookie += c;
-
-                cookies[response.ResponseUri] = cookie;
-
-                return response;
-            }
-
-            protected override WebResponse GetWebResponse(WebRequest request)
-            {
-                var response = base.GetWebResponse(request);
-
-                var getCookies = response.Headers.GetValues("Set-Cookie") ?? Array.Empty<string>();
-                if (getCookies.Length > 0)
-                {
-                    var cookie = string.Empty;
-                    foreach (var c in getCookies)
-                        cookie += c;
-
-                    cookies[response.ResponseUri] = cookie;
-                }
-
-                return response;
-            }
-        }
-
         internal class InlineProgress : IProgress<double>, IDisposable
         {
-            public DownloadDialog? DownloadForm { get; set; }
-
             public InlineProgress()
             {
-                DownloadForm?.OnProgress(0, 1);
+                DownloadDialog.Instance?.OnProgress(0, 1);
             }
 
             public void Report(double progress)
@@ -541,25 +515,112 @@ namespace VieweD.Forms
                 var newVal = (int)Math.Round(progress * 10000f);
                 // Console.WriteLine($"{progress}%");
 
-                if (LoadingForm.Instance?.InvokeRequired ?? false)
+                if (DownloadDialog.Instance?.InvokeRequired ?? false)
                 {
-                    LoadingForm.Instance?.Invoke(new MethodInvoker(delegate
+                    DownloadDialog.Instance.Invoke(new MethodInvoker(delegate
                     {
-                        DownloadForm?.OnProgress(newVal, 10000);
+                        DownloadDialog.Instance?.OnProgress(newVal, 10000);
                     }));
                 }
                 else
                 {
-                    DownloadForm?.OnProgress(newVal, 10000);
+                    DownloadDialog.Instance?.OnProgress(newVal, 10000);
                 }
             }
 
             public void Dispose()
             {
-                DownloadForm?.OnProgress(10000, 10000);
+                DownloadDialog.Instance?.OnProgress(10000, 10000);
             }
         }
     }
 
+    public static class HttpClientExtensions
+    {
+        // source: https://stackoverflow.com/questions/20661652/progress-bar-with-httpclient
 
+        public static async Task<HttpResponseMessage?> DownloadAsync(this HttpClient client, string requestUri,
+            Stream destination, IProgress<double>? progress = null, CancellationToken cancellationToken = default)
+        {
+            // Get the http headers first to examine the content length
+            var response = await client.GetAsync(requestUri, HttpCompletionOption.ResponseHeadersRead, cancellationToken);
+
+            var contentLength = response.Content.Headers.ContentLength ?? 0;
+
+            using (var download = await response.Content.ReadAsStreamAsync(cancellationToken))
+            {
+                // Ignore progress reporting when no progress reporter was 
+                // passed or when the content length is unknown
+                if (progress == null || contentLength <= 0)
+                {
+                    await download.CopyToAsync(destination, cancellationToken);
+                    return null;
+                }
+
+                // Convert absolute progress (bytes downloaded) into relative progress (0% - 100%)
+                // var relativeProgress = new Progress<long>(totalBytes => progress.Report((double)totalBytes / contentLength));
+                // Use extension method to report progress while downloading
+                // await download.CopyToAsync(destination, 81920, relativeProgress, cancellationToken);
+                await download.CopyToAsync2(destination, 81920, progress, contentLength, cancellationToken);
+                progress.Report(1);
+            }
+
+            return response;
+        }
+    }
+
+    public static class StreamExtensions
+    {
+        public static async Task CopyToAsync(this Stream source, Stream destination, int bufferSize, IProgress<long>? progress = null, CancellationToken cancellationToken = default)
+        {
+            if (source == null)
+                throw new ArgumentNullException(nameof(source));
+            if (!source.CanRead)
+                throw new ArgumentException("Has to be readable", nameof(source));
+            if (destination == null)
+                throw new ArgumentNullException(nameof(destination));
+            if (!destination.CanWrite)
+                throw new ArgumentException("Has to be writable", nameof(destination));
+            if (bufferSize < 0)
+                throw new ArgumentOutOfRangeException(nameof(bufferSize));
+
+            var buffer = new byte[bufferSize];
+            long totalBytesRead = 0;
+            int bytesRead;
+            while ((bytesRead = await source.ReadAsync(buffer, 0, buffer.Length, cancellationToken).ConfigureAwait(false)) != 0)
+            {
+                await destination.WriteAsync(buffer, 0, bytesRead, cancellationToken).ConfigureAwait(false);
+                totalBytesRead += bytesRead;
+                progress?.Report(totalBytesRead);
+            }
+        }
+
+        public static async Task CopyToAsync2(this Stream source, Stream destination, int bufferSize, IProgress<double>? progress = null, long? expectedFileSize = null, CancellationToken cancellationToken = default)
+        {
+            if (source == null)
+                throw new ArgumentNullException(nameof(source));
+            if (!source.CanRead)
+                throw new ArgumentException("Has to be readable", nameof(source));
+            if (destination == null)
+                throw new ArgumentNullException(nameof(destination));
+            if (!destination.CanWrite)
+                throw new ArgumentException("Has to be writable", nameof(destination));
+            if (bufferSize < 0)
+                throw new ArgumentOutOfRangeException(nameof(bufferSize));
+
+            var buffer = new byte[bufferSize];
+            long totalBytesRead = 0;
+            int bytesRead;
+            while ((bytesRead = await source.ReadAsync(buffer, 0, buffer.Length, cancellationToken).ConfigureAwait(false)) != 0)
+            {
+                await destination.WriteAsync(buffer, 0, bytesRead, cancellationToken).ConfigureAwait(false);
+                totalBytesRead += bytesRead;
+                if ((expectedFileSize != null) && (expectedFileSize > 0))
+                {
+                    progress?.Report(((double)totalBytesRead / (double)expectedFileSize));
+                    progress?.Report(totalBytesRead);
+                }
+            }
+        }
+    }
 }

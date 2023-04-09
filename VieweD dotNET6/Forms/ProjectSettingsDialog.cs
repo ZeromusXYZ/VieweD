@@ -6,6 +6,7 @@ using System.Linq;
 using System.Windows.Forms;
 using VieweD.engine.common;
 using VieweD.Helpers.System;
+using VieweD.Properties;
 
 namespace VieweD.Forms
 {
@@ -346,21 +347,15 @@ namespace VieweD.Forms
                 const string title = "Download video";
 
                 using var downloadDialog = new DownloadDialog();
-                downloadDialog.SetDownloadJob(TextProjectURL.Text, targetVideoFileName, title);
+                downloadDialog.SetDownloadJob(TextVideoURL.Text, targetVideoFileName, title);
                 if (downloadDialog.BeginDownload() != DialogResult.OK)
-                    MessageBox.Show($"Error during video download!\r\n{targetVideoFileName}", title, MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-                /*
-                var targetFile = Helper.DownloadFileFromURL(TextVideoURL.Text, fName);
-                if (!string.IsNullOrEmpty(targetFile) && File.Exists(targetFile))
+                    MessageBox.Show(string.Format(Resources.DownloadFileError,targetVideoFileName), title, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                else
                 {
-                    this.Invoke(new MethodInvoker(delegate
-                    {
-                        TextVideoFile.Text = targetFile;
-                    }));
-                    MessageBox.Show($"VideoLinkFileName updated to: {targetFile}");
+                    TextVideoFile.Text = downloadDialog.TargetFile;
+                    MessageBox.Show(string.Format(Resources.VideoLinkUpdatedAfterDownload, downloadDialog.TargetFile));
+                    // ParentProject!.Settings.VideoSettings.VideoFile = downloadDialog.TargetFile;
                 }
-                */
             }
         }
 
@@ -377,12 +372,17 @@ namespace VieweD.Forms
             downloadDialog.SetDownloadJob(TextProjectURL.Text, archiveFileName, title);
             if (downloadDialog.BeginDownload() != DialogResult.OK)
             {
-                MessageBox.Show($"Error during file download!\r\n{archiveFileName}", title, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(string.Format(Resources.DownloadFileError, archiveFileName), title, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
+            }
+            else
+            {
+                archiveFileName = downloadDialog.TargetFile;
+                // TextProjectArchiveFile.Text = downloadDialog.TargetFile;
             }
 
             if (!File.Exists(archiveFileName))
-                MessageBox.Show($"Error downloading file !\r\n{archiveFileName}", title, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(string.Format(Resources.DownloadFileError, archiveFileName), title, MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 }

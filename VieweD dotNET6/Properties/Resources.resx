@@ -598,4 +598,27 @@ Difference = {2}</value>
   <data name="im_youtube_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\kde-icons\im-youtube-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="FileExistsOverrideQuestion" xml:space="preserve">
+    <value>Target file already exists, do you want to override it?
+{0}</value>
+    <comment>0: filename</comment>
+  </data>
+  <data name="Download" xml:space="preserve">
+    <value>Download</value>
+  </data>
+  <data name="DownloadErrorTitle" xml:space="preserve">
+    <value>Download error</value>
+  </data>
+  <data name="DownloadFileError" xml:space="preserve">
+    <value>Error downloading file !
+{0}</value>
+    <comment>0: filename</comment>
+  </data>
+  <data name="YouTubeErrorNoStreams" xml:space="preserve">
+    <value>This videos has no streams</value>
+  </data>
+  <data name="VideoLinkUpdatedAfterDownload" xml:space="preserve">
+    <value>VideoLink updated to use: {0}</value>
+    <comment>0: new filename</comment>
+  </data>
 </root>

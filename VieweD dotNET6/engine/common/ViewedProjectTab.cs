@@ -1049,6 +1049,7 @@ public class ViewedProjectTab : TabPage
         {
             Settings.Tags = settings.GetTagsList();
             Settings.VideoSettings.VideoUrl = settings.TextVideoURL.Text;
+            Settings.VideoSettings.VideoFile = settings.TextVideoFile.Text;
             Settings.ProjectUrl = settings.TextProjectURL.Text;
             Settings.Description = settings.TextDescription.Text;
             var newRulesFile = (settings.CbRules.SelectedValue as string);

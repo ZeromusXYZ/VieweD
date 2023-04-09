@@ -1,4 +1,6 @@
-﻿namespace VieweD.Forms
+﻿using VieweD.Properties;
+
+namespace VieweD.Forms
 {
     partial class DownloadDialog
     {
@@ -114,7 +116,7 @@
             FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             Name = "DownloadDialog";
             StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            Text = "Download";
+            Text = Resources.Download;
             Load += DownloadDialog_Load;
             ResumeLayout(false);
             PerformLayout();
