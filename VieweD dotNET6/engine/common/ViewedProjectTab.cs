@@ -1462,15 +1462,18 @@ public class ViewedProjectTab : TabPage
         xmlDoc.AppendChild(vpxNode);
         // port mappings
         var portNode = XmlHelper.CreateNewXmlElementNode(vpxNode, "ports");
-        foreach (var mapping in PortToStreamIdMapping)
+        if (portNode != null)
         {
-            var streamNode = XmlHelper.CreateNewXmlElementNode(portNode, "stream");
-            if (streamNode == null)
-                break; // Error
-            XmlHelper.SetAttribute(streamNode, "port", mapping.Key.ToString());
-            XmlHelper.SetAttribute(streamNode, "id", mapping.Value.Item1.ToString());
-            XmlHelper.SetAttribute(streamNode, "name", mapping.Value.Item2);
-            XmlHelper.SetAttribute(streamNode, "short", mapping.Value.Item3);
+            foreach (var mapping in PortToStreamIdMapping)
+            {
+                var streamNode = XmlHelper.CreateNewXmlElementNode(portNode, "stream");
+                if (streamNode == null)
+                    break; // Error
+                XmlHelper.SetAttribute(streamNode, "port", mapping.Key.ToString());
+                XmlHelper.SetAttribute(streamNode, "id", mapping.Value.Item1.ToString());
+                XmlHelper.SetAttribute(streamNode, "name", mapping.Value.Item2);
+                XmlHelper.SetAttribute(streamNode, "short", mapping.Value.Item3);
+            }
         }
 
         // packet data
@@ -1483,7 +1486,7 @@ public class ViewedProjectTab : TabPage
         foreach (var basePacketData in packets)
         {
             // var packetNode = xmlDoc.CreateNode(XmlNodeType.Element, "packetdata", null);
-            var packetNode = XmlHelper.CreateNewXmlElementNode(listNode, "pd"); // packet data
+            var packetNode = XmlHelper.CreateNewXmlElementNode(listNode!, "pd"); // packet data
             if (packetNode == null)
                 break; // Error
 
@@ -1639,7 +1642,7 @@ public class ViewedProjectTab : TabPage
             xml.LoadXml(data);
             return ImportFromVpxXml(xml);
         }
-        catch (Exception e)
+        catch
         {
             return false;
         }

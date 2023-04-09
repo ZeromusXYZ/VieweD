@@ -63,6 +63,8 @@ namespace VieweD.Forms
             BtnCopySummary = new Button();
             CBIncludePacketIds = new CheckBox();
             GBOnlineFiles = new GroupBox();
+            BtnDownloadSource = new Button();
+            BtnDownloadVideo = new Button();
             TextVideoURL = new TextBox();
             label9 = new Label();
             TextProjectURL = new TextBox();
@@ -302,12 +304,30 @@ namespace VieweD.Forms
             // GBOnlineFiles
             // 
             resources.ApplyResources(GBOnlineFiles, "GBOnlineFiles");
+            GBOnlineFiles.Controls.Add(BtnDownloadSource);
+            GBOnlineFiles.Controls.Add(BtnDownloadVideo);
             GBOnlineFiles.Controls.Add(TextVideoURL);
             GBOnlineFiles.Controls.Add(label9);
             GBOnlineFiles.Controls.Add(TextProjectURL);
             GBOnlineFiles.Controls.Add(label7);
             GBOnlineFiles.Name = "GBOnlineFiles";
             GBOnlineFiles.TabStop = false;
+            // 
+            // BtnDownloadSource
+            // 
+            resources.ApplyResources(BtnDownloadSource, "BtnDownloadSource");
+            BtnDownloadSource.Image = Properties.Resources.edit_download_16;
+            BtnDownloadSource.Name = "BtnDownloadSource";
+            BtnDownloadSource.UseVisualStyleBackColor = true;
+            BtnDownloadSource.Click += BtnDownloadSource_Click;
+            // 
+            // BtnDownloadVideo
+            // 
+            resources.ApplyResources(BtnDownloadVideo, "BtnDownloadVideo");
+            BtnDownloadVideo.Image = Properties.Resources.edit_download_16;
+            BtnDownloadVideo.Name = "BtnDownloadVideo";
+            BtnDownloadVideo.UseVisualStyleBackColor = true;
+            BtnDownloadVideo.Click += BtnDownloadVideo_Click;
             // 
             // TextVideoURL
             // 
@@ -410,5 +430,7 @@ namespace VieweD.Forms
         public TextBox TextProjectURL;
         private GroupBox GBDescription;
         public TextBox TextDescription;
+        private Button BtnDownloadSource;
+        private Button BtnDownloadVideo;
     }
 }

@@ -589,4 +589,13 @@ Difference = {2}</value>
   <data name="view_filter_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\kde-icons\view-filter-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="gnumeric_link_url_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\kde-icons\gnumeric-link-url-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="im_youtube_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\kde-icons\im-youtube-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="im_youtube_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\kde-icons\im-youtube-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

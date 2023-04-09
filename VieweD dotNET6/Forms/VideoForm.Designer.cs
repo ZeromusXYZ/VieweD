@@ -38,6 +38,7 @@ namespace VieweD.Forms
             VideoViewPort = new LibVLCSharp.WinForms.VideoView();
             BtnPlay = new Button();
             PanelControls = new Panel();
+            BtnOpenVideoURI = new Button();
             BtnMute = new Button();
             BtnSeekEnd = new Button();
             BtnSeekStart = new Button();
@@ -62,6 +63,7 @@ namespace VieweD.Forms
             PMN2 = new ToolStripSeparator();
             PMSync = new ToolStripMenuItem();
             OpenVideoFileDialog = new OpenFileDialog();
+            MarqueeTimer = new Timer(components);
             ((System.ComponentModel.ISupportInitialize)VideoViewPort).BeginInit();
             PanelControls.SuspendLayout();
             PopupMenuVideo.SuspendLayout();
@@ -69,7 +71,7 @@ namespace VieweD.Forms
             // 
             // BtnOpenVideoFile
             // 
-            BtnOpenVideoFile.Image = Properties.Resources.media_eject_32;
+            BtnOpenVideoFile.Image = Resources.media_eject_32;
             BtnOpenVideoFile.Location = new Point(12, 20);
             BtnOpenVideoFile.Name = "BtnOpenVideoFile";
             BtnOpenVideoFile.Size = new Size(40, 40);
@@ -91,8 +93,9 @@ namespace VieweD.Forms
             // 
             // BtnPlay
             // 
-            BtnPlay.Image = Properties.Resources.media_playback_start_32;
-            BtnPlay.Location = new Point(236, 20);
+            BtnPlay.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            BtnPlay.Image = Resources.media_playback_start_32;
+            BtnPlay.Location = new Point(260, 20);
             BtnPlay.Name = "BtnPlay";
             BtnPlay.Size = new Size(40, 40);
             BtnPlay.TabIndex = 4;
@@ -101,6 +104,7 @@ namespace VieweD.Forms
             // 
             // PanelControls
             // 
+            PanelControls.Controls.Add(BtnOpenVideoURI);
             PanelControls.Controls.Add(BtnMute);
             PanelControls.Controls.Add(BtnSeekEnd);
             PanelControls.Controls.Add(BtnSeekStart);
@@ -117,9 +121,21 @@ namespace VieweD.Forms
             PanelControls.Size = new Size(524, 70);
             PanelControls.TabIndex = 3;
             // 
+            // BtnOpenVideoURI
+            // 
+            BtnOpenVideoURI.Image = Resources.im_youtube_32;
+            BtnOpenVideoURI.Location = new Point(58, 20);
+            BtnOpenVideoURI.Name = "BtnOpenVideoURI";
+            BtnOpenVideoURI.Size = new Size(40, 40);
+            BtnOpenVideoURI.TabIndex = 21;
+            BtnOpenVideoURI.UseVisualStyleBackColor = true;
+            BtnOpenVideoURI.Visible = false;
+            BtnOpenVideoURI.Click += BtnOpenVideoURI_Click;
+            // 
             // BtnMute
             // 
-            BtnMute.Image = Properties.Resources.audio_volume_muted_32;
+            BtnMute.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            BtnMute.Image = Resources.audio_volume_muted_32;
             BtnMute.Location = new Point(466, 20);
             BtnMute.Name = "BtnMute";
             BtnMute.Size = new Size(40, 40);
@@ -129,8 +145,9 @@ namespace VieweD.Forms
             // 
             // BtnSeekEnd
             // 
-            BtnSeekEnd.Image = Properties.Resources.media_skip_forward_32;
-            BtnSeekEnd.Location = new Point(374, 20);
+            BtnSeekEnd.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            BtnSeekEnd.Image = Resources.media_skip_forward_32;
+            BtnSeekEnd.Location = new Point(398, 20);
             BtnSeekEnd.Name = "BtnSeekEnd";
             BtnSeekEnd.Size = new Size(40, 40);
             BtnSeekEnd.TabIndex = 7;
@@ -139,8 +156,8 @@ namespace VieweD.Forms
             // 
             // BtnSeekStart
             // 
-            BtnSeekStart.Image = Properties.Resources.media_skip_backward_32;
-            BtnSeekStart.Location = new Point(144, 20);
+            BtnSeekStart.Image = Resources.media_skip_backward_32;
+            BtnSeekStart.Location = new Point(168, 20);
             BtnSeekStart.Name = "BtnSeekStart";
             BtnSeekStart.Size = new Size(40, 40);
             BtnSeekStart.TabIndex = 2;
@@ -149,8 +166,9 @@ namespace VieweD.Forms
             // 
             // BtnFastForward
             // 
-            BtnFastForward.Image = Properties.Resources.media_seek_forward_32;
-            BtnFastForward.Location = new Point(328, 20);
+            BtnFastForward.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            BtnFastForward.Image = Resources.media_seek_forward_32;
+            BtnFastForward.Location = new Point(352, 20);
             BtnFastForward.Name = "BtnFastForward";
             BtnFastForward.Size = new Size(40, 40);
             BtnFastForward.TabIndex = 6;
@@ -159,8 +177,8 @@ namespace VieweD.Forms
             // 
             // BtnRewind
             // 
-            BtnRewind.Image = Properties.Resources.media_seek_backward_32;
-            BtnRewind.Location = new Point(190, 20);
+            BtnRewind.Image = Resources.media_seek_backward_32;
+            BtnRewind.Location = new Point(214, 20);
             BtnRewind.Name = "BtnRewind";
             BtnRewind.Size = new Size(40, 40);
             BtnRewind.TabIndex = 3;
@@ -169,8 +187,8 @@ namespace VieweD.Forms
             // 
             // BtnStop
             // 
-            BtnStop.Image = Properties.Resources.media_playback_stop_32;
-            BtnStop.Location = new Point(58, 20);
+            BtnStop.Image = Resources.media_playback_stop_32;
+            BtnStop.Location = new Point(113, 20);
             BtnStop.Name = "BtnStop";
             BtnStop.Size = new Size(40, 40);
             BtnStop.TabIndex = 1;
@@ -179,8 +197,9 @@ namespace VieweD.Forms
             // 
             // BtnPause
             // 
-            BtnPause.Image = Properties.Resources.media_playback_pause_32;
-            BtnPause.Location = new Point(282, 20);
+            BtnPause.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            BtnPause.Image = Resources.media_playback_pause_32;
+            BtnPause.Location = new Point(306, 20);
             BtnPause.Name = "BtnPause";
             BtnPause.Size = new Size(40, 40);
             BtnPause.TabIndex = 5;
@@ -311,6 +330,11 @@ namespace VieweD.Forms
             OpenVideoFileDialog.Filter = "All files|*.*";
             OpenVideoFileDialog.Title = "Open video file";
             // 
+            // MarqueeTimer
+            // 
+            MarqueeTimer.Interval = 15;
+            MarqueeTimer.Tick += MarqueeTimer_Tick;
+            // 
             // VideoForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -327,6 +351,7 @@ namespace VieweD.Forms
             Deactivate += VideoForm_Deactivate;
             FormClosing += VideoForm_FormClosing;
             FormClosed += VideoForm_FormClosed;
+            Load += VideoForm_Load;
             ((System.ComponentModel.ISupportInitialize)VideoViewPort).EndInit();
             PanelControls.ResumeLayout(false);
             PopupMenuVideo.ResumeLayout(false);
@@ -363,5 +388,7 @@ namespace VieweD.Forms
         private ToolStripMenuItem PMKeepOnTop;
         private ToolStripSeparator PMN2;
         private ToolStripMenuItem PMSync;
+        private Button BtnOpenVideoURI;
+        private Timer MarqueeTimer;
     }
 }

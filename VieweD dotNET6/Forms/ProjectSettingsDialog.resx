@@ -814,6 +814,57 @@
   <data name="GBOnlineFiles.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
   </data>
+  <data name="BtnDownloadSource.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="BtnDownloadSource.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="BtnDownloadSource.Location" type="System.Drawing.Point, System.Drawing">
+    <value>665, 36</value>
+  </data>
+  <data name="BtnDownloadSource.Size" type="System.Drawing.Size, System.Drawing">
+    <value>33, 23</value>
+  </data>
+  <data name="BtnDownloadSource.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;BtnDownloadSource.Name" xml:space="preserve">
+    <value>BtnDownloadSource</value>
+  </data>
+  <data name="&gt;&gt;BtnDownloadSource.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;BtnDownloadSource.Parent" xml:space="preserve">
+    <value>GBOnlineFiles</value>
+  </data>
+  <data name="&gt;&gt;BtnDownloadSource.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="BtnDownloadVideo.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="BtnDownloadVideo.Location" type="System.Drawing.Point, System.Drawing">
+    <value>665, 90</value>
+  </data>
+  <data name="BtnDownloadVideo.Size" type="System.Drawing.Size, System.Drawing">
+    <value>33, 23</value>
+  </data>
+  <data name="BtnDownloadVideo.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;BtnDownloadVideo.Name" xml:space="preserve">
+    <value>BtnDownloadVideo</value>
+  </data>
+  <data name="&gt;&gt;BtnDownloadVideo.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;BtnDownloadVideo.Parent" xml:space="preserve">
+    <value>GBOnlineFiles</value>
+  </data>
+  <data name="&gt;&gt;BtnDownloadVideo.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
   <data name="TextVideoURL.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
   </data>
@@ -821,7 +872,7 @@
     <value>16, 91</value>
   </data>
   <data name="TextVideoURL.Size" type="System.Drawing.Size, System.Drawing">
-    <value>682, 23</value>
+    <value>643, 23</value>
   </data>
   <data name="TextVideoURL.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -836,7 +887,7 @@
     <value>GBOnlineFiles</value>
   </data>
   <data name="&gt;&gt;TextVideoURL.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>2</value>
   </data>
   <data name="label9.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -866,7 +917,7 @@
     <value>GBOnlineFiles</value>
   </data>
   <data name="&gt;&gt;label9.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>3</value>
   </data>
   <data name="TextProjectURL.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -875,7 +926,7 @@
     <value>16, 37</value>
   </data>
   <data name="TextProjectURL.Size" type="System.Drawing.Size, System.Drawing">
-    <value>682, 23</value>
+    <value>643, 23</value>
   </data>
   <data name="TextProjectURL.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -890,7 +941,7 @@
     <value>GBOnlineFiles</value>
   </data>
   <data name="&gt;&gt;TextProjectURL.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>4</value>
   </data>
   <data name="label7.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -917,7 +968,7 @@
     <value>GBOnlineFiles</value>
   </data>
   <data name="&gt;&gt;label7.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>5</value>
   </data>
   <data name="GBOnlineFiles.Location" type="System.Drawing.Point, System.Drawing">
     <value>5, 71</value>

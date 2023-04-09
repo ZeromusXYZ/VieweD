@@ -227,7 +227,7 @@ namespace VieweD.Forms
                 foreach (var dir in Enum.GetValues<PacketDataDirection>())
                 {
                     var packetsUsed = ParentProject?.GetAllUsedPacketsByDirection(dir);
-                    if (packetsUsed == null) 
+                    if (packetsUsed == null)
                         continue;
 
                     //var packets = string.Empty;
@@ -322,6 +322,67 @@ namespace VieweD.Forms
             Properties.Settings.Default.CopySummaryPacketNames = CBIncludePacketNames.Checked;
             Properties.Settings.Default.CopySummaryNoAutoLoad = CBHideUrlPreviews.Checked;
             Properties.Settings.Default.Save();
+        }
+
+        private void BtnDownloadVideo_Click(object sender, EventArgs e)
+        {
+            if (TextVideoURL.Text != string.Empty)
+            {
+                var targetVideoFileName = TextVideoFile.Text;
+
+                if (targetVideoFileName == string.Empty)
+                    targetVideoFileName = Path.ChangeExtension(Path.GetFileName(ParentProject?.ProjectFile ?? "video"), ".mp4");
+
+                if (Path.GetDirectoryName(targetVideoFileName) == string.Empty)
+                    targetVideoFileName = Path.Combine(ParentProject?.ProjectFolder ?? "", targetVideoFileName);
+
+
+                if (File.Exists(targetVideoFileName))
+                {
+                    MessageBox.Show(@"Already found a valid local video for this project, no download required.", @"No download needed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                const string title = "Download video";
+
+                using var downloadDialog = new DownloadDialog();
+                downloadDialog.SetDownloadJob(TextProjectURL.Text, targetVideoFileName, title);
+                if (downloadDialog.BeginDownload() != DialogResult.OK)
+                    MessageBox.Show($"Error during video download!\r\n{targetVideoFileName}", title, MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                /*
+                var targetFile = Helper.DownloadFileFromURL(TextVideoURL.Text, fName);
+                if (!string.IsNullOrEmpty(targetFile) && File.Exists(targetFile))
+                {
+                    this.Invoke(new MethodInvoker(delegate
+                    {
+                        TextVideoFile.Text = targetFile;
+                    }));
+                    MessageBox.Show($"VideoLinkFileName updated to: {targetFile}");
+                }
+                */
+            }
+        }
+
+        private void BtnDownloadSource_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(TextProjectURL.Text))
+                return;
+
+            const string title = "Download project source";
+
+            var archiveFileName = Path.ChangeExtension(ParentProject?.ProjectFile ?? "project", ".zip");
+
+            using var downloadDialog = new DownloadDialog();
+            downloadDialog.SetDownloadJob(TextProjectURL.Text, archiveFileName, title);
+            if (downloadDialog.BeginDownload() != DialogResult.OK)
+            {
+                MessageBox.Show($"Error during file download!\r\n{archiveFileName}", title, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (!File.Exists(archiveFileName))
+                MessageBox.Show($"Error downloading file !\r\n{archiveFileName}", title, MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 }

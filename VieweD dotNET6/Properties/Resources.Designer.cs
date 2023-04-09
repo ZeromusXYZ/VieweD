@@ -701,6 +701,36 @@ namespace VieweD.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap gnumeric_link_url_16 {
+            get {
+                object obj = ResourceManager.GetObject("gnumeric_link_url_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap im_youtube_16 {
+            get {
+                object obj = ResourceManager.GetObject("im_youtube_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap im_youtube_32 {
+            get {
+                object obj = ResourceManager.GetObject("im_youtube_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Input reader error.
         /// </summary>
         internal static string InputReaderError {

@@ -4,12 +4,17 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Forms;
+using CG.Web.MegaApiClient;
+using VieweD.Forms;
+using YoutubeExplode.Videos.Streams;
 using WebClient = System.Net.WebClient;
 
 namespace VieweD.Helpers.System
 {
-    public enum DownloadURLType
+    public enum DownloadUrlType
     {
         Invalid,
         Unknown,
@@ -222,27 +227,27 @@ namespace VieweD.Helpers.System
             return res;
         }
 
-        public static DownloadURLType GuessUrlType(string URL)
+        public static DownloadUrlType GuessUrlType(string URL)
         {
             var u = URL.ToLower();
             if (u.StartsWith("http://") || u.StartsWith("https://"))
             {
-                var res = DownloadURLType.Unknown;
+                var res = DownloadUrlType.Unknown;
 
                 if (u.Contains(".youtube.com/") || u.Contains("youtu.be/") || u.Contains(".googlevideo.com/"))
-                    res = DownloadURLType.YouTube;
+                    res = DownloadUrlType.YouTube;
                 else
                 if (u.Contains("drive.google.com/"))
-                    res = DownloadURLType.GoogleDrive;
+                    res = DownloadUrlType.GoogleDrive;
                 else
                 if (u.Contains("mega.nz/"))
-                    res = DownloadURLType.MEGA;
+                    res = DownloadUrlType.MEGA;
 
                 return res;
             }
             else
             {
-                return DownloadURLType.Invalid;
+                return DownloadUrlType.Invalid;
             }
         }
 

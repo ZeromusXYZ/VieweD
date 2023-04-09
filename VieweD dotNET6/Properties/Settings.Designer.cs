@@ -826,5 +826,17 @@ namespace VieweD.Properties {
                 this["CopySummaryNoAutoLoad"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool VideoFormOnTop {
+            get {
+                return ((bool)(this["VideoFormOnTop"]));
+            }
+            set {
+                this["VideoFormOnTop"] = value;
+            }
+        }
     }
 }

@@ -1,10 +1,18 @@
 ﻿using System;
 using System.Globalization;
 using System.IO;
+using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using LibVLCSharp.Shared;
 using VieweD.engine.common;
+using VieweD.Helpers.System;
 using VieweD.Properties;
+using YoutubeExplode;
+using YoutubeExplode.Videos;
+using YoutubeExplode.Videos.Streams;
+
 
 namespace VieweD.Forms
 {
@@ -37,7 +45,58 @@ namespace VieweD.Forms
                 }
 
                 var media = new Media(LibVlc, filePath);
-                //var media = new Media(LibVlc, new Uri("http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"));
+
+                MPlayer.Play(media);
+                MPlayer.SetPause(true);
+                MPlayer.Position = 0.0f;
+                //MPlayer.NextFrame();
+                media.Dispose();
+                PMFollowPackets.Enabled = (ParentProject != null);
+                PMSync.Enabled = PMFollowPackets.Enabled;
+
+                return true;
+            }
+            catch
+            {
+                // Ignore
+            }
+            PMFollowPackets.Enabled = false;
+            PMSync.Enabled = false;
+
+            return false;
+        }
+
+        public async Task<bool> OpenVideoUri(string videoUri)
+        {
+            try
+            {
+                if (LibVlc == null)
+                    LibVlc = new LibVLC(enableDebugLogs: true);
+                if (MPlayer == null)
+                {
+                    MPlayer = new MediaPlayer(LibVlc);
+                    MPlayer.PositionChanged += OnMediaPlayerPositionChanged;
+                    MPlayer.EnableHardwareDecoding = true;
+                    MPlayer.EnableKeyInput = false;
+                    MPlayer.EnableMouseInput = false;
+                    VideoViewPort.MediaPlayer = MPlayer;
+                }
+
+                var videoId = VideoId.Parse(videoUri);
+
+                var youtube = new YoutubeClient();
+
+                // You can specify either the video URL or its ID
+                // TODO: This currently just hangs for me, no idea why it's stalling
+                var video = await youtube.Videos.GetAsync("http://www.youtube.com/watch?v=" + videoId.Value);
+                /*
+                var title = video.Title;
+                var author = video.Author.ChannelTitle;
+                var duration = video.Duration;
+                */
+
+                // var media = new Media(LibVlc, new Uri("http://www.youtube.com/watch?v=" + videoId.Value));
+                var media = new Media(LibVlc, new Uri(video.Url));
                 MPlayer.Play(media);
                 MPlayer.SetPause(true);
                 MPlayer.Position = 0.0f;
@@ -94,7 +153,7 @@ namespace VieweD.Forms
 
             var posMs = totalLength * pos;
             var span = TimeSpan.FromMilliseconds(posMs);
-            return Math.Floor(span.TotalMinutes) + ":" + span.Seconds.ToString("00");// + "\nTime";
+            return Math.Floor(span.TotalMinutes) + ":" + span.Seconds.ToString("00") + "." + span.Milliseconds.ToString("000");// + "\nTime";
         }
 
         private void SetProgressBar(int pos, int max)
@@ -131,6 +190,15 @@ namespace VieweD.Forms
                 MethodInvokerDelegate();
         }
 
+        private void UpdateVideoMarquee(string s)
+        {
+            MPlayer?.SetMarqueeInt(VideoMarqueeOption.Color, 0xEEEE44);
+            MPlayer?.SetMarqueeInt(VideoMarqueeOption.Opacity, 192);
+            MPlayer?.SetMarqueeInt(VideoMarqueeOption.Enable, 1);
+            MPlayer?.SetMarqueeInt(VideoMarqueeOption.Position, 6); // Top-Right
+            MPlayer?.SetMarqueeString(VideoMarqueeOption.Text, s);
+        }
+
         private void OnMediaPlayerPositionChanged(object? sender, MediaPlayerPositionChangedEventArgs e)
         {
             if (MPlayer != null)
@@ -145,9 +213,7 @@ namespace VieweD.Forms
                     SetProgressBar(0, 100);
                 }
 
-                MPlayer?.SetMarqueeInt(VideoMarqueeOption.Enable, 1);
-                MPlayer?.SetMarqueeInt(VideoMarqueeOption.Position, 6);
-                MPlayer?.SetMarqueeString(VideoMarqueeOption.Text, VideoPositionToString(e.Position));
+                UpdateVideoMarquee(VideoPositionToString(e.Position));
 
                 if (PMFollowPackets.Checked)
                     UpdateProjectPositionFromVideo(pos);
@@ -206,6 +272,8 @@ namespace VieweD.Forms
                     MPlayer?.NextFrame();
                 else
                     MPlayerSeekTo(TimeSpan.FromMilliseconds((MPlayer.Position * MPlayer.Length) + delta));
+
+                UpdateVideoMarquee(VideoPositionToString(MPlayer?.Position ?? 0f));
             }
         }
 
@@ -215,6 +283,7 @@ namespace VieweD.Forms
             var delta = (ModifierKeys & Keys.Shift) != 0 ? -1000.0 : -20000.0;
             if ((MPlayer?.IsSeekable ?? false) && (MPlayer.Length > 0))
                 MPlayerSeekTo(TimeSpan.FromMilliseconds((MPlayer.Position * MPlayer.Length) + delta));
+            UpdateVideoMarquee(VideoPositionToString(MPlayer?.Position ?? 0f));
         }
 
         private void BtnSeekStart_Click(object sender, EventArgs e)
@@ -333,6 +402,8 @@ namespace VieweD.Forms
         {
             PMKeepOnTop.Checked = !PMKeepOnTop.Checked;
             TopMost = PMKeepOnTop.Checked;
+            Settings.Default.VideoFormOnTop = TopMost;
+            Settings.Default.Save();
         }
 
         private void PMSync_Click(object sender, EventArgs e)
@@ -361,13 +432,48 @@ namespace VieweD.Forms
 
             if (MessageBox.Show(
                     string.Format(Resources.UpdateToNewVideoOffset, newOffset, ParentProject.Settings.VideoSettings.VideoOffset, delta),
-                    Resources.SyncWithProjectTitle, 
-                    MessageBoxButtons.YesNo, 
+                    Resources.SyncWithProjectTitle,
+                    MessageBoxButtons.YesNo,
                     MessageBoxIcon.Question) != DialogResult.Yes)
                 return;
 
             ParentProject.Settings.VideoSettings.VideoOffset = newOffset;
             ParentProject.IsDirty = true;
+        }
+
+        private void BtnOpenVideoURI_Click(object sender, EventArgs e)
+        {
+            var newUri = InputBoxDialog.InputTextBox(ParentProject?.Settings.VideoSettings.VideoUrl ?? "", "Open URI",
+                "Video URI");
+
+            if (string.IsNullOrWhiteSpace(newUri))
+                return;
+
+            if (OpenVideoUri(newUri).Result)
+            {
+                if (ParentProject != null)
+                {
+                    ParentProject.Settings.VideoSettings.VideoUrl = newUri;
+                    ParentProject.IsDirty = true;
+                }
+                BtnPause.Focus();
+            }
+            else
+            {
+                MessageBox.Show("Failed to load video from:\n" + newUri, "Playback Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+        }
+
+        private void VideoForm_Load(object sender, EventArgs e)
+        {
+            PMKeepOnTop.Checked = Settings.Default.VideoFormOnTop;
+            TopMost = PMKeepOnTop.Checked;
+        }
+
+        private void MarqueeTimer_Tick(object sender, EventArgs e)
+        {
+            if ((MPlayer != null) && (MPlayer.Length > 0))
+                UpdateVideoMarquee(VideoPositionToString(MPlayer.Position));
         }
     }
 }

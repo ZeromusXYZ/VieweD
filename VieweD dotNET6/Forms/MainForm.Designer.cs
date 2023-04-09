@@ -216,8 +216,8 @@ namespace VieweD.Forms
             // MMProject
             // 
             MMProject.DropDownItems.AddRange(new ToolStripItem[] { MMProjectSave, toolStripMenuItem1, MMProjectCopySelectedPackets, toolStripMenuItem3, MMProjectGameData, MMProjectVideo, MMProjectN1, MMProjectSettings, MMProjectPack, MMProjectN2, MMProjectClose });
-            resources.ApplyResources(MMProject, "MMProject");
             MMProject.Name = "MMProject";
+            resources.ApplyResources(MMProject, "MMProject");
             MMProject.DropDownOpening += MMProject_DropDownOpening;
             // 
             // MMProjectSave
