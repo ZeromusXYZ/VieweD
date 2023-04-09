@@ -174,7 +174,7 @@ namespace VieweD.Forms
 
         private void bgw_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            OnProgress(e.ProgressPercentage, 100);
+            // OnProgress(e.ProgressPercentage, 100);
         }
 
         public DownloadUrlType GuessUrlType(string url)
@@ -189,6 +189,9 @@ namespace VieweD.Forms
                 else
                 if (u.Contains("drive.google.com/"))
                     res = DownloadUrlType.GoogleDrive;
+                else
+                if (u.Contains("dropbox.com"))
+                    res = DownloadUrlType.DropBox;
                 else
                 if (u.Contains("mega.nz/"))
                     res = DownloadUrlType.MEGA;
@@ -207,6 +210,14 @@ namespace VieweD.Forms
             var urlType = GuessUrlType(url);
             try
             {
+                if (urlType == DownloadUrlType.DropBox)
+                {
+                    // For dropbox to download as a normal file, it's enough to put dl=1 as option
+                    var tempUri = new UriBuilder(url);
+                    tempUri.Query = tempUri.Query.Replace("dl=0", "dl=1");
+                    url = tempUri.Uri.AbsoluteUri;
+                }
+
                 switch (urlType)
                 {
                     case DownloadUrlType.YouTube:
@@ -217,6 +228,7 @@ namespace VieweD.Forms
                     case DownloadUrlType.MEGA:
                         res = DownloadFromMegaAsync(url, suggestedFileName).Result;
                         break;
+                    case DownloadUrlType.DropBox:
                     case DownloadUrlType.GoogleDrive:
                         OnProgress(0, 100);
                         var fi = WebFileDownloader.DownloadFileFromUrlToPath(url, suggestedFileName);

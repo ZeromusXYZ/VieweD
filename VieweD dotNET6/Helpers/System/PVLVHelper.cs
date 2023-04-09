@@ -21,6 +21,7 @@ namespace VieweD.Helpers.System
         YouTube,
         GoogleDrive,
         MEGA,
+        DropBox
     }
 
     public static class Helper

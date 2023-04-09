@@ -5,9 +5,11 @@ using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Media;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using Microsoft.CodeAnalysis;
 using VieweD.engine.common;
@@ -127,14 +129,14 @@ namespace VieweD.Forms
         private void MMFileOpen_Click(object sender, EventArgs e)
         {
             if (OpenProjectFileDialog.ShowDialog() == DialogResult.OK)
-                OpenFile(OpenProjectFileDialog.FileName);
+                _ = OpenFile(OpenProjectFileDialog.FileName);
         }
 
         /// <summary>
         /// Tries to open a project file, if aFileName is a log file instead, it will create a new project instead with suggested input reader and parser
         /// </summary>
         /// <param name="aFileName"></param>
-        private void OpenFile(string aFileName)
+        private ViewedProjectTab? OpenFile(string aFileName)
         {
             var logFileName = aFileName;
             var rulesFileName = string.Empty;
@@ -187,7 +189,7 @@ namespace VieweD.Forms
                 {
                     MessageBox.Show(string.Format(Resources.UnableToOpenProject, expectedProjectFileName), Resources.ProjectReadingError, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     project.CloseProject(true);
-                    return;
+                    return null;
                 }
 
                 project.Settings = projectSetting;
@@ -236,7 +238,7 @@ namespace VieweD.Forms
             {
                 MessageBox.Show(Resources.UnableToFindInputReader, Resources.InputReaderError, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 project.CloseProject(true);
-                return;
+                return null;
             }
 
             // Load the lookup data after we know our reader (so we can name packets before parsing)
@@ -252,7 +254,7 @@ namespace VieweD.Forms
                 {
                     MessageBox.Show(Resources.UnableToFindParser, Resources.ParserError, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     project.CloseProject(true);
-                    return;
+                    return null;
                 }
 
                 project.InputParser.ParentProject = project;
@@ -264,7 +266,7 @@ namespace VieweD.Forms
                 {
                     MessageBox.Show(string.Format(Resources.MissingRulesFileForProject, OpenProjectFileDialog.FileName));
                     project.CloseProject(true);
-                    return;
+                    return null;
                 }
 
                 if (project.RequiresSubPacketCreation)
@@ -287,6 +289,8 @@ namespace VieweD.Forms
                 MessageBox.Show(string.Format(Resources.UnableToOpenFile, OpenProjectFileDialog.FileName));
                 project.CloseProject(true);
             }
+
+            return project;
         }
 
         private const string DepthSpacerVertical = "⁞";
@@ -1609,7 +1613,7 @@ namespace VieweD.Forms
                 if (c == 1)
                     continue;
                 if (File.Exists(arg))
-                    OpenFile(arg);
+                    _ = OpenFile(arg);
             }
         }
 
@@ -1794,6 +1798,284 @@ namespace VieweD.Forms
             MMProjectGameData.Enabled = project.DataLookup.LookupLists.Count > 0;
             MMProjectSettings.Enabled = (project.InputParser != null) && (project.InputReader != null);
             MMProjectPack.Enabled = Directory.Exists(project.ProjectFolder);
+        }
+
+        private void ImportFromCommunityPost(string sourceText)
+        {
+            // url, full line, expected type (0 = unknown, 1=packets, 2=video)
+            List<(string, string, byte)> urlLines = new();
+
+            sourceText = sourceText.Replace("\r", "");
+            var lines = sourceText.Split("\n");
+            var projectArchiveUrl = string.Empty;
+            var projectVideoUrl = string.Empty;
+            var projectTitle = string.Empty;
+            foreach (var line in lines)
+            {
+                var urls = Regex.Matches(line, @"((http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])?)");
+                if (urls.Count <= 0)
+                {
+                    if (string.IsNullOrWhiteSpace(projectTitle))
+                        projectTitle = line;
+                    continue;
+                }
+
+                var url = string.Empty;
+                foreach (Match match in urls)
+                {
+                    url = match.Value;
+                }
+
+                byte lineType = 0;
+                if (line.Contains("video", StringComparison.InvariantCultureIgnoreCase))
+                    lineType = 2;
+                if (line.Contains("packet", StringComparison.InvariantCultureIgnoreCase))
+                    lineType = 1;
+                if (line.Contains("logs", StringComparison.InvariantCultureIgnoreCase))
+                    lineType = 1;
+
+                if (url.Contains("youtu.be", StringComparison.InvariantCultureIgnoreCase))
+                    lineType = 2;
+                if (url.Contains("youtube", StringComparison.InvariantCultureIgnoreCase))
+                    lineType = 2;
+
+                urlLines.Add((url, line, lineType));
+            }
+
+            // First grab from already guessed data
+            foreach (var urlLine in urlLines)
+            {
+                if (urlLine.Item3 == 1)
+                    projectArchiveUrl = urlLine.Item1;
+                if (urlLine.Item3 == 2)
+                    projectVideoUrl = urlLine.Item1;
+            }
+
+            // Next go over all remaining urls, to try and fill the gaps
+            foreach (var urlLine in urlLines)
+            {
+                if (urlLine.Item3 != 0)
+                    continue; // If already guessed, skip
+
+                if (string.IsNullOrWhiteSpace(projectVideoUrl) && (urlLines.Count > 1))
+                {
+                    projectVideoUrl = urlLine.Item1;
+                    continue;
+                }
+                if (string.IsNullOrWhiteSpace(projectArchiveUrl))
+                {
+                    projectArchiveUrl = urlLine.Item1;
+                    continue;
+                }
+
+                if (!string.IsNullOrWhiteSpace(projectArchiveUrl) && !string.IsNullOrWhiteSpace(projectVideoUrl))
+                    break;
+            }
+
+            if (string.IsNullOrWhiteSpace(projectArchiveUrl))
+            {
+                MessageBox.Show("No archive url found on the clipboard");
+                return;
+            }
+
+            var res = MessageBox.Show($"Import from community post using the following settings?\n\n" +
+                                      $"Title:\n{projectTitle}\n\n" +
+                                      $"Archive:\n{projectArchiveUrl}\n\n" +
+                                      $"Video:\n{projectVideoUrl}", "Import from community post", MessageBoxButtons.YesNo);
+
+            if (res != DialogResult.Yes)
+                return;
+
+            var suggestedProjectName = Regex.Replace(projectTitle, @"[^a-zA-Z0-9-]", "_");
+            if (suggestedProjectName.Length > 64)
+                suggestedProjectName = suggestedProjectName[..64];
+
+            ExportSaveFileDialog.FileName = suggestedProjectName + ".pvd";
+            if (ExportSaveFileDialog.ShowDialog() != DialogResult.OK)
+                return;
+            var projectFile = ExportSaveFileDialog.FileName;
+            var projectArchive = Path.ChangeExtension(projectFile, ".zip");
+            var projectVideo = Path.ChangeExtension(projectFile, ".mp4");
+            var projectFolder = Path.GetDirectoryName(projectFile) ?? "";
+
+            var checkFiles = Directory.GetFiles(projectFolder, "*.*", SearchOption.TopDirectoryOnly);
+            if (checkFiles.Length > 0)
+            {
+                if (MessageBox.Show($"Target directory already contains files, are you sure you want to continue?\n{projectFolder}", "Import from community post", MessageBoxButtons.YesNo) != DialogResult.Yes)
+                    return;
+            }
+
+            // MessageBox.Show($"Downloading to {projectFolder}");
+
+            // TODO: Download files
+            // Download archive (required)
+            using (var downloadDialog = new DownloadDialog())
+            {
+                downloadDialog.SetDownloadJob(projectArchiveUrl, projectArchive, "Download project archive");
+                if (downloadDialog.BeginDownload() != DialogResult.OK)
+                {
+                    MessageBox.Show(string.Format(Resources.DownloadFileError, projectArchive),
+                        "Download project archive",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                projectArchive = downloadDialog.TargetFile;
+            }
+
+            try
+            {
+                var stripBeginningPath = string.Empty;
+                var firstFile = true;
+                using (var archiveStream = File.Open(projectArchive, FileMode.Open))
+                {
+                    using (var archive = new ZipArchive(archiveStream))
+                    {
+                        foreach (var zipArchiveEntry in archive.Entries)
+                        {
+                            // Might seem weird, but for extracting directory simplification, we skip directories
+                            if (string.IsNullOrWhiteSpace(zipArchiveEntry.Name))
+                                continue;
+
+                            var aFolder = Path.GetDirectoryName(zipArchiveEntry.FullName) ?? "";
+                            aFolder = aFolder.Replace('\\', '/').Replace('/', Path.DirectorySeparatorChar);
+                            var aDirs = aFolder.Split(Path.DirectorySeparatorChar);
+
+                            if (firstFile)
+                            {
+                                stripBeginningPath = aFolder;
+                                firstFile = false;
+                            }
+
+                            stripBeginningPath = stripBeginningPath.Replace('\\', '/')
+                                .Replace('/', Path.DirectorySeparatorChar);
+                            var stripDirs = stripBeginningPath.Split(Path.DirectorySeparatorChar);
+
+                            var newStrip = string.Empty;
+                            for (var d = 0; (d < stripDirs.Length) && (d < aDirs.Length); d++)
+                            {
+                                if (stripDirs[d] == aDirs[d])
+                                    newStrip = Path.Combine(newStrip, aDirs[d]);
+                                else
+                                    break;
+                            }
+
+                            stripBeginningPath = newStrip;
+                        }
+
+                        foreach (var zipArchiveEntry in archive.Entries)
+                        {
+                            if (string.IsNullOrWhiteSpace(zipArchiveEntry.Name))
+                                continue;
+
+                            var targetFile = zipArchiveEntry.FullName;
+                            if ((stripBeginningPath.Length > 0) && targetFile.StartsWith(stripBeginningPath))
+                                targetFile = targetFile.Substring(stripBeginningPath.Length + 1);
+
+                            targetFile = Path.Combine(projectFolder, targetFile);
+                            var targetFileDir = Path.GetDirectoryName(targetFile) ?? "";
+
+                            if (!Directory.Exists(targetFileDir))
+                                Directory.CreateDirectory(targetFileDir);
+                            zipArchiveEntry.ExtractToFile(targetFile, true);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                if ((uint)ex.HResult == 0x80131501)
+                {
+                    // invalid zip file?
+                    MessageBox.Show($"It looks like the downloaded file is not a zip archive!\n\n{ex.Message}");
+                }
+                else
+                {
+                    MessageBox.Show($"Zip error trying to extract archive!\n\n{ex.Message}");
+                }
+                return;
+            }
+
+            // Download video if available
+            if (!string.IsNullOrWhiteSpace(projectVideoUrl))
+            {
+                using (var downloadDialog = new DownloadDialog())
+                {
+                    downloadDialog.SetDownloadJob(projectVideoUrl, projectVideo, "Download project video");
+                    if (downloadDialog.BeginDownload() != DialogResult.OK)
+                    {
+                        MessageBox.Show(string.Format(Resources.DownloadFileError, projectVideo),
+                            "Download project video",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    else
+                    {
+                        projectVideo = downloadDialog.TargetFile;
+                    }
+                }
+            }
+            
+            // TODO: Check if there is only one project file after extracting
+            // TODO: Is so, directly load that, else open the file open dialog starting in newly created directory
+            var readyProjects = Directory.GetFiles(projectFolder, "*.pvd", SearchOption.AllDirectories).ToList();
+            readyProjects.AddRange(Directory.GetFiles(projectFolder, "*.pvlv", SearchOption.AllDirectories));
+
+            ViewedProjectTab? newProject = null;
+            if (readyProjects.Count == 1)
+            {
+                newProject = OpenFile(readyProjects[0]);
+            }
+            else
+            {
+                // The warning text is different if there are multiple project files, but the effect is the same.
+                // You need to manually select a file to open
+                if (readyProjects.Count == 0)
+                {
+                    MessageBox.Show(
+                        "It looks like the archive didn't contain any project files, please select a new log data file manually to create a project from!",
+                        "Import from community", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    MessageBox.Show(
+                        "Not sure which file is your main project file, please select it manually!",
+                        "Import from community", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
+
+                OpenProjectFileDialog.InitialDirectory = projectFolder;
+                OpenProjectFileDialog.FileName = Path.GetFileName(projectFile);
+                if (OpenProjectFileDialog.ShowDialog() == DialogResult.OK)
+                    newProject = OpenFile(OpenProjectFileDialog.FileName);
+            }
+
+            // Update the project settings to reflect the actually downloaded data
+            if (newProject != null)
+            {
+                if (!string.IsNullOrWhiteSpace(projectArchiveUrl))
+                    newProject.Settings.ProjectUrl = projectArchiveUrl;
+
+                if (!string.IsNullOrWhiteSpace(projectVideoUrl))
+                    newProject.Settings.VideoSettings.VideoUrl = projectVideoUrl;
+
+                if (!string.IsNullOrWhiteSpace(projectVideo) && File.Exists(projectVideo))
+                    newProject.Settings.VideoSettings.VideoFile = projectVideo;
+
+                newProject.ProjectFile = projectFile;
+                newProject.Settings.Description = projectTitle;
+                newProject.OpenSettings();
+                newProject.SaveProjectSettingsFile(newProject.ProjectFile, newProject.ProjectFolder);
+                SaveProject(newProject, false);
+                UpdateStatusBar(newProject);
+            }
+        }
+
+        private void MMFileImportFromCommunity_Click(object sender, EventArgs e)
+        {
+            var clipText = Clipboard.GetText();
+            if (string.IsNullOrWhiteSpace(clipText))
+                return;
+
+            ImportFromCommunityPost(clipText);
         }
     }
 }

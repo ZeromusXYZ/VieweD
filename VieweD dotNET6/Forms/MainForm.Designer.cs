@@ -37,8 +37,10 @@ namespace VieweD.Forms
             MM = new MenuStrip();
             MMFile = new ToolStripMenuItem();
             MMFileOpen = new ToolStripMenuItem();
-            toolStripMenuItem4 = new ToolStripSeparator();
+            MMFileN3 = new ToolStripSeparator();
+            MMFileImportFromCommunity = new ToolStripMenuItem();
             MMFileImportFromClipboard = new ToolStripMenuItem();
+            MMFileN4 = new ToolStripSeparator();
             MMFileImportVpx = new ToolStripMenuItem();
             MMFileExportVpx = new ToolStripMenuItem();
             MMFileN1 = new ToolStripSeparator();
@@ -119,6 +121,7 @@ namespace VieweD.Forms
             SaveProjectFileDialog = new SaveFileDialog();
             ExportSaveFileDialog = new SaveFileDialog();
             ImportParsedDataFileDialog = new OpenFileDialog();
+            ImportFolderBrowserDialog = new FolderBrowserDialog();
             MM.SuspendLayout();
             StatusBar.SuspendLayout();
             TCProjects.SuspendLayout();
@@ -146,7 +149,7 @@ namespace VieweD.Forms
             // 
             // MMFile
             // 
-            MMFile.DropDownItems.AddRange(new ToolStripItem[] { MMFileOpen, toolStripMenuItem4, MMFileImportFromClipboard, MMFileImportVpx, MMFileExportVpx, MMFileN1, MMFileSettings, MMFileN2, MMFileExit });
+            MMFile.DropDownItems.AddRange(new ToolStripItem[] { MMFileOpen, MMFileN3, MMFileImportFromCommunity, MMFileImportFromClipboard, MMFileN4, MMFileImportVpx, MMFileExportVpx, MMFileN1, MMFileSettings, MMFileN2, MMFileExit });
             MMFile.Name = "MMFile";
             resources.ApplyResources(MMFile, "MMFile");
             // 
@@ -157,10 +160,17 @@ namespace VieweD.Forms
             resources.ApplyResources(MMFileOpen, "MMFileOpen");
             MMFileOpen.Click += MMFileOpen_Click;
             // 
-            // toolStripMenuItem4
+            // MMFileN3
             // 
-            toolStripMenuItem4.Name = "toolStripMenuItem4";
-            resources.ApplyResources(toolStripMenuItem4, "toolStripMenuItem4");
+            MMFileN3.Name = "MMFileN3";
+            resources.ApplyResources(MMFileN3, "MMFileN3");
+            // 
+            // MMFileImportFromCommunity
+            // 
+            MMFileImportFromCommunity.Image = Properties.Resources.edit_download_16;
+            MMFileImportFromCommunity.Name = "MMFileImportFromCommunity";
+            resources.ApplyResources(MMFileImportFromCommunity, "MMFileImportFromCommunity");
+            MMFileImportFromCommunity.Click += MMFileImportFromCommunity_Click;
             // 
             // MMFileImportFromClipboard
             // 
@@ -168,6 +178,11 @@ namespace VieweD.Forms
             MMFileImportFromClipboard.Name = "MMFileImportFromClipboard";
             resources.ApplyResources(MMFileImportFromClipboard, "MMFileImportFromClipboard");
             MMFileImportFromClipboard.Click += MMFileImportFromClipboard_Click;
+            // 
+            // MMFileN4
+            // 
+            MMFileN4.Name = "MMFileN4";
+            resources.ApplyResources(MMFileN4, "MMFileN4");
             // 
             // MMFileImportVpx
             // 
@@ -216,8 +231,8 @@ namespace VieweD.Forms
             // MMProject
             // 
             MMProject.DropDownItems.AddRange(new ToolStripItem[] { MMProjectSave, toolStripMenuItem1, MMProjectCopySelectedPackets, toolStripMenuItem3, MMProjectGameData, MMProjectVideo, MMProjectN1, MMProjectSettings, MMProjectPack, MMProjectN2, MMProjectClose });
-            MMProject.Name = "MMProject";
             resources.ApplyResources(MMProject, "MMProject");
+            MMProject.Name = "MMProject";
             MMProject.DropDownOpening += MMProject_DropDownOpening;
             // 
             // MMProjectSave
@@ -734,6 +749,11 @@ namespace VieweD.Forms
             ImportParsedDataFileDialog.DefaultExt = "vpx";
             resources.ApplyResources(ImportParsedDataFileDialog, "ImportParsedDataFileDialog");
             // 
+            // ImportFolderBrowserDialog
+            // 
+            resources.ApplyResources(ImportFolderBrowserDialog, "ImportFolderBrowserDialog");
+            ImportFolderBrowserDialog.RootFolder = System.Environment.SpecialFolder.MyComputer;
+            // 
             // MainForm
             // 
             resources.ApplyResources(this, "$this");
@@ -853,8 +873,11 @@ namespace VieweD.Forms
         private SaveFileDialog ExportSaveFileDialog;
         private ToolStripMenuItem MMFileImportVpx;
         private OpenFileDialog ImportParsedDataFileDialog;
-        private ToolStripSeparator toolStripMenuItem4;
+        private ToolStripSeparator MMFileN3;
         private ToolStripMenuItem MMFileExportVpx;
         private ToolStripMenuItem MMFileImportFromClipboard;
+        private ToolStripMenuItem MMFileImportFromCommunity;
+        private ToolStripSeparator MMFileN4;
+        private FolderBrowserDialog ImportFolderBrowserDialog;
     }
 }
