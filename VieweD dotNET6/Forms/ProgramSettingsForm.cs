@@ -41,6 +41,7 @@ namespace VieweD.Forms
             Settings.Default.RawViewFont = BtnRawViewFont.Font;
 
             Settings.Default.CreditsName = DefaultCreditsTextBox.Text;
+            Settings.Default.DefaultImportFolder = LabelDefaultImportFolder.Text == @"<none>" ? "" : LabelDefaultImportFolder.Text;
 
             /*
             foreach (var tab in TcSettings.TabPages)
@@ -128,6 +129,9 @@ namespace VieweD.Forms
             CbAskNewProject.Checked = Settings.Default.AskCreateNewProjectFile;
 
             DefaultCreditsTextBox.Text = Settings.Default.CreditsName;
+            LabelDefaultImportFolder.Text = Settings.Default.DefaultImportFolder == ""
+                ? @"<none>"
+                : Settings.Default.DefaultImportFolder;
 
             // Add Engine-specific Tab Pages
             if (pressedDefaultButton)
@@ -477,6 +481,12 @@ namespace VieweD.Forms
                 BtnRawViewFont.Text = BtnRawViewFont.Font.Name + @", " + BtnRawViewFont.Font.SizeInPoints + @"pt";
             }
 
+        }
+
+        private void BtnDefaultImportFolder_Click(object sender, EventArgs e)
+        {
+            if (DefaultFolderDialog.ShowDialog() == DialogResult.OK)
+                LabelDefaultImportFolder.Text = DefaultFolderDialog.SelectedPath;
         }
     }
 }

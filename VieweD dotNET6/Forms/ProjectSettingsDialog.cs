@@ -92,9 +92,9 @@ namespace VieweD.Forms
 
         private void ProjectSettingsDialog_Load(object sender, EventArgs e)
         {
-            CBIncludePacketIds.Checked = Properties.Settings.Default.CopySummaryPacketIDs;
-            CBIncludePacketNames.Checked = Properties.Settings.Default.CopySummaryPacketNames;
-            CBHideUrlPreviews.Checked = Properties.Settings.Default.CopySummaryNoAutoLoad;
+            CBIncludePacketIds.Checked = Settings.Default.CopySummaryPacketIDs;
+            CBIncludePacketNames.Checked = Settings.Default.CopySummaryPacketNames;
+            CBHideUrlPreviews.Checked = Settings.Default.CopySummaryNoAutoLoad;
         }
 
         private void ClearForm()
@@ -191,14 +191,6 @@ namespace VieweD.Forms
             var clipText = "";
             clipText += "**Name**: " + Path.GetFileNameWithoutExtension(TextProjectFile.Text) + "\n";
             clipText += "**Description**: " + TextDescription.Text + "\n";
-            // Download URL
-            if (!string.IsNullOrWhiteSpace(TextProjectURL.Text))
-            {
-                if (CBHideUrlPreviews.Checked)
-                    clipText += "> **Logs**: <" + TextProjectURL.Text + ">\n";
-                else
-                    clipText += "> **Logs**: " + TextProjectURL.Text + "\n";
-            }
 
             // Video URL
             if (!string.IsNullOrWhiteSpace(TextVideoURL.Text))
@@ -207,6 +199,15 @@ namespace VieweD.Forms
                     clipText += "> **Video**: <" + TextVideoURL.Text + ">\n";
                 else
                     clipText += "> **Video**: " + TextVideoURL.Text + "\n";
+            }
+
+            // Download URL
+            if (!string.IsNullOrWhiteSpace(TextProjectURL.Text))
+            {
+                if (CBHideUrlPreviews.Checked)
+                    clipText += "> **Logs**: <" + TextProjectURL.Text + ">\n";
+                else
+                    clipText += "> **Logs**: " + TextProjectURL.Text + "\n";
             }
 
             // Tags
@@ -319,10 +320,10 @@ namespace VieweD.Forms
 
         private void ProjectSettingsDialog_FormClosed(object sender, FormClosedEventArgs e)
         {
-            Properties.Settings.Default.CopySummaryPacketIDs = CBIncludePacketIds.Checked;
-            Properties.Settings.Default.CopySummaryPacketNames = CBIncludePacketNames.Checked;
-            Properties.Settings.Default.CopySummaryNoAutoLoad = CBHideUrlPreviews.Checked;
-            Properties.Settings.Default.Save();
+            Settings.Default.CopySummaryPacketIDs = CBIncludePacketIds.Checked;
+            Settings.Default.CopySummaryPacketNames = CBIncludePacketNames.Checked;
+            Settings.Default.CopySummaryNoAutoLoad = CBHideUrlPreviews.Checked;
+            Settings.Default.Save();
         }
 
         private void BtnDownloadVideo_Click(object sender, EventArgs e)

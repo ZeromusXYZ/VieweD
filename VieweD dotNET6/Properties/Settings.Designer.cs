@@ -838,5 +838,17 @@ namespace VieweD.Properties {
                 this["VideoFormOnTop"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string DefaultImportFolder {
+            get {
+                return ((string)(this["DefaultImportFolder"]));
+            }
+            set {
+                this["DefaultImportFolder"] = value;
+            }
+        }
     }
 }

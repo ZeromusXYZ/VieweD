@@ -38,6 +38,7 @@ namespace VieweD.Forms
             MMFile = new ToolStripMenuItem();
             MMFileOpen = new ToolStripMenuItem();
             MMFileN3 = new ToolStripSeparator();
+            MMFileImport = new ToolStripMenuItem();
             MMFileImportFromCommunity = new ToolStripMenuItem();
             MMFileImportFromClipboard = new ToolStripMenuItem();
             MMFileN4 = new ToolStripSeparator();
@@ -149,7 +150,7 @@ namespace VieweD.Forms
             // 
             // MMFile
             // 
-            MMFile.DropDownItems.AddRange(new ToolStripItem[] { MMFileOpen, MMFileN3, MMFileImportFromCommunity, MMFileImportFromClipboard, MMFileN4, MMFileImportVpx, MMFileExportVpx, MMFileN1, MMFileSettings, MMFileN2, MMFileExit });
+            MMFile.DropDownItems.AddRange(new ToolStripItem[] { MMFileOpen, MMFileN3, MMFileImport, MMFileN1, MMFileSettings, MMFileN2, MMFileExit });
             MMFile.Name = "MMFile";
             resources.ApplyResources(MMFile, "MMFile");
             // 
@@ -164,6 +165,12 @@ namespace VieweD.Forms
             // 
             MMFileN3.Name = "MMFileN3";
             resources.ApplyResources(MMFileN3, "MMFileN3");
+            // 
+            // MMFileImport
+            // 
+            MMFileImport.DropDownItems.AddRange(new ToolStripItem[] { MMFileImportFromCommunity, MMFileImportFromClipboard, MMFileN4, MMFileImportVpx, MMFileExportVpx });
+            MMFileImport.Name = "MMFileImport";
+            resources.ApplyResources(MMFileImport, "MMFileImport");
             // 
             // MMFileImportFromCommunity
             // 
@@ -804,7 +811,6 @@ namespace VieweD.Forms
         private ToolStripMenuItem MMVersion;
         private TabControl TCProjects;
         private TabPage TPWelcome;
-        private OpenFileDialog OpenProjectFileDialog;
         private ToolStripProgressBar StatusBarProgressBar;
         private DataGridView DgvParsed;
         private DataGridViewTextBoxColumn DgvPosition;
@@ -879,5 +885,7 @@ namespace VieweD.Forms
         private ToolStripMenuItem MMFileImportFromCommunity;
         private ToolStripSeparator MMFileN4;
         private FolderBrowserDialog ImportFolderBrowserDialog;
+        private ToolStripMenuItem MMFileImport;
+        internal OpenFileDialog OpenProjectFileDialog;
     }
 }

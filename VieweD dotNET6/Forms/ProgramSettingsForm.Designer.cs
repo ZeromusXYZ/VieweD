@@ -104,6 +104,10 @@ namespace VieweD.Forms
             LFieldColCount = new Label();
             TbFieldColorCount = new TrackBar();
             GbOtherSettings = new GroupBox();
+            LabelDefaultImportFolder = new Label();
+            BtnDefaultImportFolder = new Button();
+            label16 = new Label();
+            label14 = new Label();
             DefaultCreditsTextBox = new TextBox();
             label15 = new Label();
             CbShowHexStringData = new CheckBox();
@@ -116,7 +120,7 @@ namespace VieweD.Forms
             GroupBox3 = new GroupBox();
             BtnRawViewFont = new Button();
             FontDlg = new FontDialog();
-            label14 = new Label();
+            DefaultFolderDialog = new FolderBrowserDialog();
             TableLayoutPanel1.SuspendLayout();
             GbVideoSettings.SuspendLayout();
             GbListStyle.SuspendLayout();
@@ -1179,6 +1183,9 @@ namespace VieweD.Forms
             // GbOtherSettings
             // 
             GbOtherSettings.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            GbOtherSettings.Controls.Add(LabelDefaultImportFolder);
+            GbOtherSettings.Controls.Add(BtnDefaultImportFolder);
+            GbOtherSettings.Controls.Add(label16);
             GbOtherSettings.Controls.Add(label14);
             GbOtherSettings.Controls.Add(DefaultCreditsTextBox);
             GbOtherSettings.Controls.Add(label15);
@@ -1187,10 +1194,48 @@ namespace VieweD.Forms
             GbOtherSettings.Margin = new Padding(4, 3, 4, 3);
             GbOtherSettings.Name = "GbOtherSettings";
             GbOtherSettings.Padding = new Padding(4, 3, 4, 3);
-            GbOtherSettings.Size = new Size(656, 119);
+            GbOtherSettings.Size = new Size(656, 171);
             GbOtherSettings.TabIndex = 18;
             GbOtherSettings.TabStop = false;
             GbOtherSettings.Text = "Miscellaneous Settings";
+            // 
+            // LabelDefaultImportFolder
+            // 
+            LabelDefaultImportFolder.AutoSize = true;
+            LabelDefaultImportFolder.Location = new Point(46, 140);
+            LabelDefaultImportFolder.Name = "LabelDefaultImportFolder";
+            LabelDefaultImportFolder.Size = new Size(50, 15);
+            LabelDefaultImportFolder.TabIndex = 23;
+            LabelDefaultImportFolder.Text = "<none>";
+            // 
+            // BtnDefaultImportFolder
+            // 
+            BtnDefaultImportFolder.Image = Properties.Resources.document_open_folder_16;
+            BtnDefaultImportFolder.Location = new Point(17, 136);
+            BtnDefaultImportFolder.Name = "BtnDefaultImportFolder";
+            BtnDefaultImportFolder.Size = new Size(23, 23);
+            BtnDefaultImportFolder.TabIndex = 22;
+            BtnDefaultImportFolder.UseVisualStyleBackColor = true;
+            BtnDefaultImportFolder.Click += BtnDefaultImportFolder_Click;
+            // 
+            // label16
+            // 
+            label16.AutoSize = true;
+            label16.Location = new Point(8, 118);
+            label16.Name = "label16";
+            label16.Size = new Size(120, 15);
+            label16.TabIndex = 21;
+            label16.Text = "Default Import Folder";
+            // 
+            // label14
+            // 
+            label14.AutoSize = true;
+            label14.Enabled = false;
+            label14.Location = new Point(207, 87);
+            label14.Name = "label14";
+            label14.Size = new Size(260, 15);
+            label14.TabIndex = 20;
+            label14.Text = "If blank, your current login name is used instead";
             // 
             // DefaultCreditsTextBox
             // 
@@ -1327,15 +1372,10 @@ namespace VieweD.Forms
             FontDlg.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
             FontDlg.FontMustExist = true;
             // 
-            // label14
+            // DefaultFolderDialog
             // 
-            label14.AutoSize = true;
-            label14.Enabled = false;
-            label14.Location = new Point(207, 87);
-            label14.Name = "label14";
-            label14.Size = new Size(260, 15);
-            label14.TabIndex = 20;
-            label14.Text = "If blank, your current login name is used instead";
+            DefaultFolderDialog.Description = "Default import folder";
+            DefaultFolderDialog.RootFolder = System.Environment.SpecialFolder.MyComputer;
             // 
             // ProgramSettingsForm
             // 
@@ -1473,5 +1513,9 @@ namespace VieweD.Forms
         private TextBox DefaultCreditsTextBox;
         private Label label15;
         private Label label14;
+        private FolderBrowserDialog DefaultFolderDialog;
+        private Label LabelDefaultImportFolder;
+        private Button BtnDefaultImportFolder;
+        private Label label16;
     }
 }
