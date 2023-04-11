@@ -33,7 +33,7 @@ namespace VieweD.Forms
         {
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             MM = new MenuStrip();
             MMFile = new ToolStripMenuItem();
             MMFileOpen = new ToolStripMenuItem();
@@ -80,6 +80,7 @@ namespace VieweD.Forms
             MMToolExportData = new ToolStripMenuItem();
             dataToolStripMenuItem = new ToolStripMenuItem();
             MMLinks = new ToolStripMenuItem();
+            MMLinksWiki = new ToolStripMenuItem();
             MMLinksGitHub = new ToolStripMenuItem();
             MMLinksDikscord = new ToolStripMenuItem();
             MMLinksN1 = new ToolStripSeparator();
@@ -431,9 +432,16 @@ namespace VieweD.Forms
             // 
             // MMLinks
             // 
-            MMLinks.DropDownItems.AddRange(new ToolStripItem[] { MMLinksGitHub, MMLinksDikscord, MMLinksN1, MMLinksKoFi, MMLinksN2, MMLinksVLC, MMLinksWireshark });
+            MMLinks.DropDownItems.AddRange(new ToolStripItem[] { MMLinksWiki, MMLinksGitHub, MMLinksDikscord, MMLinksN1, MMLinksKoFi, MMLinksN2, MMLinksVLC, MMLinksWireshark });
             MMLinks.Name = "MMLinks";
             resources.ApplyResources(MMLinks, "MMLinks");
+            // 
+            // MMLinksWiki
+            // 
+            MMLinksWiki.Name = "MMLinksWiki";
+            resources.ApplyResources(MMLinksWiki, "MMLinksWiki");
+            MMLinksWiki.Tag = "https://github.com/ZeromusXYZ/VieweD/wiki";
+            MMLinksWiki.Click += MMLinksOpen_Click;
             // 
             // MMLinksGitHub
             // 
@@ -566,11 +574,11 @@ namespace VieweD.Forms
             DgvParsed.AllowUserToAddRows = false;
             DgvParsed.AllowUserToDeleteRows = false;
             DgvParsed.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.BackColor = SystemColors.Control;
-            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
-            DgvParsed.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.BackColor = SystemColors.Control;
+            dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            DgvParsed.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
             DgvParsed.ClipboardCopyMode = DataGridViewClipboardCopyMode.Disable;
             DgvParsed.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             DgvParsed.Columns.AddRange(new DataGridViewColumn[] { DgvPosition, DgvName, DgvValue });
@@ -887,5 +895,6 @@ namespace VieweD.Forms
         private FolderBrowserDialog ImportFolderBrowserDialog;
         private ToolStripMenuItem MMFileImport;
         internal OpenFileDialog OpenProjectFileDialog;
+        private ToolStripMenuItem MMLinksWiki;
     }
 }

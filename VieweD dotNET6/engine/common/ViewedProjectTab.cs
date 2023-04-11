@@ -4,7 +4,6 @@ using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Security;
 using VieweD.Forms;
 using VieweD.Helpers.System;
 using VieweD.engine.serialize;
@@ -12,13 +11,7 @@ using VieweD.Properties;
 using System.Media;
 using System.Windows.Forms;
 using System.Xml;
-using CsvHelper;
-using CsvHelper.Configuration;
-using System.Globalization;
-using System.Text;
 using Ionic.BZip2;
-using System.Net;
-using VieweD.engine.common;
 
 namespace VieweD.engine.common;
 
@@ -226,11 +219,6 @@ public class ViewedProjectTab : TabPage
         PopulateListBox();
         IsDirty = false;
         OnProjectDataChanged();
-    }
-
-    private void PmPLExport_Click(object? sender, EventArgs e)
-    {
-        //throw new NotImplementedException();
     }
 
     private void PmPLEditParser_Click(object? sender, EventArgs e)
@@ -1785,7 +1773,7 @@ public class ViewedProjectTab : TabPage
                     throw new Exception("Unsupported file version");
             }
 
-            Stream? aStream = fileStream;
+            Stream aStream = fileStream;
             BZip2InputStream? bStream = null;
             if (isCompressed)
             {
