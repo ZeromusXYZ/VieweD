@@ -43,6 +43,16 @@ namespace VieweD.Forms
             MMVersion.Text = string.Format(Resources.MenuVersion, Assembly.GetExecutingAssembly().GetName().Version);
             // TCProjects.TabPages.Clear();
 
+            // Handle User settings upgrades when using a newer version
+            if (Settings.Default.DoUpdateSettings)
+            {
+                Settings.Default.Upgrade();
+                Settings.Default.Save();
+                Settings.Default.Reload();
+                Settings.Default.DoUpdateSettings = false; // This is setting is true by default, so we reset it when done upgrading
+                Settings.Default.Save();
+            }
+
             // Load Settings
             PacketColors.UpdateColorsFromSettings();
             DgvParsed.Font = Settings.Default.FieldViewFont;
