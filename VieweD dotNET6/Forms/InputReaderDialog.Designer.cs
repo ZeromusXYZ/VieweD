@@ -31,47 +31,46 @@ namespace VieweD.Forms
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(InputReaderDialog));
-            this.ListBoxInputReaders = new System.Windows.Forms.ListBox();
-            this.BtnSelect = new System.Windows.Forms.Button();
-            this.TextBoxDescription = new System.Windows.Forms.TextBox();
-            this.SuspendLayout();
+            ListBoxInputReaders = new ListBox();
+            BtnSelect = new Button();
+            TextBoxDescription = new TextBox();
+            SuspendLayout();
             // 
             // ListBoxInputReaders
             // 
-            resources.ApplyResources(this.ListBoxInputReaders, "ListBoxInputReaders");
-            this.ListBoxInputReaders.FormattingEnabled = true;
-            this.ListBoxInputReaders.Name = "ListBoxInputReaders";
-            this.ListBoxInputReaders.SelectedIndexChanged += new System.EventHandler(this.ListBoxInputReaders_SelectedIndexChanged);
+            resources.ApplyResources(ListBoxInputReaders, "ListBoxInputReaders");
+            ListBoxInputReaders.FormattingEnabled = true;
+            ListBoxInputReaders.Name = "ListBoxInputReaders";
+            ListBoxInputReaders.SelectedIndexChanged += ListBoxInputReaders_SelectedIndexChanged;
             // 
             // BtnSelect
             // 
-            resources.ApplyResources(this.BtnSelect, "BtnSelect");
-            this.BtnSelect.Name = "BtnSelect";
-            this.BtnSelect.UseVisualStyleBackColor = true;
-            this.BtnSelect.Click += new System.EventHandler(this.BtnSelect_Click);
+            resources.ApplyResources(BtnSelect, "BtnSelect");
+            BtnSelect.Name = "BtnSelect";
+            BtnSelect.UseVisualStyleBackColor = true;
+            BtnSelect.Click += BtnSelect_Click;
             // 
             // TextBoxDescription
             // 
-            resources.ApplyResources(this.TextBoxDescription, "TextBoxDescription");
-            this.TextBoxDescription.Name = "TextBoxDescription";
-            this.TextBoxDescription.ReadOnly = true;
+            resources.ApplyResources(TextBoxDescription, "TextBoxDescription");
+            TextBoxDescription.Name = "TextBoxDescription";
+            TextBoxDescription.ReadOnly = true;
             // 
             // InputReaderDialog
             // 
             resources.ApplyResources(this, "$this");
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.TextBoxDescription);
-            this.Controls.Add(this.BtnSelect);
-            this.Controls.Add(this.ListBoxInputReaders);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Name = "InputReaderDialog";
-            this.ShowIcon = false;
-            this.ShowInTaskbar = false;
-            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
-            this.Load += new System.EventHandler(this.InputReaderDialog_Load);
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(TextBoxDescription);
+            Controls.Add(BtnSelect);
+            Controls.Add(ListBoxInputReaders);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            MaximizeBox = false;
+            Name = "InputReaderDialog";
+            ShowIcon = false;
+            ShowInTaskbar = false;
+            Load += InputReaderDialog_Load;
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion

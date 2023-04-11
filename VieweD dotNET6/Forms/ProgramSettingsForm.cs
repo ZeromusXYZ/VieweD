@@ -24,8 +24,8 @@ namespace VieweD.Forms
                 Settings.Default.AutoLoadVideo = 0;
             if (RbAutoLoadVideoLocalOnly.Checked)
                 Settings.Default.AutoLoadVideo = 1;
-            if (RbAutoLoadVideoYoutube.Checked)
-                Settings.Default.AutoLoadVideo = 2;
+            // if (RbAutoLoadVideoYoutube.Checked)
+            //     Settings.Default.AutoLoadVideo = 2;
             if (RbListStyleText.Checked)
                 Settings.Default.PacketListStyle = 0;
             if (RbListStyleSolid.Checked)
@@ -34,7 +34,7 @@ namespace VieweD.Forms
                 Settings.Default.PacketListStyle = 2;
 
             Settings.Default.ShowStringHexData = CbShowHexStringData.Checked;
-            Settings.Default.AskCreateNewProjectFile = CbAskNewProject.Checked;
+            // Settings.Default.AskCreateNewProjectFile = CbAskNewProject.Checked;
 
             Settings.Default.PacketListFont = BtnPacketListFont.Font;
             Settings.Default.FieldViewFont = BtnGridViewFont.Font;
@@ -120,13 +120,13 @@ namespace VieweD.Forms
             BtnRawViewFont.Text = BtnRawViewFont.Font.Name + @", " + BtnRawViewFont.Font.SizeInPoints + @"pt";
 
             RbAutoLoadVideoLocalOnly.Checked = (Settings.Default.AutoLoadVideo == 1);
-            RbAutoLoadVideoYoutube.Checked = (Settings.Default.AutoLoadVideo == 2);
-            RbAutoLoadVideoNever.Checked = (!RbAutoLoadVideoLocalOnly.Checked && !RbAutoLoadVideoYoutube.Checked);
+            // RbAutoLoadVideoYoutube.Checked = (Settings.Default.AutoLoadVideo == 2);
+            RbAutoLoadVideoNever.Checked = (!RbAutoLoadVideoLocalOnly.Checked); //&& !RbAutoLoadVideoYoutube.Checked);
             RbListStyleText.Checked = (Settings.Default.PacketListStyle == 0);
             RbListStyleSolid.Checked = (Settings.Default.PacketListStyle == 1);
             RbListStyleTransparent.Checked = (Settings.Default.PacketListStyle == 2);
             CbShowHexStringData.Checked = Settings.Default.ShowStringHexData;
-            CbAskNewProject.Checked = Settings.Default.AskCreateNewProjectFile;
+            // CbAskNewProject.Checked = Settings.Default.AskCreateNewProjectFile;
 
             DefaultCreditsTextBox.Text = Settings.Default.CreditsName;
             LabelDefaultImportFolder.Text = Settings.Default.DefaultImportFolder == ""

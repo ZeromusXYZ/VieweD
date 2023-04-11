@@ -66,7 +66,6 @@ namespace VieweD.Forms
             BtnDefault = new Button();
             GbVideoSettings = new GroupBox();
             Label11 = new Label();
-            RbAutoLoadVideoYoutube = new RadioButton();
             RbAutoLoadVideoLocalOnly = new RadioButton();
             RbAutoLoadVideoNever = new RadioButton();
             GbListStyle = new GroupBox();
@@ -111,10 +110,8 @@ namespace VieweD.Forms
             DefaultCreditsTextBox = new TextBox();
             label15 = new Label();
             CbShowHexStringData = new CheckBox();
-            CbAskNewProject = new CheckBox();
             TcSettings = new TabControl();
             TpGeneral = new TabPage();
-            GroupBox1 = new GroupBox();
             TbPacketList = new TabPage();
             TpFieldGrid = new TabPage();
             GroupBox3 = new GroupBox();
@@ -134,7 +131,6 @@ namespace VieweD.Forms
             GbOtherSettings.SuspendLayout();
             TcSettings.SuspendLayout();
             TpGeneral.SuspendLayout();
-            GroupBox1.SuspendLayout();
             TbPacketList.SuspendLayout();
             TpFieldGrid.SuspendLayout();
             GroupBox3.SuspendLayout();
@@ -610,10 +606,9 @@ namespace VieweD.Forms
             // 
             GbVideoSettings.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             GbVideoSettings.Controls.Add(Label11);
-            GbVideoSettings.Controls.Add(RbAutoLoadVideoYoutube);
             GbVideoSettings.Controls.Add(RbAutoLoadVideoLocalOnly);
             GbVideoSettings.Controls.Add(RbAutoLoadVideoNever);
-            GbVideoSettings.Location = new Point(8, 62);
+            GbVideoSettings.Location = new Point(7, 6);
             GbVideoSettings.Margin = new Padding(4, 3, 4, 3);
             GbVideoSettings.Name = "GbVideoSettings";
             GbVideoSettings.Padding = new Padding(4, 3, 4, 3);
@@ -630,18 +625,6 @@ namespace VieweD.Forms
             Label11.Size = new Size(243, 15);
             Label11.TabIndex = 3;
             Label11.Text = "Open video together when the project opens";
-            // 
-            // RbAutoLoadVideoYoutube
-            // 
-            RbAutoLoadVideoYoutube.AutoSize = true;
-            RbAutoLoadVideoYoutube.Enabled = false;
-            RbAutoLoadVideoYoutube.Location = new Point(224, 37);
-            RbAutoLoadVideoYoutube.Margin = new Padding(4, 3, 4, 3);
-            RbAutoLoadVideoYoutube.Name = "RbAutoLoadVideoYoutube";
-            RbAutoLoadVideoYoutube.Size = new Size(138, 19);
-            RbAutoLoadVideoYoutube.TabIndex = 2;
-            RbAutoLoadVideoYoutube.Text = "also for Youtube links";
-            RbAutoLoadVideoYoutube.UseVisualStyleBackColor = true;
             // 
             // RbAutoLoadVideoLocalOnly
             // 
@@ -1190,7 +1173,7 @@ namespace VieweD.Forms
             GbOtherSettings.Controls.Add(DefaultCreditsTextBox);
             GbOtherSettings.Controls.Add(label15);
             GbOtherSettings.Controls.Add(CbShowHexStringData);
-            GbOtherSettings.Location = new Point(7, 132);
+            GbOtherSettings.Location = new Point(9, 76);
             GbOtherSettings.Margin = new Padding(4, 3, 4, 3);
             GbOtherSettings.Name = "GbOtherSettings";
             GbOtherSettings.Padding = new Padding(4, 3, 4, 3);
@@ -1264,17 +1247,6 @@ namespace VieweD.Forms
             CbShowHexStringData.Text = "Also show hex data on strings";
             CbShowHexStringData.UseVisualStyleBackColor = true;
             // 
-            // CbAskNewProject
-            // 
-            CbAskNewProject.AutoSize = true;
-            CbAskNewProject.Location = new Point(16, 22);
-            CbAskNewProject.Margin = new Padding(4, 3, 4, 3);
-            CbAskNewProject.Name = "CbAskNewProject";
-            CbAskNewProject.Size = new Size(221, 19);
-            CbAskNewProject.TabIndex = 17;
-            CbAskNewProject.Text = "Ask before creating a new project file";
-            CbAskNewProject.UseVisualStyleBackColor = true;
-            // 
             // TcSettings
             // 
             TcSettings.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
@@ -1291,7 +1263,6 @@ namespace VieweD.Forms
             // TpGeneral
             // 
             TpGeneral.BackColor = SystemColors.Control;
-            TpGeneral.Controls.Add(GroupBox1);
             TpGeneral.Controls.Add(GbOtherSettings);
             TpGeneral.Controls.Add(GbVideoSettings);
             TpGeneral.ForeColor = SystemColors.ControlText;
@@ -1302,19 +1273,6 @@ namespace VieweD.Forms
             TpGeneral.Size = new Size(676, 346);
             TpGeneral.TabIndex = 0;
             TpGeneral.Text = "General";
-            // 
-            // GroupBox1
-            // 
-            GroupBox1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            GroupBox1.Controls.Add(CbAskNewProject);
-            GroupBox1.Location = new Point(7, 7);
-            GroupBox1.Margin = new Padding(4, 3, 4, 3);
-            GroupBox1.Name = "GroupBox1";
-            GroupBox1.Padding = new Padding(4, 3, 4, 3);
-            GroupBox1.Size = new Size(656, 49);
-            GroupBox1.TabIndex = 19;
-            GroupBox1.TabStop = false;
-            GroupBox1.Text = "Program Settings";
             // 
             // TbPacketList
             // 
@@ -1417,8 +1375,6 @@ namespace VieweD.Forms
             GbOtherSettings.PerformLayout();
             TcSettings.ResumeLayout(false);
             TpGeneral.ResumeLayout(false);
-            GroupBox1.ResumeLayout(false);
-            GroupBox1.PerformLayout();
             TbPacketList.ResumeLayout(false);
             TpFieldGrid.ResumeLayout(false);
             GroupBox3.ResumeLayout(false);
@@ -1461,7 +1417,6 @@ namespace VieweD.Forms
         private System.Windows.Forms.Button BtnSelectedFontUNK;
         private System.Windows.Forms.Button BtnDefault;
         private System.Windows.Forms.GroupBox GbVideoSettings;
-        private System.Windows.Forms.RadioButton RbAutoLoadVideoYoutube;
         private System.Windows.Forms.RadioButton RbAutoLoadVideoLocalOnly;
         private System.Windows.Forms.RadioButton RbAutoLoadVideoNever;
         private System.Windows.Forms.GroupBox GbListStyle;
@@ -1496,12 +1451,10 @@ namespace VieweD.Forms
         private System.Windows.Forms.TrackBar TbFieldColorCount;
         private System.Windows.Forms.GroupBox GbOtherSettings;
         private System.Windows.Forms.CheckBox CbShowHexStringData;
-        private System.Windows.Forms.CheckBox CbAskNewProject;
         private System.Windows.Forms.TabControl TcSettings;
         private System.Windows.Forms.TabPage TpGeneral;
         private System.Windows.Forms.TabPage TbPacketList;
         private System.Windows.Forms.TabPage TpFieldGrid;
-        private System.Windows.Forms.GroupBox GroupBox1;
         private System.Windows.Forms.Label LabelPacketListArrows;
         private System.Windows.Forms.Label Label13;
         private System.Windows.Forms.Button BtnPacketListFont;

@@ -1,5 +1,5 @@
 ﻿<root>
-  <xsd:schema packetId="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
     <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
@@ -90,6 +90,9 @@
   <data name="&gt;&gt;ListBoxInputReaders.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
+  <data name="BtnSelect.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left, Right</value>
+  </data>
   <data name="BtnSelect.Location" type="System.Drawing.Point, System.Drawing">
     <value>12, 172</value>
   </data>
@@ -113,6 +116,9 @@
   </data>
   <data name="&gt;&gt;BtnSelect.ZOrder" xml:space="preserve">
     <value>1</value>
+  </data>
+  <data name="TextBoxDescription.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Right</value>
   </data>
   <data name="TextBoxDescription.Location" type="System.Drawing.Point, System.Drawing">
     <value>265, 12</value>
