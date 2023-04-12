@@ -104,7 +104,7 @@ Section "VieweD Files (required)" MainApp ;No components page, name is not impor
   File /r data\aa\filter\*.*
 
   SetOutPath $INSTDIR\data\aa\keys
-  File /r data\aa\filter\*.*
+  File /r data\aa\keys\*.*
 
   SetOutPath $INSTDIR\data\aa\lookup
   File /r data\aa\lookup\*.txt
