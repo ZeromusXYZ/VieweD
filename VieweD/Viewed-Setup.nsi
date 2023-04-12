@@ -12,12 +12,13 @@
 !define SLUG "${NAME} v${VERSION}"
 !define BIN_DEBUG "bin\Debug\net6.0-windows\"
 
+!define /date MyTIMESTAMP "%Y-%m-%d"
   
 ; The name of the installer
 Name "${NAME}"
 
 ; The file to write
-OutFile "${NAME} Setup.exe"
+OutFile "${NAME}-Setup-${MyTIMESTAMP}.exe"
 
 ; Request application privileges for Windows Vista
 RequestExecutionLevel user
