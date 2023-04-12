@@ -33,7 +33,7 @@ namespace VieweD.Forms
         {
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             MM = new MenuStrip();
             MMFile = new ToolStripMenuItem();
             MMFileOpen = new ToolStripMenuItem();
@@ -574,11 +574,11 @@ namespace VieweD.Forms
             DgvParsed.AllowUserToAddRows = false;
             DgvParsed.AllowUserToDeleteRows = false;
             DgvParsed.AllowUserToResizeRows = false;
-            dataGridViewCellStyle2.BackColor = SystemColors.Control;
-            dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
-            DgvParsed.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.BackColor = SystemColors.Control;
+            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            DgvParsed.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             DgvParsed.ClipboardCopyMode = DataGridViewClipboardCopyMode.Disable;
             DgvParsed.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             DgvParsed.Columns.AddRange(new DataGridViewColumn[] { DgvPosition, DgvName, DgvValue });
