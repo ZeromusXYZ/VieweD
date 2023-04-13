@@ -140,6 +140,7 @@ namespace VieweD.Forms
         {
             if (OpenProjectFileDialog.ShowDialog() == DialogResult.OK)
                 _ = OpenFile(OpenProjectFileDialog.FileName);
+            UpdateMainMenuAccordingToProject();
         }
 
         /// <summary>
@@ -879,7 +880,7 @@ namespace VieweD.Forms
             PacketDataToRichText(packetData, RichTextData);
         }
 
-        private void TCProjects_SelectedIndexChanged(object sender, EventArgs e)
+        private void UpdateMainMenuAccordingToProject()
         {
             var project = TCProjects.SelectedTab as ViewedProjectTab;
             UpdateStatusBar(project);
@@ -901,6 +902,11 @@ namespace VieweD.Forms
             {
                 ShowPacketData(null);
             }
+        }
+
+        private void TCProjects_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdateMainMenuAccordingToProject();
         }
 
         private void MMProjectSettings_Click(object sender, EventArgs e)
@@ -1756,6 +1762,7 @@ namespace VieweD.Forms
             {
                 project.CloseProject(true);
             }
+            UpdateMainMenuAccordingToProject();
         }
 
         private void MMProjectPack_Click(object sender, EventArgs e)
@@ -1797,6 +1804,7 @@ namespace VieweD.Forms
             {
                 project.CloseProject(true);
             }
+            UpdateMainMenuAccordingToProject();
         }
 
         private void MMProject_DropDownOpening(object sender, EventArgs e)
@@ -1821,6 +1829,12 @@ namespace VieweD.Forms
                 return;
             importDlg.ShowDialog();
             // ImportFromCommunityPost(clipText);
+            UpdateMainMenuAccordingToProject();
+        }
+
+        private void TCProjects_Selected(object sender, TabControlEventArgs e)
+        {
+            UpdateMainMenuAccordingToProject();
         }
     }
 }

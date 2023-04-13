@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Collections.Generic;
 using System.Globalization;
@@ -51,6 +51,8 @@ public class AaDInputReader : BaseInputReader
 
     private void InitReader(ViewedProjectTab parentProject)
     {
+        DecompressionHandler.InitializeInflate(false);
+
         // Load encryption handler (if present), otherwise use base null handler
         var enc = AaEncryptionsBase.CreateEncryptionByName("VieweD.data.aa.engine.AaEncryptions");
         if (enc != null)

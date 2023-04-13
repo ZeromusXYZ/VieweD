@@ -529,6 +529,7 @@ namespace VieweD.Forms
             TCProjects.SelectedIndex = 0;
             TCProjects.DrawItem += TCProjects_DrawItem;
             TCProjects.SelectedIndexChanged += TCProjects_SelectedIndexChanged;
+            TCProjects.Selected += TCProjects_Selected;
             TCProjects.MouseDoubleClick += TCProjects_MouseDoubleClick;
             // 
             // TPWelcome

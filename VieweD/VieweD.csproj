@@ -6,8 +6,8 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>disable</ImplicitUsings>
-    <AssemblyVersion>1.0.0.0</AssemblyVersion>
-    <FileVersion>1.0.0.0</FileVersion>
+    <AssemblyVersion>1.0.0.1</AssemblyVersion>
+    <FileVersion>1.0.0.1</FileVersion>
     <PackageLicenseExpression>Unlicense</PackageLicenseExpression>
     <Title>VieweD</Title>
     <ApplicationIcon>resources\icons\found-it!.ico</ApplicationIcon>
@@ -22,6 +22,10 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <GenerateAssemblyInfo>True</GenerateAssemblyInfo>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="VieweD-Setup*.exe" />
+  </ItemGroup>
 
   <ItemGroup>
     <Content Include="resources\icons\found-it!.ico" />

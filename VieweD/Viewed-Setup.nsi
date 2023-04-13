@@ -82,7 +82,9 @@ Section "VieweD Files (required)" MainApp ;No components page, name is not impor
   ; Debug file
   File ${BIN_DEBUG}*.pdb
 
-  ; Program Data
+  ; VLC Library Files
+  SetOutPath $INSTDIR\libvlc
+  File /r ${BIN_DEBUG}libvlc\*.*
 
   ; Engines Plugin Readme
   SetOutPath $INSTDIR\data
