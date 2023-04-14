@@ -1836,5 +1836,52 @@ namespace VieweD.Forms
         {
             UpdateMainMenuAccordingToProject();
         }
+
+        private void MMSearchInvalid_Click(object sender, EventArgs e)
+        {
+            if (TCProjects.SelectedTab is not ViewedProjectTab project)
+                return;
+
+            FindNextInvalid(project);
+        }
+
+        private void FindNextInvalid(ViewedProjectTab project)
+        {
+            if (project.PacketsListBox.Items.Count <= 0)
+            {
+                MessageBox.Show(Resources.NothingToSearch, Resources.Search, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            var startIndex = project.PacketsListBox.SelectedIndex;
+            if ((startIndex < 0) && (startIndex >= project.PacketsListBox.Items.Count))
+                startIndex = -1;
+
+            var i = startIndex + 1;
+            for (var c = 0; c < project.PacketsListBox.Items.Count - 1; c++)
+            {
+                if (i >= project.PacketsListBox.Items.Count)
+                    i = 0;
+                if ((project.PacketsListBox.Items[i] is BasePacketData packetData) && packetData.MarkedAsInvalid)
+                {
+                    // Select index
+                    project.PacketsListBox.SelectedIndex = i;
+                    // Move to center
+                    var iHeight = project.PacketsListBox.ItemHeight;
+                    if (iHeight <= 0)
+                        iHeight = 8;
+                    var iCount = project.PacketsListBox.Size.Height / iHeight;
+                    var tPos = i - (iCount / 2);
+                    if (tPos < 0)
+                        tPos = 0;
+                    project.PacketsListBox.TopIndex = tPos;
+                    project.PacketsListBox.Focus();
+                    // We're done
+                    return;
+                }
+                i++;
+            }
+            MessageBox.Show(Resources.NothingFound, Resources.Search, MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
     }
 }

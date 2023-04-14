@@ -32,8 +32,8 @@ namespace VieweD.Forms
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             MM = new MenuStrip();
             MMFile = new ToolStripMenuItem();
             MMFileOpen = new ToolStripMenuItem();
@@ -124,6 +124,8 @@ namespace VieweD.Forms
             ExportSaveFileDialog = new SaveFileDialog();
             ImportParsedDataFileDialog = new OpenFileDialog();
             ImportFolderBrowserDialog = new FolderBrowserDialog();
+            MMSearchN2 = new ToolStripSeparator();
+            MMSearchInvalid = new ToolStripMenuItem();
             MM.SuspendLayout();
             StatusBar.SuspendLayout();
             TCProjects.SuspendLayout();
@@ -314,7 +316,7 @@ namespace VieweD.Forms
             // 
             // MMSearch
             // 
-            MMSearch.DropDownItems.AddRange(new ToolStripItem[] { MMSearchFind, MMSearchFindNext, MMSearchN1, MMSearchEditFilter, MMSearchApplyMenu, MMSearchHighlightMenu });
+            MMSearch.DropDownItems.AddRange(new ToolStripItem[] { MMSearchFind, MMSearchFindNext, MMSearchN1, MMSearchInvalid, MMSearchN2, MMSearchEditFilter, MMSearchApplyMenu, MMSearchHighlightMenu });
             resources.ApplyResources(MMSearch, "MMSearch");
             MMSearch.Name = "MMSearch";
             // 
@@ -770,6 +772,18 @@ namespace VieweD.Forms
             resources.ApplyResources(ImportFolderBrowserDialog, "ImportFolderBrowserDialog");
             ImportFolderBrowserDialog.RootFolder = System.Environment.SpecialFolder.MyComputer;
             // 
+            // MMSearchN2
+            // 
+            MMSearchN2.Name = "MMSearchN2";
+            resources.ApplyResources(MMSearchN2, "MMSearchN2");
+            // 
+            // MMSearchInvalid
+            // 
+            MMSearchInvalid.Image = Properties.Resources.mini_unk_ticon;
+            MMSearchInvalid.Name = "MMSearchInvalid";
+            resources.ApplyResources(MMSearchInvalid, "MMSearchInvalid");
+            MMSearchInvalid.Click += MMSearchInvalid_Click;
+            // 
             // MainForm
             // 
             resources.ApplyResources(this, "$this");
@@ -897,5 +911,7 @@ namespace VieweD.Forms
         private ToolStripMenuItem MMFileImport;
         internal OpenFileDialog OpenProjectFileDialog;
         private ToolStripMenuItem MMLinksWiki;
+        private ToolStripMenuItem MMSearchInvalid;
+        private ToolStripSeparator MMSearchN2;
     }
 }
