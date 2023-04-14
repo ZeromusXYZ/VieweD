@@ -215,8 +215,11 @@ namespace VieweD.Forms
             // 
             // TagTextBox
             // 
+            TagTextBox.AutoCompleteMode = AutoCompleteMode.Suggest;
+            TagTextBox.AutoCompleteSource = AutoCompleteSource.CustomSource;
             resources.ApplyResources(TagTextBox, "TagTextBox");
             TagTextBox.Name = "TagTextBox";
+            TagTextBox.KeyDown += TagTextBox_KeyDown;
             // 
             // TagLayout
             // 

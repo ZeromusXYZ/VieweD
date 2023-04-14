@@ -95,6 +95,12 @@ namespace VieweD.Forms
             CBIncludePacketIds.Checked = Settings.Default.CopySummaryPacketIDs;
             CBIncludePacketNames.Checked = Settings.Default.CopySummaryPacketNames;
             CBHideUrlPreviews.Checked = Settings.Default.CopySummaryNoAutoLoad;
+            TagTextBox.AutoCompleteCustomSource.Clear();
+            if (ParentProject != null)
+            {
+                TagTextBox.AutoCompleteCustomSource.AddRange(ParentProject.DataLookup.AllValues.ToArray());
+                TagTextBox.AutoCompleteCustomSource.AddRange(ParentProject.AllFieldNames.ToArray());
+            }
         }
 
         private void ClearForm()
@@ -350,7 +356,7 @@ namespace VieweD.Forms
                 using var downloadDialog = new DownloadDialog();
                 downloadDialog.SetDownloadJob(TextVideoURL.Text, targetVideoFileName, title);
                 if (downloadDialog.BeginDownload() != DialogResult.OK)
-                    MessageBox.Show(string.Format(Resources.DownloadFileError,targetVideoFileName), title, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(string.Format(Resources.DownloadFileError, targetVideoFileName), title, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 else
                 {
                     TextVideoFile.Text = downloadDialog.TargetFile;
@@ -384,6 +390,14 @@ namespace VieweD.Forms
 
             if (!File.Exists(archiveFileName))
                 MessageBox.Show(string.Format(Resources.DownloadFileError, archiveFileName), title, MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        private void TagTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                BtnAddTag.PerformClick();
+            }
         }
     }
 }
