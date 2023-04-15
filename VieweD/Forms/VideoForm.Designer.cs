@@ -93,7 +93,6 @@ namespace VieweD.Forms
             // 
             // BtnPlay
             // 
-            BtnPlay.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             BtnPlay.Image = Resources.media_playback_start_32;
             BtnPlay.Location = new Point(260, 20);
             BtnPlay.Name = "BtnPlay";
@@ -197,7 +196,7 @@ namespace VieweD.Forms
             // 
             // BtnPause
             // 
-            BtnPause.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            BtnPause.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             BtnPause.Image = Resources.media_playback_pause_32;
             BtnPause.Location = new Point(306, 20);
             BtnPause.Name = "BtnPause";
@@ -332,7 +331,7 @@ namespace VieweD.Forms
             // 
             // MarqueeTimer
             // 
-            MarqueeTimer.Interval = 15;
+            MarqueeTimer.Interval = 50;
             MarqueeTimer.Tick += MarqueeTimer_Tick;
             // 
             // VideoForm

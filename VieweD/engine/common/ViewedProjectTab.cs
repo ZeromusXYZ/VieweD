@@ -12,6 +12,7 @@ using System.Media;
 using System.Windows.Forms;
 using System.Xml;
 using Ionic.BZip2;
+using VieweD.Helpers.PacketList;
 
 namespace VieweD.engine.common;
 
@@ -635,7 +636,7 @@ public class ViewedProjectTab : TabPage
         {
             CurrentSyncId = pd.SyncId;
             MainForm.Instance?.ShowPacketData(pd);
-            Video?.UpdateVideoPositionFromProject(pd.VirtualOffsetFromStart + Settings.VideoSettings.VideoOffset);
+            Video?.UpdateVideoPositionFromProject(pd.VirtualOffsetFromStart - Settings.VideoSettings.VideoOffset);
         }
         else
         {

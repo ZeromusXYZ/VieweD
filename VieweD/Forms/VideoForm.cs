@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -21,7 +22,7 @@ namespace VieweD.Forms
         private LibVLC? LibVlc { get; set; }
         public MediaPlayer? MPlayer { get; set; }
         public ViewedProjectTab? ParentProject { get; set; }
-
+        public bool IsSeeking { get; set; } = false;
 
         public VideoForm()
         {
@@ -53,6 +54,8 @@ namespace VieweD.Forms
                 media.Dispose();
                 PMFollowPackets.Enabled = (ParentProject != null);
                 PMSync.Enabled = PMFollowPackets.Enabled;
+
+                // MarqueeTimer.Enabled = true;
 
                 return true;
             }
@@ -174,6 +177,9 @@ namespace VieweD.Forms
 
         private void UpdateProjectPositionFromVideo(int pos)
         {
+            if (IsSeeking)
+                return;
+
             void MethodInvokerDelegate()
             {
                 // update parent's list position
@@ -238,6 +244,9 @@ namespace VieweD.Forms
         private void BtnPlay_Click(object sender, EventArgs e)
         {
             MPlayer?.Play();
+            MarqueeTimer.Enabled = true;
+            if (MPlayer != null)
+                UpdateProjectPositionFromVideo((int)(MPlayer.Position * MPlayer.Length));
         }
 
         private void VideoForm_Deactivate(object sender, EventArgs e)
@@ -248,21 +257,45 @@ namespace VieweD.Forms
         private void BtnStop_Click(object sender, EventArgs e)
         {
             MPlayer?.Stop();
+            MarqueeTimer.Enabled = false;
         }
 
         private void BtnPause_Click(object sender, EventArgs e)
         {
             MPlayer?.Pause();
+            if (MPlayer != null)
+                UpdateProjectPositionFromVideo((int)(MPlayer.Position * MPlayer.Length));
         }
 
         private void MPlayerSeekTo(TimeSpan pos)
         {
-            if ((MPlayer != null) && (pos >= TimeSpan.Zero) && (pos <= TimeSpan.FromMilliseconds(MPlayer.Length)))
-                MPlayer.SeekTo(pos);
+            if (IsSeeking)
+                return;
+
+            try
+            {
+                IsSeeking = true;
+                if ((MPlayer != null) && (pos >= TimeSpan.Zero) && (pos <= TimeSpan.FromMilliseconds(MPlayer.Length)))
+                {
+                    var resumePlayState = MPlayer?.IsPlaying ?? false;
+                    MPlayer?.SetPause(true);
+                    MPlayer?.SeekTo(pos);
+                    if (resumePlayState)
+                        MPlayer?.SetPause(false);
+                }
+            }
+            catch
+            {
+                // Ignore
+            }
+            IsSeeking = false;
         }
 
         private void BtnFastForward_Click(object sender, EventArgs e)
         {
+            if (IsSeeking)
+                return;
+
             // Skip forward 20 seconds (or 1 if shift is held)
             var hasShift = (ModifierKeys & Keys.Shift) != 0;
             var delta = (ModifierKeys & Keys.Shift) != 0 ? 1000.0 : 20000.0;
@@ -279,6 +312,9 @@ namespace VieweD.Forms
 
         private void BtnRewind_Click(object sender, EventArgs e)
         {
+            if (IsSeeking)
+                return;
+
             // Skip back 20 seconds (or 1 if shift is held)
             var delta = (ModifierKeys & Keys.Shift) != 0 ? -1000.0 : -20000.0;
             if ((MPlayer?.IsSeekable ?? false) && (MPlayer.Length > 0))
@@ -288,6 +324,9 @@ namespace VieweD.Forms
 
         private void BtnSeekStart_Click(object sender, EventArgs e)
         {
+            if (IsSeeking)
+                return;
+
             // Seek to beginning of the video
             if (MPlayer?.IsSeekable ?? false)
                 MPlayerSeekTo(TimeSpan.FromMilliseconds(1));
@@ -295,6 +334,9 @@ namespace VieweD.Forms
 
         private void BtnSeekEnd_Click(object sender, EventArgs e)
         {
+            if (IsSeeking)
+                return;
+
             // Seek to the end of the video
             if ((MPlayer?.IsSeekable ?? false) && (MPlayer.Length > 0))
                 MPlayerSeekTo(TimeSpan.FromMilliseconds(MPlayer.Length - 1));
@@ -341,13 +383,25 @@ namespace VieweD.Forms
 
         private void SeekVideoFromProgressMouseClick(int x)
         {
-            if (MPlayer is { Length: > 0 })
+            if (IsSeeking)
+                return;
+
+            try
             {
-                var barPositionX = x - ProgressBarVideo.Left;
-                var barPosition = (double)barPositionX / ProgressBarVideo.Width;
-                var barMs = barPosition * MPlayer.Length;
-                MPlayer?.SeekTo(TimeSpan.FromMilliseconds(barMs));
+                IsSeeking = true;
+                if (MPlayer is { Length: > 0 })
+                {
+                    var barPositionX = x - ProgressBarVideo.Left;
+                    var barPosition = (double)barPositionX / ProgressBarVideo.Width;
+                    var barMs = barPosition * MPlayer.Length;
+                    MPlayer?.SeekTo(TimeSpan.FromMilliseconds(barMs));
+                }
             }
+            catch
+            {
+                // Ignore
+            }
+            IsSeeking = false;
         }
 
         private void ProgressBarVideo_MouseClick(object sender, MouseEventArgs e)
@@ -362,7 +416,7 @@ namespace VieweD.Forms
                 SeekVideoFromProgressMouseClick(e.X);
         }
 
-        public void UpdateVideoPositionFromProject(TimeSpan packetDataOffset)
+        public void UpdateVideoPositionFromProject(TimeSpan targetVideoOffset)
         {
             if (PMFollowPackets.Checked == false)
                 return;
@@ -371,10 +425,12 @@ namespace VieweD.Forms
             // This will prevent circular reference updates
             if (MPlayer is { IsPlaying: false })
             {
-                var pos = (int)Math.Floor(MPlayer.Position * (double)MPlayer.Length);
-                if ((pos >= 0) && (MPlayer.Length > 0) && (packetDataOffset >= TimeSpan.Zero) && (pos < MPlayer.Length))
+                //var playerPosition = TimeSpan.FromMilliseconds(MPlayer.Position * MPlayer.Length);
+                //var targetPosition = packetDataOffset.Add(ParentProject?.Settings.VideoSettings.VideoOffset ?? TimeSpan.Zero);
+                var pos = (int)Math.Floor(targetVideoOffset.TotalMilliseconds);
+                if ((pos >= 0) && (MPlayer.Length > 0) && (pos < MPlayer.Length))
                 {
-                    MPlayerSeekTo(packetDataOffset);
+                    MPlayerSeekTo(targetVideoOffset);
 
                     SetProgressBar(pos, (int)MPlayer.Length);
 
@@ -473,7 +529,17 @@ namespace VieweD.Forms
         private void MarqueeTimer_Tick(object sender, EventArgs e)
         {
             if ((MPlayer != null) && (MPlayer.Length > 0))
-                UpdateVideoMarquee(VideoPositionToString(MPlayer.Position));
+            {
+                if (MPlayer.IsPlaying)
+                    UpdateVideoMarquee(VideoPositionToString(MPlayer.Position));
+                else
+                {
+                    var isEven = DateTime.UtcNow.Millisecond >= 500;
+                    var pauseText = isEven ? "[||] " : "[  ] ";
+                    UpdateVideoMarquee(pauseText + VideoPositionToString(MPlayer.Position));
+                }
+
+            }
         }
     }
 }
