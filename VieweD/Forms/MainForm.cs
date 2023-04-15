@@ -1358,15 +1358,7 @@ namespace VieweD.Forms
                 {
                     // Select index
                     project.PacketsListBox.SelectedIndex = i;
-                    // Move to center
-                    var iHeight = project.PacketsListBox.ItemHeight;
-                    if (iHeight <= 0)
-                        iHeight = 8;
-                    var iCount = project.PacketsListBox.Size.Height / iHeight;
-                    var tPos = i - (iCount / 2);
-                    if (tPos < 0)
-                        tPos = 0;
-                    project.PacketsListBox.TopIndex = tPos;
+                    project.CenterListBox();
                     project.PacketsListBox.Focus();
                     // We're done
                     return;
@@ -1866,15 +1858,7 @@ namespace VieweD.Forms
                 {
                     // Select index
                     project.PacketsListBox.SelectedIndex = i;
-                    // Move to center
-                    var iHeight = project.PacketsListBox.ItemHeight;
-                    if (iHeight <= 0)
-                        iHeight = 8;
-                    var iCount = project.PacketsListBox.Size.Height / iHeight;
-                    var tPos = i - (iCount / 2);
-                    if (tPos < 0)
-                        tPos = 0;
-                    project.PacketsListBox.TopIndex = tPos;
+                    project.CenterListBox();
                     project.PacketsListBox.Focus();
                     // We're done
                     return;

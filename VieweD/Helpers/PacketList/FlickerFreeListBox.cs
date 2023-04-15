@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace VieweD.Helpers.PacketList
@@ -63,6 +64,59 @@ namespace VieweD.Helpers.PacketList
             }
             base.OnPaint(e);
         }
-    }
 
+        // Added code to hide vertical scrollbar if wanted
+        // https://stackoverflow.com/questions/13169900/hide-vertical-scroll-bar-in-listbox-control
+        private bool _mShowScroll;
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams cp = base.CreateParams;
+                if (!_mShowScroll)
+                    cp.Style = cp.Style & ~0x200000;
+                return cp;
+            }
+        }
+
+        public bool ShowScrollbar
+        {
+            get { return _mShowScroll; }
+            set
+            {
+                if (value != _mShowScroll)
+                {
+                    _mShowScroll = value;
+                    if (IsHandleCreated)
+                        RecreateHandle();
+                }
+            }
+        }
+
+        public int MaximumVisibleItems => Size.Height / (ItemHeight <= 0 ? 8 : ItemHeight);
+
+        /*
+        private const int WM_VSCROLL = 277; // Vertical scroll
+        private const int SB_ENDSCROLL = 8; // Ends scroll
+
+        public event EventHandler TopIndexChanged;
+        private int _oldTopIndex = 0;
+
+        protected override void WndProc(ref Message m)
+        {
+            if (m.Msg == WM_VSCROLL) // && (m.WParam == (IntPtr)SB_ENDSCROLL))
+            {
+                if (m.WParam == (IntPtr)SB_ENDSCROLL)
+                {
+                    if ((TopIndex != _oldTopIndex) && (TopIndexChanged != null))
+                    {
+                        TopIndexChanged(this, EventArgs.Empty);
+                        _oldTopIndex = TopIndex;
+                    }
+                }
+            }
+            base.WndProc(ref m);
+        }
+        */
+    }
 }

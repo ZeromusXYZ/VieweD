@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -12,6 +13,7 @@ using System.Media;
 using System.Windows.Forms;
 using System.Xml;
 using Ionic.BZip2;
+using Microsoft.VisualBasic.Devices;
 using VieweD.Helpers.PacketList;
 
 namespace VieweD.engine.common;
@@ -22,6 +24,9 @@ public class ViewedProjectTab : TabPage
 
     // Visual Components
     internal FlickerFreeListBox PacketsListBox { get; } = new();
+    private Panel ListBoxPanel { get; } = new();
+    internal VScrollBar PacketsListScrollBar { get; } = new();
+    private bool _isScrollingList = false;
 
     // Project Settings
     /// <summary>
@@ -130,17 +135,45 @@ public class ViewedProjectTab : TabPage
 
         #region CreatePacketListBox
 
+        // Virtual Scrollbar that is added to fix the default ListBox scrollbar behavior
+        // There is a issue with the OG ListBox that the scrollbar breaks when you have more than 65536 items
+        PacketsListScrollBar.Parent = this;
+        PacketsListScrollBar.Location = new Point(this.Width - 16, 0);
+        PacketsListScrollBar.Size = new Size(16, this.Height);
+        PacketsListScrollBar.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
+        // PacketsListScrollBar.Dock = DockStyle.Right;
+        PacketsListScrollBar.Minimum = 0;
+        PacketsListScrollBar.Maximum = 1;
+        PacketsListScrollBar.ValueChanged += PacketListScrollBar_ValueChanged;
+
+        // This intermediate Panel is required so that the below ListBox is getting sized correctly
+        ListBoxPanel.Parent = this;
+        ListBoxPanel.BorderStyle = BorderStyle.None;
+        ListBoxPanel.Location = new Point(0, 0);
+        ListBoxPanel.Size = new Size(this.Width - 16, this.Height);
+        ListBoxPanel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+        // ListBoxPanel.Dock = DockStyle.Fill;
+        // ListBoxPanel.BackColor = Color.CadetBlue;
+
         // Set ListBox Position
-        PacketsListBox.Parent = this;
+        PacketsListBox.Parent = ListBoxPanel;
         PacketsListBox.Location = new Point(0, 0);
-        PacketsListBox.Size = new Size(this.Width, this.Height);
+        PacketsListBox.Size = new Size(ListBoxPanel.Width, ListBoxPanel.Height);
         PacketsListBox.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+        PacketsListBox.Dock = DockStyle.Fill;
         ReloadPacketListColorsFromSettings();
         PacketsListBox.DrawMode = DrawMode.OwnerDrawFixed;
 
         PacketsListBox.DrawItem += PacketsListBox_DrawItem;
         PacketsListBox.SelectedIndexChanged += PacketsListBox_SelectedIndexChanged;
         PacketsListBox.DoubleClick += PacketsListBox_DoubleClick;
+
+        PacketsListBox.MouseWheel += PacketsListBox_MouseWheel;
+
+        // PacketsListBox.TopIndexChanged += PacketListBox_TopIndexChanged;
+
+
+        PacketsListBox.ShowScrollbar = false; // Hide scrollbar
 
         #endregion
 
@@ -222,6 +255,42 @@ public class ViewedProjectTab : TabPage
         OnProjectDataChanged();
     }
 
+    public void UpdateScrollBarValue()
+    {
+        if (_isScrollingList)
+            return;
+
+        _isScrollingList = true;
+        try
+        {
+            PacketsListScrollBar.Minimum = 0;
+            PacketsListScrollBar.Maximum = PacketsListBox.Items.Count;
+            PacketsListScrollBar.Value = PacketsListBox.TopIndex;
+        }
+        catch
+        {
+            // Ignore
+        }
+        _isScrollingList = false;
+    }
+
+    private void PacketListScrollBar_ValueChanged(object? sender, EventArgs e)
+    {
+        if (_isScrollingList)
+            return;
+
+        _isScrollingList = true;
+        try
+        {
+            PacketsListBox.TopIndex = PacketsListScrollBar.Value;
+        }
+        catch
+        {
+            // Ignore
+        }
+        _isScrollingList = false;
+    }
+
     private void PmPLEditParser_Click(object? sender, EventArgs e)
     {
         EditCurrentPacketRule();
@@ -242,14 +311,11 @@ public class ViewedProjectTab : TabPage
     internal void CenterListBox()
     {
         // Move to center
-        var iHeight = PacketsListBox.ItemHeight;
-        if (iHeight <= 0)
-            iHeight = 8;
-        var iCount = PacketsListBox.Size.Height / iHeight;
-        var tPos = PacketsListBox.SelectedIndex - (iCount / 2);
+        var tPos = PacketsListBox.SelectedIndex - (PacketsListBox.MaximumVisibleItems / 2);
         if (tPos < 0)
             tPos = 0;
         PacketsListBox.TopIndex = tPos;
+        UpdateScrollBarValue();
     }
 
     private void PmPLShowIncomingOnly_Click(object? sender, EventArgs e)
@@ -632,6 +698,7 @@ public class ViewedProjectTab : TabPage
     private void PacketsListBox_SelectedIndexChanged(object? sender, EventArgs e)
     {
         PacketsListBox.Invalidate();
+        UpdateScrollBarValue();
         if ((PacketsListBox.SelectedIndex >= 0) && (PacketsListBox.Items[PacketsListBox.SelectedIndex] is BasePacketData pd))
         {
             CurrentSyncId = pd.SyncId;
@@ -1791,8 +1858,20 @@ public class ViewedProjectTab : TabPage
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
+            Debug.WriteLine(e);
             return false;
         }
     }
+
+    private void PacketsListBox_MouseWheel(object? sender, MouseEventArgs e)
+    {
+        var hasShift = ModifierKeys.HasFlag(Keys.Shift);
+        var hasControl = ModifierKeys.HasFlag(Keys.Control);
+        var itemDelta = e.Delta * SystemInformation.MouseWheelScrollLines / 120;
+        if (hasShift || hasControl)
+            itemDelta *= PacketsListBox.MaximumVisibleItems;
+        PacketsListBox.TopIndex -= itemDelta;
+        UpdateScrollBarValue();
+    }
+
 }
