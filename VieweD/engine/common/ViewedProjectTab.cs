@@ -13,7 +13,6 @@ using System.Media;
 using System.Windows.Forms;
 using System.Xml;
 using Ionic.BZip2;
-using Microsoft.VisualBasic.Devices;
 using VieweD.Helpers.PacketList;
 
 namespace VieweD.engine.common;
@@ -26,7 +25,7 @@ public class ViewedProjectTab : TabPage
     internal FlickerFreeListBox PacketsListBox { get; } = new();
     private Panel ListBoxPanel { get; } = new();
     internal VScrollBar PacketsListScrollBar { get; } = new();
-    private bool _isScrollingList = false;
+    private bool _isScrollingList;
 
     // Project Settings
     /// <summary>
@@ -143,8 +142,11 @@ public class ViewedProjectTab : TabPage
         PacketsListScrollBar.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
         // PacketsListScrollBar.Dock = DockStyle.Right;
         PacketsListScrollBar.Minimum = 0;
-        PacketsListScrollBar.Maximum = 1;
+        PacketsListScrollBar.Maximum = 0;
+        PacketsListScrollBar.SmallChange = (PacketsListBox.MaximumVisibleItems / 2) + 1;
+        PacketsListScrollBar.LargeChange = (PacketsListBox.MaximumVisibleItems * 4) + 1;
         PacketsListScrollBar.ValueChanged += PacketListScrollBar_ValueChanged;
+        PacketsListScrollBar.MouseEnter += PacketsListScrollBar_MouseEnter;
 
         // This intermediate Panel is required so that the below ListBox is getting sized correctly
         ListBoxPanel.Parent = this;
@@ -255,6 +257,11 @@ public class ViewedProjectTab : TabPage
         OnProjectDataChanged();
     }
 
+    private void PacketsListScrollBar_MouseEnter(object? sender, EventArgs e)
+    {
+        UpdateScrollBarValue();
+    }
+
     public void UpdateScrollBarValue()
     {
         if (_isScrollingList)
@@ -263,9 +270,25 @@ public class ViewedProjectTab : TabPage
         _isScrollingList = true;
         try
         {
+            // It's pretty ugly, but it does make it so the scrollbar will show at the top or bottom,
+            // when you're actually at the top or bottom of the listbox.
+            // What's this issue with scrollbars that none of the default ones do what's expected of them?
+
+            // Can't really subtract the visible item count from here, because if the scroll bar's max gets too low,
+            // You the scrollbar will show as if it's at it's maximum size, and you won't be able to scroll using it,
+            // even when it's min/max values are not the same.
+
+            var max = PacketsListBox.Items.Count; //- PacketsListBox.MaximumVisibleItems + 1;
+            var pos = Math.Clamp(PacketsListBox.TopIndex,0,max);
+            // If it's at the end, force the scrollbar to max
+            if (pos + PacketsListBox.MaximumVisibleItems >= PacketsListBox.Items.Count)
+                pos = max;
+            // If it's at the beginning, force the scrollbar to zero
+            if (PacketsListBox.TopIndex <= 0)
+                pos = 0;
             PacketsListScrollBar.Minimum = 0;
-            PacketsListScrollBar.Maximum = PacketsListBox.Items.Count;
-            PacketsListScrollBar.Value = PacketsListBox.TopIndex;
+            PacketsListScrollBar.Maximum = max;
+            PacketsListScrollBar.Value = pos;
         }
         catch
         {
@@ -1750,7 +1773,7 @@ public class ViewedProjectTab : TabPage
 
                 var sPort = (ushort)XmlHelper.GetAttributeInt(packetAttributes, "sp");
                 var dPort = (ushort)XmlHelper.GetAttributeInt(packetAttributes, "dp");
-                var packetStreamName = XmlHelper.GetAttributeString(packetAttributes, "s");
+                // var packetStreamName = XmlHelper.GetAttributeString(packetAttributes, "s");
 
                 /*
                 // for now register dummy ports where stream Id = Port
@@ -1798,7 +1821,7 @@ public class ViewedProjectTab : TabPage
                 {
                     foreach (XmlNode parsedNode in parsedNodes)
                     {
-                        var parsedField = new ParsedField();
+                        // var parsedField = new ParsedField();
                         var fieldAttributes = XmlHelper.ReadNodeAttributes(parsedNode);
                         packet.AddParsedField(
                             true,
@@ -1870,7 +1893,8 @@ public class ViewedProjectTab : TabPage
         var itemDelta = e.Delta * SystemInformation.MouseWheelScrollLines / 120;
         if (hasShift || hasControl)
             itemDelta *= PacketsListBox.MaximumVisibleItems;
-        PacketsListBox.TopIndex -= itemDelta;
+        var targetTop = Math.Clamp(PacketsListBox.TopIndex - itemDelta, 0, PacketsListBox.Items.Count);
+        PacketsListBox.TopIndex = targetTop;
         UpdateScrollBarValue();
     }
 
