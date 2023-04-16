@@ -670,6 +670,36 @@
   <data name="GBSummary.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left, Right</value>
   </data>
+  <data name="CBIncludeVisiblePacketsOnly.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="CBIncludeVisiblePacketsOnly.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="CBIncludeVisiblePacketsOnly.Location" type="System.Drawing.Point, System.Drawing">
+    <value>504, 25</value>
+  </data>
+  <data name="CBIncludeVisiblePacketsOnly.Size" type="System.Drawing.Size, System.Drawing">
+    <value>148, 19</value>
+  </data>
+  <data name="CBIncludeVisiblePacketsOnly.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="CBIncludeVisiblePacketsOnly.Text" xml:space="preserve">
+    <value>For visible packets only</value>
+  </data>
+  <data name="&gt;&gt;CBIncludeVisiblePacketsOnly.Name" xml:space="preserve">
+    <value>CBIncludeVisiblePacketsOnly</value>
+  </data>
+  <data name="&gt;&gt;CBIncludeVisiblePacketsOnly.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;CBIncludeVisiblePacketsOnly.Parent" xml:space="preserve">
+    <value>GBSummary</value>
+  </data>
+  <data name="&gt;&gt;CBIncludeVisiblePacketsOnly.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
   <data name="CBHideUrlPreviews.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -677,7 +707,7 @@
     <value>NoControl</value>
   </data>
   <data name="CBHideUrlPreviews.Location" type="System.Drawing.Point, System.Drawing">
-    <value>504, 25</value>
+    <value>229, 50</value>
   </data>
   <data name="CBHideUrlPreviews.Size" type="System.Drawing.Size, System.Drawing">
     <value>124, 19</value>
@@ -698,7 +728,7 @@
     <value>GBSummary</value>
   </data>
   <data name="&gt;&gt;CBHideUrlPreviews.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="CBIncludePacketNames.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -728,7 +758,7 @@
     <value>GBSummary</value>
   </data>
   <data name="&gt;&gt;CBIncludePacketNames.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="BtnCopySummary.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleLeft</value>
@@ -758,7 +788,7 @@
     <value>GBSummary</value>
   </data>
   <data name="&gt;&gt;BtnCopySummary.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="CBIncludePacketIds.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -785,13 +815,13 @@
     <value>GBSummary</value>
   </data>
   <data name="&gt;&gt;CBIncludePacketIds.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="GBSummary.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 365</value>
+    <value>6, 347</value>
   </data>
   <data name="GBSummary.Size" type="System.Drawing.Size, System.Drawing">
-    <value>704, 60</value>
+    <value>704, 78</value>
   </data>
   <data name="GBSummary.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>

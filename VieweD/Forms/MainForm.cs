@@ -207,7 +207,7 @@ namespace VieweD.Forms
 
                 logFileName = projectSetting.LogFile;
                 //project.Settings.ProjectUrl = projectSetting.ProjectUrl;
-                project.DecryptionKeyName = projectSetting.DecryptionName;
+                project.Settings.DecryptionName = projectSetting.DecryptionName;
                 project.InputReader = EngineManager.Instance.GetInputReaderByName(projectSetting.InputReader, project);
 
                 project.InputParser = EngineManager.Instance.GetParserByName(projectSetting.Parser, project);

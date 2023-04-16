@@ -850,5 +850,17 @@ namespace VieweD.Properties {
                 this["DefaultImportFolder"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool CopySummaryVisibleOnly {
+            get {
+                return ((bool)(this["CopySummaryVisibleOnly"]));
+            }
+            set {
+                this["CopySummaryVisibleOnly"] = value;
+            }
+        }
     }
 }

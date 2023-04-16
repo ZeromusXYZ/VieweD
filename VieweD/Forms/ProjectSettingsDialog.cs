@@ -72,7 +72,7 @@ namespace VieweD.Forms
             TextVideoURL.Text = ParentProject.Settings.VideoSettings.VideoUrl;
             TextDescription.Text = ParentProject.Settings.Description;
 
-            DecryptionKeyNameLabel.Text = ParentProject.DecryptionKeyName != string.Empty ? ParentProject.DecryptionKeyName : KeyNotUsed;
+            DecryptionKeyNameLabel.Text = ParentProject.Settings.DecryptionName != string.Empty ? ParentProject.Settings.DecryptionName : KeyNotUsed;
 
             CbInputReader.Text = ParentProject.InputReader?.Name ?? string.Empty;
             CbInputReader.Enabled = CbInputReader.Text == string.Empty;
@@ -94,6 +94,7 @@ namespace VieweD.Forms
         {
             CBIncludePacketIds.Checked = Settings.Default.CopySummaryPacketIDs;
             CBIncludePacketNames.Checked = Settings.Default.CopySummaryPacketNames;
+            CBIncludeVisiblePacketsOnly.Checked = Settings.Default.CopySummaryVisibleOnly;
             CBHideUrlPreviews.Checked = Settings.Default.CopySummaryNoAutoLoad;
             TagTextBox.AutoCompleteCustomSource.Clear();
             if (ParentProject != null)
@@ -234,7 +235,7 @@ namespace VieweD.Forms
                 // Grab all used packet Ids
                 foreach (var dir in Enum.GetValues<PacketDataDirection>())
                 {
-                    var packetsUsed = ParentProject?.GetAllUsedPacketsByDirection(dir);
+                    var packetsUsed = CBIncludeVisiblePacketsOnly.Checked ? ParentProject?.GetAllVisiblePacketsByDirection(dir) : ParentProject?.GetAllUsedPacketsByDirection(dir);
                     if (packetsUsed == null)
                         continue;
 
@@ -329,6 +330,7 @@ namespace VieweD.Forms
             Settings.Default.CopySummaryPacketIDs = CBIncludePacketIds.Checked;
             Settings.Default.CopySummaryPacketNames = CBIncludePacketNames.Checked;
             Settings.Default.CopySummaryNoAutoLoad = CBHideUrlPreviews.Checked;
+            Settings.Default.CopySummaryVisibleOnly = CBIncludeVisiblePacketsOnly.Checked;
             Settings.Default.Save();
         }
 

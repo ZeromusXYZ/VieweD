@@ -115,7 +115,6 @@ public class ViewedProjectTab : TabPage
     public VideoForm? Video { get; set; }
     public RulesEditorForm? CurrentEditor { get; set; }
     public GameViewForm? GameView { get; set; }
-    public string DecryptionKeyName { get; set; } = string.Empty;
 
     public ViewedProjectTab()
     {
@@ -1494,7 +1493,7 @@ public class ViewedProjectTab : TabPage
     }
 
     /// <summary>
-    /// Returns a list of FullFilterKeys of each used 
+    /// Returns a list of FullFilterKeys of each used packet
     /// </summary>
     /// <param name="direction"></param>
     /// <returns></returns>
@@ -1503,6 +1502,30 @@ public class ViewedProjectTab : TabPage
         var res = new List<ulong>();
         foreach (var basePacketData in LoadedPacketList)
         {
+            if (basePacketData.PacketDataDirection != direction)
+                continue;
+
+            var key = PacketFilterListEntry.EncodeFilterKey(basePacketData.PacketId, basePacketData.CompressionLevel,
+                basePacketData.StreamId);
+            if (!res.Contains(key))
+                res.Add(key);
+        }
+
+        return res;
+    }
+
+    /// <summary>
+    /// Returns a list of FullFilterKeys of each currently visible packet
+    /// </summary>
+    /// <param name="direction"></param>
+    /// <returns></returns>
+    public List<ulong> GetAllVisiblePacketsByDirection(PacketDataDirection direction)
+    {
+        var res = new List<ulong>();
+        foreach (var item in PacketsListBox.Items)
+        {
+            if (item is not BasePacketData basePacketData)
+                continue;
             if (basePacketData.PacketDataDirection != direction)
                 continue;
 

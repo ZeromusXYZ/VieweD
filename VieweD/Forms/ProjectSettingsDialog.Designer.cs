@@ -71,6 +71,7 @@ namespace VieweD.Forms
             label7 = new Label();
             TableLayoutTabsButtons = new TableLayoutPanel();
             ButtonsPanel = new Panel();
+            CBIncludeVisiblePacketsOnly = new CheckBox();
             GbProjectFile.SuspendLayout();
             GbInput.SuspendLayout();
             GbTags.SuspendLayout();
@@ -267,6 +268,7 @@ namespace VieweD.Forms
             // GBSummary
             // 
             resources.ApplyResources(GBSummary, "GBSummary");
+            GBSummary.Controls.Add(CBIncludeVisiblePacketsOnly);
             GBSummary.Controls.Add(CBHideUrlPreviews);
             GBSummary.Controls.Add(CBIncludePacketNames);
             GBSummary.Controls.Add(BtnCopySummary);
@@ -285,6 +287,8 @@ namespace VieweD.Forms
             // CBIncludePacketNames
             // 
             resources.ApplyResources(CBIncludePacketNames, "CBIncludePacketNames");
+            CBIncludePacketNames.Checked = true;
+            CBIncludePacketNames.CheckState = CheckState.Checked;
             CBIncludePacketNames.Name = "CBIncludePacketNames";
             CBIncludePacketNames.UseVisualStyleBackColor = true;
             // 
@@ -299,8 +303,6 @@ namespace VieweD.Forms
             // CBIncludePacketIds
             // 
             resources.ApplyResources(CBIncludePacketIds, "CBIncludePacketIds");
-            CBIncludePacketIds.Checked = true;
-            CBIncludePacketIds.CheckState = CheckState.Checked;
             CBIncludePacketIds.Name = "CBIncludePacketIds";
             CBIncludePacketIds.UseVisualStyleBackColor = true;
             // 
@@ -364,6 +366,14 @@ namespace VieweD.Forms
             ButtonsPanel.Controls.Add(BtnOK);
             resources.ApplyResources(ButtonsPanel, "ButtonsPanel");
             ButtonsPanel.Name = "ButtonsPanel";
+            // 
+            // CBIncludeVisiblePacketsOnly
+            // 
+            resources.ApplyResources(CBIncludeVisiblePacketsOnly, "CBIncludeVisiblePacketsOnly");
+            CBIncludeVisiblePacketsOnly.Checked = true;
+            CBIncludeVisiblePacketsOnly.CheckState = CheckState.Checked;
+            CBIncludeVisiblePacketsOnly.Name = "CBIncludeVisiblePacketsOnly";
+            CBIncludeVisiblePacketsOnly.UseVisualStyleBackColor = true;
             // 
             // ProjectSettingsDialog
             // 
@@ -435,5 +445,6 @@ namespace VieweD.Forms
         private Button BtnDownloadVideo;
         public TextBox TextVideoFile;
         public TextBox TextLogFile;
+        private CheckBox CBIncludeVisiblePacketsOnly;
     }
 }

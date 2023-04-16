@@ -440,14 +440,14 @@ public class AaDInputReader : BaseInputReader
         uint c2 = 0;
 
         // Ask for key if not defined yet
-        if (ParentProject.DecryptionKeyName == string.Empty)
+        if (ParentProject.Settings.DecryptionName == string.Empty)
         {
-            var keyName = DecryptKeySelectDialog.SelectDecryptionKeyName(ParentProject.DecryptionKeyName, ParentProject);
-            ParentProject.DecryptionKeyName = keyName;
+            var keyName = DecryptKeySelectDialog.SelectDecryptionKeyName(ParentProject.Settings.DecryptionName, ParentProject);
+            ParentProject.Settings.DecryptionName = keyName;
         }
 
-        if (ParentProject.DecryptionKeyName != string.Empty)
-            Encryption.GetValuesForVersion(ParentProject.DecryptionKeyName, out c1, out c2);
+        if (ParentProject.Settings.DecryptionName != string.Empty)
+            Encryption.GetValuesForVersion(ParentProject.Settings.DecryptionName, out c1, out c2);
 
         // var sourceData = pd.ByteData.GetRange(pd.Cursor, pd.ByteData.Count - pd.Cursor);
         // var decodeData = new List<byte>();
