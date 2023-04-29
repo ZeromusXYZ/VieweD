@@ -1255,6 +1255,29 @@ public class RulesActionReadUInt32Ms : RulesAction
 }
 
 /// <summary>
+/// uint as milliseconds
+/// </summary>
+public class RulesActionReadUInt64Ms : RulesAction
+{
+    public RulesActionReadUInt64Ms(PacketRule parent, RulesAction? parentAction, XmlNode thisNode, int thisStep, bool reversed) : base(parent, parentAction, thisNode, thisStep, reversed)
+    {
+        //
+    }
+
+    public override void RunAction(BasePacketData packetData)
+    {
+        GotoStartPosition(packetData);
+        var pos = packetData.Cursor;
+        var data = packetData.GetUInt64AtPos(pos, IsReversed);
+        var dataString = data.AsMilliseconds() + " - " + data.ToHex();
+        var varName = XmlHelper.GetAttributeString(Attributes, "name");
+        var lookupVal = GetLookup(data);
+        ParentRule.SetLocalVar(varName, data.ToString(CultureInfo.InvariantCulture));
+        packetData.AddParsedField(true, pos, packetData.Cursor - 1, pos.ToHex(2), varName, lookupVal + dataString, Depth);
+    }
+}
+
+/// <summary>
 /// Execute/Inject a template
 /// </summary>
 public class RulesActionTemplate : RulesAction

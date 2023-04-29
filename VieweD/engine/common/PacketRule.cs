@@ -108,6 +108,10 @@ public class PacketRule
                     case "rms":
                         res = new RulesActionReadUInt32Ms(this, parentAction, actionNode, step, isReversed);
                         break;
+                    case "ms64":
+                    case "rms64":
+                        res = new RulesActionReadUInt64Ms(this, parentAction, actionNode, step, isReversed);
+                        break;
                     case "int32":
                     case "r-int32":
                     case "i":
@@ -131,10 +135,12 @@ public class PacketRule
                         break;
                     case "q":
                     case "r-q":
+                    case "ulong":
                     case "uint64":
                     case "r-uint64":
                         res = new RulesActionReadUInt64(this, parentAction, actionNode, step, isReversed);
                         break;
+                    case "long": // not used
                     case "int64": // not used
                     case "r-int64": // not used
                         res = new RulesActionReadInt64(this, parentAction, actionNode, step, isReversed);

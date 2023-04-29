@@ -87,13 +87,22 @@ public class DataLookups
                 {
                     if (NumberHelper.TryFieldParse(fields[0], out int newId))
                     {
-                        var dataLookupEntry = new DataLookupEntry
+                        if (!(dataLookupList.Data.TryGetValue((ulong)newId, out var dataLookupEntry)))
                         {
-                            Id = (ulong)newId,
-                            Val = fields[1],
-                            Extra = fields.Length > 2 ? fields[2] : "",
-                        };
-                        dataLookupList.Data.Add((ulong)newId, dataLookupEntry);
+                            dataLookupEntry = new DataLookupEntry
+                            {
+                                Id = (ulong)newId,
+                                Val = fields[1],
+                                Extra = fields.Length > 2 ? fields[2] : "",
+                            };
+                            dataLookupList.Data.Add((ulong)newId, dataLookupEntry);
+                        }
+                        else
+                        {
+                            // Concat Result to previous entry
+                            dataLookupEntry.Val += " / " + fields[1];
+                        }
+                        // dataLookupList.Data.Add((ulong)newId, dataLookupEntry);
 
                         // For autocomplete
                         AllValues.Add(dataLookupEntry.Val);

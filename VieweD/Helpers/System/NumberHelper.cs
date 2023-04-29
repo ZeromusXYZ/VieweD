@@ -109,6 +109,38 @@ namespace VieweD.Helpers.System
 
             return res;
         }
+
+        public static string AsMilliseconds(this ulong val)
+        {
+            var r = val % 1000;
+            var v = val / 1000;
+            var res = r.ToString("0000") + "ms";
+            if (v <= 0)
+                return res;
+
+            r = v % 60;
+            v /= 60;
+            res = r.ToString("00") + "s " + res;
+
+            if (v <= 0)
+                return res;
+
+            r = v % 60;
+            v /= 60;
+            res = r.ToString("00") + "m " + res;
+
+            if (v <= 0)
+                return res;
+
+            r = v % 24;
+            v /= 24;
+            res = r.ToString("00") + "h " + res;
+
+            if (v > 0)
+                res = v + "d " + res;
+
+            return res;
+        }
     }
 
     public static class NumberHelper

@@ -109,6 +109,7 @@ public class AaParser : BaseParser
 
             var originalExpandedStartPos = parentPacketData.Cursor;
 
+            //while (parentPacketData.Cursor < parentPacketData.ByteData.Count - 6)
             while (parentPacketData.UnParseSubPacketCount > 0)
             {
                 var subData = new BasePacketData(parentPacketData.ParentProject);
