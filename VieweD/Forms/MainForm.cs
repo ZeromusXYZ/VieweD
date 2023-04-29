@@ -1672,7 +1672,9 @@ namespace VieweD.Forms
             }
 
             if (templateName != string.Empty)
+            {
                 project.EditTemplate(templateName);
+            }
         }
 
         private void MMToolExportData_DropDownOpening(object sender, EventArgs e)

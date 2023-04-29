@@ -35,6 +35,9 @@ public class AaPacketRule : PacketRule
             "rqx" => new RulesActionReadUInt64ShiftFraction(this, parentAction, actionNode, step, isReversed, 32, 4096f),
             "rqy" => new RulesActionReadUInt64ShiftFraction(this, parentAction, actionNode, step, isReversed, 32, 4096f),
             "rqz" => new RulesActionReadUInt64ShiftFraction(this, parentAction, actionNode, step, isReversed, 32, 4096f),
+            "dx" => new RulesActionReadUInt32ShiftFraction(this, parentAction, actionNode, step, isReversed, 0, 512f),
+            "dy" => new RulesActionReadUInt32ShiftFraction(this, parentAction, actionNode, step, isReversed, 0, 512f),
+            "dz" => new RulesActionReadUInt32ShiftFraction(this, parentAction, actionNode, step, isReversed, 0, 512f),
             _ => base.BuildFallbackDataAction(parentAction, actionNode, attributes, step, dataType, isReversed)
         };
     }
@@ -152,6 +155,33 @@ public class RulesActionReadUInt64ShiftFraction : RulesAction
         var d = packetData.GetUInt64AtPos(pos);
         if (IsReversed)
             d = BitConverter.ToUInt64(BitConverter.GetBytes(d).Reverse().ToArray(), 0);
+        var f = (d >> ShiftValue) / FractionValue;
+        var dataString = f + " (" + d.ToHex() + ")";
+        var varName = XmlHelper.GetAttributeString(Attributes, "name");
+
+        ParentRule.SetLocalVar(varName, f.ToString(CultureInfo.InvariantCulture));
+        packetData.AddParsedField(true, pos, packetData.Cursor - 1, pos.ToHex(2), varName, dataString, Depth);
+    }
+}
+
+public class RulesActionReadUInt32ShiftFraction : RulesAction
+{
+    public int ShiftValue;
+    public float FractionValue;
+
+    public RulesActionReadUInt32ShiftFraction(PacketRule parent, RulesAction? parentAction, XmlNode thisNode, int thisStep, bool reversed, int shiftValue, float fractionValue) : base(parent, parentAction, thisNode, thisStep, reversed)
+    {
+        ShiftValue = shiftValue;
+        FractionValue = fractionValue;
+    }
+
+    public override void RunAction(BasePacketData packetData)
+    {
+        GotoStartPosition(packetData);
+        var pos = packetData.Cursor;
+        var d = packetData.GetUInt32AtPos(pos);
+        if (IsReversed)
+            d = BitConverter.ToUInt32(BitConverter.GetBytes(d).Reverse().ToArray(), 0);
         var f = (d >> ShiftValue) / FractionValue;
         var dataString = f + " (" + d.ToHex() + ")";
         var varName = XmlHelper.GetAttributeString(Attributes, "name");

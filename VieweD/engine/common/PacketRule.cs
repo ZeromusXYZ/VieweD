@@ -69,7 +69,7 @@ public class PacketRule
             case "data": 
                 // Normal data
                 var dataType = XmlHelper.GetAttributeString(attributes, "type").ToLower();
-                var isReversed = dataType.StartsWith("r-");
+                var isReversed = dataType.StartsWith("r");
                 switch (dataType)
                 {
                     case "b":
@@ -81,27 +81,27 @@ public class PacketRule
                         break;
                     case "w":
                     case "uint16":
-                    case "r-uint16":
+                    case "ruint16":
                     case "word":
-                    case "r-word":
+                    case "rword":
                     case "ushort":
-                    case "r-ushort":
+                    case "rushort":
                         res = new RulesActionReadUInt16(this, parentAction, actionNode, step, isReversed);
                         break;
                     case "int16":
-                    case "r-int16":
+                    case "rint16":
                     case "h":
-                    case "r-h":
+                    case "rh":
                     case "short":
-                    case "r-short":
+                    case "rshort":
                         res = new RulesActionReadInt16(this, parentAction, actionNode, step, isReversed);
                         break;
                     case "uint32":
-                    case "r-uint32":
+                    case "ruint32":
                     case "d":
-                    case "r-d":
+                    case "rd":
                     case "uint":
-                    case "r-uint":
+                    case "ruint":
                         res = new RulesActionReadUInt32(this, parentAction, actionNode, step, isReversed);
                         break;
                     case "ms":
@@ -113,43 +113,43 @@ public class PacketRule
                         res = new RulesActionReadUInt64Ms(this, parentAction, actionNode, step, isReversed);
                         break;
                     case "int32":
-                    case "r-int32":
+                    case "rint32":
                     case "i":
-                    case "r-i":
+                    case "ri":
                     case "int":
-                    case "r-int":
+                    case "rint":
                         res = new RulesActionReadInt32(this, parentAction, actionNode, step, isReversed);
                         break;
                     case "f":
-                    case "r-f":
+                    case "rf":
                     case "float":
-                    case "r-float":
+                    case "rfloat":
                         res = new RulesActionReadSingle(this, parentAction, actionNode, step);
                         break;
                     case "double":
-                    case "r-double":
+                    case "rdouble":
                         res = new RulesActionReadDouble(this, parentAction, actionNode, step);
                         break;
                     case "half":
                         res = new RulesActionReadHalf(this, parentAction, actionNode, step);
                         break;
                     case "q":
-                    case "r-q":
+                    case "rq":
                     case "ulong":
                     case "uint64":
-                    case "r-uint64":
+                    case "ruint64":
                         res = new RulesActionReadUInt64(this, parentAction, actionNode, step, isReversed);
                         break;
                     case "long": // not used
                     case "int64": // not used
-                    case "r-int64": // not used
+                    case "rint64": // not used
                         res = new RulesActionReadInt64(this, parentAction, actionNode, step, isReversed);
                         break;
                     case "a":
                         res = new RulesActionReadArray(this, parentAction, actionNode, step);
                         break;
                     case "ts":
-                    case "r-ts":
+                    case "rts":
                         res = new RulesActionReadUnixTimeStamp(this, parentAction, actionNode, step, isReversed);
                         break;
                     case "s":
@@ -170,10 +170,10 @@ public class PacketRule
                     case "zu8":
                         res = new RulesActionReadString(this, parentAction, actionNode, step, Encoding.UTF8, true);
                         break;
-                    case "uint24":
                     case "bc":
-                    case "r-uint24":
-                    case "r-bc":
+                    case "rbc":
+                    case "uint24":
+                    case "ruint24":
                         res = new RulesActionReadUInt24(this, parentAction, actionNode, step, isReversed);
                         break;
                     case "bits":
@@ -186,8 +186,8 @@ public class PacketRule
                         break;
                     case "ip4":
                     case "ipv4":
-                    case "r-ip4":
-                    case "r-ipv4":
+                    case "rip4":
+                    case "ripv4":
                         res = new RulesActionReadIp4(this, parentAction, actionNode, step, isReversed);
                         break;
                     case "ip6":

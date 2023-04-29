@@ -182,6 +182,18 @@ namespace VieweD.Forms
                     }
                     
                     Close();
+                    if ((ParentProject != null) && (ParentProject.InputParser != null) && MessageBox.Show($"Do you want to re-parse the project?", "", MessageBoxButtons.YesNo) ==
+                        DialogResult.Yes)
+                    {
+                        var lastPacket = ParentProject.PacketsListBox.SelectedItem as BasePacketData;
+                        ParentProject.InputParser.ParseAllData(true);
+                        ParentProject.ReIndexLoadedPackets();
+                        ParentProject.PopulateListBox();
+                        if (lastPacket != null)
+                            ParentProject.PacketsListBox.SelectedItem = lastPacket;
+                            //ParentProject.GotoPacketTimeOffset(lastPacket.OffsetFromStart);
+                        ParentProject.OnProjectDataChanged();
+                    }
                 }
                 catch (Exception exception)
                 {
