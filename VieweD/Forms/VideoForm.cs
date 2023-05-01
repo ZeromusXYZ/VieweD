@@ -196,6 +196,12 @@ namespace VieweD.Forms
                 MethodInvokerDelegate();
         }
 
+        private void UpdateProjectPositionFromVideo(float pos, long max)
+        {
+            var intPos = (int)(pos * (double)max);
+            UpdateProjectPositionFromVideo(intPos);
+        }
+
         private void UpdateVideoMarquee(string s)
         {
             MPlayer?.SetMarqueeInt(VideoMarqueeOption.Color, 0xEEEE44);
@@ -307,6 +313,9 @@ namespace VieweD.Forms
                     MPlayerSeekTo(TimeSpan.FromMilliseconds((MPlayer.Position * MPlayer.Length) + delta));
 
                 UpdateVideoMarquee(VideoPositionToString(MPlayer?.Position ?? 0f));
+
+                if ((MPlayer != null) && (PMFollowPackets.Checked))
+                    UpdateProjectPositionFromVideo(MPlayer.Position, MPlayer.Length);
             }
         }
 
@@ -317,9 +326,14 @@ namespace VieweD.Forms
 
             // Skip back 20 seconds (or 1 if shift is held)
             var delta = (ModifierKeys & Keys.Shift) != 0 ? -1000.0 : -20000.0;
+
             if ((MPlayer?.IsSeekable ?? false) && (MPlayer.Length > 0))
                 MPlayerSeekTo(TimeSpan.FromMilliseconds((MPlayer.Position * MPlayer.Length) + delta));
+
             UpdateVideoMarquee(VideoPositionToString(MPlayer?.Position ?? 0f));
+
+            if ((MPlayer != null) && (PMFollowPackets.Checked))
+                UpdateProjectPositionFromVideo(MPlayer.Position, MPlayer.Length);
         }
 
         private void BtnSeekStart_Click(object sender, EventArgs e)
@@ -330,6 +344,9 @@ namespace VieweD.Forms
             // Seek to beginning of the video
             if (MPlayer?.IsSeekable ?? false)
                 MPlayerSeekTo(TimeSpan.FromMilliseconds(1));
+
+            if ((MPlayer != null) && (PMFollowPackets.Checked))
+                UpdateProjectPositionFromVideo(MPlayer.Position, MPlayer.Length);
         }
 
         private void BtnSeekEnd_Click(object sender, EventArgs e)
@@ -340,6 +357,9 @@ namespace VieweD.Forms
             // Seek to the end of the video
             if ((MPlayer?.IsSeekable ?? false) && (MPlayer.Length > 0))
                 MPlayerSeekTo(TimeSpan.FromMilliseconds(MPlayer.Length - 1));
+
+            if ((MPlayer != null) && (PMFollowPackets.Checked))
+                UpdateProjectPositionFromVideo(MPlayer.Position, MPlayer.Length);
         }
 
         private void BtnMute_Click(object sender, EventArgs e)
