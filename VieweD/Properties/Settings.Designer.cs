@@ -862,5 +862,17 @@ namespace VieweD.Properties {
                 this["CopySummaryVisibleOnly"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool CSVExportIncludeTime {
+            get {
+                return ((bool)(this["CSVExportIncludeTime"]));
+            }
+            set {
+                this["CSVExportIncludeTime"] = value;
+            }
+        }
     }
 }

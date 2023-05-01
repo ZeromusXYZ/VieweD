@@ -44,11 +44,13 @@ namespace VieweD.Forms
             DelimiterTab = new RadioButton();
             DelimiterSemicolon = new RadioButton();
             DelimiterComma = new RadioButton();
+            CbIncludeTimeStamp = new CheckBox();
             groupBox1.SuspendLayout();
             SuspendLayout();
             // 
             // SelectedFieldsListBox
             // 
+            SelectedFieldsListBox.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
             SelectedFieldsListBox.FormattingEnabled = true;
             SelectedFieldsListBox.Location = new Point(12, 42);
             SelectedFieldsListBox.Name = "SelectedFieldsListBox";
@@ -116,9 +118,10 @@ namespace VieweD.Forms
             // 
             // BtnExport
             // 
+            BtnExport.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             BtnExport.Image = Properties.Resources.document_save_16;
             BtnExport.ImageAlign = ContentAlignment.MiddleLeft;
-            BtnExport.Location = new Point(12, 304);
+            BtnExport.Location = new Point(12, 311);
             BtnExport.Name = "BtnExport";
             BtnExport.Size = new Size(114, 23);
             BtnExport.TabIndex = 6;
@@ -129,7 +132,7 @@ namespace VieweD.Forms
             // BtnClose
             // 
             BtnClose.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            BtnClose.Location = new Point(413, 304);
+            BtnClose.Location = new Point(413, 311);
             BtnClose.Name = "BtnClose";
             BtnClose.Size = new Size(75, 23);
             BtnClose.TabIndex = 7;
@@ -182,11 +185,22 @@ namespace VieweD.Forms
             DelimiterComma.Text = "Comma (standard)";
             DelimiterComma.UseVisualStyleBackColor = true;
             // 
+            // CbIncludeTimeStamp
+            // 
+            CbIncludeTimeStamp.AutoSize = true;
+            CbIncludeTimeStamp.Location = new Point(294, 264);
+            CbIncludeTimeStamp.Name = "CbIncludeTimeStamp";
+            CbIncludeTimeStamp.Size = new Size(132, 19);
+            CbIncludeTimeStamp.TabIndex = 9;
+            CbIncludeTimeStamp.Text = "Include Timestamps";
+            CbIncludeTimeStamp.UseVisualStyleBackColor = true;
+            // 
             // ExportCsvDialog
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(498, 334);
+            ClientSize = new Size(498, 341);
+            Controls.Add(CbIncludeTimeStamp);
             Controls.Add(groupBox1);
             Controls.Add(BtnClose);
             Controls.Add(BtnExport);
@@ -222,5 +236,6 @@ namespace VieweD.Forms
         private RadioButton DelimiterTab;
         private RadioButton DelimiterSemicolon;
         private RadioButton DelimiterComma;
+        private CheckBox CbIncludeTimeStamp;
     }
 }
