@@ -90,7 +90,7 @@ public class RulesActionReadPish : RulesAction
         ParentRule.SetLocalVar(varName+@"-pish", pish.ToString(CultureInfo.InvariantCulture));
         packetData.AddParsedField(true, pos, pos, pos.ToHex(2), varName, pish.ToHex() + " (" + pish.ToBinary() + ")", Depth);
 
-        var bits = new BitArray(BitConverter.GetBytes(pish));
+        var bits = new BitArray(BitConverter.GetBytes((short)pish));
         var lookupNumber = 0;
         for (var pIndex = 0; pIndex < count * 2; pIndex += 2)
         {
