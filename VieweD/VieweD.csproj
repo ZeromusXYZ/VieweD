@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <TargetFramework>net8.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>disable</ImplicitUsings>
@@ -36,16 +36,18 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CsvHelper" Version="30.0.1" />
+    <PackageReference Include="CsvHelper" Version="31.0.0" />
     <PackageReference Include="DotNetZip" Version="1.16.0" />
     <PackageReference Include="FastColoredTextBox.Net6" Version="1.0.0" />
-    <PackageReference Include="LibVLCSharp.WinForms" Version="3.7.0" />
-    <PackageReference Include="MegaApiClient" Version="1.10.3" />
-    <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="4.5.0" />
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.5.0" />
-    <PackageReference Include="SharpCompress" Version="0.33.0" />
-    <PackageReference Include="VideoLAN.LibVLC.Windows" Version="3.0.18" />
-    <PackageReference Include="YoutubeExplode" Version="6.2.12" />
+    <PackageReference Include="LibVLCSharp.WinForms" Version="3.8.2" />
+    <PackageReference Include="MegaApiClient" Version="1.10.4" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="4.8.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.8.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="SharpCompress" Version="0.36.0" />
+    <PackageReference Include="System.Drawing.Common" Version="8.0.2" />
+    <PackageReference Include="VideoLAN.LibVLC.Windows" Version="3.0.20" />
+    <PackageReference Include="YoutubeExplode" Version="6.3.13" />
   </ItemGroup>
 
   <ItemGroup>
@@ -132,6 +134,9 @@
     <None Update="data\ffxi\lookup\actionreaction.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="data\ffxi\lookup\bgmtype.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="data\ffxi\lookup\buffs.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -139,6 +144,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="data\ffxi\lookup\craftranks.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="data\ffxi\lookup\crafts.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="data\ffxi\lookup\effectbits.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="data\ffxi\lookup\equipslot.txt">
