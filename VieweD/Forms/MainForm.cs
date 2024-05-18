@@ -205,7 +205,7 @@ namespace VieweD.Forms
 
                 project.Settings = projectSetting;
 
-                logFileName = projectSetting.LogFile;
+                logFileName = Helper.TryMakeFullPath(project.ProjectFolder, projectSetting.LogFile);
                 //project.Settings.ProjectUrl = projectSetting.ProjectUrl;
                 project.Settings.DecryptionName = projectSetting.DecryptionName;
                 project.InputReader = EngineManager.Instance.GetInputReaderByName(projectSetting.InputReader, project);
@@ -255,9 +255,17 @@ namespace VieweD.Forms
             // Load the lookup data after we know our reader (so we can name packets before parsing)
             _ = project.DataLookup.LoadLookups(project.InputReader.DataFolder, true);
 
+
             if (project.InputReader.OpenFile(logFileName))
             {
                 project.InputReader.ReadAllData();
+
+                if (project.LoadedPacketList.Count <= 0)
+                {
+                    MessageBox.Show(Resources.NoFileData, Resources.InputReaderError, MessageBoxButtons.OK);
+                    project.CloseProject(true);
+                    return null;
+                }
 
                 project.InputParser ??= ParserDialog.SelectParser(project, project.InputReader);
 

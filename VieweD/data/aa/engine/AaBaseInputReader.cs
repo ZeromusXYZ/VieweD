@@ -41,7 +41,7 @@ public class AaBaseInputReader : BaseInputReader
     {
         // ExpectedFileExtensions.Add(".d");
 
-        InitReader(parentProject);
+        // InitReader(parentProject);
     }
 
     public AaBaseInputReader()
@@ -98,7 +98,7 @@ public class AaBaseInputReader : BaseInputReader
 
     public override BaseInputReader CreateNew(ViewedProjectTab parentProject)
     {
-        return new AaDInputReader(parentProject);
+        return new AaBaseInputReader(parentProject);
     }
 
     public bool CompileData(BasePacketData packetData)

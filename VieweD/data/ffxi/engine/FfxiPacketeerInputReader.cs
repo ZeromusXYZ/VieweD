@@ -51,7 +51,7 @@ public class FfxiPacketeerInputReader : BaseInputReader
     }
 
 
-    public override bool Open(Stream source)
+    public override bool Open(Stream source, string fileName)
     {
         try
         {

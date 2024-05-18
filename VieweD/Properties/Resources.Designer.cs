@@ -1004,6 +1004,15 @@ namespace VieweD.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to It looks like there is no useable data in the opened file.
+        /// </summary>
+        internal static string NoFileData {
+            get {
+                return ResourceManager.GetString("NoFileData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No rule attached to this packet, create a new one?.
         /// </summary>
         internal static string NoRuleAttachedToThisPacketCreateNewRule {

@@ -655,21 +655,6 @@
   <data name="TPWelcomeLayout.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
-  <data name="&gt;&gt;TPWelcomeLayout.Name" xml:space="preserve">
-    <value>TPWelcomeLayout</value>
-  </data>
-  <data name="&gt;&gt;TPWelcomeLayout.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;TPWelcomeLayout.Parent" xml:space="preserve">
-    <value>TPWelcome</value>
-  </data>
-  <data name="&gt;&gt;TPWelcomeLayout.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="TPWelcomeLayout.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="RichTextWelcome" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="TPWelcomeBtnClose" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="AutoSize,0" /&gt;&lt;Rows Styles="Percent,100,Absolute,32" /&gt;&lt;/TableLayoutSettings&gt;</value>
-  </data>
   <data name="RichTextWelcome.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Left, Right</value>
   </data>
@@ -685,18 +670,6 @@
   <data name="RichTextWelcome.Text" xml:space="preserve">
     <value />
   </data>
-  <data name="&gt;&gt;RichTextWelcome.Name" xml:space="preserve">
-    <value>RichTextWelcome</value>
-  </data>
-  <data name="&gt;&gt;RichTextWelcome.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RichTextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;RichTextWelcome.Parent" xml:space="preserve">
-    <value>TPWelcomeLayout</value>
-  </data>
-  <data name="&gt;&gt;RichTextWelcome.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
   <data name="TPWelcomeBtnClose.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Left, Right</value>
   </data>
@@ -711,18 +684,6 @@
   </data>
   <data name="TPWelcomeBtnClose.Text" xml:space="preserve">
     <value>Close</value>
-  </data>
-  <data name="&gt;&gt;TPWelcomeBtnClose.Name" xml:space="preserve">
-    <value>TPWelcomeBtnClose</value>
-  </data>
-  <data name="&gt;&gt;TPWelcomeBtnClose.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;TPWelcomeBtnClose.Parent" xml:space="preserve">
-    <value>TPWelcomeLayout</value>
-  </data>
-  <data name="&gt;&gt;TPWelcomeBtnClose.ZOrder" xml:space="preserve">
-    <value>1</value>
   </data>
   <metadata name="DgvPosition.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -1012,18 +973,6 @@
   <data name="RichTextData.Text" xml:space="preserve">
     <value />
   </data>
-  <data name="&gt;&gt;RichTextData.Name" xml:space="preserve">
-    <value>RichTextData</value>
-  </data>
-  <data name="&gt;&gt;RichTextData.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RichTextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;RichTextData.Parent" xml:space="preserve">
-    <value>LayoutRawAndSuggested</value>
-  </data>
-  <data name="&gt;&gt;RichTextData.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
   <metadata name="PMSuggestion.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>736, 17</value>
   </metadata>
@@ -1055,18 +1004,6 @@
     <value>219, 126</value>
   </data>
   <data name="SuggestionListBox.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;SuggestionListBox.Name" xml:space="preserve">
-    <value>SuggestionListBox</value>
-  </data>
-  <data name="&gt;&gt;SuggestionListBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ListBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;SuggestionListBox.Parent" xml:space="preserve">
-    <value>LayoutRawAndSuggested</value>
-  </data>
-  <data name="&gt;&gt;SuggestionListBox.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
   <data name="PMSuggestIntergers.Size" type="System.Drawing.Size, System.Drawing">

@@ -621,4 +621,7 @@ Difference = {2}</value>
     <value>VideoLink updated to use: {0}</value>
     <comment>0: new filename</comment>
   </data>
+  <data name="NoFileData" xml:space="preserve">
+    <value>It looks like there is no useable data in the opened file</value>
+  </data>
 </root>
