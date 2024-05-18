@@ -25,6 +25,24 @@ namespace VieweD.engine.common
         private static Assembly? _pluginsAssembly;
         public static Assembly? PluginAssembly => _pluginsAssembly;
 
+        /// <summary>
+        /// Helper function to check if a class Type is inherited from a specific Type up it's tree
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="compareTo"></param>
+        /// <returns></returns>
+        private bool ContainsType(Type? type, Type compareTo)
+        {
+            var baseType = type;
+            while(baseType != null)
+            {
+                if (baseType == compareTo)
+                    return true;
+                baseType = baseType.BaseType;
+            }
+            return false;
+        }
+
         private EngineManager()
         {
             InstanceObject = this;
@@ -36,14 +54,17 @@ namespace VieweD.engine.common
             var allClasses = Assembly.GetExecutingAssembly().GetTypes();
             foreach (var aClass in allClasses)
             {
-                if (aClass.BaseType == typeof(BaseInputReader))
+                if (ContainsType(aClass.BaseType,typeof(BaseInputReader)))
                 {
                     // Add input reader
                     if (Activator.CreateInstance(aClass) is BaseInputReader reader)
-                        AllInputReaders.Add(reader);
+                    {
+                        if (reader.ExpectedFileExtensions.Count > 0)
+                            AllInputReaders.Add(reader);
+                    }
                 }
 
-                if (aClass.BaseType == typeof(BaseParser))
+                if (ContainsType(aClass.BaseType, typeof(BaseParser)))
                 {
                     // Add parser
                     if (Activator.CreateInstance(aClass) is BaseParser parser)

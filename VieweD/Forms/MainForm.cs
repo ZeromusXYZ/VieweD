@@ -1158,7 +1158,8 @@ namespace VieweD.Forms
             MiFieldFields.Checked = true;
             MIFieldLocalVars.Checked = false;
             DgvParsed.Rows.Clear();
-            TCProjects_SelectedIndexChanged(TCProjects.SelectedTab, e);
+            if (TCProjects.SelectedTab != null)
+                TCProjects_SelectedIndexChanged(TCProjects.SelectedTab, e);
         }
 
         private void MIFieldLocalVars_Click(object sender, EventArgs e)
@@ -1166,7 +1167,8 @@ namespace VieweD.Forms
             MiFieldFields.Checked = false;
             MIFieldLocalVars.Checked = true;
             DgvParsed.Rows.Clear();
-            TCProjects_SelectedIndexChanged(TCProjects.SelectedTab, e);
+            if (TCProjects.SelectedTab != null)
+                TCProjects_SelectedIndexChanged(TCProjects.SelectedTab, e);
         }
 
         private void MiFieldView_Opening(object sender, System.ComponentModel.CancelEventArgs e)
@@ -1613,15 +1615,30 @@ namespace VieweD.Forms
 
         private void HandleCommandLine()
         {
-            var cmdLine = CommandLineParser.SplitCommandLineIntoArguments(Environment.CommandLine, true);
-            var c = 0;
-            foreach (var arg in cmdLine)
+            var cmdLine = CommandLineParser.SplitCommandLineIntoArguments(Environment.CommandLine, true).ToList();
+            if (cmdLine.Count <= 0)
+                return; // should never happen, but will keep the code from complaining.
+
+            for(var c = 1; c < cmdLine.Count; c++)
             {
-                c++;
-                if (c == 1)
-                    continue;
-                if (File.Exists(arg))
-                    _ = OpenFile(arg);
+                var rawArg = cmdLine[c];
+                var arg = rawArg.Trim().ToLower();
+                var thisCommand = string.Empty;
+                if (arg.StartsWith('-'))
+                {
+                    thisCommand = arg.Substring(1);
+                }
+
+                switch (thisCommand)
+                {
+                    case "o":
+                    case "open":
+                        break;
+                    default:
+                        if (File.Exists(rawArg))
+                            _ = OpenFile(rawArg);
+                        break;
+                }
             }
         }
 
@@ -1663,7 +1680,7 @@ namespace VieweD.Forms
             if (TCProjects.SelectedTab is not ViewedProjectTab project)
                 return;
 
-            if (e.ClickedItem.Tag is not string templateName)
+            if (e?.ClickedItem?.Tag is not string templateName)
                 return;
 
             if (templateName == "???")
@@ -1699,7 +1716,7 @@ namespace VieweD.Forms
             if (TCProjects.SelectedTab is not ViewedProjectTab project)
                 return;
 
-            if (e.ClickedItem.Tag is not string exportName)
+            if (e?.ClickedItem?.Tag is not string exportName)
                 return;
 
             if (exportName != string.Empty)
