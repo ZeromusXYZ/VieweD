@@ -1,17 +1,11 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using System.Windows.Forms;
-using Ionic.Zlib;
-using VieweD.Forms;
 using VieweD.engine.common;
-using VieweD.Properties;
 using SharpPcap.LibPcap;
 using SharpPcap;
 using PacketDotNet;
-using Newtonsoft.Json.Linq;
 
 namespace VieweD.data.aa.engine;
 
@@ -48,6 +42,7 @@ public class AaPCapInputReader : AaBaseInputReader
 
     public override bool Open(Stream source, string fileName)
     {
+        base.Open(source, fileName);
         try
         {
             // Pcap reader actually requires a file as input
@@ -60,8 +55,12 @@ public class AaPCapInputReader : AaBaseInputReader
                 ParentProject.TimeStampFormat = "HH:mm:ss.fff";
             MinTime = DateTime.MaxValue;
             MaxTime = DateTime.MinValue;
+
             // XorKey = 0x6D783F3C;
             // AesKey = new byte[] { 0x3C, 0x3F, 0x78, 0x6D, 0x6C, 0x20, 0x76, 0x65, 0x72, 0x73, 0x69, 0x6F, 0x6E, 0x3D, 0x22, 0x31 };
+
+            // XorKey = 0xe546117b;
+            // AesKey = new byte[] { 0x01, 0x43, 0xd9, 0x3c, 0x66, 0xcd, 0x1f, 0x41, 0x40, 0x2d, 0x17, 0x70, 0xf5, 0x79, 0x46, 0xc4 };
 
             return true;
         }
@@ -151,104 +150,136 @@ public class AaPCapInputReader : AaBaseInputReader
         if (tcp.PayloadData.Length <= 0)
             return;
 
-        var data = new BasePacketData(ParentProject);
-        data.SourceIp = ip4Packet.SourceAddress.ToString();
-        data.DestinationIp = ip4Packet.DestinationAddress.ToString();
-        var sPort = tcp.SourcePort;
-        var dPort = tcp.DestinationPort;
+        var remainingData = tcp.PayloadData.ToList();
 
-        if (dPort == 0)
-            data.PacketDataDirection = PacketDataDirection.Unknown;
-        else
-        if (ParentProject.PortToStreamIdMapping.ContainsKey(sPort))
-        {
-            data.SourcePort = sPort;
-            data.DestinationPort = dPort;
-            data.PacketDataDirection = PacketDataDirection.Incoming;
-        }
-        else
-        if (ParentProject.PortToStreamIdMapping.ContainsKey(dPort))
-        {
-            data.SourcePort = dPort;
-            data.DestinationPort = sPort;
-            data.PacketDataDirection = PacketDataDirection.Outgoing;
-        }
-        else
-        {
-            data.SourcePort = sPort;
-            data.DestinationPort = dPort;
-            data.PacketDataDirection = PacketDataDirection.Unknown;
-        }
+        var dummySync = ParentProject.LoadedPacketList.Count; // dummy sync
 
-        // Get Port for this stream
-        var streamInfoFromPort = ParentProject.GetExpectedStreamIdByPort(data.SourcePort, 0);
-
-        data.TimeStamp = DateTime.MinValue.AddSeconds(rawPacket.Timeval.Seconds);
-        // grab min and max timestamp used
-        if (data.TimeStamp > MaxTime)
-            MaxTime = data.TimeStamp;
-        if (data.TimeStamp < MinTime)
-            MinTime = data.TimeStamp;
-
-        data.ByteData.AddRange(tcp.PayloadData);
-        data.SyncId = ParentProject.LoadedPacketList.Count; // dummy sync
-
-        // Get Base info
-        data.Cursor = 0;
-        byte dirByte3;
-        if (streamInfoFromPort.Item3 != "?")
+        while (remainingData.Count > 0)
         {
-            data.PacketDataSize = data.GetUInt16AtPos(data.Cursor);
-            data.PacketId = 0xFFFF;
-            dirByte3 = data.GetByteAtPos(data.Cursor);
-            data.CompressionLevel = data.GetByteAtPos(data.Cursor);
-        }
-        else
-        {
-            dirByte3 = 0;
-            data.PacketDataSize = data.ByteData.Count;
-            data.PacketId = 0x0000;
-            data.CompressionLevel = 0;
-        }
 
-        switch (data.CompressionLevel)
-        {
-            case 0: // Simple packet
-                data.PacketId = dirByte3;
-                break;
-            case 1: // Packet with Hash
-                var l1Hash = data.GetUInt16AtPos(data.Cursor); // Hash L1
-                data.PacketId = data.GetUInt16AtPos(data.Cursor);
-                //pd.PacketLevel = 0;
-                break;
-            case 2: // Extra Packet
-                data.PacketId = data.GetUInt16AtPos(data.Cursor);
-                break;
-            case 3: // Do Decompress L3
-            case 4: // Do Decompress L4
-                if (DecompressL4Data(data) == false)
-                {
+            var data = new BasePacketData(ParentProject);
+            data.SourceIp = ip4Packet.SourceAddress.ToString();
+            data.DestinationIp = ip4Packet.DestinationAddress.ToString();
+            var sPort = tcp.SourcePort;
+            var dPort = tcp.DestinationPort;
+
+            if (dPort == 0)
+                data.PacketDataDirection = PacketDataDirection.Unknown;
+            else
+            if (ParentProject.PortToStreamIdMapping.ContainsKey(sPort))
+            {
+                data.SourcePort = sPort;
+                data.DestinationPort = dPort;
+                data.PacketDataDirection = PacketDataDirection.Incoming;
+            }
+            else
+            if (ParentProject.PortToStreamIdMapping.ContainsKey(dPort))
+            {
+                data.SourcePort = dPort;
+                data.DestinationPort = sPort;
+                data.PacketDataDirection = PacketDataDirection.Outgoing;
+            }
+            else
+            {
+                data.SourcePort = sPort;
+                data.DestinationPort = dPort;
+                data.PacketDataDirection = PacketDataDirection.Unknown;
+            }
+
+            // Get Port for this stream
+            var streamInfoFromPort = ParentProject.GetExpectedStreamIdByPort(data.SourcePort, 0);
+
+            try
+            {
+                data.TimeStamp = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc).AddSeconds((double)rawPacket.Timeval.Value);
+            }
+            catch
+            {
+                data.TimeStamp = DateTime.MinValue;
+            }
+            // grab min and max timestamp used
+            if (data.TimeStamp > MaxTime)
+                MaxTime = data.TimeStamp;
+            if (data.TimeStamp < MinTime)
+                MinTime = data.TimeStamp;
+
+            // Take meaningful data from the pool
+            var packetSize = Convert.ToUInt16((remainingData[1] * 0x100) + remainingData[0]);
+            var addData = remainingData.Take(packetSize);
+            remainingData = remainingData.Skip(packetSize+2).ToList();
+
+            data.ByteData.AddRange(addData);
+            data.SyncId = dummySync; // dummy sync
+
+            if (remainingData.Count > 0)
+            {
+                // Still data remaining
+                // Debug.WriteLine($"Multiple game packets in one packet, data remaining {remainingData.Count} at {data.TimeStamp} ({data.SyncId})");
+            }
+
+            // Get Base info
+            data.Cursor = 0;
+            byte dirByte3;
+            if (streamInfoFromPort.Item3 != "?")
+            {
+                data.PacketDataSize = data.GetUInt16AtPos(data.Cursor);
+                data.PacketId = 0xFFFF;
+                dirByte3 = data.GetByteAtPos(data.Cursor);
+                data.CompressionLevel = data.GetByteAtPos(data.Cursor);
+            }
+            else
+            {
+                dirByte3 = 0;
+                data.PacketDataSize = data.ByteData.Count;
+                data.PacketId = 0x0000;
+                data.CompressionLevel = 0;
+            }
+
+            switch (data.CompressionLevel)
+            {
+                case 0: // Simple packet
+                    data.PacketId = dirByte3;
+                    break;
+                case 1: // Packet with Hash
+                    var l1Hash = data.GetUInt16AtPos(data.Cursor); // Hash L1
+                    data.PacketId = data.GetUInt16AtPos(data.Cursor);
+                    //pd.PacketLevel = 0;
+                    break;
+                case 2: // Extra Packet
+                    data.PacketId = data.GetUInt16AtPos(data.Cursor);
+                    break;
+                case 3: // Do Decompress L3
+                case 4: // Do Decompress L4
+                    if (DecompressL4Data(data) == false)
+                    {
+                        data.MarkedAsInvalid = true;
+                        //return false;
+                    }
+                    break;
+                case 5: // Do decode L5
+                    if (DecodeL5Data(data) == false)
+                    {
+                        data.MarkedAsInvalid = true;
+                        // return false;
+                    }
+                    break;
+                default:
+                    // Debug.WriteLine($"Unexpected Compression Level {data.CompressionLevel}");
                     data.MarkedAsInvalid = true;
-                    //return false;
-                }
-                break;
-            case 5: // Do decode L5
-                if (DecodeL5Data(data) == false)
-                {
-                    data.MarkedAsInvalid = true;
-                    // return false;
-                }
-                break;
+                    // continue;
+                    break;
+            }
+
+            if (data.UnParseSubPacketCount > 0)
+                ParentProject.RequiresSubPacketCreation = true;
+
+            if (CompileData(data))
+                ParentProject.LoadedPacketList.Add(data);
+
+            // update position
+            ViewedProjectTab.OnInputProgressUpdate(this, data.SyncId % 0x0100, 0x0100);
         }
 
-        if (data.UnParseSubPacketCount > 0)
-            ParentProject.RequiresSubPacketCreation = true;
-
-        if (CompileData(data))
-            ParentProject.LoadedPacketList.Add(data);
-
-        // update position
-        ViewedProjectTab.OnInputProgressUpdate(this, data.SyncId % 0x0100, 0x0100);
     }
 
     private void ReaderDeviceOnPacketStopped(object sender, CaptureStoppedEventStatus status)

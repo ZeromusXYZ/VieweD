@@ -7,7 +7,6 @@ using System.Windows.Forms;
 using Ionic.Zlib;
 using VieweD.Forms;
 using VieweD.engine.common;
-using VieweD.Properties;
 
 namespace VieweD.data.aa.engine;
 
@@ -21,8 +20,9 @@ public class AaBaseInputReader : BaseInputReader
     protected uint XorKey { get; set; }
     protected byte[] AesKey { get; set; } = new byte[16];
     protected byte[] Iv { get; set; } = new byte[16];
-    protected uint NumberPacketCounter { get; set; }
     public string DecryptVersion { get; set; } = string.Empty;
+    protected uint C2SL5Counter { get; set; }
+    protected uint S2CL5Counter { get; set; }
 
     // Source: https://docs.microsoft.com/en-us/dotnet/api/system.datetime.parse?view=netframework-4.7.2#System_DateTime_Parse_System_String_System_IFormatProvider_System_Globalization_DateTimeStyles_
     // Assume a date and time string formatted for the fr-FR culture is the local 
@@ -180,6 +180,11 @@ public class AaBaseInputReader : BaseInputReader
         }
     }
 
+    protected byte[] L5Tier2Decode(byte codeKey, byte[] input)
+    {
+        return input;
+    }
+
     public bool DecodeL5Data(BasePacketData pd)
     {
         if (ParentProject == null)
@@ -188,6 +193,7 @@ public class AaBaseInputReader : BaseInputReader
         if (Encryption == null)
             return false;
 
+        var originalPacketDataSize = pd.PacketDataSize;
         uint c1 = 0;
         uint c2 = 0;
 
@@ -212,15 +218,29 @@ public class AaBaseInputReader : BaseInputReader
             {
                 try
                 {
-                    var input = pd.ByteData.GetRange(4, pd.ByteData.Count - 4).ToArray();
-                    //пакет от сервера шифрованный XOR
-                    //packet from server encrypted XOR
+                    var hashPreDecode = pd.GetUInt16AtPos(4); // hash
+                    var payloadSize = pd.ByteData.Count - 4;
+                    var input = pd.ByteData.GetRange(4, payloadSize).ToArray();
+
+                    // packet from server encrypted XOR
                     var output = Encryption.S2CEncrypt(input);
+
+                    var packetIdRawVal = (ushort)(output[2] + output[3] * 0x100);
+                    var specialVal = (byte)(packetIdRawVal >> 10);
+                    if (specialVal > 0)
+                    {
+                        // Do some more output manipulation?
+                        // This value would be between 0-63
+                        output = L5Tier2Decode(specialVal, output.ToArray());
+                    }
+
                     resultData.AddRange(pd.ByteData.GetRange(0, 4));
                     resultData.AddRange(output);
                     pd.ByteData = resultData;
-                    pd.PacketDataSize = pd.GetUInt16AtPos(4);
-                    pd.PacketId = pd.GetUInt16AtPos(pd.Cursor);
+
+                    pd.PacketId = (ushort)(packetIdRawVal & 0x03FF);
+
+                    S2CL5Counter++;
                     return true;
                 }
                 catch
@@ -243,7 +263,7 @@ public class AaBaseInputReader : BaseInputReader
             }
 
             // Initialize IV if it's the first packet ?
-            if (NumberPacketCounter == 0)
+            if (C2SL5Counter == 0)
             {
                 //Initialize IV for the first packet
                 Iv = new byte[16];
@@ -256,10 +276,10 @@ public class AaBaseInputReader : BaseInputReader
 
             try
             {
-                var output = Encryption.S2CDecrypt(input, XorKey, AesKey, Iv, NumberPacketCounter, c1, c2);
+                var output = Encryption.S2CDecrypt(input, XorKey, AesKey, Iv, C2SL5Counter, c1, c2);
 
                 // C2S L5 packet counter
-                NumberPacketCounter++;
+                C2SL5Counter++;
 
                 resultData.AddRange(pd.ByteData.GetRange(0, 5));
                 resultData.AddRange(output.Skip(1));
@@ -281,5 +301,11 @@ public class AaBaseInputReader : BaseInputReader
             return false;
         }
 
+    }
+
+    public override bool Open(Stream source, string fileName)
+    {
+        S2CL5Counter = 0;
+        return false;
     }
 }
