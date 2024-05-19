@@ -164,12 +164,6 @@ public class AaDInputReader : AaBaseInputReader
                                 data.PacketId = data.GetUInt16AtPos(data.Cursor);
                                 break;
                             case 3: // Do Decompress L3
-                                if (DecompressL3Data(data) == false)
-                                {
-                                    data.MarkedAsInvalid = true;
-                                    //return false;
-                                }
-                                break;
                             case 4: // Do Decompress L4
                                 if (DecompressL4Data(data) == false)
                                 {

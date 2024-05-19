@@ -116,69 +116,6 @@ public class AaBaseInputReader : BaseInputReader
         return true;
     }
 
-    public bool DecompressL3Data(BasePacketData pd)
-    {
-        var sourceData = pd.ByteData.GetRange(pd.Cursor, pd.ByteData.Count - pd.Cursor);
-        // var decompressedData = new List<byte>();
-        var resultData = new List<byte>();
-        try
-        {
-            var buffer = new byte[32768];
-            var compressedBytes = sourceData.ToArray();
-            var decompressedBytes = new byte[32768];
-            var ms = new MemoryStream(decompressedBytes);
-            DecompressionHandler.InputBuffer = compressedBytes;
-            DecompressionHandler.NextIn = 0;
-            DecompressionHandler.AvailableBytesIn = compressedBytes.Length;
-
-            DecompressionHandler.OutputBuffer = buffer;
-            do
-            {
-                DecompressionHandler.NextOut = 0;
-                DecompressionHandler.AvailableBytesOut = buffer.Length;
-                var rc = DecompressionHandler.Inflate(FlushType.None);
-
-                if (rc != ZlibConstants.Z_OK && rc != ZlibConstants.Z_STREAM_END)
-                    throw new Exception("inflating: " + DecompressionHandler.Message);
-
-                ms.Write(DecompressionHandler.OutputBuffer, 0, buffer.Length - DecompressionHandler.AvailableBytesOut);
-            }
-            while (DecompressionHandler.AvailableBytesIn > 0 || DecompressionHandler.AvailableBytesOut == 0);
-
-            // pass 2: finish and flush
-            do
-            {
-                DecompressionHandler.NextOut = 0;
-                DecompressionHandler.AvailableBytesOut = buffer.Length;
-                var rc = DecompressionHandler.Inflate(FlushType.Finish);
-
-                if (rc != ZlibConstants.Z_STREAM_END && rc != ZlibConstants.Z_OK)
-                    throw new Exception("inflating: " + DecompressionHandler.Message);
-
-                if (buffer.Length - DecompressionHandler.AvailableBytesOut > 0)
-                    ms.Write(buffer, 0, buffer.Length - DecompressionHandler.AvailableBytesOut);
-            }
-            while (DecompressionHandler.AvailableBytesIn > 0 || DecompressionHandler.AvailableBytesOut == 0);
-
-            // decompressedData.AddRange(DecompressedBytes.ToList().GetRange(2, (int)ms.Position - 2));
-
-            resultData.Add((byte)(ms.Position % 0x100));
-            resultData.Add((byte)(ms.Position / 0x100));
-            resultData.AddRange(pd.ByteData.GetRange(2, 2));
-            //resultData.AddRange(decompressedBytes.Skip(2).Take((int)ms.Position-2));
-            resultData.AddRange(decompressedBytes.Take((int)ms.Position));
-            pd.PacketId = BitConverter.ToUInt16(new[] { decompressedBytes[2], decompressedBytes[3] }, 0);
-
-            pd.ByteData = resultData;
-
-            return true;
-        }
-        catch
-        {
-            return false;
-        }
-    }
-
     public bool DecompressL4Data(BasePacketData pd)
     {
         int inflateOffset;
@@ -188,9 +125,16 @@ public class AaBaseInputReader : BaseInputReader
                 inflateOffset = 2;
                 break;
             case 4:
-                pd.UnParseSubPacketCount = pd.GetUInt16AtPos(pd.Cursor);
-                // l4Data1 = pd.GetByteAtPos(pd.Cursor); // This is the number of contained sub-packets (after inflate)
-                // l4Data2 = pd.GetByteAtPos(pd.Cursor); // Seems like it's always 0x00, might be the possible high-byte for the counter value of l4Data1
+                // Read the number of contained sub-packets (after inflate)
+                pd.UnParseSubPacketCount = pd.GetByteAtPos(pd.Cursor);
+
+                // Next byte seems like it's always 0x00, might be the possible high-byte for the counter value of l4Data1
+                var l4Data2 = pd.GetByteAtPos(pd.Cursor);
+                if (l4Data2 > 0)
+                {
+                    // throw new Exception($"l4data2 was larger than zero");
+                }
+
                 inflateOffset = 1;
                 break;
             default:

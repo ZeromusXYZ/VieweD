@@ -354,3 +354,5 @@ MigrationBackup/
 *.sha256
 
 *.sha3
+
+**/.idea/[Dd]iscord.xml
