@@ -356,7 +356,7 @@ namespace VieweD.Forms
                         if (zipArchiveEntry.IsDirectory)
                             continue;
 
-                        var targetFile = zipArchiveEntry.Key;
+                        var targetFile = zipArchiveEntry.Key ?? string.Empty;
                         if ((stripBeginningPath.Length > 0) && targetFile.StartsWith(stripBeginningPath))
                             targetFile = targetFile.Substring(stripBeginningPath.Length + 1);
 

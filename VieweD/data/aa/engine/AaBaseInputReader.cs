@@ -218,7 +218,7 @@ public class AaBaseInputReader : BaseInputReader
             {
                 try
                 {
-                    var hashPreDecode = pd.GetUInt16AtPos(4); // hash
+                    var hashPreDecode = pd.GetUInt16AtPos(4); // hash?
                     var payloadSize = pd.ByteData.Count - 4;
                     var input = pd.ByteData.GetRange(4, payloadSize).ToArray();
 

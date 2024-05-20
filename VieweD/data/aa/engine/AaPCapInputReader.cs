@@ -6,6 +6,8 @@ using VieweD.engine.common;
 using SharpPcap.LibPcap;
 using SharpPcap;
 using PacketDotNet;
+using System.Globalization;
+using System.Xml;
 
 namespace VieweD.data.aa.engine;
 
@@ -20,6 +22,7 @@ public class AaPCapInputReader : AaBaseInputReader
     private CaptureStoppedEventStatus StopState { get; set; }
     private DateTime MinTime { get; set; }
     private DateTime MaxTime { get; set; }
+    private List<byte> ReadDataBuffer { get; set; } = new();
 
     public AaPCapInputReader(ViewedProjectTab parentProject) : base(parentProject)
     {
@@ -40,6 +43,41 @@ public class AaPCapInputReader : AaBaseInputReader
         return new AaPCapInputReader(parentProject);
     }
 
+    /// <summary>
+    /// Loads XOR and AES keys from .keys files (xml)
+    /// </summary>
+    /// <param name="fileName"></param>
+    /// <returns></returns>
+    private bool LoadKeys(string fileName)
+    {
+        try
+        {
+            var doc = new XmlDocument();
+            doc.Load(fileName);
+
+            XmlNode? aesNode = doc.SelectSingleNode("/Settings/ArcheAge/AES");
+            if (aesNode != null)
+            {
+                var aes = Convert.FromHexString(aesNode.InnerText);
+                AesKey = aes;
+            }
+
+            XmlNode? xorNode = doc.SelectSingleNode("/Settings/ArcheAge/XOR");
+            if (xorNode != null)
+            {
+                if (uint.TryParse(xorNode.InnerText, NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture, out var xor))
+                {
+                    XorKey = xor;
+                }
+            }
+        }
+        catch
+        {
+            return false;
+        }
+        return true;
+    }
+
     public override bool Open(Stream source, string fileName)
     {
         base.Open(source, fileName);
@@ -55,20 +93,18 @@ public class AaPCapInputReader : AaBaseInputReader
                 ParentProject.TimeStampFormat = "HH:mm:ss.fff";
             MinTime = DateTime.MaxValue;
             MaxTime = DateTime.MinValue;
-
-            // XorKey = 0x6D783F3C;
-            // AesKey = new byte[] { 0x3C, 0x3F, 0x78, 0x6D, 0x6C, 0x20, 0x76, 0x65, 0x72, 0x73, 0x69, 0x6F, 0x6E, 0x3D, 0x22, 0x31 };
-
-            // XorKey = 0xe546117b;
-            // AesKey = new byte[] { 0x01, 0x43, 0xd9, 0x3c, 0x66, 0xcd, 0x1f, 0x41, 0x40, 0x2d, 0x17, 0x70, 0xf5, 0x79, 0x46, 0xc4 };
-
-            return true;
         }
         catch (Exception ex)
         {
             ParentProject?.OnInputError(this, ex.Message);
             return false;
         }
+
+        var keyFile = Path.ChangeExtension(fileName, ".keys");
+        if (File.Exists(keyFile))
+            _ = LoadKeys(keyFile);
+
+        return true;
     }
 
     public override int ReadAllData()
@@ -85,8 +121,8 @@ public class AaPCapInputReader : AaBaseInputReader
         var minTime = DateTime.MaxValue;
         var maxTime = DateTime.MinValue;
 
-        var packetCounter = 0;
         ParentProject.LoadedPacketList.Clear();
+        ReadDataBuffer.Clear(); // Clear reading buffer
         try
         {
             var ipMapping = new Dictionary<byte, string>();
@@ -95,16 +131,16 @@ public class AaPCapInputReader : AaBaseInputReader
             StopState = CaptureStoppedEventStatus.ErrorWhileCapturing;
             ReaderDevice.OnPacketArrival += ReaderDeviceOnPacketArrival;
             ReaderDevice.OnCaptureStopped += ReaderDeviceOnPacketStopped;
-            ReaderDevice.Open();
-            ReaderDevice.Capture(); // 50 for testing // Reads all the data
+            ReaderDevice.Open(); 
+            ReaderDevice.Capture(); // Start reading all the data, triggers ReaderDeviceOnPacketStopped
 
-            // shorten the timestamp if the total capture is less than 1 hour
+            // Shorten the timestamp if the total capture is less than 1 hour
             var dMin = minTime - DateTime.MinValue;
             var dMax = maxTime - DateTime.MinValue;
             if ((dMin.TotalHours < 1.0) && (dMax.TotalHours < 1.0))
                 ParentProject.TimeStampFormat = "mm:ss.fff";
 
-            // end progress update
+            // End progress update
             ViewedProjectTab.OnInputProgressUpdate(this, 100, 100);
         }
         catch (Exception ex)
@@ -114,6 +150,7 @@ public class AaPCapInputReader : AaBaseInputReader
         }
         finally
         {
+            // Close the reader, un detach the triggers
             ReaderDevice.Close();
             ReaderDevice.OnPacketArrival -= ReaderDeviceOnPacketArrival;
             ReaderDevice.OnCaptureStopped -= ReaderDeviceOnPacketStopped;
@@ -124,45 +161,63 @@ public class AaPCapInputReader : AaBaseInputReader
             return -1;
         }
 
-        return packetCounter;
+        return ParentProject.LoadedPacketList.Count;
     }
 
     private void ReaderDeviceOnPacketArrival(object sender, PacketCapture e)
     {
         if (ParentProject == null)
             return;
+
+        // Get the raw Capture Data
         var rawPacket = e.GetPacket();
 
         if (rawPacket == null)
             return;
 
+        // Get pre-parsed packet
         var packet = TcpPacket.ParsePacket(rawPacket.LinkLayerType, rawPacket.Data);
 
+        // Check if it's an IPv4 one
         var ip4Packet = packet.PayloadPacket as IPv4Packet;
-
         if (ip4Packet?.Protocol != ProtocolType.Tcp)
             return;
 
+        // Extract TCP data (if any)
         var tcp = ip4Packet.Extract<TcpPacket>();
         if (tcp == null)
             return;
 
+        // Don't bother if it's empty
         if (tcp.PayloadData.Length <= 0)
             return;
 
-        var remainingData = tcp.PayloadData.ToList();
+        // Add to Read buffer
+        ReadDataBuffer.AddRange(tcp.PayloadData);
+        
+        // Generate Dummy Sync ID
+        var dummySync = ParentProject.LoadedPacketList.Count;
 
-        var dummySync = ParentProject.LoadedPacketList.Count; // dummy sync
-
-        while (remainingData.Count > 0)
+        // Keep processing until our buffer is too small
+        while (ReadDataBuffer.Count > 4)
         {
+            // Get the size of the next expected game packet
+            var expectedCompiledPacketSize = Convert.ToUInt16((ReadDataBuffer[1] * 0x100) + ReadDataBuffer[0]);
+            // Check if our current data is big enough
+            if (ReadDataBuffer.Count < expectedCompiledPacketSize)
+                return; // expect more data
 
+            // Create new PacketData object
             var data = new BasePacketData(ParentProject);
-            data.SourceIp = ip4Packet.SourceAddress.ToString();
-            data.DestinationIp = ip4Packet.DestinationAddress.ToString();
+            // Grab IP and port data
+            var sIp = ip4Packet.SourceAddress.ToString();
+            var dIp = ip4Packet.DestinationAddress.ToString();
             var sPort = tcp.SourcePort;
             var dPort = tcp.DestinationPort;
+            data.SourceIp = sIp;
+            data.DestinationIp = dIp;
 
+            // Use port data to determine what direction the packet is for and adjust the port values
             if (dPort == 0)
                 data.PacketDataDirection = PacketDataDirection.Unknown;
             else
@@ -175,6 +230,9 @@ public class AaPCapInputReader : AaBaseInputReader
             else
             if (ParentProject.PortToStreamIdMapping.ContainsKey(dPort))
             {
+                // Swap ports
+                data.SourceIp = dIp;
+                data.DestinationIp = sIp;
                 data.SourcePort = dPort;
                 data.DestinationPort = sPort;
                 data.PacketDataDirection = PacketDataDirection.Outgoing;
@@ -186,9 +244,10 @@ public class AaPCapInputReader : AaBaseInputReader
                 data.PacketDataDirection = PacketDataDirection.Unknown;
             }
 
-            // Get Port for this stream
+            // Get StreamPort information for this port
             var streamInfoFromPort = ParentProject.GetExpectedStreamIdByPort(data.SourcePort, 0);
 
+            // Try to generate timestamp
             try
             {
                 data.TimeStamp = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc).AddSeconds((double)rawPacket.Timeval.Value);
@@ -197,25 +256,21 @@ public class AaPCapInputReader : AaBaseInputReader
             {
                 data.TimeStamp = DateTime.MinValue;
             }
-            // grab min and max timestamp used
+
+            // Capture min and max timestamp used
             if (data.TimeStamp > MaxTime)
                 MaxTime = data.TimeStamp;
             if (data.TimeStamp < MinTime)
                 MinTime = data.TimeStamp;
 
-            // Take meaningful data from the pool
-            var packetSize = Convert.ToUInt16((remainingData[1] * 0x100) + remainingData[0]);
-            var addData = remainingData.Take(packetSize);
-            remainingData = remainingData.Skip(packetSize+2).ToList();
+            // Take meaningful data from the pool, and leave the rest in the ReadDataBuffer
+            var packetSize = Convert.ToUInt16((ReadDataBuffer[1] * 0x100) + ReadDataBuffer[0]);
+            var addData = ReadDataBuffer.Take(packetSize+2);
+            ReadDataBuffer = ReadDataBuffer.Skip(packetSize+2).ToList();
 
+            // Add the data to the BasePacketData
             data.ByteData.AddRange(addData);
             data.SyncId = dummySync; // dummy sync
-
-            if (remainingData.Count > 0)
-            {
-                // Still data remaining
-                // Debug.WriteLine($"Multiple game packets in one packet, data remaining {remainingData.Count} at {data.TimeStamp} ({data.SyncId})");
-            }
 
             // Get Base info
             data.Cursor = 0;
@@ -235,6 +290,7 @@ public class AaPCapInputReader : AaBaseInputReader
                 data.CompressionLevel = 0;
             }
 
+            // Compile the packet depending on level
             switch (data.CompressionLevel)
             {
                 case 0: // Simple packet
@@ -277,7 +333,8 @@ public class AaPCapInputReader : AaBaseInputReader
                 ParentProject.LoadedPacketList.Add(data);
 
             // update position
-            ViewedProjectTab.OnInputProgressUpdate(this, data.SyncId % 0x0100, 0x0100);
+            if (data.SyncId % 0x0100 == 0)
+                ViewedProjectTab.OnInputProgressUpdate(this, data.SyncId >> 8 % 0x0100, 0x0100);
         }
 
     }
