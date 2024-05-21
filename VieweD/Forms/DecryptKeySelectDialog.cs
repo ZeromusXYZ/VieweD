@@ -124,7 +124,7 @@ namespace VieweD.Forms
 
         private void btnOK_Click(object sender, EventArgs e)
         {
-            SelectedKey = cbKeysList?.SelectedValue.ToString() ?? string.Empty;
+            SelectedKey = cbKeysList.SelectedValue?.ToString() ?? string.Empty;
             DialogResult = DialogResult.OK;
         }
     }

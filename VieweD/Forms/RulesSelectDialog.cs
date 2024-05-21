@@ -115,7 +115,7 @@ namespace VieweD.Forms
 
         private void btnOK_Click(object sender, EventArgs e)
         {
-            SelectedFile = cbRulesList?.SelectedValue.ToString() ?? string.Empty;
+            SelectedFile = cbRulesList.SelectedValue?.ToString() ?? string.Empty;
             DialogResult = DialogResult.OK;
         }
     }

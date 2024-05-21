@@ -1,11 +1,7 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
 using System.Windows.Forms;
-using Ionic.Zlib;
-using VieweD.Forms;
 using VieweD.engine.common;
 using VieweD.Properties;
 
@@ -29,8 +25,14 @@ public class AaDInputReader : AaBaseInputReader
         ExpectedFileExtensions.Add(".d");
     }
 
-    public override bool Open(Stream source)
+    public override BaseInputReader CreateNew(ViewedProjectTab parentProject)
     {
+        return new AaDInputReader(parentProject);
+    }
+
+    public override bool Open(Stream source, string fileName)
+    {
+        base.Open(source, fileName);
         try
         {
             Reader = new BinaryReader(source);

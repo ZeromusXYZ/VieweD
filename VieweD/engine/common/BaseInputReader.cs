@@ -99,8 +99,9 @@ public class BaseInputReader : IComparable<BaseInputReader>
     /// Opens the source stream and read the headers if needed
     /// </summary>
     /// <param name="source"></param>
+    /// <param name="fileName">Originally opened file name (if any)</param>
     /// <returns></returns>
-    public virtual bool Open(Stream source)
+    public virtual bool Open(Stream source, string fileName)
     {
         ParentProject?.OnInputError(this, "Function not Implemented!");
         return false;
@@ -120,7 +121,7 @@ public class BaseInputReader : IComparable<BaseInputReader>
         try
         {
             SourceStream = new FileStream(source, FileMode.Open, FileAccess.Read, FileShare.Read);
-            var res = Open(SourceStream);
+            var res = Open(SourceStream, source);
             if (res)
             {
                 ParentProject.Settings.LogFile = source;

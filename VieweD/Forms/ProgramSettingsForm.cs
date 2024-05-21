@@ -440,7 +440,7 @@ namespace VieweD.Forms
             if (sender is not Button btn)
                 return;
 
-            int t = int.Parse((string)btn.Tag);
+            int t = btn.Tag != null ? int.Parse((string)btn.Tag) : 0;
             ColorDlg.Color = LocalFieldColors[t];
             if (ColorDlg.ShowDialog() == DialogResult.OK)
             {

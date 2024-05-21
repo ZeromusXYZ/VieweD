@@ -32,8 +32,8 @@ namespace VieweD.Forms
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             MM = new MenuStrip();
             MMFile = new ToolStripMenuItem();
             MMFileOpen = new ToolStripMenuItem();
@@ -65,6 +65,8 @@ namespace VieweD.Forms
             MMSearchFind = new ToolStripMenuItem();
             MMSearchFindNext = new ToolStripMenuItem();
             MMSearchN1 = new ToolStripSeparator();
+            MMSearchInvalid = new ToolStripMenuItem();
+            MMSearchN2 = new ToolStripSeparator();
             MMSearchEditFilter = new ToolStripMenuItem();
             MMSearchApplyMenu = new ToolStripMenuItem();
             MMSearchApplyReset = new ToolStripMenuItem();
@@ -124,8 +126,6 @@ namespace VieweD.Forms
             ExportSaveFileDialog = new SaveFileDialog();
             ImportParsedDataFileDialog = new OpenFileDialog();
             ImportFolderBrowserDialog = new FolderBrowserDialog();
-            MMSearchN2 = new ToolStripSeparator();
-            MMSearchInvalid = new ToolStripMenuItem();
             MM.SuspendLayout();
             StatusBar.SuspendLayout();
             TCProjects.SuspendLayout();
@@ -339,6 +339,18 @@ namespace VieweD.Forms
             MMSearchN1.Name = "MMSearchN1";
             resources.ApplyResources(MMSearchN1, "MMSearchN1");
             // 
+            // MMSearchInvalid
+            // 
+            MMSearchInvalid.Image = Properties.Resources.mini_unk_ticon;
+            MMSearchInvalid.Name = "MMSearchInvalid";
+            resources.ApplyResources(MMSearchInvalid, "MMSearchInvalid");
+            MMSearchInvalid.Click += MMSearchInvalid_Click;
+            // 
+            // MMSearchN2
+            // 
+            MMSearchN2.Name = "MMSearchN2";
+            resources.ApplyResources(MMSearchN2, "MMSearchN2");
+            // 
             // MMSearchEditFilter
             // 
             MMSearchEditFilter.Image = Properties.Resources.document_edit_16;
@@ -489,9 +501,9 @@ namespace VieweD.Forms
             // 
             // MMLinksWireshark
             // 
-            resources.ApplyResources(MMLinksWireshark, "MMLinksWireshark");
             MMLinksWireshark.Image = Properties.Resources.wireshark_x48;
             MMLinksWireshark.Name = "MMLinksWireshark";
+            resources.ApplyResources(MMLinksWireshark, "MMLinksWireshark");
             MMLinksWireshark.Tag = "https://www.wireshark.org/";
             MMLinksWireshark.Click += MMLinksOpen_Click;
             // 
@@ -590,7 +602,6 @@ namespace VieweD.Forms
             DgvParsed.EditMode = DataGridViewEditMode.EditOnF2;
             DgvParsed.Name = "DgvParsed";
             DgvParsed.RowHeadersVisible = false;
-            DgvParsed.RowTemplate.Height = 25;
             DgvParsed.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             DgvParsed.SelectionChanged += DgvParsed_SelectionChanged;
             // 
@@ -771,18 +782,6 @@ namespace VieweD.Forms
             // 
             resources.ApplyResources(ImportFolderBrowserDialog, "ImportFolderBrowserDialog");
             ImportFolderBrowserDialog.RootFolder = System.Environment.SpecialFolder.MyComputer;
-            // 
-            // MMSearchN2
-            // 
-            MMSearchN2.Name = "MMSearchN2";
-            resources.ApplyResources(MMSearchN2, "MMSearchN2");
-            // 
-            // MMSearchInvalid
-            // 
-            MMSearchInvalid.Image = Properties.Resources.mini_unk_ticon;
-            MMSearchInvalid.Name = "MMSearchInvalid";
-            resources.ApplyResources(MMSearchInvalid, "MMSearchInvalid");
-            MMSearchInvalid.Click += MMSearchInvalid_Click;
             // 
             // MainForm
             // 

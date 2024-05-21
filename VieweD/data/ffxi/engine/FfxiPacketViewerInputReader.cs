@@ -48,7 +48,7 @@ public class FfxiPacketViewerInputReader : BaseInputReader
         return new FfxiPacketViewerInputReader(parentProject);
     }
 
-    public override bool Open(Stream source)
+    public override bool Open(Stream source, string fileName)
     {
         try
         {

@@ -1004,6 +1004,15 @@ namespace VieweD.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to It looks like there is no useable data in the opened file.
+        /// </summary>
+        internal static string NoFileData {
+            get {
+                return ResourceManager.GetString("NoFileData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No rule attached to this packet, create a new one?.
         /// </summary>
         internal static string NoRuleAttachedToThisPacketCreateNewRule {
@@ -1090,6 +1099,17 @@ namespace VieweD.Properties {
         internal static string ParserError {
             get {
                 return ResourceManager.GetString("ParserError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to open &quot;{0}&quot;, likely no compatible library installed that supports pcap.
+        ///
+        ///{1}.
+        /// </summary>
+        internal static string PCapNotInstalled {
+            get {
+                return ResourceManager.GetString("PCapNotInstalled", resourceCulture);
             }
         }
         
