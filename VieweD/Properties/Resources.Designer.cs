@@ -1103,6 +1103,17 @@ namespace VieweD.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to open &quot;{0}&quot;, likely no compatible library installed that supports pcap.
+        ///
+        ///{1}.
+        /// </summary>
+        internal static string PCapNotInstalled {
+            get {
+                return ResourceManager.GetString("PCapNotInstalled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Plugin Compile Error.
         /// </summary>
         internal static string PluginCompileError {

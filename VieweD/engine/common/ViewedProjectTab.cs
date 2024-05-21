@@ -993,6 +993,7 @@ public class ViewedProjectTab : TabPage
     public virtual void OnInputError(BaseInputReader inputReader, string errorMessage)
     {
         // Do nothing
+        MessageBox.Show(errorMessage, inputReader.Name, MessageBoxButtons.OK, MessageBoxIcon.Error);
     }
 
     /// <summary>

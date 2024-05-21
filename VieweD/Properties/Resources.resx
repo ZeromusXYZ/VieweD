@@ -624,4 +624,10 @@ Difference = {2}</value>
   <data name="NoFileData" xml:space="preserve">
     <value>It looks like there is no useable data in the opened file</value>
   </data>
+  <data name="PCapNotInstalled" xml:space="preserve">
+    <value>Failed to open "{0}", likely no compatible library installed that supports pcap.
+
+{1}</value>
+    <comment>0: FileName  1: exception</comment>
+  </data>
 </root>

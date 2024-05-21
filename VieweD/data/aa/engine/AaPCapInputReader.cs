@@ -8,6 +8,7 @@ using SharpPcap;
 using PacketDotNet;
 using System.Globalization;
 using System.Xml;
+using VieweD.Properties;
 
 namespace VieweD.data.aa.engine;
 
@@ -93,6 +94,12 @@ public class AaPCapInputReader : AaBaseInputReader
                 ParentProject.TimeStampFormat = "HH:mm:ss.fff";
             MinTime = DateTime.MaxValue;
             MaxTime = DateTime.MinValue;
+            ReaderDevice.Open();
+        }
+        catch (DllNotFoundException dllNotFoundException)
+        {
+            ParentProject?.OnInputError(this, string.Format(Resources.PCapNotInstalled, fileName, dllNotFoundException.Message));
+            return false;
         }
         catch (Exception ex)
         {
@@ -131,7 +138,7 @@ public class AaPCapInputReader : AaBaseInputReader
             StopState = CaptureStoppedEventStatus.ErrorWhileCapturing;
             ReaderDevice.OnPacketArrival += ReaderDeviceOnPacketArrival;
             ReaderDevice.OnCaptureStopped += ReaderDeviceOnPacketStopped;
-            ReaderDevice.Open(); 
+            // ReaderDevice.Open(); 
             ReaderDevice.Capture(); // Start reading all the data, triggers ReaderDeviceOnPacketStopped
 
             // Shorten the timestamp if the total capture is less than 1 hour
