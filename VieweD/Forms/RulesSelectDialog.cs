@@ -9,25 +9,25 @@ namespace VieweD.Forms
 {
     public partial class RulesSelectDialog : Form
     {
-        public string SelectedFile { get; set; } = string.Empty;
-        public List<string> DetectedFiles { get; set; } = new();
-        public string LoadedRuleFileName { get; set; } = string.Empty;
-        public ViewedProjectTab? ParentProject { get; set; }
+        private string SelectedFile { get; set; } = string.Empty;
+        private List<string> DetectedFiles { get; set; } = [];
+        private string LoadedRuleFileName { get; set; } = string.Empty;
+        private ViewedProjectTab? ParentProject { get; set; }
 
-        public RulesSelectDialog()
+        private RulesSelectDialog()
         {
             InitializeComponent();
         }
 
-        public void FillForm()
+        private void FillForm()
         {
             SelectedFile = string.Empty;
             var defaultRulesPath = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath) ?? "", "data", ParentProject?.InputReader?.DataFolder ?? "base", "rules");
             try
             {
                 var def = string.Empty;
-                var lastDispSize = 0;
-                DetectedFiles = new List<string>();
+                var lastDisplaySize = 0;
+                DetectedFiles = [];
                 try
                 {
                     if (Directory.Exists(defaultRulesPath))
@@ -53,20 +53,20 @@ namespace VieweD.Forms
                 var list = new List<RuleComboBoxEntry>();
                 foreach (var f in DetectedFiles)
                 {
-                    var disp = Path.GetFileNameWithoutExtension(f);
-                    var disp2 = disp;
+                    var display = Path.GetFileNameWithoutExtension(f);
+                    var displayWithSelectionInfo = display;
                     if (f == LoadedRuleFileName)
-                        disp2 = ">> " + disp2 + " << (current)";
+                        displayWithSelectionInfo = ">> " + displayWithSelectionInfo + " << (current)";
                     if (!f.StartsWith(defaultRulesPath))
-                        disp2 = disp + " (local)";
+                        displayWithSelectionInfo = display + " (local)";
 
-                    list.Add(new RuleComboBoxEntry(disp2, f));
-                    if (LoadedRuleFileName.Contains(disp))
+                    list.Add(new RuleComboBoxEntry(displayWithSelectionInfo, f));
+                    if (LoadedRuleFileName.Contains(display))
                     {
-                        if (disp.Length > lastDispSize)
+                        if (display.Length > lastDisplaySize)
                         {
                             def = f;
-                            lastDispSize = disp.Length;
+                            lastDisplaySize = display.Length;
                         }
                     }
                 }
@@ -87,6 +87,7 @@ namespace VieweD.Forms
 
         private void RulesSelectForm_Load(object sender, EventArgs e)
         {
+            //
         }
 
         public static string SelectRulesFile(string ruleFileName, ViewedProjectTab project)
@@ -97,18 +98,18 @@ namespace VieweD.Forms
             thisForm.LoadedRuleFileName = ruleFileName;
             thisForm.ParentProject = project;
             thisForm.FillForm();
-            if (thisForm.DetectedFiles.Count <= 0)
-                res = string.Empty;
-            else
-            if (thisForm.DetectedFiles.Count == 1)
-                res = thisForm.DetectedFiles[0];
-            else
-            if (thisForm.ShowDialog() == DialogResult.OK)
+            switch (thisForm.DetectedFiles.Count)
             {
-                res = thisForm.SelectedFile;
+                case <= 0:
+                    res = string.Empty;
+                    break;
+                case 1:
+                    res = thisForm.DetectedFiles[0];
+                    break;
+                default:
+                    res = thisForm.ShowDialog() == DialogResult.OK ? thisForm.SelectedFile : string.Empty;
+                    break;
             }
-            else
-                res = string.Empty;
 
             return res;
         }

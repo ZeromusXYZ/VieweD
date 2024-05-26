@@ -31,29 +31,28 @@ namespace VieweD.Forms
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LoadingForm));
-            this.Bar = new System.Windows.Forms.ProgressBar();
-            this.SuspendLayout();
+            Bar = new ProgressBar();
+            SuspendLayout();
             // 
             // Bar
             // 
-            resources.ApplyResources(this.Bar, "Bar");
-            this.Bar.Name = "Bar";
+            resources.ApplyResources(Bar, "Bar");
+            Bar.Name = "Bar";
             // 
             // LoadingForm
             // 
             resources.ApplyResources(this, "$this");
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ControlBox = false;
-            this.Controls.Add(this.Bar);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.MaximizeBox = false;
-            this.MdiChildrenMinimizedAnchorBottom = false;
-            this.MinimizeBox = false;
-            this.Name = "LoadingForm";
-            this.ShowInTaskbar = false;
-            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
-            this.ResumeLayout(false);
-
+            AutoScaleMode = AutoScaleMode.Font;
+            ControlBox = false;
+            Controls.Add(Bar);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            MaximizeBox = false;
+            MdiChildrenMinimizedAnchorBottom = false;
+            MinimizeBox = false;
+            Name = "LoadingForm";
+            ShowInTaskbar = false;
+            SizeGripStyle = SizeGripStyle.Hide;
+            ResumeLayout(false);
         }
 
         #endregion

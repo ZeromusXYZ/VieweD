@@ -123,7 +123,7 @@ public class FfxiPacketViewerInputReader : BaseInputReader
                     }
                     else if (sLower.Contains("npc id:", StringComparison.InvariantCulture))
                     {
-                        // This is likely a npc logger log file, assume it's a incoming packet
+                        // This is likely a npc logger log file, assume it's an incoming packet
                         packetData.PacketDataDirection = PacketDataDirection.Incoming;
                         isUndefinedPacketDirection = false;
                     }

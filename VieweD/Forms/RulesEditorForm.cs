@@ -12,12 +12,12 @@ namespace VieweD.Forms
     public partial class RulesEditorForm : Form
     {
         public ViewedProjectTab? ParentProject { get; set; }
-        public PacketRule? Rule { get; set; }
-        public XmlNode? EditorNode { get; set; }
-        public BasePacketData? PacketData { get; set; }
-        public string? OldValue { get; set; }
+        public PacketRule? Rule { get; private set; }
+        private XmlNode? EditorNode { get; set; }
+        public BasePacketData? PacketData { get; private set; }
+        private string? OldValue { get; set; }
 
-        public RulesEditorForm()
+        private RulesEditorForm()
         {
             InitializeComponent();
         }
@@ -125,7 +125,7 @@ namespace VieweD.Forms
                                 Resources.RuleError, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
 
-                    // Apply to the rest of the packets with the same rule, and re-parse them
+                    // Apply to the rest of the packets with the same rule, and reparse them
                     if (PacketData != null)
                     {
                         MainForm.Instance.ShowDebugInfo = false;
@@ -182,8 +182,8 @@ namespace VieweD.Forms
                     }
                     
                     Close();
-                    if ((ParentProject != null) && (ParentProject.InputParser != null) && MessageBox.Show($"Do you want to re-parse the project?", "", MessageBoxButtons.YesNo) ==
-                        DialogResult.Yes)
+                    if (ParentProject is { InputParser: not null } && 
+                        MessageBox.Show(Resources.ReParseProject, "", MessageBoxButtons.YesNo) == DialogResult.Yes)
                     {
                         var lastPacket = ParentProject.PacketsListBox.SelectedItem as BasePacketData;
                         ParentProject.InputParser.ParseAllData(true);

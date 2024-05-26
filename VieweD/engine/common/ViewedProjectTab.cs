@@ -1054,7 +1054,7 @@ public class ViewedProjectTab : TabPage
     /// <returns></returns>
     public (byte, string, string) GetExpectedStreamIdByPort(ushort port, byte defaultValue)
     {
-        return PortToStreamIdMapping.TryGetValue(port, out var id) ? id : (defaultValue, "S" + defaultValue, "?");
+        return PortToStreamIdMapping.TryGetValue(port, out var id) ? id : (defaultValue, "$" + defaultValue, "?");
     }
 
     public string GetStreamIdName(byte id)
@@ -1065,7 +1065,7 @@ public class ViewedProjectTab : TabPage
                 return valueTuple.Value.Item2;
         }
 
-        return "S" + id;
+        return "$" + id;
     }
 
     public byte GetStreamIdByName(string name)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.InteropServices;
 using VieweD.Helpers.System;
 using VieweD.Properties;
 
@@ -108,10 +109,13 @@ public class BasePacketData
 
     public ParsedField? GetParsedFieldByByteIndex(int index, bool preferSelectedFields = false)
     {
+        // Capture ParsedData as Span to increase speed as a lot of time is spend here
+        var parsedSpan = CollectionsMarshal.AsSpan(ParsedData);
+
         // If enabled, check in selected fields first
         if (preferSelectedFields)
         {
-            foreach (var parsed in ParsedData)
+            foreach (var parsed in parsedSpan)
             {
                 if ((parsed.HasValue == false) || (parsed.IsSelected == false))
                     continue;
@@ -122,7 +126,7 @@ public class BasePacketData
         }
 
         // Do a normal first come, first served
-        foreach (var parsed in ParsedData)
+        foreach (var parsed in parsedSpan)
         {
             if (!parsed.HasValue) 
                 continue;
@@ -325,6 +329,7 @@ public class BasePacketData
         return res;
     }
 
+    // ReSharper disable once UnusedMember.Global
     public long GetBitsAtBitPos(int bitOffset, int bitsSize)
     {
         return GetBitsAtPos(bitOffset / 8, bitOffset % 8, bitsSize);
@@ -498,7 +503,7 @@ public class BasePacketData
         var levelName = string.Empty;
         var packetIdString = PacketId.ToHex(3) + " ";
 
-        // If the stream has no short name attached, assume it won't get parsed and just mark it by it's normal name
+        // If the stream has no short name attached, assume it won't get parsed and just mark it by its normal name
         var streamInfoFromPort = ParentProject.GetExpectedStreamIdByPort(SourcePort, 0);
         var streamShortName = streamInfoFromPort.Item3;
         if (streamInfoFromPort.Item3 == "")
@@ -549,14 +554,14 @@ public class BasePacketData
     {
         foreach (var parsedField in ParsedData)
         {
-            if (parsedField.HasValue && parsedField.IsSelected)
+            if (parsedField is { HasValue: true, IsSelected: true })
                 return true;
         }
         return false;
     }
 
     /// <summary>
-    /// Check if a individual packet can be shown with a given filter set
+    /// Check if an individual packet can be shown with a given filter set
     /// </summary>
     /// <param name="packetKey"></param>
     /// <param name="filterType"></param>

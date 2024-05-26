@@ -12,7 +12,7 @@ namespace VieweD.Forms
 
         public ViewedProjectTab? ParentProject { get; set; }
 
-        private bool IsValidating { get; set; } = false;
+        private bool IsValidating { get; set; }
 
         public SearchForm()
         {
@@ -25,22 +25,16 @@ namespace VieweD.Forms
         {
             // temporary disable validate
             IsValidating = true;
-            rbAny.Checked = ((SearchParameters.SearchIncoming && SearchParameters.SearchOutgoing) || (!SearchParameters.SearchIncoming && !SearchParameters.SearchOutgoing));
-            rbIncoming.Checked = (SearchParameters.SearchIncoming && !SearchParameters.SearchOutgoing);
-            rbOutgoing.Checked = (!SearchParameters.SearchIncoming && SearchParameters.SearchOutgoing);
+            rbAny.Checked = SearchParameters is { SearchIncoming: true, SearchOutgoing: true } or { SearchIncoming: false, SearchOutgoing: false };
+            rbIncoming.Checked = SearchParameters is { SearchIncoming: true, SearchOutgoing: false };
+            rbOutgoing.Checked = SearchParameters is { SearchIncoming: false, SearchOutgoing: true };
 
-            if (SearchParameters.SearchByPacketId)
-                ePacketID.Text = SearchParameters.SearchPacketId.ToHex(1);
-            else
-                ePacketID.Text = "";
+            ePacketID.Text = SearchParameters.SearchByPacketId ? SearchParameters.SearchPacketId.ToHex(1) : "";
 
             if (ParentProject?.InputParser?.Rules?.UsesCompressionLevels ?? false)
             {
                 ePacketLevel.Enabled = true;
-                if (SearchParameters.SearchByPacketLevel)
-                    ePacketLevel.Text = SearchParameters.SearchPacketLevel.ToHex(1);
-                else
-                    ePacketLevel.Text = "";
+                ePacketLevel.Text = SearchParameters.SearchByPacketLevel ? SearchParameters.SearchPacketLevel.ToHex(1) : "";
             }
             else
             {
@@ -53,10 +47,7 @@ namespace VieweD.Forms
             if (ParentProject?.InputParser?.AllowSyncSearch ?? false)
             {
                 eSync.Enabled = true;
-                if (SearchParameters.SearchBySync)
-                    eSync.Text = SearchParameters.SearchSync.ToHex(1);
-                else
-                    eSync.Text = "";
+                eSync.Text = SearchParameters.SearchBySync ? SearchParameters.SearchSync.ToHex(1) : "";
             }
             else
             {
@@ -195,7 +186,7 @@ namespace VieweD.Forms
             // Sync
             if (NumberHelper.TryFieldParse(eSync.Text, out long nSync))
             {
-                if ((nSync > 0) && (nSync < 0xFFFF))
+                if (nSync is > 0 and < 0xFFFF)
                 {
                     hasData = true;
                     SearchParameters.SearchBySync = true;
@@ -221,7 +212,7 @@ namespace VieweD.Forms
                 if ((nValue > 0xFF) && (rbByte.Checked))
                     rbUInt16.Checked = true;
 
-                if ((nValue >= 0) && (nValue <= 0xFF) && (rbByte.Checked))
+                if ((nValue is >= 0 and <= 0xFF) && rbByte.Checked)
                 {
                     hasData = true;
                     SearchParameters.SearchByByte = true;
@@ -232,7 +223,7 @@ namespace VieweD.Forms
                     eValue.ForeColor = Color.Navy;
                 }
                 else
-                if ((nValue >= 0) && (nValue <= 0xFFFF) && (rbUInt16.Checked))
+                if ((nValue is >= 0 and <= 0xFFFF) && rbUInt16.Checked)
                 {
                     hasData = true;
                     SearchParameters.SearchByByte = false;
@@ -243,7 +234,7 @@ namespace VieweD.Forms
                     eValue.ForeColor = Color.RoyalBlue;
                 }
                 else
-                if ((nValue >= 0) && (nValue <= 0xFFFFFF) && (rbUInt24.Checked))
+                if ((nValue is >= 0 and <= 0xFFFFFF) && rbUInt24.Checked)
                 {
                     hasData = true;
                     SearchParameters.SearchByByte = false;
@@ -254,7 +245,7 @@ namespace VieweD.Forms
                     eValue.ForeColor = Color.Blue;
                 }
                 else
-                if ((nValue >= 0) && (nValue <= 0xFFFFFFFF) && (rbUInt32.Checked))
+                if ((nValue is >= 0 and <= 0xFFFFFFFF) && rbUInt32.Checked)
                 {
                     hasData = true;
                     SearchParameters.SearchByByte = false;

@@ -1,7 +1,6 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
 using Ionic.Zlib;
@@ -20,20 +19,12 @@ public class AaBaseInputReader : BaseInputReader
     protected uint XorKey { get; set; }
     protected byte[] AesKey { get; set; } = new byte[16];
     protected byte[] Iv { get; set; } = new byte[16];
+    // ReSharper disable once UnusedMember.Global
     public string DecryptVersion { get; set; } = string.Empty;
-    protected uint C2SL5Counter { get; set; }
-    protected uint S2CL5Counter { get; set; }
+    protected uint ClientToServerL5Counter { get; set; }
+    protected uint ServerToClientL5Counter { get; set; }
 
-    // Source: https://docs.microsoft.com/en-us/dotnet/api/system.datetime.parse?view=netframework-4.7.2#System_DateTime_Parse_System_String_System_IFormatProvider_System_Globalization_DateTimeStyles_
-    // Assume a date and time string formatted for the fr-FR culture is the local 
-    // time and convert it to UTC.
-    // dateString = "2008-03-01 10:00";
-    public static readonly CultureInfo
-        CultureForDateTimeParse =
-            CultureInfo.CreateSpecificCulture("fr-FR"); // French seems to best match for what we need here
-
-    public static readonly DateTimeStyles StylesForDateTimeParse = DateTimeStyles.AssumeLocal;
-    protected ZlibCodec DecompressionHandler { get; set; } = new ZlibCodec(CompressionMode.Decompress);
+    protected ZlibCodec DecompressionHandler { get; set; } = new(CompressionMode.Decompress);
 
     private AaEncryptionsBase? Encryption { get; set; }
 
@@ -55,10 +46,7 @@ public class AaBaseInputReader : BaseInputReader
 
         // Load encryption handler (if present), otherwise use base null handler
         var enc = AaEncryptionsBase.CreateEncryptionByName("VieweD.data.aa.engine.AaEncryptions");
-        if (enc != null)
-            Encryption = enc;
-        else
-            Encryption = new AaEncryptionsBase();
+        Encryption = enc ?? new AaEncryptionsBase();
 
         /*
         var t = Type.GetType("VieweD.data.aa.engine.AaEncryptions");
@@ -70,7 +58,6 @@ public class AaBaseInputReader : BaseInputReader
                 Encryption = new AaEncryptionsBase();
         }
         */
-
         _ = Encryption?.LoadKeysFromFolder(Path.Combine(Application.StartupPath, "data", DataFolder, "keys"));
 
         // _ = DecryptCs.LoadKeysFromFolder(Path.Combine(Application.StartupPath, "data", DataFolder, "rules", "decryption.keys"));
@@ -193,7 +180,7 @@ public class AaBaseInputReader : BaseInputReader
         if (Encryption == null)
             return false;
 
-        var originalPacketDataSize = pd.PacketDataSize;
+        // var originalPacketDataSize = pd.PacketDataSize;
         uint c1 = 0;
         uint c2 = 0;
 
@@ -218,7 +205,7 @@ public class AaBaseInputReader : BaseInputReader
             {
                 try
                 {
-                    var hashPreDecode = pd.GetUInt16AtPos(4); // hash?
+                    _ = pd.GetUInt16AtPos(4); // hash?
                     var payloadSize = pd.ByteData.Count - 4;
                     var input = pd.ByteData.GetRange(4, payloadSize).ToArray();
 
@@ -240,7 +227,7 @@ public class AaBaseInputReader : BaseInputReader
 
                     pd.PacketId = (ushort)(packetIdRawVal & 0x03FF);
 
-                    S2CL5Counter++;
+                    ServerToClientL5Counter++;
                     return true;
                 }
                 catch
@@ -263,7 +250,7 @@ public class AaBaseInputReader : BaseInputReader
             }
 
             // Initialize IV if it's the first packet ?
-            if (C2SL5Counter == 0)
+            if (ClientToServerL5Counter == 0)
             {
                 //Initialize IV for the first packet
                 Iv = new byte[16];
@@ -276,10 +263,10 @@ public class AaBaseInputReader : BaseInputReader
 
             try
             {
-                var output = Encryption.S2CDecrypt(input, XorKey, AesKey, Iv, C2SL5Counter, c1, c2);
+                var output = Encryption.S2CDecrypt(input, XorKey, AesKey, Iv, ClientToServerL5Counter, c1, c2);
 
                 // C2S L5 packet counter
-                C2SL5Counter++;
+                ClientToServerL5Counter++;
 
                 resultData.AddRange(pd.ByteData.GetRange(0, 5));
                 resultData.AddRange(output.Skip(1));
@@ -305,7 +292,7 @@ public class AaBaseInputReader : BaseInputReader
 
     public override bool Open(Stream source, string fileName)
     {
-        S2CL5Counter = 0;
+        ServerToClientL5Counter = 0;
         return false;
     }
 }

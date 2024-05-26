@@ -81,10 +81,10 @@ public class AaParser : BaseParser
             return;
         if (Rules == null) // requires rules to be loaded
             return;
-        if (ParentProject.InputReader is not AaDInputReader reader)
+        if (ParentProject.InputReader is not AaBaseInputReader reader)
             return; // needs a D-file reader
 
-        // Un-mark requirement here, so if things fail, it won't get re-parsed
+        // Un-mark requirement here, so if things fail, it won't get parsed again
         ParentProject.RequiresSubPacketCreation = false;
 
         ViewedProjectTab.OnExpandProgressUpdate(this, 0, ParentProject.LoadedPacketList.Count);
@@ -97,7 +97,7 @@ public class AaParser : BaseParser
 
             // First, do a regular parse of the main packet
             if (Rules.GetPacketRule(parentPacketData) is not AaPacketRule firstRule)
-                return; // If can't parse, abort
+                return; // If it can't parse, abort
 
             var previousData = parentPacketData;
             parentPacketData.Cursor = 0;

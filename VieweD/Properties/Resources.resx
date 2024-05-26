@@ -630,4 +630,30 @@ Difference = {2}</value>
 {1}</value>
     <comment>0: FileName  1: exception</comment>
   </data>
+  <data name="PlaybackErrorTitle" xml:space="preserve">
+    <value>Playback Error</value>
+  </data>
+  <data name="FailedToLoadVideoURI" xml:space="preserve">
+    <value>Failed to load video from:
+{0}
+</value>
+  </data>
+  <data name="ReParseProject" xml:space="preserve">
+    <value>Do you want to reparse the project?</value>
+  </data>
+  <data name="FailedToExport" xml:space="preserve">
+    <value>Failed to export!</value>
+  </data>
+  <data name="ImportFromClipboard" xml:space="preserve">
+    <value>Import from clipboard</value>
+  </data>
+  <data name="NoDataOnClipboard" xml:space="preserve">
+    <value>No data on clipboard</value>
+  </data>
+  <data name="ClipboardNoPacketData" xml:space="preserve">
+    <value>Clipboard does not seem to contain packet data</value>
+  </data>
+  <data name="ClipboardTabName" xml:space="preserve">
+    <value>Clipboard</value>
+  </data>
 </root>

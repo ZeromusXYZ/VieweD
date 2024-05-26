@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Windows.Forms;
 using VieweD.engine.common;
 
@@ -27,7 +26,7 @@ namespace VieweD.Forms
             try
             {
                 var def = string.Empty;
-                var lastDispSize = 0;
+                var lastDisplaySize = 0;
                 var detectedFiles = new List<string>();
                 try
                 {
@@ -65,17 +64,17 @@ namespace VieweD.Forms
                 var list = new List<RuleComboBoxEntry>();
                 foreach (var keyName in DetectedKeys)
                 {
-                    var disp = keyName;
+                    var displayText = keyName;
                     if (keyName == LoadedKey)
-                        disp = ">> " + disp + " << (current)";
+                        displayText = ">> " + displayText + " << (current)";
 
-                    list.Add(new RuleComboBoxEntry(disp, keyName));
-                    if (LoadedKey.Contains(disp))
+                    list.Add(new RuleComboBoxEntry(displayText, keyName));
+                    if (LoadedKey.Contains(displayText))
                     {
-                        if (disp.Length > lastDispSize)
+                        if (displayText.Length > lastDisplaySize)
                         {
                             def = keyName;
-                            lastDispSize = disp.Length;
+                            lastDisplaySize = displayText.Length;
                         }
                     }
                 }

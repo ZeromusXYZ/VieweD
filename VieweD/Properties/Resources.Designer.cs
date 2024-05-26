@@ -196,6 +196,24 @@ namespace VieweD.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Clipboard does not seem to contain packet data.
+        /// </summary>
+        internal static string ClipboardNoPacketData {
+            get {
+                return ResourceManager.GetString("ClipboardNoPacketData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clipboard.
+        /// </summary>
+        internal static string ClipboardTabName {
+            get {
+                return ResourceManager.GetString("ClipboardTabName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap close {
@@ -664,6 +682,26 @@ namespace VieweD.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to export!.
+        /// </summary>
+        internal static string FailedToExport {
+            get {
+                return ResourceManager.GetString("FailedToExport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to load video from:
+        ///{0}
+        ///.
+        /// </summary>
+        internal static string FailedToLoadVideoURI {
+            get {
+                return ResourceManager.GetString("FailedToLoadVideoURI", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed to open.
         /// </summary>
         internal static string FailedToOpen {
@@ -765,6 +803,15 @@ namespace VieweD.Properties {
             get {
                 object obj = ResourceManager.GetObject("im_youtube_32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import from clipboard.
+        /// </summary>
+        internal static string ImportFromClipboard {
+            get {
+                return ResourceManager.GetString("ImportFromClipboard", resourceCulture);
             }
         }
         
@@ -1004,6 +1051,15 @@ namespace VieweD.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No data on clipboard.
+        /// </summary>
+        internal static string NoDataOnClipboard {
+            get {
+                return ResourceManager.GetString("NoDataOnClipboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to It looks like there is no useable data in the opened file.
         /// </summary>
         internal static string NoFileData {
@@ -1110,6 +1166,15 @@ namespace VieweD.Properties {
         internal static string PCapNotInstalled {
             get {
                 return ResourceManager.GetString("PCapNotInstalled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Playback Error.
+        /// </summary>
+        internal static string PlaybackErrorTitle {
+            get {
+                return ResourceManager.GetString("PlaybackErrorTitle", resourceCulture);
             }
         }
         
@@ -1229,6 +1294,15 @@ namespace VieweD.Properties {
         internal static string ReadAllDataUnknownCommand {
             get {
                 return ResourceManager.GetString("ReadAllDataUnknownCommand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you want to reparse the project?.
+        /// </summary>
+        internal static string ReParseProject {
+            get {
+                return ResourceManager.GetString("ReParseProject", resourceCulture);
             }
         }
         

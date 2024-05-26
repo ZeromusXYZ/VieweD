@@ -12,6 +12,7 @@ using VieweD.Properties;
 
 namespace VieweD.data.aa.engine;
 
+// ReSharper disable once UnusedMember.Global
 public class AaPCapInputReader : AaBaseInputReader
 {
     public override string Name => "ArcheAge Pcap Reader";
@@ -23,7 +24,7 @@ public class AaPCapInputReader : AaBaseInputReader
     private CaptureStoppedEventStatus StopState { get; set; }
     private DateTime MinTime { get; set; }
     private DateTime MaxTime { get; set; }
-    private List<byte> ReadDataBuffer { get; set; } = new();
+    private Dictionary<(int, PacketDataDirection), List<byte>> ReadDataBuffers { get; set; } = new();
 
     public AaPCapInputReader(ViewedProjectTab parentProject) : base(parentProject)
     {
@@ -85,7 +86,7 @@ public class AaPCapInputReader : AaBaseInputReader
         try
         {
             // Pcap reader actually requires a file as input
-            // TODO: Fine a workaround so it can read a stream without having to make a temp-file first
+            // TODO: Find a workaround so that it can read a stream without having to make a temp-file first
             if (!File.Exists(fileName))
                 return false;
 
@@ -122,18 +123,17 @@ public class AaPCapInputReader : AaBaseInputReader
         if (ParentProject == null)
             return -1;
 
-        var localStreamToPortMapping = new Dictionary<byte, ushort>();
+        // var localStreamToPortMapping = new Dictionary<byte, ushort>();
 
         ParentProject.TimeStampFormat = "HH:mm:ss.fff";
         var minTime = DateTime.MaxValue;
         var maxTime = DateTime.MinValue;
 
         ParentProject.LoadedPacketList.Clear();
-        ReadDataBuffer.Clear(); // Clear reading buffer
+        ReadDataBuffers.Clear(); // Clear reading buffer
         try
         {
-            var ipMapping = new Dictionary<byte, string>();
-
+            // var ipMapping = new Dictionary<byte, string>();
             // var handler = new PacketArrivalEventHandler(ReaderDeviceOnPacketArrival);
             StopState = CaptureStoppedEventStatus.ErrorWhileCapturing;
             ReaderDevice.OnPacketArrival += ReaderDeviceOnPacketArrival;
@@ -183,7 +183,7 @@ public class AaPCapInputReader : AaBaseInputReader
             return;
 
         // Get pre-parsed packet
-        var packet = TcpPacket.ParsePacket(rawPacket.LinkLayerType, rawPacket.Data);
+        var packet = Packet.ParsePacket(rawPacket.LinkLayerType, rawPacket.Data);
 
         // Check if it's an IPv4 one
         var ip4Packet = packet.PayloadPacket as IPv4Packet;
@@ -199,65 +199,68 @@ public class AaPCapInputReader : AaBaseInputReader
         if (tcp.PayloadData.Length <= 0)
             return;
 
+        var sIp = ip4Packet.SourceAddress.ToString();
+        var dIp = ip4Packet.DestinationAddress.ToString();
+        var sPort = tcp.SourcePort;
+        var dPort = tcp.DestinationPort;
+        var packetDataDirection = PacketDataDirection.Unknown;
+        if (ParentProject.PortToStreamIdMapping.ContainsKey(sPort))
+        {
+            packetDataDirection = PacketDataDirection.Incoming;
+        }
+        else
+        if (ParentProject.PortToStreamIdMapping.ContainsKey(dPort))
+        {
+            // Swap ports if it's incoming
+            sIp = ip4Packet.DestinationAddress.ToString();
+            dIp = ip4Packet.SourceAddress.ToString();
+            sPort = tcp.DestinationPort;
+            dPort = tcp.SourcePort;
+            packetDataDirection = PacketDataDirection.Outgoing;
+        }
+        // Use port data to determine what direction the packet is for and adjust the port values
+        if (dPort == 0)
+            packetDataDirection = PacketDataDirection.Unknown;
+
+        // Get StreamPort information for this port
+        var streamInfoFromPort = ParentProject.GetExpectedStreamIdByPort(sPort, 0);
+
         // Add to Read buffer
-        ReadDataBuffer.AddRange(tcp.PayloadData);
+        if (!ReadDataBuffers.ContainsKey((streamInfoFromPort.Item1, packetDataDirection)))
+        {
+            var readDataBuffer = new List<byte>();
+            ReadDataBuffers.Add((streamInfoFromPort.Item1, packetDataDirection), readDataBuffer);
+        }
+
+        ReadDataBuffers[(streamInfoFromPort.Item1, packetDataDirection)].AddRange(tcp.PayloadData);
+        //readDataBuffer.AddRange(tcp.PayloadData);
         
         // Generate Dummy Sync ID
         var dummySync = ParentProject.LoadedPacketList.Count;
 
         // Keep processing until our buffer is too small
-        while (ReadDataBuffer.Count > 4)
+        while (ReadDataBuffers[(streamInfoFromPort.Item1, packetDataDirection)].Count > 4)
         {
             // Get the size of the next expected game packet
-            var expectedCompiledPacketSize = Convert.ToUInt16((ReadDataBuffer[1] * 0x100) + ReadDataBuffer[0]);
+            var expectedCompiledPacketSize = Convert.ToUInt16((ReadDataBuffers[(streamInfoFromPort.Item1, packetDataDirection)][1] * 0x100) + ReadDataBuffers[(streamInfoFromPort.Item1, packetDataDirection)][0]);
             // Check if our current data is big enough
-            if (ReadDataBuffer.Count < expectedCompiledPacketSize)
+            if (ReadDataBuffers[(streamInfoFromPort.Item1, packetDataDirection)].Count < expectedCompiledPacketSize)
                 return; // expect more data
 
             // Create new PacketData object
             var data = new BasePacketData(ParentProject);
             // Grab IP and port data
-            var sIp = ip4Packet.SourceAddress.ToString();
-            var dIp = ip4Packet.DestinationAddress.ToString();
-            var sPort = tcp.SourcePort;
-            var dPort = tcp.DestinationPort;
             data.SourceIp = sIp;
             data.DestinationIp = dIp;
-
-            // Use port data to determine what direction the packet is for and adjust the port values
-            if (dPort == 0)
-                data.PacketDataDirection = PacketDataDirection.Unknown;
-            else
-            if (ParentProject.PortToStreamIdMapping.ContainsKey(sPort))
-            {
-                data.SourcePort = sPort;
-                data.DestinationPort = dPort;
-                data.PacketDataDirection = PacketDataDirection.Incoming;
-            }
-            else
-            if (ParentProject.PortToStreamIdMapping.ContainsKey(dPort))
-            {
-                // Swap ports
-                data.SourceIp = dIp;
-                data.DestinationIp = sIp;
-                data.SourcePort = dPort;
-                data.DestinationPort = sPort;
-                data.PacketDataDirection = PacketDataDirection.Outgoing;
-            }
-            else
-            {
-                data.SourcePort = sPort;
-                data.DestinationPort = dPort;
-                data.PacketDataDirection = PacketDataDirection.Unknown;
-            }
-
-            // Get StreamPort information for this port
-            var streamInfoFromPort = ParentProject.GetExpectedStreamIdByPort(data.SourcePort, 0);
+            data.SourcePort = sPort;
+            data.DestinationPort = dPort;
+            data.PacketDataDirection = packetDataDirection;
 
             // Try to generate timestamp
             try
             {
-                data.TimeStamp = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc).AddSeconds((double)rawPacket.Timeval.Value);
+                data.TimeStamp = DateTime.MinValue.AddSeconds((double)rawPacket.Timeval.Value);
+                // data.TimeStamp = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc).AddSeconds((double)rawPacket.Timeval.Value);
             }
             catch
             {
@@ -271,9 +274,10 @@ public class AaPCapInputReader : AaBaseInputReader
                 MinTime = data.TimeStamp;
 
             // Take meaningful data from the pool, and leave the rest in the ReadDataBuffer
-            var packetSize = Convert.ToUInt16((ReadDataBuffer[1] * 0x100) + ReadDataBuffer[0]);
-            var addData = ReadDataBuffer.Take(packetSize+2);
-            ReadDataBuffer = ReadDataBuffer.Skip(packetSize+2).ToList();
+            var packetSize = expectedCompiledPacketSize;
+            var addData = ReadDataBuffers[(streamInfoFromPort.Item1, packetDataDirection)].Take(packetSize+2);
+            var newPool = ReadDataBuffers[(streamInfoFromPort.Item1, packetDataDirection)].Skip(packetSize + 2).ToList();
+            ReadDataBuffers[(streamInfoFromPort.Item1, packetDataDirection)] = newPool;
 
             // Add the data to the BasePacketData
             data.ByteData.AddRange(addData);
@@ -298,39 +302,51 @@ public class AaPCapInputReader : AaBaseInputReader
             }
 
             // Compile the packet depending on level
-            switch (data.CompressionLevel)
+            try
             {
-                case 0: // Simple packet
-                    data.PacketId = dirByte3;
-                    break;
-                case 1: // Packet with Hash
-                    var l1Hash = data.GetUInt16AtPos(data.Cursor); // Hash L1
-                    data.PacketId = data.GetUInt16AtPos(data.Cursor);
-                    //pd.PacketLevel = 0;
-                    break;
-                case 2: // Extra Packet
-                    data.PacketId = data.GetUInt16AtPos(data.Cursor);
-                    break;
-                case 3: // Do Decompress L3
-                case 4: // Do Decompress L4
-                    if (DecompressL4Data(data) == false)
-                    {
+                switch (data.CompressionLevel)
+                {
+                    case 0: // Simple packet
+                        data.PacketId = dirByte3;
+                        break;
+                    case 1: // Packet with Hash
+                        _ = data.GetUInt16AtPos(data.Cursor); // Hash L1
+                        data.PacketId = data.GetUInt16AtPos(data.Cursor);
+                        //pd.PacketLevel = 0;
+                        break;
+                    case 2: // Extra Packet
+                        data.PacketId = data.GetUInt16AtPos(data.Cursor);
+                        break;
+                    case 3: // Do Decompress L3
+                    case 4: // Do Decompress L4
+                        if (DecompressL4Data(data) == false)
+                        {
+                            data.MarkedAsInvalid = true;
+                            //return false;
+                        }
+
+                        break;
+                    case 5: // Do decode L5
+                        if (DecodeL5Data(data) == false)
+                        {
+                            data.MarkedAsInvalid = true;
+                            // return false;
+                        }
+
+                        break;
+                    default:
+                        // Debug.WriteLine($"Unexpected Compression Level {data.CompressionLevel}");
                         data.MarkedAsInvalid = true;
-                        //return false;
-                    }
-                    break;
-                case 5: // Do decode L5
-                    if (DecodeL5Data(data) == false)
-                    {
-                        data.MarkedAsInvalid = true;
-                        // return false;
-                    }
-                    break;
-                default:
-                    // Debug.WriteLine($"Unexpected Compression Level {data.CompressionLevel}");
-                    data.MarkedAsInvalid = true;
-                    // continue;
-                    break;
+                        // continue;
+                        break;
+                }
+            }
+            catch (Exception exception)
+            {
+                data.MarkedAsInvalid = true;
+                //data.ParsedData.Clear();
+                data.AddParsedError("EX", "DecodeException", exception.Message, 0);
+                //data.AddUnparsedFields();
             }
 
             if (data.UnParseSubPacketCount > 0)
@@ -340,10 +356,9 @@ public class AaPCapInputReader : AaBaseInputReader
                 ParentProject.LoadedPacketList.Add(data);
 
             // update position
-            if (data.SyncId % 0x0100 == 0)
-                ViewedProjectTab.OnInputProgressUpdate(this, data.SyncId >> 8 % 0x0100, 0x0100);
+            if (data.SyncId % 0x010 == 0)
+                ViewedProjectTab.OnInputProgressUpdate(this, data.SyncId >> 4 % 0x0100, 0x0100);
         }
-
     }
 
     private void ReaderDeviceOnPacketStopped(object sender, CaptureStoppedEventStatus status)

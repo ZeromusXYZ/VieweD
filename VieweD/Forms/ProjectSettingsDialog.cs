@@ -12,7 +12,7 @@ namespace VieweD.Forms
 {
     public partial class ProjectSettingsDialog : Form
     {
-        public ViewedProjectTab? ParentProject { get; set; }
+        private ViewedProjectTab? ParentProject { get; set; }
         public bool RequiresReload { get; set; }
         private string DefaultTitle { get; set; } = string.Empty;
         private List<RuleComboBoxEntry> RulesSelectionList { get; } = new();

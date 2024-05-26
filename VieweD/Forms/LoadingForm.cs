@@ -1,12 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Net.Mime;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace VieweD.Forms
@@ -18,7 +11,7 @@ namespace VieweD.Forms
             InitializeComponent();
         }
 
-        public static LoadingForm? Instance { get; private set; } = null;
+        public static LoadingForm? Instance { get; private set; }
         private DateTime _showThresholdTime = DateTime.MinValue;
         private DateTime _unFreezeThresholdTime = DateTime.MinValue;
 
@@ -71,6 +64,4 @@ namespace VieweD.Forms
             }
         }
     }
-
-    
 }

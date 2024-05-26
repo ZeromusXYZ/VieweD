@@ -57,20 +57,16 @@ namespace VieweD.engine.common
                 if (ContainsType(aClass.BaseType,typeof(BaseInputReader)))
                 {
                     // Add input reader
-                    if (Activator.CreateInstance(aClass) is BaseInputReader reader)
-                    {
-                        if (reader.ExpectedFileExtensions.Count > 0)
-                            AllInputReaders.Add(reader);
-                    }
+                    if (Activator.CreateInstance(aClass) is BaseInputReader { ExpectedFileExtensions.Count: > 0 } reader)
+                        AllInputReaders.Add(reader);
                 }
 
-                if (ContainsType(aClass.BaseType, typeof(BaseParser)))
-                {
-                    // Add parser
-                    if (Activator.CreateInstance(aClass) is BaseParser parser)
-                        AllParsers.Add(parser);
-                }
+                if (!ContainsType(aClass.BaseType, typeof(BaseParser)))
+                    continue;
 
+                // Add parser
+                if (Activator.CreateInstance(aClass) is BaseParser parser)
+                    AllParsers.Add(parser);
             }
 
             // Load plugin engines

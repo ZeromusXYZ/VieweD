@@ -7,6 +7,7 @@ public class BaseParser : IComparable<BaseParser>
 {
     public virtual string Name => "Base Parser";
     public virtual string Description => "";
+    // ReSharper disable once UnusedMember.Global
     public virtual string DefaultRulesFile => "rules.xml";
     public ViewedProjectTab? ParentProject { get; set; }
     public RulesReader? Rules { get; protected set; }

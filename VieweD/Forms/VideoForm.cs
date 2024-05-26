@@ -1,18 +1,13 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
-using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using LibVLCSharp.Shared;
 using VieweD.engine.common;
-using VieweD.Helpers.System;
 using VieweD.Properties;
 using YoutubeExplode;
 using YoutubeExplode.Videos;
-using YoutubeExplode.Videos.Streams;
 
 
 namespace VieweD.Forms
@@ -20,16 +15,16 @@ namespace VieweD.Forms
     public partial class VideoForm : Form
     {
         private LibVLC? LibVlc { get; set; }
-        public MediaPlayer? MPlayer { get; set; }
-        public ViewedProjectTab? ParentProject { get; set; }
-        public bool IsSeeking { get; set; } = false;
+        public MediaPlayer? MPlayer { get; private set; }
+        public ViewedProjectTab? ParentProject { get; init; }
+        private bool IsSeeking { get; set; }
 
         public VideoForm()
         {
             InitializeComponent();
         }
 
-        public bool OpenVideoFile(string filePath)
+        private bool OpenVideoFile(string filePath)
         {
             try
             {
@@ -69,7 +64,7 @@ namespace VieweD.Forms
             return false;
         }
 
-        public async Task<bool> OpenVideoUri(string videoUri)
+        private async Task<bool> OpenVideoUri(string videoUri)
         {
             try
             {
@@ -536,7 +531,7 @@ namespace VieweD.Forms
             }
             else
             {
-                MessageBox.Show("Failed to load video from:\n" + newUri, "Playback Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show(string.Format(Resources.FailedToLoadVideoURI, newUri), Resources.PlaybackErrorTitle, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
 
@@ -548,17 +543,15 @@ namespace VieweD.Forms
 
         private void MarqueeTimer_Tick(object sender, EventArgs e)
         {
-            if ((MPlayer != null) && (MPlayer.Length > 0))
-            {
-                if (MPlayer.IsPlaying)
-                    UpdateVideoMarquee(VideoPositionToString(MPlayer.Position));
-                else
-                {
-                    var isEven = DateTime.UtcNow.Millisecond >= 500;
-                    var pauseText = isEven ? "[||] " : "[  ] ";
-                    UpdateVideoMarquee(pauseText + VideoPositionToString(MPlayer.Position));
-                }
+            if (MPlayer is not { Length: > 0 }) return;
 
+            if (MPlayer.IsPlaying)
+                UpdateVideoMarquee(VideoPositionToString(MPlayer.Position));
+            else
+            {
+                var isEven = DateTime.UtcNow.Millisecond >= 500;
+                var pauseText = isEven ? "[||] " : "[  ] ";
+                UpdateVideoMarquee(pauseText + VideoPositionToString(MPlayer.Position));
             }
         }
     }

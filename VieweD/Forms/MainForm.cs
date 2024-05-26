@@ -5,11 +5,9 @@ using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
-using System.IO.Compression;
 using System.Linq;
 using System.Media;
 using System.Reflection;
-using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using Microsoft.CodeAnalysis;
 using VieweD.engine.common;
@@ -1121,7 +1119,7 @@ namespace VieweD.Forms
 
                 if (imageRect.Contains(e.Location))
                 {
-                    var tabText = tabControl.TabPages[i]?.Text ?? "Tab";
+                    var tabText = tabControl.TabPages[i].Text;
                     var thisTab = tabControl.TabPages[i];
                     if (MessageBox.Show(string.Format(Resources.CloseFile, tabText),
                             Resources.ConfirmClose,
@@ -1688,7 +1686,7 @@ namespace VieweD.Forms
             if (TCProjects.SelectedTab is not ViewedProjectTab project)
                 return;
 
-            if (e?.ClickedItem?.Tag is not string templateName)
+            if (e.ClickedItem?.Tag is not string templateName)
                 return;
 
             if (templateName == "???")
@@ -1724,7 +1722,7 @@ namespace VieweD.Forms
             if (TCProjects.SelectedTab is not ViewedProjectTab project)
                 return;
 
-            if (e?.ClickedItem?.Tag is not string exportName)
+            if (e.ClickedItem?.Tag is not string exportName)
                 return;
 
             if (exportName != string.Empty)
@@ -1757,7 +1755,7 @@ namespace VieweD.Forms
             if (ExportSaveFileDialog.ShowDialog() == DialogResult.OK)
             {
                 if (!project.ExportParsedDataAsXml(ExportSaveFileDialog.FileName, true))
-                    MessageBox.Show($"Failed to export!");
+                    MessageBox.Show(Resources.FailedToExport);
                 else
                     SystemSounds.Asterisk.Play();
             }
@@ -1800,20 +1798,20 @@ namespace VieweD.Forms
 
             if (string.IsNullOrWhiteSpace(clipText))
             {
-                MessageBox.Show("No data on clipboard", "Import from clipboard", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                MessageBox.Show(Resources.NoDataOnClipboard, Resources.ImportFromClipboard, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
                 return;
             }
 
             if (!clipText.StartsWith("<vpx"))
             {
-                MessageBox.Show("Clipboard does not seem to contain packet data", "Import from clipboard", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(Resources.ClipboardNoPacketData, Resources.ImportFromClipboard, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
             var project = new ViewedProjectTab();
             if (project.ImportFromVpxString(clipText))
             {
-                project.Text = "Clipboard";
+                project.Text = Resources.ClipboardTabName;
                 TCProjects.TabPages.Add(project);
                 if (TCProjects.ImageList != null)
                     project.ImageIndex = 1; // viewed icon
