@@ -34,6 +34,7 @@ namespace VieweD.Forms
                 Settings.Default.PacketListStyle = 2;
 
             Settings.Default.ShowStringHexData = CbShowHexStringData.Checked;
+            Settings.Default.SkipUnparsed = CbSkipUnparsed.Checked;
             // Settings.Default.AskCreateNewProjectFile = CbAskNewProject.Checked;
 
             Settings.Default.PacketListFont = BtnPacketListFont.Font;
@@ -126,6 +127,7 @@ namespace VieweD.Forms
             RbListStyleSolid.Checked = (Settings.Default.PacketListStyle == 1);
             RbListStyleTransparent.Checked = (Settings.Default.PacketListStyle == 2);
             CbShowHexStringData.Checked = Settings.Default.ShowStringHexData;
+            CbSkipUnparsed.Checked = Settings.Default.SkipUnparsed;
             // CbAskNewProject.Checked = Settings.Default.AskCreateNewProjectFile;
 
             DefaultCreditsTextBox.Text = Settings.Default.CreditsName;

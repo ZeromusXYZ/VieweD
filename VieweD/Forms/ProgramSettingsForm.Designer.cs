@@ -103,6 +103,7 @@ namespace VieweD.Forms
             LFieldColCount = new Label();
             TbFieldColorCount = new TrackBar();
             GbOtherSettings = new GroupBox();
+            CbSkipUnparsed = new CheckBox();
             LabelDefaultImportFolder = new Label();
             BtnDefaultImportFolder = new Button();
             label16 = new Label();
@@ -1166,6 +1167,7 @@ namespace VieweD.Forms
             // GbOtherSettings
             // 
             GbOtherSettings.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            GbOtherSettings.Controls.Add(CbSkipUnparsed);
             GbOtherSettings.Controls.Add(LabelDefaultImportFolder);
             GbOtherSettings.Controls.Add(BtnDefaultImportFolder);
             GbOtherSettings.Controls.Add(label16);
@@ -1177,15 +1179,26 @@ namespace VieweD.Forms
             GbOtherSettings.Margin = new Padding(4, 3, 4, 3);
             GbOtherSettings.Name = "GbOtherSettings";
             GbOtherSettings.Padding = new Padding(4, 3, 4, 3);
-            GbOtherSettings.Size = new Size(656, 182);
+            GbOtherSettings.Size = new Size(656, 189);
             GbOtherSettings.TabIndex = 18;
             GbOtherSettings.TabStop = false;
             GbOtherSettings.Text = "Miscellaneous Settings";
             // 
+            // CbSkipUnparsed
+            // 
+            CbSkipUnparsed.AutoSize = true;
+            CbSkipUnparsed.Location = new Point(15, 48);
+            CbSkipUnparsed.Margin = new Padding(4, 3, 4, 3);
+            CbSkipUnparsed.Name = "CbSkipUnparsed";
+            CbSkipUnparsed.Size = new Size(630, 20);
+            CbSkipUnparsed.TabIndex = 24;
+            CbSkipUnparsed.Text = "Skip parsing of unparsed data (recommended off but can be useful for debugging rules when there is data missing)";
+            CbSkipUnparsed.UseVisualStyleBackColor = true;
+            // 
             // LabelDefaultImportFolder
             // 
             LabelDefaultImportFolder.AutoSize = true;
-            LabelDefaultImportFolder.Location = new Point(46, 149);
+            LabelDefaultImportFolder.Location = new Point(44, 158);
             LabelDefaultImportFolder.Name = "LabelDefaultImportFolder";
             LabelDefaultImportFolder.Size = new Size(50, 16);
             LabelDefaultImportFolder.TabIndex = 23;
@@ -1194,7 +1207,7 @@ namespace VieweD.Forms
             // BtnDefaultImportFolder
             // 
             BtnDefaultImportFolder.Image = Properties.Resources.document_open_folder_16;
-            BtnDefaultImportFolder.Location = new Point(17, 145);
+            BtnDefaultImportFolder.Location = new Point(15, 154);
             BtnDefaultImportFolder.Name = "BtnDefaultImportFolder";
             BtnDefaultImportFolder.Size = new Size(23, 25);
             BtnDefaultImportFolder.TabIndex = 22;
@@ -1204,7 +1217,7 @@ namespace VieweD.Forms
             // label16
             // 
             label16.AutoSize = true;
-            label16.Location = new Point(8, 126);
+            label16.Location = new Point(6, 135);
             label16.Name = "label16";
             label16.Size = new Size(119, 16);
             label16.TabIndex = 21;
@@ -1214,7 +1227,7 @@ namespace VieweD.Forms
             // 
             label14.AutoSize = true;
             label14.Enabled = false;
-            label14.Location = new Point(207, 93);
+            label14.Location = new Point(205, 102);
             label14.Name = "label14";
             label14.Size = new Size(259, 16);
             label14.TabIndex = 20;
@@ -1222,7 +1235,7 @@ namespace VieweD.Forms
             // 
             // DefaultCreditsTextBox
             // 
-            DefaultCreditsTextBox.Location = new Point(17, 87);
+            DefaultCreditsTextBox.Location = new Point(15, 96);
             DefaultCreditsTextBox.Name = "DefaultCreditsTextBox";
             DefaultCreditsTextBox.Size = new Size(182, 23);
             DefaultCreditsTextBox.TabIndex = 19;
@@ -1230,7 +1243,7 @@ namespace VieweD.Forms
             // label15
             // 
             label15.AutoSize = true;
-            label15.Location = new Point(7, 63);
+            label15.Location = new Point(5, 72);
             label15.Name = "label15";
             label15.Size = new Size(118, 16);
             label15.TabIndex = 18;
@@ -1239,7 +1252,7 @@ namespace VieweD.Forms
             // CbShowHexStringData
             // 
             CbShowHexStringData.AutoSize = true;
-            CbShowHexStringData.Location = new Point(16, 23);
+            CbShowHexStringData.Location = new Point(15, 22);
             CbShowHexStringData.Margin = new Padding(4, 3, 4, 3);
             CbShowHexStringData.Name = "CbShowHexStringData";
             CbShowHexStringData.Size = new Size(183, 20);
@@ -1470,5 +1483,6 @@ namespace VieweD.Forms
         private Label LabelDefaultImportFolder;
         private Button BtnDefaultImportFolder;
         private Label label16;
+        private CheckBox CbSkipUnparsed;
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
+using System.Net.Mime;
 using System.Runtime.InteropServices;
 using VieweD.Helpers.System;
 using VieweD.Properties;
@@ -402,6 +403,9 @@ public class BasePacketData
 
     public void AddUnparsedFields()
     {
+        if (Settings.Default.SkipUnparsed)
+            return;
+
         var firstAdded = false;
 
         void AddFirstUnparsed()

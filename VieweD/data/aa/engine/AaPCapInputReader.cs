@@ -24,7 +24,7 @@ public class AaPCapInputReader : AaBaseInputReader
     private CaptureStoppedEventStatus StopState { get; set; }
     private DateTime MinTime { get; set; }
     private DateTime MaxTime { get; set; }
-    private Dictionary<(int, PacketDataDirection), List<byte>> ReadDataBuffers { get; set; } = new();
+    private Dictionary<(int, PacketDataDirection), List<byte>> ReadDataBuffers { get; } = new();
 
     public AaPCapInputReader(ViewedProjectTab parentProject) : base(parentProject)
     {
@@ -248,19 +248,21 @@ public class AaPCapInputReader : AaBaseInputReader
                 return; // expect more data
 
             // Create new PacketData object
-            var data = new BasePacketData(ParentProject);
-            // Grab IP and port data
-            data.SourceIp = sIp;
-            data.DestinationIp = dIp;
-            data.SourcePort = sPort;
-            data.DestinationPort = dPort;
-            data.PacketDataDirection = packetDataDirection;
+            var data = new BasePacketData(ParentProject)
+            {
+                // Grab IP and port data
+                SourceIp = sIp,
+                DestinationIp = dIp,
+                SourcePort = sPort,
+                DestinationPort = dPort,
+                PacketDataDirection = packetDataDirection
+            };
 
             // Try to generate timestamp
             try
             {
-                data.TimeStamp = DateTime.MinValue.AddSeconds((double)rawPacket.Timeval.Value);
-                // data.TimeStamp = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc).AddSeconds((double)rawPacket.Timeval.Value);
+                // data.TimeStamp = DateTime.MinValue.AddSeconds((double)rawPacket.Timeval.Value);
+                data.TimeStamp = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc).AddSeconds((double)rawPacket.Timeval.Value);
             }
             catch
             {
