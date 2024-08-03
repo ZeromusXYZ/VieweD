@@ -682,6 +682,15 @@ namespace VieweD.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to delete {0}, aborting.
+        /// </summary>
+        internal static string FailedToDeleteExportFileAborting {
+            get {
+                return ResourceManager.GetString("FailedToDeleteExportFileAborting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed to export!.
         /// </summary>
         internal static string FailedToExport {

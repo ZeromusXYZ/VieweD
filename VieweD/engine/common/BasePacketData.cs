@@ -197,6 +197,16 @@ public class BasePacketData
         return BitConverter.ToInt16(bytes, 0);
     }
 
+    public float GetInt16AsOneFloatAtPos(int pos, bool reversed = false)
+    {
+        if ((pos > (ByteData.Count - 2)) || (pos < 0)) return 0;
+        Cursor = pos + 2;
+        var bytes = ByteData.GetRange(pos, 2).ToArray();
+        if (reversed) bytes = bytes.Reverse().ToArray();
+        var shortVal = BitConverter.ToInt16(bytes, 0);
+        return (1f * shortVal / short.MaxValue);
+    }
+
     public uint GetUInt24AtPos(int pos, bool reversed = false)
     {
         if ((pos > (ByteData.Count - 3)) || (pos < 0)) return 0;

@@ -1454,7 +1454,7 @@ public class ViewedProjectTab : TabPage
         InputParser.Rules.CurrentExportDataTool = exportTool;
         InputParser.Rules.CurrentExportCount = 0;
         var targetFile = Path.Combine(ProjectFolder, exportTool.FileName);
-        if (File.Exists(targetFile))
+        while (File.Exists(targetFile))
         {
             var res = MessageBox.Show(string.Format(Resources.AppendToCurrentFile, targetFile),
                 Resources.OverwriteFileTitle,
@@ -1462,11 +1462,21 @@ public class ViewedProjectTab : TabPage
             if (res == DialogResult.Yes)
             {
                 // Good to go
+                break;
             }
             else if (res == DialogResult.No)
             {
                 // No = Create a new file, so delete the old one
-                File.Delete(targetFile);
+                try
+                {
+                    File.Delete(targetFile);
+                    break;
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(string.Format(Resources.FailedToDeleteExportFileAborting, targetFile));
+                    return;
+                }
             }
             else
             {

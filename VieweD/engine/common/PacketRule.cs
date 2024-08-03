@@ -133,6 +133,16 @@ public class PacketRule
                     case "half":
                         res = new RulesActionReadHalf(this, parentAction, actionNode, step);
                         break;
+                    case "shortone":
+                    case "hx":
+                    case "hy":
+                    case "hz":
+                    case "rshortone":
+                    case "rhx":
+                    case "rhy":
+                    case "rhz":
+                        res = new RulesActionReadShortOneFloat(this, parentAction, actionNode, step, isReversed);
+                        break;
                     case "q":
                     case "rq":
                     case "ulong":

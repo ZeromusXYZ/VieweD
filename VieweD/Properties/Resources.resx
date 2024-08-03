@@ -656,4 +656,8 @@ Difference = {2}</value>
   <data name="ClipboardTabName" xml:space="preserve">
     <value>Clipboard</value>
   </data>
+  <data name="FailedToDeleteExportFileAborting" xml:space="preserve">
+    <value>Failed to delete {0}, aborting</value>
+    <comment>0: export file</comment>
+  </data>
 </root>

@@ -329,6 +329,29 @@ public class RulesActionReadHalf : RulesAction
 }
 
 /// <summary>
+/// Reads a short and returns a float value between -1 and 1
+/// </summary>
+public class RulesActionReadShortOneFloat : RulesAction
+{
+    public RulesActionReadShortOneFloat(PacketRule parent, RulesAction? parentAction, XmlNode thisNode, int thisStep, bool isReversed) : base(parent, parentAction, thisNode, thisStep, isReversed)
+    {
+        //
+    }
+
+    public override void RunAction(BasePacketData packetData)
+    {
+        GotoStartPosition(packetData);
+        var pos = packetData.Cursor;
+        var data = packetData.GetInt16AsOneFloatAtPos(pos, IsReversed);
+        var dataString = data.ToString(CultureInfo.InvariantCulture);
+        var varName = XmlHelper.GetAttributeString(Attributes, "name");
+        ParentRule.SetLocalVar(varName, dataString);
+        packetData.AddParsedField(true, pos, packetData.Cursor - 1, pos.ToHex(2), varName, dataString, Depth);
+    }
+}
+
+
+/// <summary>
 /// Read ulong
 /// </summary>
 public class RulesActionReadUInt64 : RulesAction
