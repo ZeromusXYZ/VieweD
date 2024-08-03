@@ -69,6 +69,12 @@ namespace VieweD.Forms
                 rbUInt16.Checked = true;
             }
             else
+            if (SearchParameters.SearchByUInt24)
+            {
+                eValue.Text = SearchParameters.SearchUInt24.ToHex(1);
+                rbUInt24.Checked = true;
+            }
+            else
             if (SearchParameters.SearchByUInt32)
             {
                 eValue.Text = SearchParameters.SearchUInt32.ToHex(1);
@@ -94,6 +100,16 @@ namespace VieweD.Forms
 
             IsValidating = false;
             ValidateFields();
+            if (!string.IsNullOrWhiteSpace(eFieldValue.Text))
+            {
+                eFieldValue.Focus();
+                eFieldValue.SelectAll();
+            }
+            else if (!string.IsNullOrWhiteSpace(eValue.Text))
+            {
+                eValue.Focus();
+                eValue.SelectAll();
+            }
         }
 
         private void BtnFindNext_Click(object sender, EventArgs e)

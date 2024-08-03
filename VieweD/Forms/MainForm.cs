@@ -26,6 +26,7 @@ namespace VieweD.Forms
                                               "-----+----------------------------------------------------  -+------------------\n";
 
         public List<string> AllTempFiles { get; set; } = new();
+        private List<string> RecentFilesList { get; set; } = new();
 
         public BasePacketData? CurrentPacketData;
 
@@ -49,6 +50,13 @@ namespace VieweD.Forms
                 Settings.Default.Reload();
                 Settings.Default.DoUpdateSettings = false; // This is setting is true by default, so we reset it when done upgrading
                 Settings.Default.Save();
+            }
+
+            // Grab recent files
+            foreach (var fn in Settings.Default.RecentFiles.Split(Path.PathSeparator))
+            {
+                if (!string.IsNullOrWhiteSpace(fn))
+                    RecentFilesList.Add(fn);
             }
 
             // Load Settings
@@ -137,7 +145,18 @@ namespace VieweD.Forms
         private void MMFileOpen_Click(object sender, EventArgs e)
         {
             if (OpenProjectFileDialog.ShowDialog() == DialogResult.OK)
-                _ = OpenFile(OpenProjectFileDialog.FileName);
+            {
+                var newProject = OpenFile(OpenProjectFileDialog.FileName);
+                // Add to recent files if success
+                if (newProject != null)
+                {
+                    RecentFilesList.Remove(OpenProjectFileDialog.FileName);
+                    RecentFilesList.Insert(0, OpenProjectFileDialog.FileName);
+
+                    while (RecentFilesList.Count > 10)
+                        RecentFilesList.RemoveAt(RecentFilesList.Count - 1);
+                }
+            }
             UpdateMainMenuAccordingToProject();
         }
 
@@ -949,6 +968,9 @@ namespace VieweD.Forms
                     // Ignore
                 }
             }
+
+            Settings.Default.RecentFiles = string.Join(Path.PathSeparator, RecentFilesList);
+            Settings.Default.Save();
         }
 
         private void TPWelcomeBtnClose_Click(object sender, EventArgs e)
@@ -1625,7 +1647,7 @@ namespace VieweD.Forms
             if (cmdLine.Count <= 0)
                 return; // should never happen, but will keep the code from complaining.
 
-            for(var c = 1; c < cmdLine.Count; c++)
+            for (var c = 1; c < cmdLine.Count; c++)
             {
                 var rawArg = cmdLine[c];
                 var arg = rawArg.Trim().ToLower();
@@ -1891,6 +1913,54 @@ namespace VieweD.Forms
                 i++;
             }
             MessageBox.Show(Resources.NothingFound, Resources.Search, MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void MMOpenRecentFile_Click(object sender, EventArgs e)
+        {
+            if (sender is not ToolStripMenuItem item)
+                return;
+            if (item.Tag is not string fileName)
+                return;
+
+            if (!File.Exists(fileName))
+            {
+                MessageBox.Show($"File no longer exists {fileName}, removing", "File not found", MessageBoxButtons.OK);
+                RecentFilesList.Remove(fileName);
+                return;
+            }
+            
+            var newProject = OpenFile(fileName);
+            if (newProject != null)
+            {
+                RecentFilesList.Remove(fileName);
+                RecentFilesList.Insert(0, fileName);
+
+                // Redundant code
+                while (RecentFilesList.Count > 10)
+                    RecentFilesList.RemoveAt(RecentFilesList.Count - 1);
+            }
+            UpdateMainMenuAccordingToProject();
+        }
+
+        private void MMFile_DropDownOpening(object sender, EventArgs e)
+        {
+            MMFileRecent.DropDownItems.Clear();
+            foreach (var recentFileName in RecentFilesList)
+            {
+                var item = new ToolStripMenuItem();
+                item.Text = recentFileName;
+                item.Tag = recentFileName;
+                item.Click += MMOpenRecentFile_Click!;
+                foreach (TabPage tcProjectsTabPage in TCProjects.TabPages)
+                {
+                    if ((tcProjectsTabPage is ViewedProjectTab project) && (project.ProjectFile == recentFileName))
+                    {
+                        item.Enabled = false;
+                        break;
+                    }
+                }
+                MMFileRecent.DropDownItems.Add(item);
+            }
         }
     }
 }

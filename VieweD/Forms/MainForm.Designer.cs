@@ -37,6 +37,8 @@ namespace VieweD.Forms
             MM = new MenuStrip();
             MMFile = new ToolStripMenuItem();
             MMFileOpen = new ToolStripMenuItem();
+            MMFileRecent = new ToolStripMenuItem();
+            MMOpenRecentFile = new ToolStripMenuItem();
             MMFileN3 = new ToolStripSeparator();
             MMFileImport = new ToolStripMenuItem();
             MMFileImportFromCommunity = new ToolStripMenuItem();
@@ -153,9 +155,10 @@ namespace VieweD.Forms
             // 
             // MMFile
             // 
-            MMFile.DropDownItems.AddRange(new ToolStripItem[] { MMFileOpen, MMFileN3, MMFileImport, MMFileN1, MMFileSettings, MMFileN2, MMFileExit });
+            MMFile.DropDownItems.AddRange(new ToolStripItem[] { MMFileOpen, MMFileRecent, MMFileN3, MMFileImport, MMFileN1, MMFileSettings, MMFileN2, MMFileExit });
             MMFile.Name = "MMFile";
             resources.ApplyResources(MMFile, "MMFile");
+            MMFile.DropDownOpening += MMFile_DropDownOpening;
             // 
             // MMFileOpen
             // 
@@ -163,6 +166,18 @@ namespace VieweD.Forms
             MMFileOpen.Name = "MMFileOpen";
             resources.ApplyResources(MMFileOpen, "MMFileOpen");
             MMFileOpen.Click += MMFileOpen_Click;
+            // 
+            // MMFileRecent
+            // 
+            MMFileRecent.DropDownItems.AddRange(new ToolStripItem[] { MMOpenRecentFile });
+            MMFileRecent.Name = "MMFileRecent";
+            resources.ApplyResources(MMFileRecent, "MMFileRecent");
+            // 
+            // MMOpenRecentFile
+            // 
+            MMOpenRecentFile.Name = "MMOpenRecentFile";
+            resources.ApplyResources(MMOpenRecentFile, "MMOpenRecentFile");
+            MMOpenRecentFile.Click += MMOpenRecentFile_Click;
             // 
             // MMFileN3
             // 
@@ -912,5 +927,7 @@ namespace VieweD.Forms
         private ToolStripMenuItem MMLinksWiki;
         private ToolStripMenuItem MMSearchInvalid;
         private ToolStripSeparator MMSearchN2;
+        private ToolStripMenuItem MMFileRecent;
+        private ToolStripMenuItem MMOpenRecentFile;
     }
 }

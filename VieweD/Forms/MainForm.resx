@@ -126,64 +126,76 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="MMFileOpen.Size" type="System.Drawing.Size, System.Drawing">
-    <value>164, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="MMFileOpen.Text" xml:space="preserve">
     <value>&amp;Open ...</value>
   </data>
+  <data name="MMOpenRecentFile.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
+  </data>
+  <data name="MMOpenRecentFile.Text" xml:space="preserve">
+    <value>filename</value>
+  </data>
+  <data name="MMFileRecent.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
+  </data>
+  <data name="MMFileRecent.Text" xml:space="preserve">
+    <value>Open recent</value>
+  </data>
   <data name="MMFileN3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>161, 6</value>
+    <value>177, 6</value>
   </data>
   <data name="MMFileImportFromCommunity.Size" type="System.Drawing.Size, System.Drawing">
-    <value>242, 22</value>
+    <value>238, 22</value>
   </data>
   <data name="MMFileImportFromCommunity.Text" xml:space="preserve">
     <value>Import from community post ...</value>
   </data>
   <data name="MMFileImportFromClipboard.Size" type="System.Drawing.Size, System.Drawing">
-    <value>242, 22</value>
+    <value>238, 22</value>
   </data>
   <data name="MMFileImportFromClipboard.Text" xml:space="preserve">
     <value>Import from clipboard</value>
   </data>
   <data name="MMFileN4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>239, 6</value>
+    <value>235, 6</value>
   </data>
   <data name="MMFileImportVpx.Size" type="System.Drawing.Size, System.Drawing">
-    <value>242, 22</value>
+    <value>238, 22</value>
   </data>
   <data name="MMFileImportVpx.Text" xml:space="preserve">
     <value>Import from VPX ...</value>
   </data>
   <data name="MMFileExportVpx.Size" type="System.Drawing.Size, System.Drawing">
-    <value>242, 22</value>
+    <value>238, 22</value>
   </data>
   <data name="MMFileExportVpx.Text" xml:space="preserve">
     <value>Export packets to VPX ...</value>
   </data>
   <data name="MMFileImport.Size" type="System.Drawing.Size, System.Drawing">
-    <value>164, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="MMFileImport.Text" xml:space="preserve">
     <value>&amp;Import / Export</value>
   </data>
   <data name="MMFileN1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>161, 6</value>
+    <value>177, 6</value>
   </data>
   <data name="MMFileSettings.Size" type="System.Drawing.Size, System.Drawing">
-    <value>164, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="MMFileSettings.Text" xml:space="preserve">
     <value>Program &amp;settings</value>
   </data>
   <data name="MMFileN2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>161, 6</value>
+    <value>177, 6</value>
   </data>
   <data name="MMFileExit.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
     <value>Alt+F4</value>
   </data>
   <data name="MMFileExit.Size" type="System.Drawing.Size, System.Drawing">
-    <value>164, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="MMFileExit.Text" xml:space="preserve">
     <value>E&amp;xit</value>
@@ -208,64 +220,64 @@
     <value>Ctrl+S</value>
   </data>
   <data name="MMProjectSave.Size" type="System.Drawing.Size, System.Drawing">
-    <value>214, 22</value>
+    <value>211, 22</value>
   </data>
   <data name="MMProjectSave.Text" xml:space="preserve">
     <value>&amp;Save</value>
   </data>
   <data name="toolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>211, 6</value>
+    <value>208, 6</value>
   </data>
   <data name="MMProjectCopySelectedPackets.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
     <value>Ctrl+Shift+C</value>
   </data>
   <data name="MMProjectCopySelectedPackets.Size" type="System.Drawing.Size, System.Drawing">
-    <value>214, 22</value>
+    <value>211, 22</value>
   </data>
   <data name="MMProjectCopySelectedPackets.Text" xml:space="preserve">
     <value>Cop&amp;y Packet</value>
   </data>
   <data name="toolStripMenuItem3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>211, 6</value>
+    <value>208, 6</value>
   </data>
   <data name="MMProjectGameData.Size" type="System.Drawing.Size, System.Drawing">
-    <value>214, 22</value>
+    <value>211, 22</value>
   </data>
   <data name="MMProjectGameData.Text" xml:space="preserve">
     <value>&amp;Game Data ...</value>
   </data>
   <data name="MMProjectVideo.Size" type="System.Drawing.Size, System.Drawing">
-    <value>214, 22</value>
+    <value>211, 22</value>
   </data>
   <data name="MMProjectVideo.Text" xml:space="preserve">
     <value>&amp;Video Link ...</value>
   </data>
   <data name="MMProjectN1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>211, 6</value>
+    <value>208, 6</value>
   </data>
   <data name="MMProjectSettings.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
     <value>Ctrl+P</value>
   </data>
   <data name="MMProjectSettings.Size" type="System.Drawing.Size, System.Drawing">
-    <value>214, 22</value>
+    <value>211, 22</value>
   </data>
   <data name="MMProjectSettings.Text" xml:space="preserve">
     <value>Se&amp;ttings ...</value>
   </data>
   <data name="MMProjectPack.Size" type="System.Drawing.Size, System.Drawing">
-    <value>214, 22</value>
+    <value>211, 22</value>
   </data>
   <data name="MMProjectPack.Text" xml:space="preserve">
     <value>Pack project to .&amp;zip ...</value>
   </data>
   <data name="MMProjectN2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>211, 6</value>
+    <value>208, 6</value>
   </data>
   <data name="MMProjectClose.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
     <value>Ctrl+W</value>
   </data>
   <data name="MMProjectClose.Size" type="System.Drawing.Size, System.Drawing">
-    <value>214, 22</value>
+    <value>211, 22</value>
   </data>
   <data name="MMProjectClose.Text" xml:space="preserve">
     <value>&amp;Close</value>
@@ -283,7 +295,7 @@
     <value>Ctrl+F</value>
   </data>
   <data name="MMSearchFind.Size" type="System.Drawing.Size, System.Drawing">
-    <value>207, 22</value>
+    <value>206, 22</value>
   </data>
   <data name="MMSearchFind.Text" xml:space="preserve">
     <value>&amp;Find ...</value>
@@ -292,28 +304,28 @@
     <value>F3</value>
   </data>
   <data name="MMSearchFindNext.Size" type="System.Drawing.Size, System.Drawing">
-    <value>207, 22</value>
+    <value>206, 22</value>
   </data>
   <data name="MMSearchFindNext.Text" xml:space="preserve">
     <value>Find &amp;Next</value>
   </data>
   <data name="MMSearchN1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>204, 6</value>
+    <value>203, 6</value>
   </data>
   <data name="MMSearchInvalid.Size" type="System.Drawing.Size, System.Drawing">
-    <value>207, 22</value>
+    <value>206, 22</value>
   </data>
   <data name="MMSearchInvalid.Text" xml:space="preserve">
     <value>Find Next &amp;Invalid</value>
   </data>
   <data name="MMSearchN2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>204, 6</value>
+    <value>203, 6</value>
   </data>
   <data name="MMSearchEditFilter.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
     <value>Ctrl+Shift+F</value>
   </data>
   <data name="MMSearchEditFilter.Size" type="System.Drawing.Size, System.Drawing">
-    <value>207, 22</value>
+    <value>206, 22</value>
   </data>
   <data name="MMSearchEditFilter.Text" xml:space="preserve">
     <value>&amp;Edit Filter ...</value>
@@ -328,7 +340,7 @@
     <value>99, 6</value>
   </data>
   <data name="MMSearchApplyMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>207, 22</value>
+    <value>206, 22</value>
   </data>
   <data name="MMSearchApplyMenu.Text" xml:space="preserve">
     <value>Apply &amp;Filter</value>
@@ -343,7 +355,7 @@
     <value>99, 6</value>
   </data>
   <data name="MMSearchHighlightMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>207, 22</value>
+    <value>206, 22</value>
   </data>
   <data name="MMSearchHighlightMenu.Text" xml:space="preserve">
     <value>&amp;Highlight Filter</value>
@@ -358,22 +370,22 @@
     <value>&amp;Search and Filters</value>
   </data>
   <data name="MMToolsEditTemplateItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>122, 22</value>
+    <value>121, 22</value>
   </data>
   <data name="MMToolsEditTemplateItem.Text" xml:space="preserve">
     <value>Template</value>
   </data>
   <data name="MMToolsEditTemplates.Size" type="System.Drawing.Size, System.Drawing">
-    <value>158, 22</value>
+    <value>157, 22</value>
   </data>
   <data name="MMToolsEditTemplates.Text" xml:space="preserve">
     <value>Edit &amp;Templates</value>
   </data>
   <data name="toolStripMenuItem2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>155, 6</value>
+    <value>154, 6</value>
   </data>
   <data name="MMToolsExportCSV.Size" type="System.Drawing.Size, System.Drawing">
-    <value>158, 22</value>
+    <value>157, 22</value>
   </data>
   <data name="MMToolsExportCSV.Text" xml:space="preserve">
     <value>Export as &amp;CSV ...</value>
@@ -385,7 +397,7 @@
     <value>Data</value>
   </data>
   <data name="MMToolExportData.Size" type="System.Drawing.Size, System.Drawing">
-    <value>158, 22</value>
+    <value>157, 22</value>
   </data>
   <data name="MMToolExportData.Text" xml:space="preserve">
     <value>Export &amp;Data</value>
@@ -400,43 +412,43 @@
     <value>&amp;Tools</value>
   </data>
   <data name="MMLinksWiki.Size" type="System.Drawing.Size, System.Drawing">
-    <value>199, 22</value>
+    <value>198, 22</value>
   </data>
   <data name="MMLinksWiki.Text" xml:space="preserve">
     <value>Wiki / Help</value>
   </data>
   <data name="MMLinksGitHub.Size" type="System.Drawing.Size, System.Drawing">
-    <value>199, 22</value>
+    <value>198, 22</value>
   </data>
   <data name="MMLinksGitHub.Text" xml:space="preserve">
     <value>Source Code on GitHub</value>
   </data>
   <data name="MMLinksDikscord.Size" type="System.Drawing.Size, System.Drawing">
-    <value>199, 22</value>
+    <value>198, 22</value>
   </data>
   <data name="MMLinksDikscord.Text" xml:space="preserve">
     <value>Join Discord</value>
   </data>
   <data name="MMLinksN1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>196, 6</value>
+    <value>195, 6</value>
   </data>
   <data name="MMLinksKoFi.Size" type="System.Drawing.Size, System.Drawing">
-    <value>199, 22</value>
+    <value>198, 22</value>
   </data>
   <data name="MMLinksKoFi.Text" xml:space="preserve">
     <value>Buy me a coffee</value>
   </data>
   <data name="MMLinksN2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>196, 6</value>
+    <value>195, 6</value>
   </data>
   <data name="MMLinksVLC.Size" type="System.Drawing.Size, System.Drawing">
-    <value>199, 22</value>
+    <value>198, 22</value>
   </data>
   <data name="MMLinksVLC.Text" xml:space="preserve">
     <value>Visit VideoLAN VLC site</value>
   </data>
   <data name="MMLinksWireshark.Size" type="System.Drawing.Size, System.Drawing">
-    <value>199, 22</value>
+    <value>198, 22</value>
   </data>
   <data name="MMLinksWireshark.Text" xml:space="preserve">
     <value>Visit Wireshark site</value>
@@ -478,13 +490,13 @@
     <value>False</value>
   </data>
   <data name="StatusBarProgressBar.Size" type="System.Drawing.Size, System.Drawing">
-    <value>150, 18</value>
+    <value>150, 19</value>
   </data>
   <data name="StatusBarEngineName.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleLeft</value>
   </data>
   <data name="StatusBarEngineName.Size" type="System.Drawing.Size, System.Drawing">
-    <value>54, 19</value>
+    <value>54, 20</value>
   </data>
   <data name="StatusBarEngineName.Text" xml:space="preserve">
     <value>&lt;none&gt;</value>
@@ -496,7 +508,7 @@
     <value>MiddleLeft</value>
   </data>
   <data name="StatusBarProject.Size" type="System.Drawing.Size, System.Drawing">
-    <value>863, 19</value>
+    <value>863, 20</value>
   </data>
   <data name="StatusBarProject.Text" xml:space="preserve">
     <value>Project folder:</value>
@@ -505,10 +517,10 @@
     <value>MiddleLeft</value>
   </data>
   <data name="StatusBar.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 577</value>
+    <value>0, 616</value>
   </data>
   <data name="StatusBar.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1084, 24</value>
+    <value>1084, 25</value>
   </data>
   <data name="StatusBar.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -541,7 +553,7 @@
     <value>3, 3</value>
   </data>
   <data name="RichTextWelcome.Size" type="System.Drawing.Size, System.Drawing">
-    <value>300, 501</value>
+    <value>300, 538</value>
   </data>
   <data name="RichTextWelcome.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -565,10 +577,10 @@
     <value>Top, Bottom, Left, Right</value>
   </data>
   <data name="TPWelcomeBtnClose.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 510</value>
+    <value>3, 547</value>
   </data>
   <data name="TPWelcomeBtnClose.Size" type="System.Drawing.Size, System.Drawing">
-    <value>300, 26</value>
+    <value>300, 28</value>
   </data>
   <data name="TPWelcomeBtnClose.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -598,7 +610,7 @@
     <value>2</value>
   </data>
   <data name="TPWelcomeLayout.Size" type="System.Drawing.Size, System.Drawing">
-    <value>303, 539</value>
+    <value>303, 578</value>
   </data>
   <data name="TPWelcomeLayout.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -616,7 +628,7 @@
     <value>0</value>
   </data>
   <data name="TPWelcomeLayout.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="RichTextWelcome" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="TPWelcomeBtnClose" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="AutoSize,0" /&gt;&lt;Rows Styles="Percent,100,Absolute,32" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="RichTextWelcome" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="TPWelcomeBtnClose" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="AutoSize,0" /&gt;&lt;Rows Styles="Percent,100,Absolute,34" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="TPWelcome.ImageIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -629,7 +641,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="TPWelcome.Size" type="System.Drawing.Size, System.Drawing">
-    <value>309, 545</value>
+    <value>309, 584</value>
   </data>
   <data name="TPWelcome.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -660,7 +672,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAEZTeXN0ZW0uV2luZG93cy5Gb3JtcywgQ3VsdHVyZT1uZXV0cmFs
         LCBQdWJsaWNLZXlUb2tlbj1iNzdhNWM1NjE5MzRlMDg5BQEAAAAmU3lzdGVtLldpbmRvd3MuRm9ybXMu
         SW1hZ2VMaXN0U3RyZWFtZXIBAAAABERhdGEHAgIAAAAJAwAAAA8DAAAAbAwAAAJNU0Z0AUkBTAIBAQUB
-        AAHYAQIB2AECARABAAEQAQAE/wEJAQAI/wFCAU0BNgEEBgABNgEEAgABKAMAAUADAAEgAwABAQEAAQgG
+        AAH4AQIB+AECARABAAEQAQAE/wEJAQAI/wFCAU0BNgEEBgABNgEEAgABKAMAAUADAAEgAwABAQEAAQgG
         AAEIGAABgAIAAYADAAKAAQABgAMAAYABAAGAAQACgAIAA8ABAAHAAdwBwAEAAfABygGmAQABMwUAATMB
         AAEzAQABMwEAAjMCAAMWAQADHAEAAyIBAAMpAQADVQEAA00BAANCAQADOQEAAYABfAH/AQACUAH/AQAB
         kwEAAdYBAAH/AewBzAEAAcYB1gHvAQAB1gLnAQABkAGpAa0CAAH/ATMDAAFmAwABmQMAAcwCAAEzAwAC
@@ -722,7 +734,7 @@
     <value>0, 0</value>
   </data>
   <data name="TCProjects.Size" type="System.Drawing.Size, System.Drawing">
-    <value>340, 553</value>
+    <value>340, 592</value>
   </data>
   <data name="TCProjects.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -776,28 +788,28 @@
     <value>451, 17</value>
   </metadata>
   <data name="MiFieldFields.Size" type="System.Drawing.Size, System.Drawing">
-    <value>175, 22</value>
+    <value>174, 22</value>
   </data>
   <data name="MiFieldFields.Text" xml:space="preserve">
     <value>Fields</value>
   </data>
   <data name="MIFieldLocalVars.Size" type="System.Drawing.Size, System.Drawing">
-    <value>175, 22</value>
+    <value>174, 22</value>
   </data>
   <data name="MIFieldLocalVars.Text" xml:space="preserve">
     <value>Local Vars</value>
   </data>
   <data name="MiFieldN1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>172, 6</value>
+    <value>171, 6</value>
   </data>
   <data name="MiFieldDebug.Size" type="System.Drawing.Size, System.Drawing">
-    <value>175, 22</value>
+    <value>174, 22</value>
   </data>
   <data name="MiFieldDebug.Text" xml:space="preserve">
     <value>Debug information</value>
   </data>
   <data name="MiFieldView.Size" type="System.Drawing.Size, System.Drawing">
-    <value>176, 76</value>
+    <value>175, 76</value>
   </data>
   <data name="&gt;&gt;MiFieldView.Name" xml:space="preserve">
     <value>MiFieldView</value>
@@ -815,7 +827,7 @@
     <value>8</value>
   </data>
   <data name="DgvParsed.Size" type="System.Drawing.Size, System.Drawing">
-    <value>740, 417</value>
+    <value>740, 446</value>
   </data>
   <data name="DgvParsed.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -896,7 +908,7 @@
     <value>3, 3</value>
   </data>
   <data name="RichTextData.Size" type="System.Drawing.Size, System.Drawing">
-    <value>509, 126</value>
+    <value>509, 136</value>
   </data>
   <data name="RichTextData.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -920,40 +932,40 @@
     <value>736, 17</value>
   </metadata>
   <data name="PMSuggestIntergers.Size" type="System.Drawing.Size, System.Drawing">
-    <value>161, 22</value>
+    <value>159, 22</value>
   </data>
   <data name="PMSuggestIntergers.Text" xml:space="preserve">
     <value>Integers</value>
   </data>
   <data name="PMSuggestFloats.Size" type="System.Drawing.Size, System.Drawing">
-    <value>161, 22</value>
+    <value>159, 22</value>
   </data>
   <data name="PMSuggestFloats.Text" xml:space="preserve">
     <value>Floating points</value>
   </data>
   <data name="PMSuggestDateTime.Size" type="System.Drawing.Size, System.Drawing">
-    <value>161, 22</value>
+    <value>159, 22</value>
   </data>
   <data name="PMSuggestDateTime.Text" xml:space="preserve">
     <value>DateTime</value>
   </data>
   <data name="PMSuggestN1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>158, 6</value>
+    <value>156, 6</value>
   </data>
   <data name="PMSuggestLookup.Size" type="System.Drawing.Size, System.Drawing">
-    <value>161, 22</value>
+    <value>159, 22</value>
   </data>
   <data name="PMSuggestLookup.Text" xml:space="preserve">
     <value>Lookup lists</value>
   </data>
   <data name="PMSuggestCustomLookup.Size" type="System.Drawing.Size, System.Drawing">
-    <value>161, 22</value>
+    <value>159, 22</value>
   </data>
   <data name="PMSuggestCustomLookup.Text" xml:space="preserve">
     <value>Custom lookups</value>
   </data>
   <data name="PMSuggestion.Size" type="System.Drawing.Size, System.Drawing">
-    <value>162, 120</value>
+    <value>160, 120</value>
   </data>
   <data name="PMSuggestion.Text" xml:space="preserve">
     <value>Suggestion Settings</value>
@@ -977,7 +989,7 @@
     <value>518, 3</value>
   </data>
   <data name="SuggestionListBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>219, 126</value>
+    <value>219, 136</value>
   </data>
   <data name="SuggestionListBox.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -1004,7 +1016,7 @@
     <value>1</value>
   </data>
   <data name="LayoutRawAndSuggested.Size" type="System.Drawing.Size, System.Drawing">
-    <value>740, 132</value>
+    <value>740, 142</value>
   </data>
   <data name="LayoutRawAndSuggested.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1040,10 +1052,10 @@
     <value>120</value>
   </data>
   <data name="SplitContainerFieldsAndRawData.Size" type="System.Drawing.Size, System.Drawing">
-    <value>740, 553</value>
+    <value>740, 592</value>
   </data>
   <data name="SplitContainerFieldsAndRawData.SplitterDistance" type="System.Int32, mscorlib">
-    <value>417</value>
+    <value>446</value>
   </data>
   <data name="SplitContainerFieldsAndRawData.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1073,7 +1085,7 @@
     <value>1</value>
   </data>
   <data name="SplitContainerListAndFields.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1084, 553</value>
+    <value>1084, 592</value>
   </data>
   <data name="SplitContainerListAndFields.SplitterDistance" type="System.Int32, mscorlib">
     <value>340</value>
@@ -1130,10 +1142,10 @@
     <value>True</value>
   </metadata>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>7, 15</value>
+    <value>7, 16</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>1084, 601</value>
+    <value>1084, 641</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -1217,7 +1229,7 @@
 </value>
   </data>
   <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
-    <value>450, 250</value>
+    <value>450, 264</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>VieweD</value>
@@ -1232,6 +1244,18 @@
     <value>MMFileOpen</value>
   </data>
   <data name="&gt;&gt;MMFileOpen.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MMFileRecent.Name" xml:space="preserve">
+    <value>MMFileRecent</value>
+  </data>
+  <data name="&gt;&gt;MMFileRecent.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MMOpenRecentFile.Name" xml:space="preserve">
+    <value>MMOpenRecentFile</value>
+  </data>
+  <data name="&gt;&gt;MMOpenRecentFile.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;MMFileN3.Name" xml:space="preserve">

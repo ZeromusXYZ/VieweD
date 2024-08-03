@@ -70,11 +70,11 @@ namespace VieweD.Forms
             // 
             btnFindNext.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnFindNext.Enabled = false;
-            btnFindNext.Location = new Point(472, 14);
+            btnFindNext.Location = new Point(472, 15);
             btnFindNext.Margin = new Padding(4, 3, 4, 3);
             btnFindNext.Name = "btnFindNext";
-            btnFindNext.Size = new Size(88, 27);
-            btnFindNext.TabIndex = 0;
+            btnFindNext.Size = new Size(88, 29);
+            btnFindNext.TabIndex = 9;
             btnFindNext.Text = "Find Next";
             btnFindNext.UseVisualStyleBackColor = true;
             btnFindNext.Click += BtnFindNext_Click;
@@ -83,11 +83,11 @@ namespace VieweD.Forms
             // 
             btnCancel.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnCancel.DialogResult = DialogResult.Cancel;
-            btnCancel.Location = new Point(472, 47);
+            btnCancel.Location = new Point(472, 50);
             btnCancel.Margin = new Padding(4, 3, 4, 3);
             btnCancel.Name = "btnCancel";
-            btnCancel.Size = new Size(88, 27);
-            btnCancel.TabIndex = 1;
+            btnCancel.Size = new Size(88, 29);
+            btnCancel.TabIndex = 10;
             btnCancel.Text = "Cancel";
             btnCancel.UseVisualStyleBackColor = true;
             btnCancel.Click += BtnCancel_Click;
@@ -98,11 +98,11 @@ namespace VieweD.Forms
             gbPacketType.Controls.Add(rbOutgoing);
             gbPacketType.Controls.Add(rbIncoming);
             gbPacketType.Controls.Add(rbAny);
-            gbPacketType.Location = new Point(14, 14);
+            gbPacketType.Location = new Point(14, 15);
             gbPacketType.Margin = new Padding(4, 3, 4, 3);
             gbPacketType.Name = "gbPacketType";
             gbPacketType.Padding = new Padding(4, 3, 4, 3);
-            gbPacketType.Size = new Size(438, 60);
+            gbPacketType.Size = new Size(438, 64);
             gbPacketType.TabIndex = 3;
             gbPacketType.TabStop = false;
             gbPacketType.Text = "Packet Types to search in";
@@ -110,11 +110,11 @@ namespace VieweD.Forms
             // rbOutgoing
             // 
             rbOutgoing.AutoSize = true;
-            rbOutgoing.Location = new Point(245, 22);
+            rbOutgoing.Location = new Point(245, 23);
             rbOutgoing.Margin = new Padding(4, 3, 4, 3);
             rbOutgoing.Name = "rbOutgoing";
-            rbOutgoing.Size = new Size(76, 19);
-            rbOutgoing.TabIndex = 2;
+            rbOutgoing.Size = new Size(76, 20);
+            rbOutgoing.TabIndex = 8;
             rbOutgoing.Text = "Outgoing";
             rbOutgoing.UseVisualStyleBackColor = true;
             rbOutgoing.CheckedChanged += SearchFieldsChanged;
@@ -122,11 +122,11 @@ namespace VieweD.Forms
             // rbIncoming
             // 
             rbIncoming.AutoSize = true;
-            rbIncoming.Location = new Point(114, 22);
+            rbIncoming.Location = new Point(114, 23);
             rbIncoming.Margin = new Padding(4, 3, 4, 3);
             rbIncoming.Name = "rbIncoming";
-            rbIncoming.Size = new Size(76, 19);
-            rbIncoming.TabIndex = 1;
+            rbIncoming.Size = new Size(75, 20);
+            rbIncoming.TabIndex = 7;
             rbIncoming.Text = "Incoming";
             rbIncoming.UseVisualStyleBackColor = true;
             rbIncoming.CheckedChanged += SearchFieldsChanged;
@@ -135,11 +135,11 @@ namespace VieweD.Forms
             // 
             rbAny.AutoSize = true;
             rbAny.Checked = true;
-            rbAny.Location = new Point(7, 22);
+            rbAny.Location = new Point(7, 23);
             rbAny.Margin = new Padding(4, 3, 4, 3);
             rbAny.Name = "rbAny";
-            rbAny.Size = new Size(46, 19);
-            rbAny.TabIndex = 0;
+            rbAny.Size = new Size(46, 20);
+            rbAny.TabIndex = 6;
             rbAny.TabStop = true;
             rbAny.Text = "Any";
             rbAny.UseVisualStyleBackColor = true;
@@ -149,11 +149,11 @@ namespace VieweD.Forms
             // 
             btnAsNewTab.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnAsNewTab.Enabled = false;
-            btnAsNewTab.Location = new Point(472, 103);
+            btnAsNewTab.Location = new Point(472, 110);
             btnAsNewTab.Margin = new Padding(4, 3, 4, 3);
             btnAsNewTab.Name = "btnAsNewTab";
-            btnAsNewTab.Size = new Size(88, 27);
-            btnAsNewTab.TabIndex = 2;
+            btnAsNewTab.Size = new Size(88, 29);
+            btnAsNewTab.TabIndex = 11;
             btnAsNewTab.Text = "As New Tab";
             btnAsNewTab.UseVisualStyleBackColor = true;
             btnAsNewTab.Click += BtnAsNewTab_Click;
@@ -167,11 +167,11 @@ namespace VieweD.Forms
             gbSearchPacket.Controls.Add(lPacketId);
             gbSearchPacket.Controls.Add(eSync);
             gbSearchPacket.Controls.Add(ePacketID);
-            gbSearchPacket.Location = new Point(14, 81);
+            gbSearchPacket.Location = new Point(14, 86);
             gbSearchPacket.Margin = new Padding(4, 3, 4, 3);
             gbSearchPacket.Name = "gbSearchPacket";
             gbSearchPacket.Padding = new Padding(4, 3, 4, 3);
-            gbSearchPacket.Size = new Size(254, 118);
+            gbSearchPacket.Size = new Size(254, 126);
             gbSearchPacket.TabIndex = 4;
             gbSearchPacket.TabStop = false;
             gbSearchPacket.Text = "Search for packet";
@@ -179,45 +179,45 @@ namespace VieweD.Forms
             // lPacketLevel
             // 
             lPacketLevel.AutoSize = true;
-            lPacketLevel.Location = new Point(7, 52);
+            lPacketLevel.Location = new Point(7, 55);
             lPacketLevel.Margin = new Padding(4, 0, 4, 0);
             lPacketLevel.Name = "lPacketLevel";
-            lPacketLevel.Size = new Size(145, 15);
+            lPacketLevel.Size = new Size(143, 16);
             lPacketLevel.TabIndex = 2;
             lPacketLevel.Text = "Packet Compression Level";
             // 
             // ePacketLevel
             // 
-            ePacketLevel.Location = new Point(159, 48);
+            ePacketLevel.Location = new Point(159, 51);
             ePacketLevel.Margin = new Padding(4, 3, 4, 3);
             ePacketLevel.Name = "ePacketLevel";
             ePacketLevel.Size = new Size(79, 23);
-            ePacketLevel.TabIndex = 3;
+            ePacketLevel.TabIndex = 4;
             ePacketLevel.TextChanged += SearchFieldsChanged;
             // 
             // lPacketSync
             // 
             lPacketSync.AutoSize = true;
-            lPacketSync.Location = new Point(7, 82);
+            lPacketSync.Location = new Point(7, 87);
             lPacketSync.Margin = new Padding(4, 0, 4, 0);
             lPacketSync.Name = "lPacketSync";
-            lPacketSync.Size = new Size(79, 15);
+            lPacketSync.Size = new Size(78, 16);
             lPacketSync.TabIndex = 4;
             lPacketSync.Text = "Sync Number";
             // 
             // lPacketId
             // 
             lPacketId.AutoSize = true;
-            lPacketId.Location = new Point(7, 22);
+            lPacketId.Location = new Point(7, 23);
             lPacketId.Margin = new Padding(4, 0, 4, 0);
             lPacketId.Name = "lPacketId";
-            lPacketId.Size = new Size(91, 15);
+            lPacketId.Size = new Size(91, 16);
             lPacketId.TabIndex = 0;
             lPacketId.Text = "Packet ID (Type)";
             // 
             // eSync
             // 
-            eSync.Location = new Point(159, 78);
+            eSync.Location = new Point(159, 83);
             eSync.Margin = new Padding(4, 3, 4, 3);
             eSync.Name = "eSync";
             eSync.Size = new Size(79, 23);
@@ -226,21 +226,21 @@ namespace VieweD.Forms
             // 
             // ePacketID
             // 
-            ePacketID.Location = new Point(159, 18);
+            ePacketID.Location = new Point(159, 19);
             ePacketID.Margin = new Padding(4, 3, 4, 3);
             ePacketID.Name = "ePacketID";
             ePacketID.Size = new Size(79, 23);
-            ePacketID.TabIndex = 1;
+            ePacketID.TabIndex = 3;
             ePacketID.TextChanged += SearchFieldsChanged;
             // 
             // rbUInt32
             // 
             rbUInt32.AutoSize = true;
-            rbUInt32.Location = new Point(454, 25);
+            rbUInt32.Location = new Point(454, 27);
             rbUInt32.Margin = new Padding(4, 3, 4, 3);
             rbUInt32.Name = "rbUInt32";
-            rbUInt32.Size = new Size(58, 19);
-            rbUInt32.TabIndex = 5;
+            rbUInt32.Size = new Size(58, 20);
+            rbUInt32.TabIndex = 16;
             rbUInt32.Text = "uint32";
             rbUInt32.UseVisualStyleBackColor = true;
             rbUInt32.CheckedChanged += SearchFieldsChanged;
@@ -248,11 +248,11 @@ namespace VieweD.Forms
             // rbUInt16
             // 
             rbUInt16.AutoSize = true;
-            rbUInt16.Location = new Point(314, 25);
+            rbUInt16.Location = new Point(314, 27);
             rbUInt16.Margin = new Padding(4, 3, 4, 3);
             rbUInt16.Name = "rbUInt16";
-            rbUInt16.Size = new Size(58, 19);
-            rbUInt16.TabIndex = 3;
+            rbUInt16.Size = new Size(57, 20);
+            rbUInt16.TabIndex = 14;
             rbUInt16.Text = "uint16";
             rbUInt16.UseVisualStyleBackColor = true;
             rbUInt16.CheckedChanged += SearchFieldsChanged;
@@ -261,11 +261,11 @@ namespace VieweD.Forms
             // 
             rbByte.AutoSize = true;
             rbByte.Checked = true;
-            rbByte.Location = new Point(254, 25);
+            rbByte.Location = new Point(254, 27);
             rbByte.Margin = new Padding(4, 3, 4, 3);
             rbByte.Name = "rbByte";
-            rbByte.Size = new Size(48, 19);
-            rbByte.TabIndex = 2;
+            rbByte.Size = new Size(48, 20);
+            rbByte.TabIndex = 13;
             rbByte.TabStop = true;
             rbByte.Text = "byte";
             rbByte.UseVisualStyleBackColor = true;
@@ -274,20 +274,20 @@ namespace VieweD.Forms
             // lRawValue
             // 
             lRawValue.AutoSize = true;
-            lRawValue.Location = new Point(7, 28);
+            lRawValue.Location = new Point(7, 30);
             lRawValue.Margin = new Padding(4, 0, 4, 0);
             lRawValue.Name = "lRawValue";
-            lRawValue.Size = new Size(60, 15);
+            lRawValue.Size = new Size(60, 16);
             lRawValue.TabIndex = 0;
             lRawValue.Text = "Raw Value";
             // 
             // eValue
             // 
-            eValue.Location = new Point(99, 24);
+            eValue.Location = new Point(99, 26);
             eValue.Margin = new Padding(4, 3, 4, 3);
             eValue.Name = "eValue";
             eValue.Size = new Size(138, 23);
-            eValue.TabIndex = 1;
+            eValue.TabIndex = 0;
             eValue.TextChanged += SearchFieldsChanged;
             // 
             // gbRawValues
@@ -299,11 +299,11 @@ namespace VieweD.Forms
             gbRawValues.Controls.Add(rbUInt16);
             gbRawValues.Controls.Add(eValue);
             gbRawValues.Controls.Add(rbByte);
-            gbRawValues.Location = new Point(14, 205);
+            gbRawValues.Location = new Point(14, 219);
             gbRawValues.Margin = new Padding(4, 3, 4, 3);
             gbRawValues.Name = "gbRawValues";
             gbRawValues.Padding = new Padding(4, 3, 4, 3);
-            gbRawValues.Size = new Size(546, 72);
+            gbRawValues.Size = new Size(546, 77);
             gbRawValues.TabIndex = 5;
             gbRawValues.TabStop = false;
             gbRawValues.Text = "Search for RAW value";
@@ -311,11 +311,11 @@ namespace VieweD.Forms
             // rbUInt24
             // 
             rbUInt24.AutoSize = true;
-            rbUInt24.Location = new Point(384, 25);
+            rbUInt24.Location = new Point(384, 27);
             rbUInt24.Margin = new Padding(4, 3, 4, 3);
             rbUInt24.Name = "rbUInt24";
-            rbUInt24.Size = new Size(58, 19);
-            rbUInt24.TabIndex = 4;
+            rbUInt24.Size = new Size(58, 20);
+            rbUInt24.TabIndex = 15;
             rbUInt24.Text = "uint24";
             rbUInt24.UseVisualStyleBackColor = true;
             rbUInt24.CheckedChanged += SearchFieldsChanged;
@@ -328,11 +328,11 @@ namespace VieweD.Forms
             gbSearchByField.Controls.Add(lFieldValue);
             gbSearchByField.Controls.Add(lFieldName);
             gbSearchByField.Controls.Add(eFieldValue);
-            gbSearchByField.Location = new Point(14, 284);
+            gbSearchByField.Location = new Point(14, 303);
             gbSearchByField.Margin = new Padding(4, 3, 4, 3);
             gbSearchByField.Name = "gbSearchByField";
             gbSearchByField.Padding = new Padding(4, 3, 4, 3);
-            gbSearchByField.Size = new Size(546, 90);
+            gbSearchByField.Size = new Size(546, 96);
             gbSearchByField.TabIndex = 6;
             gbSearchByField.TabStop = false;
             gbSearchByField.Text = "Search for PARSED value";
@@ -342,18 +342,18 @@ namespace VieweD.Forms
             cbFieldNames.AutoCompleteMode = AutoCompleteMode.Suggest;
             cbFieldNames.AutoCompleteSource = AutoCompleteSource.ListItems;
             cbFieldNames.FormattingEnabled = true;
-            cbFieldNames.Location = new Point(99, 22);
+            cbFieldNames.Location = new Point(99, 23);
             cbFieldNames.Margin = new Padding(4, 3, 4, 3);
             cbFieldNames.Name = "cbFieldNames";
-            cbFieldNames.Size = new Size(138, 23);
-            cbFieldNames.TabIndex = 1;
+            cbFieldNames.Size = new Size(138, 24);
+            cbFieldNames.TabIndex = 2;
             cbFieldNames.TextChanged += SearchFieldsChanged;
             // 
             // lParsedNote
             // 
             lParsedNote.AutoSize = true;
-            lParsedNote.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
-            lParsedNote.Location = new Point(7, 54);
+            lParsedNote.Font = new Font("Microsoft Sans Serif", 8.25F);
+            lParsedNote.Location = new Point(7, 58);
             lParsedNote.Margin = new Padding(4, 0, 4, 0);
             lParsedNote.Name = "lParsedNote";
             lParsedNote.Size = new Size(451, 13);
@@ -363,40 +363,40 @@ namespace VieweD.Forms
             // lFieldValue
             // 
             lFieldValue.AutoSize = true;
-            lFieldValue.Location = new Point(245, 28);
+            lFieldValue.Location = new Point(245, 30);
             lFieldValue.Margin = new Padding(4, 0, 4, 0);
             lFieldValue.Name = "lFieldValue";
-            lFieldValue.Size = new Size(63, 15);
+            lFieldValue.Size = new Size(63, 16);
             lFieldValue.TabIndex = 2;
             lFieldValue.Text = "Field Value";
             // 
             // lFieldName
             // 
             lFieldName.AutoSize = true;
-            lFieldName.Location = new Point(7, 28);
+            lFieldName.Location = new Point(7, 30);
             lFieldName.Margin = new Padding(4, 0, 4, 0);
             lFieldName.Name = "lFieldName";
-            lFieldName.Size = new Size(67, 15);
+            lFieldName.Size = new Size(66, 16);
             lFieldName.TabIndex = 0;
             lFieldName.Text = "Field Name";
             // 
             // eFieldValue
             // 
-            eFieldValue.Location = new Point(314, 24);
+            eFieldValue.Location = new Point(314, 26);
             eFieldValue.Margin = new Padding(4, 3, 4, 3);
             eFieldValue.Name = "eFieldValue";
             eFieldValue.Size = new Size(202, 23);
-            eFieldValue.TabIndex = 3;
+            eFieldValue.TabIndex = 1;
             eFieldValue.TextChanged += SearchFieldsChanged;
             // 
             // BtnClearSearch
             // 
             BtnClearSearch.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            BtnClearSearch.Location = new Point(472, 157);
+            BtnClearSearch.Location = new Point(472, 167);
             BtnClearSearch.Margin = new Padding(4, 3, 4, 3);
             BtnClearSearch.Name = "BtnClearSearch";
-            BtnClearSearch.Size = new Size(88, 27);
-            BtnClearSearch.TabIndex = 7;
+            BtnClearSearch.Size = new Size(88, 29);
+            BtnClearSearch.TabIndex = 12;
             BtnClearSearch.Text = "Clear";
             BtnClearSearch.UseVisualStyleBackColor = true;
             BtnClearSearch.Click += BtnClearSearch_Click;
@@ -404,10 +404,10 @@ namespace VieweD.Forms
             // SearchForm
             // 
             AcceptButton = btnFindNext;
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(7F, 16F);
             AutoScaleMode = AutoScaleMode.Font;
             CancelButton = btnCancel;
-            ClientSize = new Size(570, 387);
+            ClientSize = new Size(570, 413);
             Controls.Add(BtnClearSearch);
             Controls.Add(gbSearchByField);
             Controls.Add(gbRawValues);
