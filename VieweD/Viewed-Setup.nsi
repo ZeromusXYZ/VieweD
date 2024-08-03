@@ -8,9 +8,9 @@
 ; Custom defines
 !define NAME "VieweD"
 !define APPFILE "viewed.exe"
-!define VERSION "1.0"
+!define VERSION "1.0.3.6"
 !define SLUG "${NAME} v${VERSION}"
-!define BIN_DEBUG "bin\Debug\net6.0-windows\"
+!define BIN_DEBUG "bin\Debug\net8.0-windows\"
 
 !define /date MyTIMESTAMP "%Y-%m-%d"
   
@@ -65,8 +65,8 @@ SetCompressor /SOLID lzma
 Section "VieweD Files (required)" MainApp ;No components page, name is not important
   SectionIn RO
 
-  ; Check for .NET 6
-  !insertmacro CheckDotNetCore 6.0
+  ; Check for .NET 8
+  !insertmacro CheckDotNetCore 8.0
 
   ; Set output path to the installation directory.
   SetOutPath $INSTDIR
