@@ -12,8 +12,11 @@ using VieweD.Properties;
 using System.Media;
 using System.Windows.Forms;
 using System.Xml;
-using Ionic.BZip2;
+using System.IO.Compression;
+using SharpCompress.Compressors.BZip2;
+// using Ionic.BZip2;
 using VieweD.Helpers.PacketList;
+using CompressionMode = SharpCompress.Compressors.CompressionMode;
 
 namespace VieweD.engine.common;
 
@@ -1675,7 +1678,7 @@ public class ViewedProjectTab : TabPage
                     exportSettingsDialog.ExportParsed);
                 using var fileStream = new FileStream(fileName, FileMode.Create);
                 fileStream.Write(new byte[] { 0x56, 0x50, 0x58, 0 });
-                using var bStream = new BZip2OutputStream(fileStream, false);
+                using var bStream = new BZip2Stream(fileStream, CompressionMode.Compress, false);
                 LoadingForm.OnProgress(0, 100, "Saving export", null, true);
                 xmlDoc.Save(bStream);
             }
@@ -1899,10 +1902,10 @@ public class ViewedProjectTab : TabPage
             }
 
             Stream aStream = fileStream;
-            BZip2InputStream? bStream = null;
+            BZip2Stream? bStream = null;
             if (isCompressed)
             {
-                bStream = new BZip2InputStream(fileStream);
+                bStream = new BZip2Stream(fileStream, CompressionMode.Decompress, false);
                 aStream = bStream;
             }
 
