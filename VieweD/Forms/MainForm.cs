@@ -1650,21 +1650,96 @@ namespace VieweD.Forms
             for (var c = 1; c < cmdLine.Count; c++)
             {
                 var rawArg = cmdLine[c];
+                var rawNextArg = cmdLine.Count-1 > c ? cmdLine[c+1] : string.Empty;
                 var arg = rawArg.Trim().ToLower();
                 var thisCommand = string.Empty;
+                var argumentAdd = false;
+                var argumentSub = false;
+                if (arg.StartsWith("--"))
+                {
+                    thisCommand = arg.Substring(2);
+                    argumentSub = true;
+                }
+                else
                 if (arg.StartsWith('-'))
+                {
+                    thisCommand = arg.Substring(1);
+                    argumentSub = true;
+                }
+                else
+                if (arg.StartsWith('+'))
+                {
+                    thisCommand = arg.Substring(1);
+                    argumentAdd = true;
+                }
+                else
+                if (arg.StartsWith('/'))
                 {
                     thisCommand = arg.Substring(1);
                 }
 
                 switch (thisCommand)
                 {
+                    case "?":
+                    case "help":
+                        MessageBox.Show("You can use either - + or / as a command identifier in front of the following commands;\n\n" +
+                                        "help: This help message (?)\n\n" +
+                                        "open <filename>: Opens a file (o)\n\n" +
+                                        "close: Closes the currently active project tab. Use + if you want to save the project (c)\n\n" +
+                                        "exit: Closes all project tabs and exists the program. Use + if you want to save the projects (x)\n\n" +
+                                        "tool-export <export_name>: Runs the export data tool with the given name. Use + if you want to append to the export file.\n\n" +
+                                        "Any unknown argument will be treated as if it's a file to -open", "VieweD Command-Line Help", MessageBoxButtons.OK);
+                        break;
                     case "o":
                     case "open":
+                        // Open a file
+                        if (!string.IsNullOrWhiteSpace(rawNextArg))
+                        {
+                            if (File.Exists(rawNextArg))
+                            {
+                                _ = OpenFile(rawNextArg);
+                            }
+                            UpdateMainMenuAccordingToProject();
+                            c++;
+                        }
+                        break;
+                    case "c":
+                    case "close":
+                        // Close active project tab
+                        if (TCProjects.SelectedTab is not ViewedProjectTab project)
+                            break;
+                        if ((project.InputParser == null) || (project.InputParser.Rules == null))
+                            break;
+                        project.CloseProject(!argumentAdd);
+                        break;
+                    case "x":
+                    case "exit":
+                        // Close all tabs and Exit program
+                        foreach (TabPage tcProjectsTabPage in TCProjects.TabPages)
+                        {
+                            if (tcProjectsTabPage is ViewedProjectTab thisProject)
+                            {
+                                thisProject.CloseProject(!argumentAdd);
+                            }
+                            else
+                            {
+                                tcProjectsTabPage.Dispose();
+                            }
+                        }
+                        Close();
+                        break;
+                    case "tool-export":
+                        // Close active project tab
+                        if (TCProjects.SelectedTab is ViewedProjectTab exportProject)
+                        {
+                            exportProject.RunExportDataTool(rawNextArg, true, argumentAdd);
+                        }
                         break;
                     default:
+                        // Assume it's a file when you didn't provide a command
                         if (File.Exists(rawArg))
                             _ = OpenFile(rawArg);
+                        UpdateMainMenuAccordingToProject();
                         break;
                 }
             }
@@ -1748,7 +1823,7 @@ namespace VieweD.Forms
                 return;
 
             if (exportName != string.Empty)
-                project.RunExportDataTool(exportName);
+                project.RunExportDataTool(exportName, false);
         }
 
         private void MMProjectCopySelectedPackets_Click(object sender, EventArgs e)
