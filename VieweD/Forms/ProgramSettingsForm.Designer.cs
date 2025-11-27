@@ -140,10 +140,10 @@ namespace VieweD.Forms
             // BtnOK
             // 
             BtnOK.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            BtnOK.Location = new Point(12, 422);
+            BtnOK.Location = new Point(12, 396);
             BtnOK.Margin = new Padding(4, 3, 4, 3);
             BtnOK.Name = "BtnOK";
-            BtnOK.Size = new Size(88, 29);
+            BtnOK.Size = new Size(88, 27);
             BtnOK.TabIndex = 0;
             BtnOK.Text = "OK";
             BtnOK.UseVisualStyleBackColor = true;
@@ -153,10 +153,10 @@ namespace VieweD.Forms
             // 
             BtnCancel.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             BtnCancel.DialogResult = DialogResult.Cancel;
-            BtnCancel.Location = new Point(108, 422);
+            BtnCancel.Location = new Point(108, 396);
             BtnCancel.Margin = new Padding(4, 3, 4, 3);
             BtnCancel.Name = "BtnCancel";
-            BtnCancel.Size = new Size(88, 29);
+            BtnCancel.Size = new Size(88, 27);
             BtnCancel.TabIndex = 1;
             BtnCancel.Text = "Cancel";
             BtnCancel.UseVisualStyleBackColor = true;
@@ -171,10 +171,10 @@ namespace VieweD.Forms
             // 
             Label1.AutoSize = true;
             Label1.Dock = DockStyle.Fill;
-            Label1.Location = new Point(6, 49);
+            Label1.Location = new Point(6, 46);
             Label1.Margin = new Padding(4, 0, 4, 0);
             Label1.Name = "Label1";
-            Label1.Size = new Size(81, 45);
+            Label1.Size = new Size(81, 42);
             Label1.TabIndex = 2;
             Label1.Text = "IN packet";
             Label1.TextAlign = ContentAlignment.MiddleCenter;
@@ -183,10 +183,10 @@ namespace VieweD.Forms
             // 
             Label2.AutoSize = true;
             Label2.Dock = DockStyle.Fill;
-            Label2.Location = new Point(6, 96);
+            Label2.Location = new Point(6, 90);
             Label2.Margin = new Padding(4, 0, 4, 0);
             Label2.Name = "Label2";
-            Label2.Size = new Size(81, 45);
+            Label2.Size = new Size(81, 42);
             Label2.TabIndex = 3;
             Label2.Text = "OUT Packet";
             Label2.TextAlign = ContentAlignment.MiddleCenter;
@@ -195,10 +195,10 @@ namespace VieweD.Forms
             // 
             Label3.AutoSize = true;
             Label3.Dock = DockStyle.Fill;
-            Label3.Location = new Point(6, 143);
+            Label3.Location = new Point(6, 134);
             Label3.Margin = new Padding(4, 0, 4, 0);
             Label3.Name = "Label3";
-            Label3.Size = new Size(81, 46);
+            Label3.Size = new Size(81, 43);
             Label3.TabIndex = 4;
             Label3.Text = "Unknown Direction";
             Label3.TextAlign = ContentAlignment.MiddleCenter;
@@ -210,7 +210,7 @@ namespace VieweD.Forms
             Label4.Location = new Point(188, 2);
             Label4.Margin = new Padding(4, 0, 4, 0);
             Label4.Name = "Label4";
-            Label4.Size = new Size(81, 45);
+            Label4.Size = new Size(81, 42);
             Label4.TabIndex = 5;
             Label4.Text = "Back color";
             Label4.TextAlign = ContentAlignment.MiddleCenter;
@@ -222,7 +222,7 @@ namespace VieweD.Forms
             Label5.Location = new Point(279, 2);
             Label5.Margin = new Padding(4, 0, 4, 0);
             Label5.Name = "Label5";
-            Label5.Size = new Size(81, 45);
+            Label5.Size = new Size(81, 42);
             Label5.TabIndex = 6;
             Label5.Text = "Synced";
             Label5.TextAlign = ContentAlignment.MiddleCenter;
@@ -234,7 +234,7 @@ namespace VieweD.Forms
             Label6.Location = new Point(370, 2);
             Label6.Margin = new Padding(4, 0, 4, 0);
             Label6.Name = "Label6";
-            Label6.Size = new Size(81, 45);
+            Label6.Size = new Size(81, 42);
             Label6.TabIndex = 7;
             Label6.Text = "Selected back color";
             Label6.TextAlign = ContentAlignment.MiddleCenter;
@@ -246,7 +246,7 @@ namespace VieweD.Forms
             Label7.Location = new Point(552, 2);
             Label7.Margin = new Padding(4, 0, 4, 0);
             Label7.Name = "Label7";
-            Label7.Size = new Size(88, 45);
+            Label7.Size = new Size(88, 42);
             Label7.TabIndex = 8;
             Label7.Text = "SyncBar color";
             Label7.TextAlign = ContentAlignment.MiddleCenter;
@@ -258,7 +258,7 @@ namespace VieweD.Forms
             Label8.Location = new Point(97, 2);
             Label8.Margin = new Padding(4, 0, 4, 0);
             Label8.Name = "Label8";
-            Label8.Size = new Size(81, 45);
+            Label8.Size = new Size(81, 42);
             Label8.TabIndex = 9;
             Label8.Text = "Font";
             Label8.TextAlign = ContentAlignment.MiddleCenter;
@@ -304,7 +304,7 @@ namespace VieweD.Forms
             TableLayoutPanel1.Controls.Add(BtnSelectedFontUNK, 5, 3);
             TableLayoutPanel1.Controls.Add(BtnFontUNK, 1, 3);
             TableLayoutPanel1.GrowStyle = TableLayoutPanelGrowStyle.FixedSize;
-            TableLayoutPanel1.Location = new Point(7, 23);
+            TableLayoutPanel1.Location = new Point(7, 22);
             TableLayoutPanel1.Margin = new Padding(4, 3, 4, 3);
             TableLayoutPanel1.Name = "TableLayoutPanel1";
             TableLayoutPanel1.RowCount = 4;
@@ -312,7 +312,7 @@ namespace VieweD.Forms
             TableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
             TableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
             TableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
-            TableLayoutPanel1.Size = new Size(646, 191);
+            TableLayoutPanel1.Size = new Size(646, 179);
             TableLayoutPanel1.TabIndex = 10;
             // 
             // Label10
@@ -322,7 +322,7 @@ namespace VieweD.Forms
             Label10.Location = new Point(461, 2);
             Label10.Margin = new Padding(4, 0, 4, 0);
             Label10.Name = "Label10";
-            Label10.Size = new Size(81, 45);
+            Label10.Size = new Size(81, 42);
             Label10.TabIndex = 29;
             Label10.Text = "Selected Text";
             Label10.TextAlign = ContentAlignment.MiddleCenter;
@@ -332,10 +332,10 @@ namespace VieweD.Forms
             BtnFontIN.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             BtnFontIN.AutoSize = true;
             BtnFontIN.BackColor = Color.Lime;
-            BtnFontIN.Location = new Point(97, 52);
+            BtnFontIN.Location = new Point(97, 49);
             BtnFontIN.Margin = new Padding(4, 3, 4, 3);
             BtnFontIN.Name = "BtnFontIN";
-            BtnFontIN.Size = new Size(81, 39);
+            BtnFontIN.Size = new Size(81, 36);
             BtnFontIN.TabIndex = 10;
             BtnFontIN.Tag = "1";
             BtnFontIN.UseVisualStyleBackColor = false;
@@ -346,10 +346,10 @@ namespace VieweD.Forms
             BtnBackIN.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             BtnBackIN.AutoSize = true;
             BtnBackIN.BackColor = Color.Lime;
-            BtnBackIN.Location = new Point(188, 52);
+            BtnBackIN.Location = new Point(188, 49);
             BtnBackIN.Margin = new Padding(4, 3, 4, 3);
             BtnBackIN.Name = "BtnBackIN";
-            BtnBackIN.Size = new Size(81, 39);
+            BtnBackIN.Size = new Size(81, 36);
             BtnBackIN.TabIndex = 11;
             BtnBackIN.Tag = "1";
             BtnBackIN.UseVisualStyleBackColor = false;
@@ -360,10 +360,10 @@ namespace VieweD.Forms
             BtnSyncIN.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             BtnSyncIN.AutoSize = true;
             BtnSyncIN.BackColor = Color.Lime;
-            BtnSyncIN.Location = new Point(279, 52);
+            BtnSyncIN.Location = new Point(279, 49);
             BtnSyncIN.Margin = new Padding(4, 3, 4, 3);
             BtnSyncIN.Name = "BtnSyncIN";
-            BtnSyncIN.Size = new Size(81, 39);
+            BtnSyncIN.Size = new Size(81, 36);
             BtnSyncIN.TabIndex = 12;
             BtnSyncIN.Tag = "1";
             BtnSyncIN.UseVisualStyleBackColor = false;
@@ -374,10 +374,10 @@ namespace VieweD.Forms
             BtnSelectIN.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             BtnSelectIN.AutoSize = true;
             BtnSelectIN.BackColor = Color.Lime;
-            BtnSelectIN.Location = new Point(370, 52);
+            BtnSelectIN.Location = new Point(370, 49);
             BtnSelectIN.Margin = new Padding(4, 3, 4, 3);
             BtnSelectIN.Name = "BtnSelectIN";
-            BtnSelectIN.Size = new Size(81, 39);
+            BtnSelectIN.Size = new Size(81, 36);
             BtnSelectIN.TabIndex = 13;
             BtnSelectIN.Tag = "1";
             BtnSelectIN.UseVisualStyleBackColor = false;
@@ -388,10 +388,10 @@ namespace VieweD.Forms
             BtnFontOUT.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             BtnFontOUT.AutoSize = true;
             BtnFontOUT.BackColor = Color.Blue;
-            BtnFontOUT.Location = new Point(97, 99);
+            BtnFontOUT.Location = new Point(97, 93);
             BtnFontOUT.Margin = new Padding(4, 3, 4, 3);
             BtnFontOUT.Name = "BtnFontOUT";
-            BtnFontOUT.Size = new Size(81, 39);
+            BtnFontOUT.Size = new Size(81, 36);
             BtnFontOUT.TabIndex = 15;
             BtnFontOUT.Tag = "1";
             BtnFontOUT.UseVisualStyleBackColor = false;
@@ -402,10 +402,10 @@ namespace VieweD.Forms
             BtnBackOUT.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             BtnBackOUT.AutoSize = true;
             BtnBackOUT.BackColor = Color.Blue;
-            BtnBackOUT.Location = new Point(188, 99);
+            BtnBackOUT.Location = new Point(188, 93);
             BtnBackOUT.Margin = new Padding(4, 3, 4, 3);
             BtnBackOUT.Name = "BtnBackOUT";
-            BtnBackOUT.Size = new Size(81, 39);
+            BtnBackOUT.Size = new Size(81, 36);
             BtnBackOUT.TabIndex = 16;
             BtnBackOUT.Tag = "1";
             BtnBackOUT.UseVisualStyleBackColor = false;
@@ -416,10 +416,10 @@ namespace VieweD.Forms
             BtnSyncOUT.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             BtnSyncOUT.AutoSize = true;
             BtnSyncOUT.BackColor = Color.Blue;
-            BtnSyncOUT.Location = new Point(279, 99);
+            BtnSyncOUT.Location = new Point(279, 93);
             BtnSyncOUT.Margin = new Padding(4, 3, 4, 3);
             BtnSyncOUT.Name = "BtnSyncOUT";
-            BtnSyncOUT.Size = new Size(81, 39);
+            BtnSyncOUT.Size = new Size(81, 36);
             BtnSyncOUT.TabIndex = 17;
             BtnSyncOUT.Tag = "1";
             BtnSyncOUT.UseVisualStyleBackColor = false;
@@ -430,10 +430,10 @@ namespace VieweD.Forms
             BtnSelectOUT.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             BtnSelectOUT.AutoSize = true;
             BtnSelectOUT.BackColor = Color.Blue;
-            BtnSelectOUT.Location = new Point(370, 99);
+            BtnSelectOUT.Location = new Point(370, 93);
             BtnSelectOUT.Margin = new Padding(4, 3, 4, 3);
             BtnSelectOUT.Name = "BtnSelectOUT";
-            BtnSelectOUT.Size = new Size(81, 39);
+            BtnSelectOUT.Size = new Size(81, 36);
             BtnSelectOUT.TabIndex = 18;
             BtnSelectOUT.Tag = "1";
             BtnSelectOUT.UseVisualStyleBackColor = false;
@@ -444,10 +444,10 @@ namespace VieweD.Forms
             BtnBackUNK.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             BtnBackUNK.AutoSize = true;
             BtnBackUNK.BackColor = Color.White;
-            BtnBackUNK.Location = new Point(188, 146);
+            BtnBackUNK.Location = new Point(188, 137);
             BtnBackUNK.Margin = new Padding(4, 3, 4, 3);
             BtnBackUNK.Name = "BtnBackUNK";
-            BtnBackUNK.Size = new Size(81, 40);
+            BtnBackUNK.Size = new Size(81, 37);
             BtnBackUNK.TabIndex = 21;
             BtnBackUNK.Tag = "1";
             BtnBackUNK.UseVisualStyleBackColor = false;
@@ -458,10 +458,10 @@ namespace VieweD.Forms
             BtnSyncUNK.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             BtnSyncUNK.AutoSize = true;
             BtnSyncUNK.BackColor = Color.White;
-            BtnSyncUNK.Location = new Point(279, 146);
+            BtnSyncUNK.Location = new Point(279, 137);
             BtnSyncUNK.Margin = new Padding(4, 3, 4, 3);
             BtnSyncUNK.Name = "BtnSyncUNK";
-            BtnSyncUNK.Size = new Size(81, 40);
+            BtnSyncUNK.Size = new Size(81, 37);
             BtnSyncUNK.TabIndex = 22;
             BtnSyncUNK.Tag = "1";
             BtnSyncUNK.UseVisualStyleBackColor = false;
@@ -472,10 +472,10 @@ namespace VieweD.Forms
             BtnSelectUNK.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             BtnSelectUNK.AutoSize = true;
             BtnSelectUNK.BackColor = Color.White;
-            BtnSelectUNK.Location = new Point(370, 146);
+            BtnSelectUNK.Location = new Point(370, 137);
             BtnSelectUNK.Margin = new Padding(4, 3, 4, 3);
             BtnSelectUNK.Name = "BtnSelectUNK";
-            BtnSelectUNK.Size = new Size(81, 40);
+            BtnSelectUNK.Size = new Size(81, 37);
             BtnSelectUNK.TabIndex = 23;
             BtnSelectUNK.Tag = "1";
             BtnSelectUNK.UseVisualStyleBackColor = false;
@@ -486,10 +486,10 @@ namespace VieweD.Forms
             BtnBarIN.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             BtnBarIN.AutoSize = true;
             BtnBarIN.BackColor = Color.Lime;
-            BtnBarIN.Location = new Point(552, 52);
+            BtnBarIN.Location = new Point(552, 49);
             BtnBarIN.Margin = new Padding(4, 3, 4, 3);
             BtnBarIN.Name = "BtnBarIN";
-            BtnBarIN.Size = new Size(88, 39);
+            BtnBarIN.Size = new Size(88, 36);
             BtnBarIN.TabIndex = 14;
             BtnBarIN.Tag = "1";
             BtnBarIN.UseVisualStyleBackColor = false;
@@ -500,10 +500,10 @@ namespace VieweD.Forms
             BtnBarOUT.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             BtnBarOUT.AutoSize = true;
             BtnBarOUT.BackColor = Color.Blue;
-            BtnBarOUT.Location = new Point(552, 99);
+            BtnBarOUT.Location = new Point(552, 93);
             BtnBarOUT.Margin = new Padding(4, 3, 4, 3);
             BtnBarOUT.Name = "BtnBarOUT";
-            BtnBarOUT.Size = new Size(88, 39);
+            BtnBarOUT.Size = new Size(88, 36);
             BtnBarOUT.TabIndex = 19;
             BtnBarOUT.Tag = "1";
             BtnBarOUT.UseVisualStyleBackColor = false;
@@ -514,10 +514,10 @@ namespace VieweD.Forms
             BtnBarUNK.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             BtnBarUNK.AutoSize = true;
             BtnBarUNK.BackColor = Color.White;
-            BtnBarUNK.Location = new Point(552, 146);
+            BtnBarUNK.Location = new Point(552, 137);
             BtnBarUNK.Margin = new Padding(4, 3, 4, 3);
             BtnBarUNK.Name = "BtnBarUNK";
-            BtnBarUNK.Size = new Size(88, 40);
+            BtnBarUNK.Size = new Size(88, 37);
             BtnBarUNK.TabIndex = 24;
             BtnBarUNK.Tag = "1";
             BtnBarUNK.UseVisualStyleBackColor = false;
@@ -530,7 +530,7 @@ namespace VieweD.Forms
             Label9.Location = new Point(6, 2);
             Label9.Margin = new Padding(4, 0, 4, 0);
             Label9.Name = "Label9";
-            Label9.Size = new Size(81, 45);
+            Label9.Size = new Size(81, 42);
             Label9.TabIndex = 25;
             Label9.Text = "Colors";
             Label9.TextAlign = ContentAlignment.MiddleCenter;
@@ -540,10 +540,10 @@ namespace VieweD.Forms
             BtnSelectedFontIN.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             BtnSelectedFontIN.AutoSize = true;
             BtnSelectedFontIN.BackColor = Color.Lime;
-            BtnSelectedFontIN.Location = new Point(461, 52);
+            BtnSelectedFontIN.Location = new Point(461, 49);
             BtnSelectedFontIN.Margin = new Padding(4, 3, 4, 3);
             BtnSelectedFontIN.Name = "BtnSelectedFontIN";
-            BtnSelectedFontIN.Size = new Size(81, 39);
+            BtnSelectedFontIN.Size = new Size(81, 36);
             BtnSelectedFontIN.TabIndex = 26;
             BtnSelectedFontIN.Tag = "1";
             BtnSelectedFontIN.UseVisualStyleBackColor = false;
@@ -554,10 +554,10 @@ namespace VieweD.Forms
             BtnSelectedFontOUT.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             BtnSelectedFontOUT.AutoSize = true;
             BtnSelectedFontOUT.BackColor = Color.Blue;
-            BtnSelectedFontOUT.Location = new Point(461, 99);
+            BtnSelectedFontOUT.Location = new Point(461, 93);
             BtnSelectedFontOUT.Margin = new Padding(4, 3, 4, 3);
             BtnSelectedFontOUT.Name = "BtnSelectedFontOUT";
-            BtnSelectedFontOUT.Size = new Size(81, 39);
+            BtnSelectedFontOUT.Size = new Size(81, 36);
             BtnSelectedFontOUT.TabIndex = 27;
             BtnSelectedFontOUT.Tag = "1";
             BtnSelectedFontOUT.UseVisualStyleBackColor = false;
@@ -568,10 +568,10 @@ namespace VieweD.Forms
             BtnSelectedFontUNK.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             BtnSelectedFontUNK.AutoSize = true;
             BtnSelectedFontUNK.BackColor = Color.White;
-            BtnSelectedFontUNK.Location = new Point(461, 146);
+            BtnSelectedFontUNK.Location = new Point(461, 137);
             BtnSelectedFontUNK.Margin = new Padding(4, 3, 4, 3);
             BtnSelectedFontUNK.Name = "BtnSelectedFontUNK";
-            BtnSelectedFontUNK.Size = new Size(81, 40);
+            BtnSelectedFontUNK.Size = new Size(81, 37);
             BtnSelectedFontUNK.TabIndex = 28;
             BtnSelectedFontUNK.Tag = "1";
             BtnSelectedFontUNK.UseVisualStyleBackColor = false;
@@ -582,10 +582,10 @@ namespace VieweD.Forms
             BtnFontUNK.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             BtnFontUNK.AutoSize = true;
             BtnFontUNK.BackColor = Color.Black;
-            BtnFontUNK.Location = new Point(97, 146);
+            BtnFontUNK.Location = new Point(97, 137);
             BtnFontUNK.Margin = new Padding(4, 3, 4, 3);
             BtnFontUNK.Name = "BtnFontUNK";
-            BtnFontUNK.Size = new Size(81, 40);
+            BtnFontUNK.Size = new Size(81, 37);
             BtnFontUNK.TabIndex = 20;
             BtnFontUNK.Tag = "1";
             BtnFontUNK.UseVisualStyleBackColor = false;
@@ -594,10 +594,10 @@ namespace VieweD.Forms
             // BtnDefault
             // 
             BtnDefault.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            BtnDefault.Location = new Point(580, 422);
+            BtnDefault.Location = new Point(580, 396);
             BtnDefault.Margin = new Padding(4, 3, 4, 3);
             BtnDefault.Name = "BtnDefault";
-            BtnDefault.Size = new Size(88, 29);
+            BtnDefault.Size = new Size(88, 27);
             BtnDefault.TabIndex = 11;
             BtnDefault.Text = "Default";
             BtnDefault.UseVisualStyleBackColor = true;
@@ -613,7 +613,7 @@ namespace VieweD.Forms
             GbVideoSettings.Margin = new Padding(4, 3, 4, 3);
             GbVideoSettings.Name = "GbVideoSettings";
             GbVideoSettings.Padding = new Padding(4, 3, 4, 3);
-            GbVideoSettings.Size = new Size(656, 68);
+            GbVideoSettings.Size = new Size(656, 64);
             GbVideoSettings.TabIndex = 13;
             GbVideoSettings.TabStop = false;
             GbVideoSettings.Text = "Video Linking Settings";
@@ -621,9 +621,9 @@ namespace VieweD.Forms
             // Label11
             // 
             Label11.AutoSize = true;
-            Label11.Location = new Point(7, 20);
+            Label11.Location = new Point(7, 19);
             Label11.Name = "Label11";
-            Label11.Size = new Size(243, 16);
+            Label11.Size = new Size(243, 15);
             Label11.TabIndex = 3;
             Label11.Text = "Open video together when the project opens";
             // 
@@ -631,10 +631,10 @@ namespace VieweD.Forms
             // 
             RbAutoLoadVideoLocalOnly.AutoSize = true;
             RbAutoLoadVideoLocalOnly.Checked = true;
-            RbAutoLoadVideoLocalOnly.Location = new Point(86, 39);
+            RbAutoLoadVideoLocalOnly.Location = new Point(86, 37);
             RbAutoLoadVideoLocalOnly.Margin = new Padding(4, 3, 4, 3);
             RbAutoLoadVideoLocalOnly.Name = "RbAutoLoadVideoLocalOnly";
-            RbAutoLoadVideoLocalOnly.Size = new Size(123, 20);
+            RbAutoLoadVideoLocalOnly.Size = new Size(123, 19);
             RbAutoLoadVideoLocalOnly.TabIndex = 1;
             RbAutoLoadVideoLocalOnly.TabStop = true;
             RbAutoLoadVideoLocalOnly.Text = "for Local Files only";
@@ -643,10 +643,10 @@ namespace VieweD.Forms
             // RbAutoLoadVideoNever
             // 
             RbAutoLoadVideoNever.AutoSize = true;
-            RbAutoLoadVideoNever.Location = new Point(16, 39);
+            RbAutoLoadVideoNever.Location = new Point(16, 37);
             RbAutoLoadVideoNever.Margin = new Padding(4, 3, 4, 3);
             RbAutoLoadVideoNever.Name = "RbAutoLoadVideoNever";
-            RbAutoLoadVideoNever.Size = new Size(56, 20);
+            RbAutoLoadVideoNever.Size = new Size(56, 19);
             RbAutoLoadVideoNever.TabIndex = 0;
             RbAutoLoadVideoNever.Text = "Never";
             RbAutoLoadVideoNever.UseVisualStyleBackColor = true;
@@ -670,7 +670,7 @@ namespace VieweD.Forms
             GbListStyle.Margin = new Padding(4, 3, 4, 3);
             GbListStyle.Name = "GbListStyle";
             GbListStyle.Padding = new Padding(4, 3, 4, 3);
-            GbListStyle.Size = new Size(660, 375);
+            GbListStyle.Size = new Size(660, 352);
             GbListStyle.TabIndex = 14;
             GbListStyle.TabStop = false;
             GbListStyle.Text = "Packet List Style";
@@ -678,10 +678,10 @@ namespace VieweD.Forms
             // BtnPacketListFont
             // 
             BtnPacketListFont.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            BtnPacketListFont.Location = new Point(394, 289);
+            BtnPacketListFont.Location = new Point(394, 271);
             BtnPacketListFont.Margin = new Padding(4, 3, 4, 3);
             BtnPacketListFont.Name = "BtnPacketListFont";
-            BtnPacketListFont.Size = new Size(261, 29);
+            BtnPacketListFont.Size = new Size(261, 27);
             BtnPacketListFont.TabIndex = 18;
             BtnPacketListFont.Text = "Select Font";
             BtnPacketListFont.UseVisualStyleBackColor = true;
@@ -691,10 +691,10 @@ namespace VieweD.Forms
             // 
             LabelPacketListArrows.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             LabelPacketListArrows.AutoSize = true;
-            LabelPacketListArrows.Location = new Point(147, 289);
+            LabelPacketListArrows.Location = new Point(147, 271);
             LabelPacketListArrows.Margin = new Padding(4, 0, 4, 0);
             LabelPacketListArrows.Name = "LabelPacketListArrows";
-            LabelPacketListArrows.Size = new Size(45, 16);
+            LabelPacketListArrows.Size = new Size(45, 15);
             LabelPacketListArrows.TabIndex = 17;
             LabelPacketListArrows.Text = "<=  =>";
             // 
@@ -702,20 +702,20 @@ namespace VieweD.Forms
             // 
             Label12.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             Label12.AutoSize = true;
-            Label12.Location = new Point(4, 267);
+            Label12.Location = new Point(4, 250);
             Label12.Margin = new Padding(4, 0, 4, 0);
             Label12.Name = "Label12";
-            Label12.Size = new Size(67, 16);
+            Label12.Size = new Size(67, 15);
             Label12.TabIndex = 12;
             Label12.Text = "Arrow Style";
             // 
             // BtnSetDarkMode
             // 
             BtnSetDarkMode.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            BtnSetDarkMode.Location = new Point(394, 339);
+            BtnSetDarkMode.Location = new Point(394, 318);
             BtnSetDarkMode.Margin = new Padding(4, 3, 4, 3);
             BtnSetDarkMode.Name = "BtnSetDarkMode";
-            BtnSetDarkMode.Size = new Size(261, 29);
+            BtnSetDarkMode.Size = new Size(261, 27);
             BtnSetDarkMode.TabIndex = 16;
             BtnSetDarkMode.Text = "Set Dark Mode Packet Colors";
             BtnSetDarkMode.UseVisualStyleBackColor = true;
@@ -725,7 +725,7 @@ namespace VieweD.Forms
             // 
             PictureBox3.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             PictureBox3.Image = Properties.Resources.mini_out_ticon;
-            PictureBox3.Location = new Point(172, 350);
+            PictureBox3.Location = new Point(172, 328);
             PictureBox3.Margin = new Padding(4, 3, 4, 3);
             PictureBox3.Name = "PictureBox3";
             PictureBox3.Size = new Size(12, 12);
@@ -737,7 +737,7 @@ namespace VieweD.Forms
             // 
             PictureBox4.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             PictureBox4.Image = Properties.Resources.mini_in_ticon;
-            PictureBox4.Location = new Point(150, 350);
+            PictureBox4.Location = new Point(150, 328);
             PictureBox4.Margin = new Padding(4, 3, 4, 3);
             PictureBox4.Name = "PictureBox4";
             PictureBox4.Size = new Size(12, 12);
@@ -749,7 +749,7 @@ namespace VieweD.Forms
             // 
             PictureBox2.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             PictureBox2.Image = Properties.Resources.mini_out_icon;
-            PictureBox2.Location = new Point(172, 321);
+            PictureBox2.Location = new Point(172, 301);
             PictureBox2.Margin = new Padding(4, 3, 4, 3);
             PictureBox2.Name = "PictureBox2";
             PictureBox2.Size = new Size(12, 12);
@@ -761,7 +761,7 @@ namespace VieweD.Forms
             // 
             PictureBox1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             PictureBox1.Image = Properties.Resources.mini_in_icon;
-            PictureBox1.Location = new Point(150, 321);
+            PictureBox1.Location = new Point(150, 301);
             PictureBox1.Margin = new Padding(4, 3, 4, 3);
             PictureBox1.Name = "PictureBox1";
             PictureBox1.Size = new Size(12, 12);
@@ -773,10 +773,10 @@ namespace VieweD.Forms
             // 
             RbListStyleTransparent.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             RbListStyleTransparent.AutoSize = true;
-            RbListStyleTransparent.Location = new Point(7, 343);
+            RbListStyleTransparent.Location = new Point(7, 321);
             RbListStyleTransparent.Margin = new Padding(4, 3, 4, 3);
             RbListStyleTransparent.Name = "RbListStyleTransparent";
-            RbListStyleTransparent.Size = new Size(126, 20);
+            RbListStyleTransparent.Size = new Size(127, 19);
             RbListStyleTransparent.TabIndex = 2;
             RbListStyleTransparent.Text = "Transparent Arrows";
             RbListStyleTransparent.UseVisualStyleBackColor = true;
@@ -786,10 +786,10 @@ namespace VieweD.Forms
             RbListStyleSolid.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             RbListStyleSolid.AutoSize = true;
             RbListStyleSolid.Checked = true;
-            RbListStyleSolid.Location = new Point(7, 316);
+            RbListStyleSolid.Location = new Point(7, 296);
             RbListStyleSolid.Margin = new Padding(4, 3, 4, 3);
             RbListStyleSolid.Name = "RbListStyleSolid";
-            RbListStyleSolid.Size = new Size(91, 20);
+            RbListStyleSolid.Size = new Size(91, 19);
             RbListStyleSolid.TabIndex = 1;
             RbListStyleSolid.TabStop = true;
             RbListStyleSolid.Text = "Solid Arrows";
@@ -799,10 +799,10 @@ namespace VieweD.Forms
             // 
             RbListStyleText.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             RbListStyleText.AutoSize = true;
-            RbListStyleText.Location = new Point(7, 287);
+            RbListStyleText.Location = new Point(7, 269);
             RbListStyleText.Margin = new Padding(4, 3, 4, 3);
             RbListStyleText.Name = "RbListStyleText";
-            RbListStyleText.Size = new Size(86, 20);
+            RbListStyleText.Size = new Size(86, 19);
             RbListStyleText.TabIndex = 0;
             RbListStyleText.Text = "Text Arrows";
             RbListStyleText.UseVisualStyleBackColor = true;
@@ -833,7 +833,7 @@ namespace VieweD.Forms
             LayoutGridColors.Controls.Add(BtnColField13, 0, 3);
             LayoutGridColors.Controls.Add(LFieldCol0, 0, 0);
             LayoutGridColors.Font = new Font("Consolas", 9F);
-            LayoutGridColors.Location = new Point(7, 23);
+            LayoutGridColors.Location = new Point(7, 22);
             LayoutGridColors.Margin = new Padding(4, 3, 4, 3);
             LayoutGridColors.Name = "LayoutGridColors";
             LayoutGridColors.RowCount = 4;
@@ -841,7 +841,7 @@ namespace VieweD.Forms
             LayoutGridColors.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
             LayoutGridColors.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
             LayoutGridColors.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
-            LayoutGridColors.Size = new Size(646, 176);
+            LayoutGridColors.Size = new Size(646, 165);
             LayoutGridColors.TabIndex = 13;
             // 
             // BtnColField12
@@ -850,10 +850,10 @@ namespace VieweD.Forms
             BtnColField12.AutoSize = true;
             BtnColField12.BackColor = SystemColors.Control;
             BtnColField12.Font = new Font("Consolas", 9F);
-            BtnColField12.Location = new Point(6, 134);
+            BtnColField12.Location = new Point(6, 125);
             BtnColField12.Margin = new Padding(4, 3, 4, 3);
             BtnColField12.Name = "BtnColField12";
-            BtnColField12.Size = new Size(151, 37);
+            BtnColField12.Size = new Size(151, 35);
             BtnColField12.TabIndex = 36;
             BtnColField12.Tag = "13";
             BtnColField12.Text = "0x0C";
@@ -866,10 +866,10 @@ namespace VieweD.Forms
             BtnColField14.AutoSize = true;
             BtnColField14.BackColor = SystemColors.Control;
             BtnColField14.Font = new Font("Consolas", 9F);
-            BtnColField14.Location = new Point(328, 134);
+            BtnColField14.Location = new Point(328, 125);
             BtnColField14.Margin = new Padding(4, 3, 4, 3);
             BtnColField14.Name = "BtnColField14";
-            BtnColField14.Size = new Size(151, 37);
+            BtnColField14.Size = new Size(151, 35);
             BtnColField14.TabIndex = 35;
             BtnColField14.Tag = "15";
             BtnColField14.Text = "0x0E";
@@ -882,10 +882,10 @@ namespace VieweD.Forms
             BtnColField15.AutoSize = true;
             BtnColField15.BackColor = SystemColors.Control;
             BtnColField15.Font = new Font("Consolas", 9F);
-            BtnColField15.Location = new Point(489, 134);
+            BtnColField15.Location = new Point(489, 125);
             BtnColField15.Margin = new Padding(4, 3, 4, 3);
             BtnColField15.Name = "BtnColField15";
-            BtnColField15.Size = new Size(151, 37);
+            BtnColField15.Size = new Size(151, 35);
             BtnColField15.TabIndex = 34;
             BtnColField15.Tag = "16";
             BtnColField15.Text = "0x0F";
@@ -901,7 +901,7 @@ namespace VieweD.Forms
             BtnColField1.Location = new Point(167, 5);
             BtnColField1.Margin = new Padding(4, 3, 4, 3);
             BtnColField1.Name = "BtnColField1";
-            BtnColField1.Size = new Size(151, 35);
+            BtnColField1.Size = new Size(151, 32);
             BtnColField1.TabIndex = 22;
             BtnColField1.Tag = "1";
             BtnColField1.Text = "0x01";
@@ -917,7 +917,7 @@ namespace VieweD.Forms
             BtnColField2.Location = new Point(328, 5);
             BtnColField2.Margin = new Padding(4, 3, 4, 3);
             BtnColField2.Name = "BtnColField2";
-            BtnColField2.Size = new Size(151, 35);
+            BtnColField2.Size = new Size(151, 32);
             BtnColField2.TabIndex = 23;
             BtnColField2.Tag = "2";
             BtnColField2.Text = "0x02";
@@ -933,7 +933,7 @@ namespace VieweD.Forms
             BtnColField3.Location = new Point(489, 5);
             BtnColField3.Margin = new Padding(4, 3, 4, 3);
             BtnColField3.Name = "BtnColField3";
-            BtnColField3.Size = new Size(151, 35);
+            BtnColField3.Size = new Size(151, 32);
             BtnColField3.TabIndex = 24;
             BtnColField3.Tag = "3";
             BtnColField3.Text = "0x03";
@@ -946,10 +946,10 @@ namespace VieweD.Forms
             BtnColField4.AutoSize = true;
             BtnColField4.BackColor = SystemColors.Control;
             BtnColField4.Font = new Font("Consolas", 9F);
-            BtnColField4.Location = new Point(6, 48);
+            BtnColField4.Location = new Point(6, 45);
             BtnColField4.Margin = new Padding(4, 3, 4, 3);
             BtnColField4.Name = "BtnColField4";
-            BtnColField4.Size = new Size(151, 35);
+            BtnColField4.Size = new Size(151, 32);
             BtnColField4.TabIndex = 25;
             BtnColField4.Tag = "4";
             BtnColField4.Text = "0x04";
@@ -962,10 +962,10 @@ namespace VieweD.Forms
             BtnColField5.AutoSize = true;
             BtnColField5.BackColor = SystemColors.Control;
             BtnColField5.Font = new Font("Consolas", 9F);
-            BtnColField5.Location = new Point(167, 48);
+            BtnColField5.Location = new Point(167, 45);
             BtnColField5.Margin = new Padding(4, 3, 4, 3);
             BtnColField5.Name = "BtnColField5";
-            BtnColField5.Size = new Size(151, 35);
+            BtnColField5.Size = new Size(151, 32);
             BtnColField5.TabIndex = 26;
             BtnColField5.Tag = "5";
             BtnColField5.Text = "0x05";
@@ -978,10 +978,10 @@ namespace VieweD.Forms
             BtnColField6.AutoSize = true;
             BtnColField6.BackColor = SystemColors.Control;
             BtnColField6.Font = new Font("Consolas", 9F);
-            BtnColField6.Location = new Point(328, 48);
+            BtnColField6.Location = new Point(328, 45);
             BtnColField6.Margin = new Padding(4, 3, 4, 3);
             BtnColField6.Name = "BtnColField6";
-            BtnColField6.Size = new Size(151, 35);
+            BtnColField6.Size = new Size(151, 32);
             BtnColField6.TabIndex = 27;
             BtnColField6.Tag = "6";
             BtnColField6.Text = "0x06";
@@ -994,10 +994,10 @@ namespace VieweD.Forms
             BtnColField7.AutoSize = true;
             BtnColField7.BackColor = SystemColors.Control;
             BtnColField7.Font = new Font("Consolas", 9F);
-            BtnColField7.Location = new Point(489, 48);
+            BtnColField7.Location = new Point(489, 45);
             BtnColField7.Margin = new Padding(4, 3, 4, 3);
             BtnColField7.Name = "BtnColField7";
-            BtnColField7.Size = new Size(151, 35);
+            BtnColField7.Size = new Size(151, 32);
             BtnColField7.TabIndex = 28;
             BtnColField7.Tag = "7";
             BtnColField7.Text = "0x07";
@@ -1010,10 +1010,10 @@ namespace VieweD.Forms
             BtnColField8.AutoSize = true;
             BtnColField8.BackColor = SystemColors.Control;
             BtnColField8.Font = new Font("Consolas", 9F);
-            BtnColField8.Location = new Point(6, 91);
+            BtnColField8.Location = new Point(6, 85);
             BtnColField8.Margin = new Padding(4, 3, 4, 3);
             BtnColField8.Name = "BtnColField8";
-            BtnColField8.Size = new Size(151, 35);
+            BtnColField8.Size = new Size(151, 32);
             BtnColField8.TabIndex = 29;
             BtnColField8.Tag = "8";
             BtnColField8.Text = "0x08";
@@ -1026,10 +1026,10 @@ namespace VieweD.Forms
             BtnColField9.AutoSize = true;
             BtnColField9.BackColor = SystemColors.Control;
             BtnColField9.Font = new Font("Consolas", 9F);
-            BtnColField9.Location = new Point(167, 91);
+            BtnColField9.Location = new Point(167, 85);
             BtnColField9.Margin = new Padding(4, 3, 4, 3);
             BtnColField9.Name = "BtnColField9";
-            BtnColField9.Size = new Size(151, 35);
+            BtnColField9.Size = new Size(151, 32);
             BtnColField9.TabIndex = 30;
             BtnColField9.Tag = "9";
             BtnColField9.Text = "0x09";
@@ -1042,10 +1042,10 @@ namespace VieweD.Forms
             BtnColField10.AutoSize = true;
             BtnColField10.BackColor = SystemColors.Control;
             BtnColField10.Font = new Font("Consolas", 9F);
-            BtnColField10.Location = new Point(328, 91);
+            BtnColField10.Location = new Point(328, 85);
             BtnColField10.Margin = new Padding(4, 3, 4, 3);
             BtnColField10.Name = "BtnColField10";
-            BtnColField10.Size = new Size(151, 35);
+            BtnColField10.Size = new Size(151, 32);
             BtnColField10.TabIndex = 31;
             BtnColField10.Tag = "10";
             BtnColField10.Text = "0x0A";
@@ -1058,10 +1058,10 @@ namespace VieweD.Forms
             BtnColField11.AutoSize = true;
             BtnColField11.BackColor = SystemColors.Control;
             BtnColField11.Font = new Font("Consolas", 9F);
-            BtnColField11.Location = new Point(489, 91);
+            BtnColField11.Location = new Point(489, 85);
             BtnColField11.Margin = new Padding(4, 3, 4, 3);
             BtnColField11.Name = "BtnColField11";
-            BtnColField11.Size = new Size(151, 35);
+            BtnColField11.Size = new Size(151, 32);
             BtnColField11.TabIndex = 32;
             BtnColField11.Tag = "11";
             BtnColField11.Text = "0x0B";
@@ -1074,10 +1074,10 @@ namespace VieweD.Forms
             BtnColField13.AutoSize = true;
             BtnColField13.BackColor = SystemColors.Control;
             BtnColField13.Font = new Font("Consolas", 9F);
-            BtnColField13.Location = new Point(167, 134);
+            BtnColField13.Location = new Point(167, 125);
             BtnColField13.Margin = new Padding(4, 3, 4, 3);
             BtnColField13.Name = "BtnColField13";
-            BtnColField13.Size = new Size(151, 37);
+            BtnColField13.Size = new Size(151, 35);
             BtnColField13.TabIndex = 33;
             BtnColField13.Tag = "14";
             BtnColField13.Text = "0x0D";
@@ -1092,7 +1092,7 @@ namespace VieweD.Forms
             LFieldCol0.Location = new Point(6, 2);
             LFieldCol0.Margin = new Padding(4, 0, 4, 0);
             LFieldCol0.Name = "LFieldCol0";
-            LFieldCol0.Size = new Size(151, 41);
+            LFieldCol0.Size = new Size(151, 38);
             LFieldCol0.TabIndex = 37;
             LFieldCol0.Text = "Default Color";
             LFieldCol0.TextAlign = ContentAlignment.MiddleCenter;
@@ -1110,7 +1110,7 @@ namespace VieweD.Forms
             GbGridStyle.Margin = new Padding(4, 3, 4, 3);
             GbGridStyle.Name = "GbGridStyle";
             GbGridStyle.Padding = new Padding(4, 3, 4, 3);
-            GbGridStyle.Size = new Size(660, 284);
+            GbGridStyle.Size = new Size(660, 266);
             GbGridStyle.TabIndex = 17;
             GbGridStyle.TabStop = false;
             GbGridStyle.Text = "Field Grid Colors";
@@ -1118,10 +1118,10 @@ namespace VieweD.Forms
             // BtnGridViewFont
             // 
             BtnGridViewFont.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            BtnGridViewFont.Location = new Point(392, 248);
+            BtnGridViewFont.Location = new Point(392, 232);
             BtnGridViewFont.Margin = new Padding(4, 3, 4, 3);
             BtnGridViewFont.Name = "BtnGridViewFont";
-            BtnGridViewFont.Size = new Size(261, 29);
+            BtnGridViewFont.Size = new Size(261, 27);
             BtnGridViewFont.TabIndex = 19;
             BtnGridViewFont.Text = "Select Font";
             BtnGridViewFont.UseVisualStyleBackColor = true;
@@ -1131,10 +1131,10 @@ namespace VieweD.Forms
             // 
             Label13.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             Label13.AutoSize = true;
-            Label13.Location = new Point(13, 203);
+            Label13.Location = new Point(13, 190);
             Label13.Margin = new Padding(4, 0, 4, 0);
             Label13.Name = "Label13";
-            Label13.Size = new Size(217, 16);
+            Label13.Size = new Size(218, 15);
             Label13.TabIndex = 16;
             Label13.Text = "Number of colors to use in the field grid";
             // 
@@ -1143,7 +1143,7 @@ namespace VieweD.Forms
             LFieldColCount.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             LFieldColCount.AutoSize = true;
             LFieldColCount.Font = new Font("Microsoft Sans Serif", 12F);
-            LFieldColCount.Location = new Point(332, 235);
+            LFieldColCount.Location = new Point(332, 220);
             LFieldColCount.Margin = new Padding(4, 0, 4, 0);
             LFieldColCount.Name = "LFieldColCount";
             LFieldColCount.Size = new Size(18, 20);
@@ -1153,7 +1153,7 @@ namespace VieweD.Forms
             // TbFieldColorCount
             // 
             TbFieldColorCount.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            TbFieldColorCount.Location = new Point(13, 222);
+            TbFieldColorCount.Location = new Point(13, 208);
             TbFieldColorCount.Margin = new Padding(4, 3, 4, 3);
             TbFieldColorCount.Maximum = 16;
             TbFieldColorCount.Minimum = 1;
@@ -1175,11 +1175,11 @@ namespace VieweD.Forms
             GbOtherSettings.Controls.Add(DefaultCreditsTextBox);
             GbOtherSettings.Controls.Add(label15);
             GbOtherSettings.Controls.Add(CbShowHexStringData);
-            GbOtherSettings.Location = new Point(9, 81);
+            GbOtherSettings.Location = new Point(9, 76);
             GbOtherSettings.Margin = new Padding(4, 3, 4, 3);
             GbOtherSettings.Name = "GbOtherSettings";
             GbOtherSettings.Padding = new Padding(4, 3, 4, 3);
-            GbOtherSettings.Size = new Size(656, 189);
+            GbOtherSettings.Size = new Size(656, 177);
             GbOtherSettings.TabIndex = 18;
             GbOtherSettings.TabStop = false;
             GbOtherSettings.Text = "Miscellaneous Settings";
@@ -1187,10 +1187,10 @@ namespace VieweD.Forms
             // CbSkipUnparsed
             // 
             CbSkipUnparsed.AutoSize = true;
-            CbSkipUnparsed.Location = new Point(15, 48);
+            CbSkipUnparsed.Location = new Point(15, 45);
             CbSkipUnparsed.Margin = new Padding(4, 3, 4, 3);
             CbSkipUnparsed.Name = "CbSkipUnparsed";
-            CbSkipUnparsed.Size = new Size(630, 20);
+            CbSkipUnparsed.Size = new Size(633, 19);
             CbSkipUnparsed.TabIndex = 24;
             CbSkipUnparsed.Text = "Skip parsing of unparsed data (recommended off but can be useful for debugging rules when there is data missing)";
             CbSkipUnparsed.UseVisualStyleBackColor = true;
@@ -1198,18 +1198,18 @@ namespace VieweD.Forms
             // LabelDefaultImportFolder
             // 
             LabelDefaultImportFolder.AutoSize = true;
-            LabelDefaultImportFolder.Location = new Point(44, 158);
+            LabelDefaultImportFolder.Location = new Point(44, 148);
             LabelDefaultImportFolder.Name = "LabelDefaultImportFolder";
-            LabelDefaultImportFolder.Size = new Size(50, 16);
+            LabelDefaultImportFolder.Size = new Size(50, 15);
             LabelDefaultImportFolder.TabIndex = 23;
             LabelDefaultImportFolder.Text = "<none>";
             // 
             // BtnDefaultImportFolder
             // 
             BtnDefaultImportFolder.Image = Properties.Resources.document_open_folder_16;
-            BtnDefaultImportFolder.Location = new Point(15, 154);
+            BtnDefaultImportFolder.Location = new Point(15, 144);
             BtnDefaultImportFolder.Name = "BtnDefaultImportFolder";
-            BtnDefaultImportFolder.Size = new Size(23, 25);
+            BtnDefaultImportFolder.Size = new Size(23, 23);
             BtnDefaultImportFolder.TabIndex = 22;
             BtnDefaultImportFolder.UseVisualStyleBackColor = true;
             BtnDefaultImportFolder.Click += BtnDefaultImportFolder_Click;
@@ -1217,9 +1217,9 @@ namespace VieweD.Forms
             // label16
             // 
             label16.AutoSize = true;
-            label16.Location = new Point(6, 135);
+            label16.Location = new Point(6, 127);
             label16.Name = "label16";
-            label16.Size = new Size(119, 16);
+            label16.Size = new Size(120, 15);
             label16.TabIndex = 21;
             label16.Text = "Default Import Folder";
             // 
@@ -1227,15 +1227,15 @@ namespace VieweD.Forms
             // 
             label14.AutoSize = true;
             label14.Enabled = false;
-            label14.Location = new Point(205, 102);
+            label14.Location = new Point(205, 96);
             label14.Name = "label14";
-            label14.Size = new Size(259, 16);
+            label14.Size = new Size(260, 15);
             label14.TabIndex = 20;
             label14.Text = "If blank, your current login name is used instead";
             // 
             // DefaultCreditsTextBox
             // 
-            DefaultCreditsTextBox.Location = new Point(15, 96);
+            DefaultCreditsTextBox.Location = new Point(15, 90);
             DefaultCreditsTextBox.Name = "DefaultCreditsTextBox";
             DefaultCreditsTextBox.Size = new Size(182, 23);
             DefaultCreditsTextBox.TabIndex = 19;
@@ -1243,19 +1243,19 @@ namespace VieweD.Forms
             // label15
             // 
             label15.AutoSize = true;
-            label15.Location = new Point(5, 72);
+            label15.Location = new Point(5, 68);
             label15.Name = "label15";
-            label15.Size = new Size(118, 16);
+            label15.Size = new Size(120, 15);
             label15.TabIndex = 18;
             label15.Text = "Default Credits Name";
             // 
             // CbShowHexStringData
             // 
             CbShowHexStringData.AutoSize = true;
-            CbShowHexStringData.Location = new Point(15, 22);
+            CbShowHexStringData.Location = new Point(15, 21);
             CbShowHexStringData.Margin = new Padding(4, 3, 4, 3);
             CbShowHexStringData.Name = "CbShowHexStringData";
-            CbShowHexStringData.Size = new Size(183, 20);
+            CbShowHexStringData.Size = new Size(182, 19);
             CbShowHexStringData.TabIndex = 16;
             CbShowHexStringData.Text = "Also show hex data on strings";
             CbShowHexStringData.UseVisualStyleBackColor = true;
@@ -1270,7 +1270,7 @@ namespace VieweD.Forms
             TcSettings.Margin = new Padding(4, 3, 4, 3);
             TcSettings.Name = "TcSettings";
             TcSettings.SelectedIndex = 0;
-            TcSettings.Size = new Size(684, 416);
+            TcSettings.Size = new Size(684, 390);
             TcSettings.TabIndex = 19;
             // 
             // TpGeneral
@@ -1279,11 +1279,11 @@ namespace VieweD.Forms
             TpGeneral.Controls.Add(GbOtherSettings);
             TpGeneral.Controls.Add(GbVideoSettings);
             TpGeneral.ForeColor = SystemColors.ControlText;
-            TpGeneral.Location = new Point(4, 25);
+            TpGeneral.Location = new Point(4, 24);
             TpGeneral.Margin = new Padding(4, 3, 4, 3);
             TpGeneral.Name = "TpGeneral";
             TpGeneral.Padding = new Padding(4, 3, 4, 3);
-            TpGeneral.Size = new Size(676, 387);
+            TpGeneral.Size = new Size(676, 362);
             TpGeneral.TabIndex = 0;
             TpGeneral.Text = "General";
             // 
@@ -1292,11 +1292,11 @@ namespace VieweD.Forms
             TbPacketList.BackColor = SystemColors.Control;
             TbPacketList.Controls.Add(GbListStyle);
             TbPacketList.ForeColor = SystemColors.ControlText;
-            TbPacketList.Location = new Point(4, 25);
+            TbPacketList.Location = new Point(4, 24);
             TbPacketList.Margin = new Padding(4, 3, 4, 3);
             TbPacketList.Name = "TbPacketList";
             TbPacketList.Padding = new Padding(4, 3, 4, 3);
-            TbPacketList.Size = new Size(676, 387);
+            TbPacketList.Size = new Size(676, 362);
             TbPacketList.TabIndex = 1;
             TbPacketList.Text = "Packet List";
             // 
@@ -1305,11 +1305,11 @@ namespace VieweD.Forms
             TpFieldGrid.BackColor = SystemColors.Control;
             TpFieldGrid.Controls.Add(GroupBox3);
             TpFieldGrid.Controls.Add(GbGridStyle);
-            TpFieldGrid.Location = new Point(4, 25);
+            TpFieldGrid.Location = new Point(4, 24);
             TpFieldGrid.Margin = new Padding(4, 3, 4, 3);
             TpFieldGrid.Name = "TpFieldGrid";
             TpFieldGrid.Padding = new Padding(4, 3, 4, 3);
-            TpFieldGrid.Size = new Size(676, 387);
+            TpFieldGrid.Size = new Size(676, 362);
             TpFieldGrid.TabIndex = 2;
             TpFieldGrid.Text = "Data Views";
             // 
@@ -1317,11 +1317,11 @@ namespace VieweD.Forms
             // 
             GroupBox3.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             GroupBox3.Controls.Add(BtnRawViewFont);
-            GroupBox3.Location = new Point(7, 300);
+            GroupBox3.Location = new Point(7, 281);
             GroupBox3.Margin = new Padding(4, 3, 4, 3);
             GroupBox3.Name = "GroupBox3";
             GroupBox3.Padding = new Padding(4, 3, 4, 3);
-            GroupBox3.Size = new Size(660, 77);
+            GroupBox3.Size = new Size(660, 72);
             GroupBox3.TabIndex = 18;
             GroupBox3.TabStop = false;
             GroupBox3.Text = "Raw Data View";
@@ -1329,10 +1329,10 @@ namespace VieweD.Forms
             // BtnRawViewFont
             // 
             BtnRawViewFont.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            BtnRawViewFont.Location = new Point(392, 41);
+            BtnRawViewFont.Location = new Point(392, 38);
             BtnRawViewFont.Margin = new Padding(4, 3, 4, 3);
             BtnRawViewFont.Name = "BtnRawViewFont";
-            BtnRawViewFont.Size = new Size(261, 29);
+            BtnRawViewFont.Size = new Size(261, 27);
             BtnRawViewFont.TabIndex = 20;
             BtnRawViewFont.Text = "Select Font";
             BtnRawViewFont.UseVisualStyleBackColor = true;
@@ -1351,16 +1351,15 @@ namespace VieweD.Forms
             // ProgramSettingsForm
             // 
             AcceptButton = BtnOK;
-            AutoScaleDimensions = new SizeF(7F, 16F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             CancelButton = BtnCancel;
-            ClientSize = new Size(681, 462);
+            ClientSize = new Size(681, 433);
             ControlBox = false;
             Controls.Add(TcSettings);
             Controls.Add(BtnDefault);
             Controls.Add(BtnCancel);
             Controls.Add(BtnOK);
-            FormBorderStyle = FormBorderStyle.FixedDialog;
             Margin = new Padding(4, 3, 4, 3);
             MaximizeBox = false;
             MinimizeBox = false;
