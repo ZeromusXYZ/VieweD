@@ -306,7 +306,7 @@ namespace VieweD.Forms
                 var stripBeginningPath = string.Empty;
                 var firstFile = true;
 
-                using (var archive = ArchiveFactory.Open(ProjectArchive))
+                using (var archive = ArchiveFactory.OpenArchive(ProjectArchive))
                 {
                     // Check if there are "empty folders" in the archive tree
                     foreach (var zipArchiveEntry in archive.Entries)

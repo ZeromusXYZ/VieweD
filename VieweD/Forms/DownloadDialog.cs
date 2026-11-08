@@ -277,14 +277,29 @@ namespace VieweD.Forms
                 // Get media streams & choose the best muxed stream
                 var streamInfo = streamManifest.GetMuxedStreams().TryGetWithHighestVideoQuality();
 
+                // No Muxed stream found, try video only
                 if (streamInfo == null)
                 {
+                    streamInfo = streamManifest.GetVideoStreams().TryGetWithHighestVideoQuality();
+                }
+
+                // TODO: Create solution for re-mixing the video and audio streams into a single file using YoutubeExplode.Converter
+                // https://github.com/Tyrrrz/YoutubeExplode/tree/prime/YoutubeExplode.Converter
+
+                if (streamInfo == null)
+                {
+                    LabelContainerName.Invoke((MethodInvoker)delegate {
+                        LabelContainerName.Text = Resources.YouTubeErrorNoStreams;
+                    });
                     // Console.Error.WriteLine("This videos has no streams");
                     MessageBox.Show(Resources.YouTubeErrorNoStreams, Resources.DownloadErrorTitle);
                     res = false;
                 }
                 else
                 {
+                    LabelContainerName.Invoke((MethodInvoker)delegate {
+                        LabelContainerName.Text = $@"{streamInfo} @ {streamInfo.VideoResolution}";
+                    });
                     using (var progress = new InlineProgress())
                     {
                         await youtube.Videos.Streams.DownloadAsync(streamInfo, fileName, progress);

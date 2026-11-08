@@ -37,6 +37,8 @@ namespace VieweD.Forms
             LabelTargetFile = new System.Windows.Forms.Label();
             BtnCancel = new System.Windows.Forms.Button();
             bgw = new System.ComponentModel.BackgroundWorker();
+            LabelContainerName = new System.Windows.Forms.Label();
+            label4 = new System.Windows.Forms.Label();
             SuspendLayout();
             // 
             // DownloadProgress
@@ -72,7 +74,7 @@ namespace VieweD.Forms
             label2.AutoSize = true;
             label2.Location = new System.Drawing.Point(12, 53);
             label2.Name = "label2";
-            label2.Size = new System.Drawing.Size(42, 15);
+            label2.Size = new System.Drawing.Size(43, 15);
             label2.TabIndex = 3;
             label2.Text = "Target:";
             // 
@@ -88,7 +90,7 @@ namespace VieweD.Forms
             // BtnCancel
             // 
             BtnCancel.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
-            BtnCancel.Location = new System.Drawing.Point(12, 76);
+            BtnCancel.Location = new System.Drawing.Point(12, 96);
             BtnCancel.Name = "BtnCancel";
             BtnCancel.Size = new System.Drawing.Size(84, 23);
             BtnCancel.TabIndex = 5;
@@ -102,11 +104,31 @@ namespace VieweD.Forms
             bgw.ProgressChanged += bgw_ProgressChanged;
             bgw.RunWorkerCompleted += bgw_RunWorkerCompleted;
             // 
+            // LabelContainerName
+            // 
+            LabelContainerName.AutoSize = true;
+            LabelContainerName.Location = new System.Drawing.Point(102, 68);
+            LabelContainerName.Name = "LabelContainerName";
+            LabelContainerName.Size = new System.Drawing.Size(12, 15);
+            LabelContainerName.TabIndex = 7;
+            LabelContainerName.Text = "-";
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new System.Drawing.Point(12, 68);
+            label4.Name = "label4";
+            label4.Size = new System.Drawing.Size(48, 15);
+            label4.TabIndex = 6;
+            label4.Text = "Quality:";
+            // 
             // DownloadDialog
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(601, 111);
+            ClientSize = new System.Drawing.Size(601, 131);
+            Controls.Add(LabelContainerName);
+            Controls.Add(label4);
             Controls.Add(BtnCancel);
             Controls.Add(LabelTargetFile);
             Controls.Add(label2);
@@ -116,7 +138,7 @@ namespace VieweD.Forms
             FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             Name = "DownloadDialog";
             StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            Text = Resources.Download;
+            Text = "Download";
             Load += DownloadDialog_Load;
             ResumeLayout(false);
             PerformLayout();
@@ -131,5 +153,7 @@ namespace VieweD.Forms
         private System.Windows.Forms.Label LabelTargetFile;
         private System.Windows.Forms.Button BtnCancel;
         private System.ComponentModel.BackgroundWorker bgw;
+        private System.Windows.Forms.Label LabelContainerName;
+        private System.Windows.Forms.Label label4;
     }
 }

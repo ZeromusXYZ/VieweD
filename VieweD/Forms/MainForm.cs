@@ -77,6 +77,44 @@ namespace VieweD.Forms
                     RichTextWelcome.LoadFile(rtfFile);
                 else
                     RichTextWelcome.Text = Resources.WelcomeFileNotFound;
+
+                // Append loaded readers and parsers
+                var s = string.Empty;
+                // Parsers
+                RichTextWelcome.AppendText(Environment.NewLine + Environment.NewLine + Environment.NewLine);
+                RichTextWelcome.SelectionFont = new Font("Calibri", 11, FontStyle.Bold);
+                RichTextWelcome.AppendText(@"Registered Parsers:" + Environment.NewLine);
+                RichTextWelcome.SelectionFont = new Font("Calibri", 11, FontStyle.Regular);
+                s = string.Empty;
+                foreach (var parser in EngineManager.AllParsers)
+                {
+                    s += parser.Name + Environment.NewLine;
+                }
+                RichTextWelcome.AppendText(s);
+                RichTextWelcome.AppendText(Environment.NewLine);
+
+                // Readers
+                RichTextWelcome.SelectionFont = new Font("Calibri", 11, FontStyle.Bold);
+                RichTextWelcome.AppendText(@"Registered Input Readers:"+ Environment.NewLine);
+                RichTextWelcome.SelectionFont = new Font("Calibri", 11, FontStyle.Regular);
+                s = string.Empty;
+                foreach (var inputReader in EngineManager.AllInputReaders)
+                {
+                    s += inputReader.Name + " (";
+                    var first = true;
+                    foreach (var ext in inputReader.ExpectedFileExtensions)
+                    {
+                        if (!first)
+                        {
+                            s += " | ";
+                        }
+                        first = false;
+                        s += ext ;
+                    }
+                    s += ")" + Environment.NewLine;
+                }
+                RichTextWelcome.AppendText(s);
+
             }
             catch
             {

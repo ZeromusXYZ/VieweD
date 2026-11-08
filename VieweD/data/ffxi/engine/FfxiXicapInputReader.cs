@@ -3,9 +3,9 @@ using System.Buffers.Binary;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using SharpCompress.Compressors.ZStandard;
 using SharpCompress.Crypto;
 using VieweD.engine.common;
-using ZstdSharp;
 
 namespace VieweD.data.ffxi.engine;
 
