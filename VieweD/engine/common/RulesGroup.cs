@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Forms;
 using System.Xml;
 using VieweD.Helpers.System;
 
@@ -78,9 +79,18 @@ public class RulesGroup
                 var pNode = S2C.ChildNodes.Item(i);
                 if (pNode?.Name.ToLower() == "packet")
                 {
+                    ushort pType;
+                    byte level;
                     var attributes = XmlHelper.ReadNodeAttributes(pNode);
-                    var pType = Convert.ToUInt16(XmlHelper.GetAttributeInt(attributes, "type"));
-                    var level = Convert.ToByte(XmlHelper.GetAttributeInt(attributes, "level"));
+                    try
+                    {
+                        pType = Convert.ToUInt16(XmlHelper.GetAttributeInt(attributes, "type"));
+                        level = Convert.ToByte(XmlHelper.GetAttributeInt(attributes, "level"));
+                    }
+                    catch
+                    {
+                        continue;
+                    }
                     if (level > 0)
                         Parent.UsesCompressionLevels = true;
                     var description = XmlHelper.GetAttributeString(attributes, "desc");
@@ -119,16 +129,17 @@ public class RulesGroup
                 {
                     var attributes = XmlHelper.ReadNodeAttributes(pNode);
                     ushort pType;
+                    byte level;
                     try
                     {
                         pType = Convert.ToUInt16(XmlHelper.GetAttributeInt(attributes, "type"));
+                        level = Convert.ToByte(XmlHelper.GetAttributeInt(attributes, "level"));
                     }
                     catch
                     {
                         continue;
                     }
 
-                    var level = Convert.ToByte(XmlHelper.GetAttributeInt(attributes, "level"));
                     if (level > 0)
                         Parent.UsesCompressionLevels = true;
                     var description = XmlHelper.GetAttributeString(attributes, "desc");

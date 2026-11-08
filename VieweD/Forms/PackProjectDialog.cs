@@ -6,7 +6,6 @@ using System.IO;
 using System.IO.Compression;
 using System.Text;
 using System.Windows.Forms;
-using CsvHelper.Configuration;
 using VieweD.engine.common;
 using VieweD.Helpers.System;
 using VieweD.Properties;

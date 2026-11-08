@@ -356,3 +356,7 @@ MigrationBackup/
 *.sha3
 
 **/.idea/[Dd]iscord.xml
+
+AaEncryptions.cs
+
+VieweD/data/**/keys/*.key*

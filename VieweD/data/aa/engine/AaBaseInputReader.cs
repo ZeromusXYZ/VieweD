@@ -3,7 +3,8 @@ using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using Ionic.Zlib;
+using System.IO.Compression;
+// using Ionic.Zlib;
 using VieweD.Forms;
 using VieweD.engine.common;
 
@@ -24,7 +25,7 @@ public class AaBaseInputReader : BaseInputReader
     protected uint ClientToServerL5Counter { get; set; }
     protected uint ServerToClientL5Counter { get; set; }
 
-    protected ZlibCodec DecompressionHandler { get; set; } = new(CompressionMode.Decompress);
+    // protected ZlibCodec DecompressionHandler { get; set; } = new(CompressionMode.Decompress);
 
     private AaEncryptionsBase? Encryption { get; set; }
 
@@ -42,7 +43,7 @@ public class AaBaseInputReader : BaseInputReader
 
     protected void InitReader(ViewedProjectTab parentProject)
     {
-        DecompressionHandler.InitializeInflate(false);
+        // DecompressionHandler.InitializeInflate(false);
 
         // Load encryption handler (if present), otherwise use base null handler
         var enc = AaEncryptionsBase.CreateEncryptionByName("VieweD.data.aa.engine.AaEncryptions");

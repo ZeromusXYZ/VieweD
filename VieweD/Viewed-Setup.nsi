@@ -8,9 +8,9 @@
 ; Custom defines
 !define NAME "VieweD"
 !define APPFILE "viewed.exe"
-!define VERSION "1.0.3.6"
+!define VERSION "1.1.0.0"
 !define SLUG "${NAME} v${VERSION}"
-!define BIN_DEBUG "bin\Debug\net8.0-windows\"
+!define BIN_DEBUG "bin\publish\"
 
 !define /date MyTIMESTAMP "%Y-%m-%d"
   
@@ -65,8 +65,8 @@ SetCompressor /SOLID lzma
 Section "VieweD Files (required)" MainApp ;No components page, name is not important
   SectionIn RO
 
-  ; Check for .NET 8
-  !insertmacro CheckDotNetCore 8.0
+  ; Check for .NET 10
+  !insertmacro CheckDotNetCore 10.0
 
   ; Set output path to the installation directory.
   SetOutPath $INSTDIR
@@ -88,31 +88,31 @@ Section "VieweD Files (required)" MainApp ;No components page, name is not impor
 
   ; Engines Plugin Readme
   SetOutPath $INSTDIR\data
-  File data\welcome.rtf
+  File ${BIN_DEBUG}data\welcome.rtf
 
   ; Default Plugins
   ; FFXI Engine Data
   SetOutPath $INSTDIR\data\ffxi\filter
-  File /r data\ffxi\filter\*.*
+  File /r ${BIN_DEBUG}data\ffxi\filter\*.*
 
   SetOutPath $INSTDIR\data\ffxi\lookup
-  File /r data\ffxi\lookup\*.*
+  File /r ${BIN_DEBUG}data\ffxi\lookup\*.*
 
   SetOutPath $INSTDIR\data\ffxi\rules
-  File /r data\ffxi\rules\ffxi.xml
+  File /r ${BIN_DEBUG}data\ffxi\rules\ffxi.xml
 
   ; AA Engine Data
   SetOutPath $INSTDIR\data\aa\filter
-  File /r data\aa\filter\*.*
+  File /r ${BIN_DEBUG}data\aa\filter\*.*
 
   SetOutPath $INSTDIR\data\aa\keys
-  File /r data\aa\keys\*.*
+  File /r ${BIN_DEBUG}data\aa\keys\*.*
 
   SetOutPath $INSTDIR\data\aa\lookup
-  File /r data\aa\lookup\*.txt
+  File /r ${BIN_DEBUG}data\aa\lookup\*.txt
 
   SetOutPath $INSTDIR\data\aa\rules
-  File /r data\aa\rules\*.txt
+  File /r ${BIN_DEBUG}data\aa\rules\*.txt
 
   SetOutPath $INSTDIR
   

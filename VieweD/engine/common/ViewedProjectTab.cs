@@ -12,7 +12,7 @@ using VieweD.Properties;
 using System.Media;
 using System.Windows.Forms;
 using System.Xml;
-using Ionic.BZip2;
+using ICSharpCode.SharpZipLib.BZip2;
 using VieweD.Helpers.PacketList;
 
 namespace VieweD.engine.common;
@@ -1443,7 +1443,7 @@ public class ViewedProjectTab : TabPage
         Video.BringToFront();
     }
 
-    public void RunExportDataTool(string exportName)
+    public void RunExportDataTool(string exportName, bool skipDialog, bool doAppendFile = false)
     {
         if ((InputParser == null) || (InputParser.Rules == null))
             return;
@@ -1456,7 +1456,7 @@ public class ViewedProjectTab : TabPage
         var targetFile = Path.Combine(ProjectFolder, exportTool.FileName);
         while (File.Exists(targetFile))
         {
-            var res = MessageBox.Show(string.Format(Resources.AppendToCurrentFile, targetFile),
+            var res = skipDialog ? (doAppendFile ? DialogResult.Yes : DialogResult.No) : MessageBox.Show(string.Format(Resources.AppendToCurrentFile, targetFile),
                 Resources.OverwriteFileTitle,
                 MessageBoxButtons.YesNoCancel);
             if (res == DialogResult.Yes)
@@ -1472,7 +1472,7 @@ public class ViewedProjectTab : TabPage
                     File.Delete(targetFile);
                     break;
                 }
-                catch (Exception e)
+                catch
                 {
                     MessageBox.Show(string.Format(Resources.FailedToDeleteExportFileAborting, targetFile));
                     return;
@@ -1495,12 +1495,12 @@ public class ViewedProjectTab : TabPage
         InputParser.Rules.CurrentExportDataTool = null;
 
         // Show export report
-        MessageBox.Show(
-            InputParser.Rules.CurrentExportCount > 0
-                ? string.Format(Resources.ExportedXItems, InputParser.Rules.CurrentExportCount)
-                : Resources.NoDataExported, Resources.ExportDataTitle, MessageBoxButtons.OK,
-            MessageBoxIcon.Information);
-
+        if (!skipDialog)
+            MessageBox.Show(
+                InputParser.Rules.CurrentExportCount > 0
+                    ? string.Format(Resources.ExportedXItems, InputParser.Rules.CurrentExportCount)
+                    : Resources.NoDataExported, Resources.ExportDataTitle, MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
     }
 
     /// <summary>
@@ -1675,7 +1675,7 @@ public class ViewedProjectTab : TabPage
                     exportSettingsDialog.ExportParsed);
                 using var fileStream = new FileStream(fileName, FileMode.Create);
                 fileStream.Write(new byte[] { 0x56, 0x50, 0x58, 0 });
-                using var bStream = new BZip2OutputStream(fileStream, false);
+                using var bStream = new BZip2OutputStream(fileStream);
                 LoadingForm.OnProgress(0, 100, "Saving export", null, true);
                 xmlDoc.Save(bStream);
             }
@@ -1898,7 +1898,7 @@ public class ViewedProjectTab : TabPage
                     throw new Exception("Unsupported file version");
             }
 
-            Stream aStream = fileStream;
+            var aStream = fileStream;
             BZip2InputStream? bStream = null;
             if (isCompressed)
             {
