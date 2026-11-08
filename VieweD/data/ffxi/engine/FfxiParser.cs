@@ -18,6 +18,7 @@ public class FfxiParser : BaseParser
         // Supported Readers
         SupportedReaders.Add("FFXI Packeteer");
         SupportedReaders.Add("FFXI Packet Viewer");
+        SupportedReaders.Add("FFXI xicap");
         // Override the rules reader with the FFXI one for custom fields
         Rules = new FfxiRulesReader(parentProject);
     }
@@ -28,6 +29,7 @@ public class FfxiParser : BaseParser
         // Supported Readers
         SupportedReaders.Add("FFXI Packeteer");
         SupportedReaders.Add("FFXI Packet Viewer");
+        SupportedReaders.Add("FFXI xicap");
     }
 
     public override BaseParser CreateNew(ViewedProjectTab parentProject)
